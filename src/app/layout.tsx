@@ -1,5 +1,8 @@
+'use client'
+
 import type { Metadata } from 'next'
 import { Poppins, Azeret_Mono } from 'next/font/google'
+import { ThemeProvider } from 'next-themes'
 import './globals.css'
 
 const poppins = Poppins({
@@ -35,7 +38,13 @@ export default function RootLayout({
             <body
                 className={`${poppins.variable} ${azeretMono.variable} font-mono bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
             >
-                {children}
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                >
+                    {children}
+                </ThemeProvider>
             </body>
         </html>
     )
