@@ -4,9 +4,15 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { SunIcon, MoonIcon, Bars3Icon } from '@heroicons/react/24/outline'
+import { ViewColumnsIcon } from '@heroicons/react/24/outline'
 import MobileMenu from './MobileMenu'
 
-const Header = () => {
+interface HeaderProps {
+    isGridVisible: boolean
+    onToggleGrid: () => void
+}
+
+const Header = ({ isGridVisible, onToggleGrid }: HeaderProps) => {
     const [isDark, setIsDark] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -43,7 +49,7 @@ const Header = () => {
                         : 'bg-transparent'
                 }`}
             >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="container mx-auto px-6">
                     <div className="flex justify-between items-center h-16">
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
@@ -76,27 +82,43 @@ const Header = () => {
                         </nav>
 
                         <div className="flex items-center space-x-4">
-                            <motion.button
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                                onClick={() => setIsDark(!isDark)}
-                                className="p-2 rounded-full bg-gray-100 dark:bg-gray-800"
-                            >
-                                {isDark ? (
-                                    <SunIcon className="h-5 w-5 text-yellow-500" />
-                                ) : (
-                                    <MoonIcon className="h-5 w-5 text-gray-700" />
-                                )}
-                            </motion.button>
+                            <div className="relative">
+                                <button
+                                    onClick={onToggleGrid}
+                                    className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:scale-110 active:scale-90 transition-transform"
+                                    title="Toggle grid guides"
+                                >
+                                    <ViewColumnsIcon
+                                        className={`h-5 w-5 ${
+                                            isGridVisible
+                                                ? 'text-red-500'
+                                                : 'text-gray-700 dark:text-gray-300'
+                                        }`}
+                                    />
+                                </button>
+                            </div>
 
-                            <motion.button
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.9 }}
-                                onClick={() => setIsMobileMenuOpen(true)}
-                                className="md:hidden p-2 rounded-full bg-gray-100 dark:bg-gray-800"
-                            >
-                                <Bars3Icon className="h-5 w-5 text-gray-700 dark:text-gray-300" />
-                            </motion.button>
+                            <div className="relative">
+                                <button
+                                    onClick={() => setIsDark(!isDark)}
+                                    className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:scale-110 active:scale-90 transition-transform"
+                                >
+                                    {isDark ? (
+                                        <SunIcon className="h-5 w-5 text-yellow-500" />
+                                    ) : (
+                                        <MoonIcon className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                                    )}
+                                </button>
+                            </div>
+
+                            <div className="relative md:hidden">
+                                <button
+                                    onClick={() => setIsMobileMenuOpen(true)}
+                                    className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 hover:scale-110 active:scale-90 transition-transform"
+                                >
+                                    <Bars3Icon className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

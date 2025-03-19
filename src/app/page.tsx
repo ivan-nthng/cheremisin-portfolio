@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '@/components/Header'
 import Hero from '@/components/Hero'
 import Projects from '@/components/Projects'
@@ -9,14 +9,21 @@ import Contact from '@/components/Contact'
 import GridOverlay from '@/components/GridOverlay'
 
 export default function Home() {
+    const [isGridVisible, setIsGridVisible] = useState(false)
+
     return (
-        <main className="relative">
-            <Header />
-            <Hero />
-            <Projects />
-            <About />
-            <Contact />
-            <GridOverlay />
-        </main>
+        <>
+            <GridOverlay isVisible={isGridVisible} />
+            <main className="relative">
+                <Header
+                    isGridVisible={isGridVisible}
+                    onToggleGrid={() => setIsGridVisible(!isGridVisible)}
+                />
+                <Hero />
+                <Projects />
+                <About />
+                <Contact />
+            </main>
+        </>
     )
 }

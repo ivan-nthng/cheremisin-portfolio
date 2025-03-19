@@ -1,41 +1,34 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import type { FC } from 'react'
+import React from 'react'
+import { motion } from 'framer-motion'
 
 interface GridOverlayProps {
-    className?: string
+    isVisible: boolean
 }
 
-const GridOverlay: FC<GridOverlayProps> = ({ className = '' }) => {
-    const [isVisible, setIsVisible] = useState(false)
-
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.ctrlKey && e.key === 'g') {
-                e.preventDefault()
-                setIsVisible((prev) => !prev)
-            }
-        }
-
-        document.addEventListener('keydown', handleKeyDown)
-        return () => document.removeEventListener('keydown', handleKeyDown)
-    }, [])
-
-    if (!isVisible) return null
-
+export default function GridOverlay({ isVisible }: GridOverlayProps) {
     return (
         <div
-            className={`fixed inset-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 pointer-events-none z-50 p-4 ${className}`}
+            className="fixed inset-0 pointer-events-none"
+            style={{ zIndex: 9999 }}
         >
-            {Array.from({ length: 12 }).map((_, i) => (
-                <div
-                    key={i}
-                    className="h-full bg-blue-500/10 dark:bg-blue-500/10 border border-blue-500/20"
-                />
-            ))}
+            <motion.div
+                className="w-full h-full"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: isVisible ? 1 : 0 }}
+                transition={{ duration: 0.3 }}
+            >
+                <div className="container mx-auto h-full px-6">
+                    <div className="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 h-full gap-6">
+                        {Array.from({ length: 12 }).map((_, i) => (
+                            <div key={i} className="h-full">
+                                <div className="h-full bg-red-500/20 border border-red-500/40" />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </motion.div>
         </div>
     )
 }
-
-export default GridOverlay
