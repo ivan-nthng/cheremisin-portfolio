@@ -1,49 +1,77 @@
 'use client'
 
 import React from 'react'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 
 export default function Hero() {
     return (
-        <section className="container mx-auto px-6 py-12 md:py-24">
-            <div className="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-x-8">
-                <div className="col-span-4 md:col-span-5 lg:col-span-6 flex flex-col justify-center">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-sans font-bold mb-4">
-                        Hi! I'm <span className="text-blue-500">Ivan</span>
-                        <br />
-                        Product Designer
-                    </h1>
-                    <p className="text-gray-600 dark:text-gray-300 text-lg mb-8 max-w-xl font-mono">
-                        I'm a product designer, focusing on complex business
-                        tools such as SaaS products, project management
-                        services, dashboards, and data visualization. My goal is
-                        to help people do their jobs in the best possible way.
-                    </p>
-                    <div className="flex gap-4">
-                        <a
-                            href="#projects"
-                            className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors font-mono"
+        <section className="min-h-screen flex items-center justify-center py-20 md:py-0">
+            <div className="container mx-auto px-6">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-x-4">
+                    {/* Left Column - Text Content */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="md:col-span-6 flex flex-col justify-center mt-16 md:mt-0"
+                    >
+                        <motion.h1
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="text-4xl md:text-5xl font-bold mb-6 font-heading"
                         >
-                            View My Work
-                        </a>
-                        <a
-                            href="#contact"
-                            className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white px-6 py-3 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors font-mono"
+                            Hi, I'm Ivan, Product Designer
+                        </motion.h1>
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.4 }}
+                            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8"
                         >
-                            Get In Touch
-                        </a>
-                    </div>
-                </div>
-                <div className="col-span-4 md:col-span-3 lg:col-span-6 flex items-center justify-center">
-                    <div className="relative w-full aspect-square max-w-lg">
-                        <Image
-                            src="/hero-illustration.svg"
-                            alt="Hero Illustration"
-                            fill
-                            className="object-contain"
-                            priority
-                        />
-                    </div>
+                            Crafting digital experiences that blend creativity
+                            with functionality. Specialized in creating
+                            intuitive and engaging user interfaces.
+                        </motion.p>
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.6 }}
+                            className="flex gap-4"
+                        >
+                            <a
+                                href="#projects"
+                                className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                            >
+                                View Projects
+                            </a>
+                            <a
+                                href="#contact"
+                                className="px-6 py-3 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                            >
+                                Contact Me
+                            </a>
+                        </motion.div>
+                    </motion.div>
+
+                    {/* Right Column - Image */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                        className="md:col-span-6 flex items-center justify-center mt-8 md:mt-0"
+                    >
+                        <div className="relative w-full max-w-md aspect-square">
+                            <Image
+                                src="/images/hero-image.jpg"
+                                alt="Ivan Cheremisin"
+                                fill
+                                className="object-cover rounded-2xl"
+                                priority
+                            />
+                        </div>
+                    </motion.div>
                 </div>
             </div>
         </section>
