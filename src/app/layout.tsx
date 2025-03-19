@@ -1,6 +1,5 @@
 'use client'
 
-import type { Metadata } from 'next'
 import { Poppins, Azeret_Mono } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
 import './globals.css'
@@ -18,15 +17,6 @@ const azeretMono = Azeret_Mono({
     display: 'swap',
     variable: '--font-azeret-mono',
 })
-
-export const metadata: Metadata = {
-    title: 'Ivan Cheremisin - Product Designer',
-    description:
-        'Portfolio website of Ivan Cheremisin, a product designer focusing on complex business tools.',
-    icons: {
-        icon: '/favicon.ico',
-    },
-}
 
 export default function RootLayout({
     children,
