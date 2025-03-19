@@ -12,7 +12,7 @@ interface HeaderProps {
     onToggleGrid: () => void
 }
 
-const Header = ({ isGridVisible, onToggleGrid }: HeaderProps) => {
+export default function Header({ isGridVisible, onToggleGrid }: HeaderProps) {
     const [isDark, setIsDark] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -58,7 +58,11 @@ const Header = ({ isGridVisible, onToggleGrid }: HeaderProps) => {
                         >
                             <Link
                                 href="/"
-                                className="text-2xl font-bold text-gray-900 dark:text-white"
+                                style={{
+                                    fontFamily: 'var(--font-poppins)',
+                                    fontWeight: 700,
+                                }}
+                                className="text-2xl text-gray-900 dark:text-white"
                             >
                                 Portfolio
                             </Link>
@@ -73,7 +77,7 @@ const Header = ({ isGridVisible, onToggleGrid }: HeaderProps) => {
                                 >
                                     <Link
                                         href={item.href}
-                                        className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                                        className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors font-mono"
                                     >
                                         {item.name}
                                     </Link>
@@ -132,5 +136,3 @@ const Header = ({ isGridVisible, onToggleGrid }: HeaderProps) => {
         </>
     )
 }
-
-export default Header

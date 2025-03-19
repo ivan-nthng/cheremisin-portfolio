@@ -16,14 +16,14 @@ export default function GridOverlay({ isVisible }: GridOverlayProps) {
             <motion.div
                 className="w-full h-full"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: isVisible ? 1 : 0 }}
+                animate={{ opacity: isVisible ? 0.2 : 0 }}
                 transition={{ duration: 0.3 }}
             >
                 <div className="container mx-auto h-full px-6">
-                    <div className="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 h-full gap-6">
+                    <div className="grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 h-full gap-x-8">
                         {Array.from({ length: 12 }).map((_, i) => (
                             <div key={i} className="h-full">
-                                <div className="h-full bg-red-500/20 border border-red-500/40" />
+                                <div className="h-full bg-red-500 border border-red-500" />
                             </div>
                         ))}
                     </div>

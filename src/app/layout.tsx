@@ -1,12 +1,19 @@
 import type { Metadata } from 'next'
-import { Poppins } from 'next/font/google'
+import { Poppins, Azeret_Mono } from 'next/font/google'
 import './globals.css'
 
 const poppins = Poppins({
-    weight: ['300', '400', '500', '600', '700'],
+    weight: '700',
     subsets: ['latin'],
     display: 'swap',
     variable: '--font-poppins',
+})
+
+const azeretMono = Azeret_Mono({
+    weight: '400',
+    subsets: ['latin'],
+    display: 'swap',
+    variable: '--font-azeret-mono',
 })
 
 export const metadata: Metadata = {
@@ -23,7 +30,7 @@ export default function RootLayout({
     return (
         <html lang="en" className="scroll-smooth">
             <body
-                className={`${poppins.variable} font-sans bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
+                className={`${poppins.variable} ${azeretMono.variable} font-mono bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
             >
                 {children}
             </body>

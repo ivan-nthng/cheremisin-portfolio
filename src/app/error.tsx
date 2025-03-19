@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import React from 'react'
 
 export default function Error({
     error,
@@ -9,22 +9,19 @@ export default function Error({
     error: Error & { digest?: string }
     reset: () => void
 }) {
-    useEffect(() => {
-        // Log the error to an error reporting service
-        console.error(error)
-    }, [error])
-
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-white dark:bg-gray-900">
-            <div className="max-w-xl p-6 text-center">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+            <div className="text-center">
+                <h2 className="text-3xl font-heading mb-4 text-gray-900 dark:text-white">
                     Something went wrong!
                 </h2>
-                <p className="text-gray-600 dark:text-gray-300 mb-6">
-                    {error.message ||
-                        'An unexpected error occurred. Please try again.'}
+                <p className="text-lg font-mono mb-8 text-gray-600 dark:text-gray-400">
+                    {error.message}
                 </p>
-                <button onClick={reset} className="btn">
+                <button
+                    onClick={reset}
+                    className="px-6 py-3 font-mono bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
                     Try again
                 </button>
             </div>

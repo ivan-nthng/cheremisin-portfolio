@@ -1,6 +1,6 @@
 'use client'
 
-import { FC } from 'react'
+import React from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -42,26 +42,20 @@ const projects: Project[] = [
     },
 ]
 
-const Projects: FC = () => {
+export default function Projects() {
     return (
-        <section id="projects" className="py-20 bg-gray-50 dark:bg-gray-900">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
-                    className="text-center mb-16"
-                >
-                    <h2 className="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
-                        My Projects
+        <section id="projects" className="py-24">
+            <div className="container mx-auto px-6">
+                <div className="max-w-4xl mx-auto text-center mb-16">
+                    <h2 className="text-3xl sm:text-4xl font-heading text-gray-900 dark:text-white">
+                        Featured Projects
                     </h2>
-                    <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-                        Here are some of the projects I've worked on
+                    <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 font-mono">
+                        A selection of my recent design work
                     </p>
-                </motion.div>
+                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8">
                     {projects.map((project, index) => (
                         <motion.div
                             key={project.id}
@@ -110,5 +104,3 @@ const Projects: FC = () => {
         </section>
     )
 }
-
-export default Projects
