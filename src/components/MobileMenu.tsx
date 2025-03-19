@@ -6,9 +6,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 interface MobileMenuProps {
     theme?: string
     setTheme?: (theme: string) => void
+    isGridVisible?: boolean
+    onToggleGrid?: () => void
 }
 
-export default function MobileMenu({ theme, setTheme }: MobileMenuProps) {
+export default function MobileMenu({
+    theme,
+    setTheme,
+    isGridVisible,
+    onToggleGrid,
+}: MobileMenuProps) {
     const [isOpen, setIsOpen] = useState(false)
 
     return (
@@ -66,16 +73,45 @@ export default function MobileMenu({ theme, setTheme }: MobileMenuProps) {
                             >
                                 Contact
                             </a>
-                            <button
-                                onClick={() => {
-                                    setTheme?.(
-                                        theme === 'dark' ? 'light' : 'dark',
-                                    )
-                                }}
-                                className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors w-10 text-center"
-                            >
-                                {theme === 'dark' ? '🌞' : '🌙'}
-                            </button>
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => {
+                                        onToggleGrid?.()
+                                        setIsOpen(false)
+                                    }}
+                                    className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                                    title="Toggle grid overlay"
+                                >
+                                    <svg
+                                        className={`w-5 h-5 ${
+                                            isGridVisible
+                                                ? 'text-blue-500'
+                                                : 'text-gray-700 dark:text-gray-300'
+                                        }`}
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M4 6h16M4 12h16M4 18h16"
+                                        />
+                                    </svg>
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        setTheme?.(
+                                            theme === 'dark' ? 'light' : 'dark',
+                                        )
+                                        setIsOpen(false)
+                                    }}
+                                    className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                                >
+                                    {theme === 'dark' ? '🌞' : '🌙'}
+                                </button>
+                            </div>
                         </nav>
                     </motion.div>
                 )}
