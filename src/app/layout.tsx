@@ -1,23 +1,18 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({
+const poppins = Poppins({
+    weight: ['300', '400', '500', '600', '700'],
     subsets: ['latin'],
     display: 'swap',
+    variable: '--font-poppins',
 })
 
 export const metadata: Metadata = {
-    title: 'Ivan Cheremisin - Full Stack Developer',
+    title: 'Ivan Cheremisin - Product Designer',
     description:
-        'Portfolio website showcasing my work as a Full Stack Developer specializing in modern web technologies.',
-    keywords: [
-        'Full Stack Developer',
-        'Web Development',
-        'React',
-        'Next.js',
-        'TypeScript',
-    ],
+        'Portfolio website of Ivan Cheremisin, a product designer focusing on complex business tools.',
 }
 
 export default function RootLayout({
@@ -28,7 +23,7 @@ export default function RootLayout({
     return (
         <html lang="en" className="scroll-smooth">
             <body
-                className={`${inter.className} bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
+                className={`${poppins.variable} font-sans bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
             >
                 {children}
             </body>
