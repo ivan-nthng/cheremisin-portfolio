@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import GeometricHero from './GeometricHero'
+import Image from 'next/image'
 
 export default function Hero() {
     return (
@@ -36,7 +36,13 @@ export default function Hero() {
                 </div>
                 <div className="col-span-4 md:col-span-3 lg:col-span-6 flex items-center justify-center">
                     <div className="relative w-full aspect-square max-w-lg">
-                        <GeometricHero />
+                        <Image
+                            src="/hero-illustration.svg"
+                            alt="Hero Illustration"
+                            fill
+                            className="object-contain"
+                            priority
+                        />
                     </div>
                 </div>
             </div>
