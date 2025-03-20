@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail } from 'lucide-react'
+import { GithubIcon, LinkedinIcon, Mail } from 'lucide-react'
 import Link from 'next/link'
 
 export default function Contact() {
@@ -44,7 +44,7 @@ export default function Contact() {
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-100 dark:bg-primary-800 text-primary-800 dark:text-primary-100 hover:bg-primary-200 dark:hover:bg-primary-700 transition-colors"
                             >
-                                <Github className="w-5 h-5" />
+                                <GithubIcon className="w-5 h-5" />
                                 <span>GitHub</span>
                             </Link>
                         </motion.div>
@@ -59,7 +59,7 @@ export default function Contact() {
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-100 dark:bg-primary-800 text-primary-800 dark:text-primary-100 hover:bg-primary-200 dark:hover:bg-primary-700 transition-colors"
                             >
-                                <Linkedin className="w-5 h-5" />
+                                <LinkedinIcon className="w-5 h-5" />
                                 <span>LinkedIn</span>
                             </Link>
                         </motion.div>

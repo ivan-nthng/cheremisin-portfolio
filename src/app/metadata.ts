@@ -17,4 +17,8 @@ export const metadata: Metadata = {
             },
         ],
     },
+    manifest: '/site.webmanifest',
+    themeColor: '#274284',
+    viewport: 'width=device-width, initial-scale=1',
+    robots: 'index, follow',
 }

@@ -1,0 +1,21 @@
+{
+    "name": "Ivan Cheremisin - Product Designer",
+    "short_name": "Ivan Cheremisin",
+    "description": "Portfolio of Ivan Cheremisin, a Product Designer specializing in user experience and interface design.",
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        },
+        {
+            "src": "/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#274284",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "start_url": "/"
+}
