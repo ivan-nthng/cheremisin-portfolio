@@ -20,9 +20,19 @@ export default function Hero() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
-                            className="text-4xl md:text-5xl font-bold mb-6 font-heading"
+                            className="text-4xl md:text-5xl font-bold mb-6 font-heading leading-tight"
                         >
-                            Hi, I'm Ivan, Product Designer
+                            Hi! I'm Ivan{' '}
+                            <span className="inline-block w-10 h-10 md:w-12 md:h-12 relative align-middle -my-1">
+                                <Image
+                                    src="/ivan-avatar.png"
+                                    alt="Ivan's avatar"
+                                    fill
+                                    className="object-contain"
+                                    priority
+                                />
+                            </span>{' '}
+                            – a product designer
                         </motion.h1>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
