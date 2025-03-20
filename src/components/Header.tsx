@@ -23,18 +23,51 @@ const Logo = () => (
 )
 
 export default function Header() {
+    const [mounted, setMounted] = React.useState(false)
     const [isScrolled, setIsScrolled] = React.useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
     const [showGrid, setShowGrid] = React.useState(false)
+    const [showText, setShowText] = React.useState(false)
+    const [isSpinning, setIsSpinning] = React.useState(false)
     const { theme, setTheme } = useTheme()
 
     React.useEffect(() => {
+        setMounted(true)
         const handleScroll = () => {
+            const projectsSection = document.getElementById('projects')
+            if (projectsSection) {
+                const rect = projectsSection.getBoundingClientRect()
+                setShowText(rect.top <= 100) // Show text when projects section is near the top
+            }
             setIsScrolled(window.scrollY > 0)
         }
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
+
+    const handleLogoClick = (e: React.MouseEvent) => {
+        e.preventDefault()
+        setIsSpinning(true)
+        setTimeout(() => setIsSpinning(false), 1000)
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        })
+    }
+
+    if (!mounted) {
+        return (
+            <header className="fixed top-0 left-0 right-0 z-50 bg-transparent">
+                <nav className="container mx-auto px-6 h-16 flex items-center justify-between">
+                    <Link href="/" className="flex items-center gap-3">
+                        <div className="relative w-8 h-8 text-primary-800 dark:text-primary-100">
+                            <Logo />
+                        </div>
+                    </Link>
+                </nav>
+            </header>
+        )
+    }
 
     return (
         <motion.header
@@ -48,120 +81,152 @@ export default function Header() {
             }}
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
                 isScrolled
-                    ? 'bg-primary-50/80 dark:bg-primary-900/80 backdrop-blur-md shadow-sm'
+                    ? 'bg-primary-50/80 dark:bg-primary-900/80 backdrop-blur-md'
                     : 'bg-transparent'
             }`}
         >
             <nav className="container mx-auto px-6 h-16 flex items-center justify-between">
-                <Link href="/" className="flex items-center gap-3">
+                <Link
+                    href="/"
+                    className="flex items-center gap-3"
+                    onClick={handleLogoClick}
+                >
                     <motion.div
+                        animate={{ rotate: isSpinning ? 360 : 0 }}
+                        transition={{ duration: 1, ease: 'easeInOut' }}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        className="relative w-10 h-10 text-primary-800 dark:text-primary-100 transition-colors duration-300"
+                        className="relative w-8 h-8 text-primary-800 dark:text-primary-100 transition-colors duration-300"
                     >
                         <Logo />
                     </motion.div>
-                    <motion.span
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        className="text-xl font-heading font-bold text-primary-800 dark:text-primary-100"
-                    >
-                        Portfolio
-                    </motion.span>
+                    <AnimatePresence>
+                        {showText && (
+                            <motion.span
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                                transition={{ duration: 0.3 }}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="text-xl font-heading font-bold text-primary-800 dark:text-primary-100 cursor-pointer"
+                            >
+                                Ivan Cheremisin
+                            </motion.span>
+                        )}
+                    </AnimatePresence>
                 </Link>
 
-                {/* Desktop Navigation */}
-                <div className="hidden md:flex items-center space-x-8">
-                    {['About', 'Projects', 'Contact'].map((item) => (
-                        <motion.div
-                            key={item}
+                {/* Right side controls */}
+                <div className="flex items-center gap-8">
+                    {/* Desktop Navigation */}
+                    <div className="hidden md:flex items-center space-x-8">
+                        {['Projects', 'About', 'Contact'].map((item) => (
+                            <motion.div
+                                key={item}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                transition={{ duration: 0.2 }}
+                            >
+                                <Link
+                                    href={`#${item.toLowerCase()}`}
+                                    className="text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-primary-50 transition-colors"
+                                >
+                                    {item}
+                                </Link>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    {/* Theme, Grid Controls, and Mobile Menu */}
+                    <div className="flex items-center space-x-4">
+                        {/* Theme and Grid Controls - Always visible */}
+                        <motion.button
+                            onClick={() => setShowGrid(!showGrid)}
+                            className="p-2 rounded-md hover:bg-primary-100 dark:hover:bg-primary-800/50 transition-colors"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            transition={{ duration: 0.2 }}
                         >
-                            <Link
-                                href={`#${item.toLowerCase()}`}
-                                className="text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-primary-50 transition-colors"
+                            <motion.div
+                                key={showGrid ? 'grid-on' : 'grid-off'}
+                                initial={{
+                                    opacity: 0,
+                                    rotate: -180,
+                                    scale: 0.5,
+                                }}
+                                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                                exit={{ opacity: 0, rotate: 180, scale: 0.5 }}
+                                transition={{
+                                    duration: 0.3,
+                                    ease: [0.4, 0, 0.2, 1],
+                                    scale: { duration: 0.2 },
+                                }}
                             >
-                                {item}
-                            </Link>
-                        </motion.div>
-                    ))}
-                </div>
+                                <Grid
+                                    className={`w-5 h-5 ${
+                                        showGrid
+                                            ? 'text-primary-200'
+                                            : 'text-primary-700'
+                                    }`}
+                                />
+                            </motion.div>
+                        </motion.button>
+                        <motion.button
+                            onClick={() =>
+                                setTheme(theme === 'dark' ? 'light' : 'dark')
+                            }
+                            className="p-2 rounded-md hover:bg-primary-100 dark:hover:bg-primary-800/50 transition-colors"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            <motion.div
+                                key={theme}
+                                initial={{
+                                    opacity: 0,
+                                    rotate: -180,
+                                    scale: 0.5,
+                                }}
+                                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                                exit={{ opacity: 0, rotate: 180, scale: 0.5 }}
+                                transition={{
+                                    duration: 0.3,
+                                    ease: [0.4, 0, 0.2, 1],
+                                    scale: { duration: 0.2 },
+                                }}
+                            >
+                                {theme === 'dark' ? (
+                                    <Sun className="w-5 h-5 text-primary-200" />
+                                ) : (
+                                    <Moon className="w-5 h-5 text-primary-700" />
+                                )}
+                            </motion.div>
+                        </motion.button>
 
-                {/* Theme and Grid Controls */}
-                <div className="hidden md:flex items-center space-x-4">
-                    <MotionButton
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        transition={{ duration: 0.2 }}
-                        onClick={() => setShowGrid(!showGrid)}
-                        className="p-2 text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100 transition-colors"
-                        aria-label="Toggle grid overlay"
-                    >
-                        <Grid className="w-5 h-5" />
-                    </MotionButton>
-                    <MotionButton
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        transition={{ duration: 0.2 }}
-                        onClick={() =>
-                            setTheme(theme === 'dark' ? 'light' : 'dark')
-                        }
-                        className="p-2 text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100 transition-colors"
-                        aria-label="Toggle theme"
-                    >
-                        <AnimatePresence>
-                            {theme === 'dark' ? (
-                                <motion.div
-                                    key="sun"
-                                    initial={{ opacity: 0, rotate: -90 }}
-                                    animate={{ opacity: 1, rotate: 0 }}
-                                    exit={{ opacity: 0, rotate: 90 }}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <Sun className="w-5 h-5" />
-                                </motion.div>
-                            ) : (
-                                <motion.div
-                                    key="moon"
-                                    initial={{ opacity: 0, rotate: 90 }}
-                                    animate={{ opacity: 1, rotate: 0 }}
-                                    exit={{ opacity: 0, rotate: -90 }}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <Moon className="w-5 h-5" />
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </MotionButton>
+                        {/* Mobile Menu Button */}
+                        <MotionButton
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            transition={{ duration: 0.2 }}
+                            className="md:hidden p-2 text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100"
+                            onClick={() => setIsMobileMenuOpen(true)}
+                            aria-label="Open menu"
+                        >
+                            <svg
+                                className="w-6 h-6"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                />
+                            </svg>
+                        </MotionButton>
+                    </div>
                 </div>
-
-                {/* Mobile Menu Button */}
-                <MotionButton
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    transition={{ duration: 0.2 }}
-                    className="md:hidden p-2 text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100"
-                    onClick={() => setIsMobileMenuOpen(true)}
-                    aria-label="Open menu"
-                >
-                    <svg
-                        className="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M4 6h16M4 12h16M4 18h16"
-                        />
-                    </svg>
-                </MotionButton>
 
                 {/* Mobile Menu */}
                 <MobileMenu

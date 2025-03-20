@@ -1,44 +1,182 @@
 'use client'
 
 import React from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
+import { ArrowDown } from 'lucide-react'
 
 export default function Hero() {
+    const [isHovered, setIsHovered] = React.useState(false)
+    const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 })
+    const [isTooltipVisible, setIsTooltipVisible] = React.useState(false)
+    const [isProjectsTooltipVisible, setIsProjectsTooltipVisible] =
+        React.useState(false)
+    const [projectsButtonPosition, setProjectsButtonPosition] = React.useState({
+        x: 0,
+        y: 0,
+    })
+    const [calendlyButtonPosition, setCalendlyButtonPosition] = React.useState({
+        x: 0,
+        y: 0,
+    })
+    const [avatarPosition, setAvatarPosition] = React.useState({ x: 0, y: 0 })
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        const rect = e.currentTarget.getBoundingClientRect()
+        setMousePosition({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+        })
+    }
+
+    const handleAvatarMouseMove = (e: React.MouseEvent) => {
+        const rect = e.currentTarget.getBoundingClientRect()
+        setAvatarPosition({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+        })
+    }
+
+    const handleProjectsMouseMove = (e: React.MouseEvent) => {
+        const rect = e.currentTarget.getBoundingClientRect()
+        setProjectsButtonPosition({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+        })
+    }
+
+    const handleCalendlyMouseMove = (e: React.MouseEvent) => {
+        const rect = e.currentTarget.getBoundingClientRect()
+        setCalendlyButtonPosition({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+        })
+    }
+
+    const handleProjectsClick = (e: React.MouseEvent) => {
+        e.preventDefault()
+        const projectsSection = document.getElementById('projects')
+        if (projectsSection) {
+            projectsSection.scrollIntoView({ behavior: 'smooth' })
+        }
+    }
+
     return (
-        <section className="min-h-screen flex items-center justify-center py-20 md:py-0">
+        <section className="min-h-screen flex items-center justify-center py-20 md:py-0 bg-primary-50 dark:bg-primary-900">
             <div className="container mx-auto px-6">
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-x-4">
-                    {/* Left Column - Text Content */}
+                <div className="flex flex-col items-start">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="md:col-span-6 flex flex-col justify-center mt-16 md:mt-0"
+                        className="w-full"
                     >
                         <motion.h1
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
-                            className="text-4xl md:text-5xl font-bold mb-6 font-heading leading-tight"
+                            className="text-4xl md:text-5xl font-bold mb-8 font-heading leading-[1.4] text-primary-800 dark:text-primary-100"
                         >
-                            Hi! I'm Ivan{' '}
-                            <span className="inline-block w-10 h-10 md:w-12 md:h-12 relative align-middle -my-1">
-                                <Image
-                                    src="/ivan-avatar.png"
-                                    alt="Ivan's avatar"
-                                    fill
-                                    className="object-contain"
-                                    priority
-                                />
-                            </span>{' '}
-                            – a product designer
+                            <span className="inline-flex flex-wrap items-center gap-2">
+                                Hi 👋! I'm Ivan{' '}
+                                <div className="relative inline-flex">
+                                    <Link
+                                        href="https://calendly.com/icheremisin/30min"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex relative group items-center"
+                                        onMouseEnter={() => setIsHovered(true)}
+                                        onMouseLeave={() => setIsHovered(false)}
+                                        onMouseMove={handleAvatarMouseMove}
+                                    >
+                                        <motion.span
+                                            className="inline-flex w-10 h-10 md:w-12 md:h-12 relative items-center"
+                                            animate={{
+                                                rotate: isHovered ? 360 : 0,
+                                                scale: isHovered ? 1.1 : 1,
+                                            }}
+                                            transition={{
+                                                rotate: {
+                                                    duration: 0.6,
+                                                    ease: 'easeInOut',
+                                                },
+                                                scale: { duration: 0.2 },
+                                            }}
+                                        >
+                                            <Image
+                                                src="/ivan-avatar.png"
+                                                alt="Ivan's avatar"
+                                                fill
+                                                className={`object-contain transition-all duration-300 ${
+                                                    isHovered
+                                                        ? 'brightness-120'
+                                                        : ''
+                                                }`}
+                                                priority
+                                            />
+                                        </motion.span>
+                                    </Link>
+                                    <AnimatePresence>
+                                        {isHovered && (
+                                            <div className="absolute z-[100] pointer-events-none">
+                                                <motion.div
+                                                    initial={{
+                                                        opacity: 0,
+                                                        scale: 0.8,
+                                                    }}
+                                                    animate={{
+                                                        opacity: 1,
+                                                        scale: 1,
+                                                        x:
+                                                            avatarPosition.x +
+                                                            20,
+                                                        y:
+                                                            avatarPosition.y -
+                                                            20,
+                                                    }}
+                                                    exit={{
+                                                        opacity: 0,
+                                                        scale: 0.8,
+                                                    }}
+                                                    transition={{
+                                                        duration: 0.2,
+                                                        ease: 'easeOut',
+                                                    }}
+                                                    className="bg-primary-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap font-mono"
+                                                >
+                                                    Book a 15-minute call
+                                                </motion.div>
+                                            </div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>{' '}
+                                <span className="whitespace-nowrap">– a</span>{' '}
+                                <motion.span
+                                    className="inline-block bg-clip-text text-transparent pb-1"
+                                    animate={{
+                                        backgroundImage: [
+                                            'radial-gradient(circle at 0% 0%, #274284, #FF4E51)',
+                                            'radial-gradient(circle at 100% 100%, #274284, #FF4E51)',
+                                            'radial-gradient(circle at 100% 0%, #274284, #FF4E51)',
+                                            'radial-gradient(circle at 0% 100%, #274284, #FF4E51)',
+                                        ],
+                                    }}
+                                    transition={{
+                                        duration: 8,
+                                        repeat: Infinity,
+                                        ease: 'linear',
+                                    }}
+                                >
+                                    Product Designer
+                                </motion.span>
+                            </span>
                         </motion.h1>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.4 }}
-                            className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8"
+                            className="text-lg md:text-xl text-primary-600 dark:text-primary-300 mb-12 max-w-2xl"
                         >
                             Crafting digital experiences that blend creativity
                             with functionality. Specialized in creating
@@ -50,37 +188,111 @@ export default function Hero() {
                             transition={{ duration: 0.6, delay: 0.6 }}
                             className="flex gap-4"
                         >
-                            <a
-                                href="#projects"
-                                className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-                            >
-                                View Projects
-                            </a>
-                            <a
-                                href="#contact"
-                                className="px-6 py-3 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                            >
-                                Contact Me
-                            </a>
+                            <div className="relative">
+                                <motion.a
+                                    href="https://calendly.com/icheremisin/30min"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    onMouseEnter={() =>
+                                        setIsTooltipVisible(true)
+                                    }
+                                    onMouseLeave={() =>
+                                        setIsTooltipVisible(false)
+                                    }
+                                    onMouseMove={handleCalendlyMouseMove}
+                                    className="px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-md transition-colors"
+                                >
+                                    Book 15 Minutes Call
+                                </motion.a>
+                                <AnimatePresence>
+                                    {isTooltipVisible && (
+                                        <div className="absolute z-[100] pointer-events-none">
+                                            <motion.div
+                                                initial={{
+                                                    opacity: 0,
+                                                    scale: 0.8,
+                                                }}
+                                                animate={{
+                                                    opacity: 1,
+                                                    scale: 1,
+                                                    x:
+                                                        calendlyButtonPosition.x +
+                                                        20,
+                                                    y:
+                                                        calendlyButtonPosition.y -
+                                                        20,
+                                                }}
+                                                exit={{
+                                                    opacity: 0,
+                                                    scale: 0.8,
+                                                }}
+                                                transition={{
+                                                    duration: 0.2,
+                                                    ease: 'easeOut',
+                                                }}
+                                                className="bg-primary-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap font-mono"
+                                            >
+                                                Move to Calendly
+                                            </motion.div>
+                                        </div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                            <div className="relative">
+                                <motion.a
+                                    href="#projects"
+                                    onClick={handleProjectsClick}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    onMouseEnter={() =>
+                                        setIsProjectsTooltipVisible(true)
+                                    }
+                                    onMouseLeave={() =>
+                                        setIsProjectsTooltipVisible(false)
+                                    }
+                                    onMouseMove={handleProjectsMouseMove}
+                                    className="px-6 py-3 border border-primary-200 dark:border-primary-700 text-primary-700 dark:text-primary-200 rounded-md hover:bg-primary-100 dark:hover:bg-primary-800/50 transition-colors"
+                                >
+                                    Projects
+                                </motion.a>
+                                <AnimatePresence>
+                                    {isProjectsTooltipVisible && (
+                                        <div className="absolute z-[100] pointer-events-none">
+                                            <motion.div
+                                                initial={{
+                                                    opacity: 0,
+                                                    scale: 0.8,
+                                                }}
+                                                animate={{
+                                                    opacity: 1,
+                                                    scale: 1,
+                                                    x:
+                                                        projectsButtonPosition.x +
+                                                        20,
+                                                    y:
+                                                        projectsButtonPosition.y -
+                                                        20,
+                                                }}
+                                                exit={{
+                                                    opacity: 0,
+                                                    scale: 0.8,
+                                                }}
+                                                transition={{
+                                                    duration: 0.2,
+                                                    ease: 'easeOut',
+                                                }}
+                                                className="bg-primary-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap flex items-center gap-1 font-mono"
+                                            >
+                                                Go to Projects
+                                                <ArrowDown className="w-4 h-4" />
+                                            </motion.div>
+                                        </div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
                         </motion.div>
-                    </motion.div>
-
-                    {/* Right Column - Image */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                        className="md:col-span-6 flex items-center justify-center mt-8 md:mt-0"
-                    >
-                        <div className="relative w-full max-w-md aspect-square">
-                            <Image
-                                src="/images/hero-image.jpg"
-                                alt="Ivan Cheremisin"
-                                fill
-                                className="object-cover rounded-2xl"
-                                priority
-                            />
-                        </div>
                     </motion.div>
                 </div>
             </div>

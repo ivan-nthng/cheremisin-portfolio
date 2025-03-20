@@ -1,121 +1,120 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Sun, Moon, Grid, X } from 'lucide-react'
 
 interface MobileMenuProps {
-    theme?: string
-    setTheme?: (theme: string) => void
-    isGridVisible?: boolean
-    onToggleGrid?: () => void
+    isOpen: boolean
+    onClose: () => void
+    theme: string | undefined
+    setTheme: (theme: string) => void
+    showGrid: boolean
+    setShowGrid: (show: boolean) => void
 }
 
 export default function MobileMenu({
+    isOpen,
+    onClose,
     theme,
     setTheme,
-    isGridVisible,
-    onToggleGrid,
+    showGrid,
+    setShowGrid,
 }: MobileMenuProps) {
-    const [isOpen, setIsOpen] = useState(false)
-
     return (
-        <div className="md:hidden">
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-            >
-                <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d={
-                            isOpen
-                                ? 'M6 18L18 6M6 6l12 12'
-                                : 'M4 6h16M4 12h16M4 18h16'
-                        }
-                    />
-                </svg>
-            </button>
-
-            <AnimatePresence>
-                {isOpen && (
+        <AnimatePresence>
+            {isOpen && (
+                <>
+                    {/* Backdrop */}
                     <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="absolute top-16 left-0 right-0 bg-white dark:bg-gray-900 shadow-lg rounded-b-lg"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={onClose}
+                        className="fixed inset-0 bg-primary-900/50 backdrop-blur-sm z-40"
+                    />
+
+                    {/* Menu Panel */}
+                    <motion.div
+                        initial={{ x: '100%' }}
+                        animate={{ x: 0 }}
+                        exit={{ x: '100%' }}
+                        transition={{ type: 'spring', damping: 20 }}
+                        className="fixed right-0 top-0 h-full w-64 bg-primary-50 dark:bg-primary-900 shadow-xl z-50"
                     >
-                        <nav className="container mx-auto px-6 py-4 flex flex-col gap-4">
-                            <a
-                                href="#about"
-                                onClick={() => setIsOpen(false)}
-                                className="font-mono hover:text-blue-500 transition-colors"
-                            >
-                                About
-                            </a>
-                            <a
-                                href="#projects"
-                                onClick={() => setIsOpen(false)}
-                                className="font-mono hover:text-blue-500 transition-colors"
-                            >
-                                Projects
-                            </a>
-                            <a
-                                href="#contact"
-                                onClick={() => setIsOpen(false)}
-                                className="font-mono hover:text-blue-500 transition-colors"
-                            >
-                                Contact
-                            </a>
-                            <div className="flex gap-2">
-                                <button
-                                    onClick={() => {
-                                        onToggleGrid?.()
-                                        setIsOpen(false)
-                                    }}
-                                    className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                                    title="Toggle grid overlay"
-                                >
-                                    <svg
-                                        className={`w-5 h-5 ${
-                                            isGridVisible
-                                                ? 'text-blue-500'
-                                                : 'text-gray-700 dark:text-gray-300'
-                                        }`}
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
+                        {/* Close Button */}
+                        <button
+                            onClick={onClose}
+                            className="absolute top-4 right-4 p-2 text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100"
+                            aria-label="Close menu"
+                        >
+                            <X className="w-6 h-6" />
+                        </button>
+
+                        {/* Navigation Links */}
+                        <nav className="pt-16 px-6">
+                            <ul className="space-y-4">
+                                <li>
+                                    <Link
+                                        href="#about"
+                                        onClick={onClose}
+                                        className="block text-lg text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-primary-50"
                                     >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M4 6h16M4 12h16M4 18h16"
-                                        />
-                                    </svg>
+                                        About
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="#projects"
+                                        onClick={onClose}
+                                        className="block text-lg text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-primary-50"
+                                    >
+                                        Projects
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="#contact"
+                                        onClick={onClose}
+                                        className="block text-lg text-primary-700 dark:text-primary-200 hover:text-primary-900 dark:hover:text-primary-50"
+                                    >
+                                        Contact
+                                    </Link>
+                                </li>
+                            </ul>
+                        </nav>
+
+                        {/* Controls */}
+                        <div className="absolute bottom-8 left-6 right-6">
+                            <div className="flex items-center justify-around">
+                                <button
+                                    onClick={() => setShowGrid(!showGrid)}
+                                    className="p-2 text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100"
+                                    aria-label="Toggle grid overlay"
+                                >
+                                    <Grid className="w-5 h-5" />
                                 </button>
                                 <button
-                                    onClick={() => {
-                                        setTheme?.(
+                                    onClick={() =>
+                                        setTheme(
                                             theme === 'dark' ? 'light' : 'dark',
                                         )
-                                        setIsOpen(false)
-                                    }}
-                                    className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                                    }
+                                    className="p-2 text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100"
+                                    aria-label="Toggle theme"
                                 >
-                                    {theme === 'dark' ? '🌞' : '🌙'}
+                                    {theme === 'dark' ? (
+                                        <Sun className="w-5 h-5" />
+                                    ) : (
+                                        <Moon className="w-5 h-5" />
+                                    )}
                                 </button>
                             </div>
-                        </nav>
+                        </div>
                     </motion.div>
-                )}
-            </AnimatePresence>
-        </div>
+                </>
+            )}
+        </AnimatePresence>
     )
 }

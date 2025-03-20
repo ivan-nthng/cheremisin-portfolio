@@ -1,52 +1,40 @@
 'use client'
 
 import React from 'react'
+import { motion } from 'framer-motion'
 
 export default function About() {
     return (
-        <section id="about" className="py-24 bg-gray-50 dark:bg-gray-800">
+        <section
+            id="about"
+            className="relative py-24 bg-primary-50/80 dark:bg-primary-900/80 backdrop-blur-sm"
+        >
             <div className="container mx-auto px-6">
-                <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-3xl sm:text-4xl font-heading text-gray-900 dark:text-white">
-                        About Me
-                    </h2>
-                    <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 font-mono">
-                        I'm passionate about creating intuitive and efficient
-                        interfaces that solve real business problems.
+                <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="text-3xl md:text-4xl font-bold text-primary-800 dark:text-primary-100 mb-8"
+                >
+                    About Me
+                </motion.h2>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                    className="max-w-2xl"
+                >
+                    <p className="text-lg text-primary-600 dark:text-primary-300 leading-relaxed">
+                        I am a passionate full-stack developer with expertise in
+                        modern web technologies. My journey in software
+                        development has been driven by a desire to create
+                        elegant solutions to complex problems. I specialize in
+                        building responsive, user-friendly applications that
+                        deliver exceptional user experiences.
                     </p>
-                </div>
-
-                <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-x-8">
-                    <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm">
-                        <h3 className="text-2xl font-heading text-gray-900 dark:text-white mb-4">
-                            Experience
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-300 font-mono">
-                            Over 5 years of experience in product design,
-                            working with startups and established companies.
-                        </p>
-                    </div>
-
-                    <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm">
-                        <h3 className="text-2xl font-heading text-gray-900 dark:text-white mb-4">
-                            Skills
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-300 font-mono">
-                            Proficient in UX research, wireframing, prototyping,
-                            and design systems.
-                        </p>
-                    </div>
-
-                    <div className="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-sm">
-                        <h3 className="text-2xl font-heading text-gray-900 dark:text-white mb-4">
-                            Approach
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-300 font-mono">
-                            Data-driven design decisions combined with strong
-                            user empathy and business understanding.
-                        </p>
-                    </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     )
