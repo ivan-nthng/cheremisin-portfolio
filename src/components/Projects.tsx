@@ -179,9 +179,9 @@ export default function Projects() {
                                         setHoveredTag(null)
                                     }}
                                     onMouseMove={handleTagMouseMove}
-                                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors flex items-center gap-1 ${
+                                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors duration-300 flex items-center gap-1 ${
                                         selectedTags.has(tag)
-                                            ? 'bg-primary-500 text-white'
+                                            ? 'bg-primary-500 text-white dark:bg-primary-400 dark:text-white'
                                             : 'bg-primary-100 dark:bg-primary-800 text-primary-700 dark:text-primary-200 hover:bg-primary-200 dark:hover:bg-primary-700'
                                     }`}
                                 >

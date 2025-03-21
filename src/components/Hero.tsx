@@ -4,7 +4,7 @@ import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowDown } from 'lucide-react'
+import { ArrowDown, Calendar } from 'lucide-react'
 
 export default function Hero() {
     const [isHovered, setIsHovered] = React.useState(false)
@@ -202,9 +202,10 @@ export default function Hero() {
                                         setIsTooltipVisible(false)
                                     }
                                     onMouseMove={handleCalendlyMouseMove}
-                                    className="px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white rounded-md transition-colors"
+                                    className="px-6 py-3 bg-primary-500 hover:bg-primary-600 dark:bg-primary-400 dark:hover:bg-primary-300 text-white rounded-md transition-colors duration-300 flex items-center gap-2"
                                 >
                                     Book 15 Minutes Call
+                                    <Calendar className="w-4 h-4" />
                                 </motion.a>
                                 <AnimatePresence>
                                     {isTooltipVisible && (
@@ -253,9 +254,10 @@ export default function Hero() {
                                         setIsProjectsTooltipVisible(false)
                                     }
                                     onMouseMove={handleProjectsMouseMove}
-                                    className="px-6 py-3 border border-primary-200 dark:border-primary-700 text-primary-700 dark:text-primary-200 rounded-md hover:bg-primary-100 dark:hover:bg-primary-800/50 transition-colors"
+                                    className="px-6 py-3 border border-primary-200 dark:border-primary-700 text-primary-700 dark:text-primary-200 rounded-md hover:bg-primary-100 dark:hover:bg-primary-800/50 transition-colors flex items-center gap-2"
                                 >
                                     Projects
+                                    <ArrowDown className="w-4 h-4" />
                                 </motion.a>
                                 <AnimatePresence>
                                     {isProjectsTooltipVisible && (

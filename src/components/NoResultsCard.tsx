@@ -86,13 +86,15 @@ export default function NoResultsCard() {
 
             <div className="flex-1">
                 <h3 className="text-xl sm:text-2xl font-bold text-primary-800 dark:text-primary-100">
-                    There is no such project yet
+                    No project yet — yours could be the first
                 </h3>
-                <div className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
+                <div className="mt-2 sm:mt-3 space-y-3 sm:space-y-4">
                     <p className="text-base sm:text-lg text-primary-600 dark:text-primary-300">
-                        But you can be the first to order it.
+                        Every big idea starts somewhere. Let's make it happen
+                        together — reach out or schedule a quick call to get
+                        started!
                     </p>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-3 pt-4">
                         <div className="relative">
                             <Link
                                 href="https://calendly.com/your-link"
@@ -101,7 +103,7 @@ export default function NoResultsCard() {
                                 onMouseEnter={() => setIsCalendarHovered(true)}
                                 onMouseLeave={() => setIsCalendarHovered(false)}
                                 onMouseMove={handleCalendarMouseMove}
-                                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-500 text-white hover:bg-primary-600 transition-colors cursor-pointer"
+                                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-500 text-white hover:bg-primary-600 dark:bg-primary-400 dark:hover:bg-primary-300 transition-colors duration-300 cursor-pointer"
                             >
                                 <Calendar className="w-4 h-4" />
                                 Book 15 Minutes Call
