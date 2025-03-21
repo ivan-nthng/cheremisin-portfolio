@@ -58,21 +58,26 @@ export default function ProjectCard({
     }
 
     const containerVariants = {
-        hidden: { backgroundColor: 'rgb(239 246 255)' },
-        hover: { backgroundColor: 'rgb(30 58 138)' },
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { duration: 0.5, ease: 'easeOut' },
+        },
     }
 
     const imageVariants = {
         hidden: { x: '100%', opacity: 0 },
-        visible: { x: 0, opacity: 1 },
+        visible: {
+            x: 0,
+            opacity: 1,
+            transition: { duration: 0.5, ease: 'easeOut' },
+        },
         exit: { x: '100%', opacity: 0 },
     }
 
     return (
         <motion.div
             ref={cardRef}
-            initial="hidden"
-            animate={isHovered ? 'hover' : 'hidden'}
             onHoverStart={() => setIsHovered(true)}
             onHoverEnd={() => setIsHovered(false)}
             onMouseMove={handleMouseMove}
@@ -82,27 +87,32 @@ export default function ProjectCard({
             <CustomCursor isVisible={isHovered} position={cursorPosition} />
 
             <motion.div
-                variants={containerVariants}
                 onHoverStart={() => setIsImageHovered(true)}
                 onHoverEnd={() => setIsImageHovered(false)}
-                className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden bg-blue-50"
+                className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-blue-100/80 dark:bg-blue-900/80"
+                variants={containerVariants}
+                initial="hidden"
+                animate={isVisible ? 'visible' : 'hidden'}
             >
                 <motion.div
-                    className="absolute inset-0 flex items-start pt-8 pl-8"
+                    className="absolute inset-0 flex items-center justify-center"
+                    style={{ padding: '6%' }}
                     initial="hidden"
                     animate={
                         isVisible && !isImageHovered ? 'visible' : 'hidden'
                     }
                     variants={imageVariants}
-                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3, ease: 'easeOut' }}
                 >
                     <div className="relative w-full h-full">
                         <Image
                             src={image}
                             alt={title}
                             fill
-                            className="object-none object-left-top"
+                            className="object-contain"
                             priority
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                     </div>
                 </motion.div>
