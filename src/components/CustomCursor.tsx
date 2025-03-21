@@ -6,11 +6,15 @@ import { motion } from 'framer-motion'
 interface CustomCursorProps {
     isVisible: boolean
     position: { x: number; y: number }
+    text?: string
+    isHighlighted?: boolean
 }
 
 export default function CustomCursor({
     isVisible,
     position,
+    text = 'Read More',
+    isHighlighted = false,
 }: CustomCursorProps) {
     return (
         <motion.div
@@ -28,7 +32,9 @@ export default function CustomCursor({
         >
             <div className="relative w-[80px] h-[80px]">
                 <motion.div
-                    className="absolute inset-0 rounded-full bg-white"
+                    className={`absolute inset-0 rounded-full ${
+                        isHighlighted ? 'bg-blue-500' : 'bg-white'
+                    }`}
                     initial={{ scale: 0.5 }}
                     animate={{ scale: isVisible ? 1 : 0.5 }}
                     transition={{ duration: 0.2 }}
@@ -51,7 +57,7 @@ export default function CustomCursor({
                         />
                         <text className="text-[14px] font-medium tracking-wider">
                             <textPath href="#textPath" startOffset="0%">
-                                Read More • Read More •
+                                {text} • {text} •
                             </textPath>
                         </text>
                     </svg>

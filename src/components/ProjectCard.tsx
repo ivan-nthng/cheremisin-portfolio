@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import CustomCursor from './CustomCursor'
 import { useTheme } from 'next-themes'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, Star } from 'lucide-react'
 import Link from 'next/link'
 
 interface ProjectCardProps {
@@ -17,6 +17,7 @@ interface ProjectCardProps {
     link: string
     darkImage?: string
     companyName?: string
+    tagCounts?: Map<string, number>
 }
 
 export default function ProjectCard({
@@ -27,6 +28,7 @@ export default function ProjectCard({
     darkImage,
     link,
     companyName,
+    tagCounts,
 }: ProjectCardProps) {
     const router = useRouter()
     const { theme } = useTheme()
@@ -37,6 +39,11 @@ export default function ProjectCard({
     const [cursorPosition, setCursorPosition] = React.useState({ x: 0, y: 0 })
     const [isTooltipVisible, setIsTooltipVisible] = React.useState(false)
     const [tooltipPosition, setTooltipPosition] = React.useState({ x: 0, y: 0 })
+    const [isCompanyHovered, setIsCompanyHovered] = React.useState(false)
+    const [companyTooltipPosition, setCompanyTooltipPosition] = React.useState({
+        x: 0,
+        y: 0,
+    })
 
     React.useEffect(() => {
         const observer = new IntersectionObserver(
@@ -75,6 +82,14 @@ export default function ProjectCard({
         })
     }
 
+    const handleCompanyMouseMove = (e: React.MouseEvent) => {
+        const rect = e.currentTarget.getBoundingClientRect()
+        setCompanyTooltipPosition({
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top,
+        })
+    }
+
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -104,7 +119,12 @@ export default function ProjectCard({
             onClick={() => router.push(link)}
             className="flex flex-col gap-4 cursor-none relative"
         >
-            <CustomCursor isVisible={isHovered} position={cursorPosition} />
+            <CustomCursor
+                isVisible={isHovered}
+                position={cursorPosition}
+                text={isCompanyHovered ? 'Website' : 'Read More'}
+                isHighlighted={isCompanyHovered}
+            />
 
             <motion.div
                 onHoverStart={() => setIsImageHovered(true)}
@@ -148,59 +168,22 @@ export default function ProjectCard({
                             href={link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group relative inline-flex items-center gap-1 text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100 cursor-pointer mt-0.5"
-                            onMouseEnter={() => {
-                                setIsHovered(false)
-                                setIsTooltipVisible(true)
+                            onMouseEnter={(e) => {
+                                setIsCompanyHovered(true)
+                                handleCompanyMouseMove(e)
                             }}
                             onMouseLeave={() => {
-                                setIsHovered(true)
-                                setIsTooltipVisible(false)
+                                setIsCompanyHovered(false)
                             }}
-                            onMouseMove={handleTooltipMouseMove}
+                            onMouseMove={handleCompanyMouseMove}
+                            className="inline-flex items-center gap-1 text-primary-600 dark:text-primary-300 hover:text-primary-800 dark:hover:text-primary-100 transition-colors cursor-pointer"
                         >
-                            <span className="text-sm sm:text-base">
-                                {companyName}
-                            </span>
-                            <motion.div
-                                whileHover={{ x: 4, y: -4 }}
-                                transition={{ duration: 0.2 }}
-                            >
-                                <ArrowUpRight className="w-4 h-4" />
-                            </motion.div>
+                            {companyName}
+                            <ArrowUpRight className="w-4 h-4" />
                         </Link>
-                        <AnimatePresence>
-                            {isTooltipVisible && (
-                                <div className="absolute z-[100] pointer-events-none">
-                                    <motion.div
-                                        initial={{
-                                            opacity: 0,
-                                            scale: 0.8,
-                                        }}
-                                        animate={{
-                                            opacity: 1,
-                                            scale: 1,
-                                            x: tooltipPosition.x + 20,
-                                            y: tooltipPosition.y - 20,
-                                        }}
-                                        exit={{
-                                            opacity: 0,
-                                            scale: 0.8,
-                                        }}
-                                        transition={{
-                                            duration: 0.2,
-                                            ease: 'easeOut',
-                                        }}
-                                        className="bg-primary-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap font-mono"
-                                    >
-                                        Website
-                                    </motion.div>
-                                </div>
-                            )}
-                        </AnimatePresence>
                     </div>
                 )}
-                <div className="mt-4 sm:mt-6 space-y-3 sm:space-y-4">
+                <div className="mt-2 sm:mt-3 space-y-3 sm:space-y-4">
                     <p className="text-base sm:text-lg text-primary-600 dark:text-primary-300">
                         {description}
                     </p>
@@ -208,8 +191,12 @@ export default function ProjectCard({
                         {tags.map((tag) => (
                             <span
                                 key={tag}
-                                className="px-2 py-1 text-sm bg-primary-100 dark:bg-primary-800 text-primary-700 dark:text-primary-200 rounded"
+                                className="px-2 py-1 text-sm bg-primary-100 dark:bg-primary-800 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1"
                             >
+                                {tagCounts?.get(tag) &&
+                                    tagCounts.get(tag)! > 1 && (
+                                        <Star className="w-3 h-3 opacity-50" />
+                                    )}
                                 {tag}
                             </span>
                         ))}
