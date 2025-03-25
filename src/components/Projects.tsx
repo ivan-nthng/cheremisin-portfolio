@@ -20,14 +20,14 @@ interface Project {
 
 const projects: Project[] = [
     {
-        title: 'Project 1',
+        title: 'Taxi Aggregator Support Workspace',
         description:
             'A modern web application built with Next.js, TypeScript, and Tailwind CSS.',
         image: '/chat-light.png',
         darkImage: '/chat-dark.png',
         technologies: ['Next.js', 'TypeScript', 'Tailwind CSS'],
-        link: '#',
-        companyName: 'Company 1',
+        link: '/projects/taxi-aggregator-support-workspace',
+        companyName: 'VK',
     },
     {
         title: 'DS Hito',
@@ -36,7 +36,7 @@ const projects: Project[] = [
         image: '/ds-hito-light.png',
         darkImage: '/ds-hito-dark.png',
         technologies: ['Next.js', 'Python', 'TensorFlow', 'D3.js'],
-        link: '#',
+        link: '/projects/ds-hito',
         isWide: true,
         companyName: 'DS Hito',
     },
@@ -46,7 +46,7 @@ const projects: Project[] = [
             'A responsive e-commerce platform with a focus on user experience.',
         image: '/message.png',
         technologies: ['React', 'Node.js', 'MongoDB'],
-        link: '#',
+        link: '/projects/placeholder-project-2',
         companyName: 'Company 2',
     },
     {
@@ -54,7 +54,7 @@ const projects: Project[] = [
         description: 'A real-time chat application with WebSocket integration.',
         image: '/message.png',
         technologies: ['Vue.js', 'Express', 'Socket.io'],
-        link: '#',
+        link: '/projects/placeholder-project-3',
         companyName: 'Company 3',
     },
 ]

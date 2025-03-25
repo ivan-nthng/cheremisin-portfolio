@@ -135,8 +135,8 @@ export default function ProjectCard({
                 animate={isVisible ? 'visible' : 'hidden'}
             >
                 <motion.div
-                    className="absolute inset-0"
-                    style={{ padding: '6%' }}
+                    className="absolute inset-0 flex items-center justify-center"
+                    style={{ padding: '4%' }}
                     initial="hidden"
                     animate={
                         isVisible && !isImageHovered ? 'visible' : 'hidden'
@@ -145,15 +145,16 @@ export default function ProjectCard({
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3, ease: 'easeOut' }}
                 >
-                    <Image
-                        src={currentImage}
-                        alt={title}
-                        width={800}
-                        height={450}
-                        className="w-full h-full object-cover rounded-xl"
-                        priority
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
+                    <div className="relative w-full h-full flex items-center justify-center">
+                        <Image
+                            src={currentImage}
+                            alt={title}
+                            width={800}
+                            height={450}
+                            className="w-auto h-auto max-w-full max-h-full object-contain rounded-xl"
+                            priority
+                        />
+                    </div>
                 </motion.div>
             </motion.div>
 
