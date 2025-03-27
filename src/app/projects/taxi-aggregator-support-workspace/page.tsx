@@ -4,6 +4,7 @@ import React from 'react'
 import { useTheme } from 'next-themes'
 import ProjectHero from '@/components/ProjectHero'
 import ProjectHeader from '@/components/ProjectHeader'
+import ProjectOverview from '@/components/ProjectOverview'
 import GridOverlay from '@/components/GridOverlay'
 
 export default function TaxiAggregatorSupportWorkspacePage() {
@@ -36,10 +37,32 @@ export default function TaxiAggregatorSupportWorkspacePage() {
         ),
     }
 
+    const stats = [
+        {
+            value: '14m',
+            label: 'Potential user base',
+        },
+        {
+            value: '80k',
+            label: 'Registered drivers',
+        },
+        {
+            value: '16k',
+            label: 'Daily drivers',
+        },
+        {
+            value: '220k',
+            label: 'Total daily rides',
+        },
+    ]
+
+    const description =
+        'In a city where drivers can easily switch to another aggregator, losing a driver means losing money. And the only way to compete was through superior service. The company needed to scale without growing the team — and that meant completely rethinking the tools.'
+
     return (
         <>
             <GridOverlay show={isGridVisible} />
-            <main className="relative">
+            <main className="relative space-y-8 md:space-y-12">
                 <ProjectHeader
                     isGridVisible={isGridVisible}
                     onToggleGrid={() => setIsGridVisible(!isGridVisible)}
@@ -51,6 +74,9 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                     forwardImage={forwardImage}
                     clientLogo={clientLogo}
                 />
+                <div className="container mx-auto px-6">
+                    <ProjectOverview stats={stats} description={description} />
+                </div>
             </main>
         </>
     )
