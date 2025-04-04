@@ -5,7 +5,10 @@ import { useTheme } from 'next-themes'
 import ProjectHero from '@/components/ProjectHero'
 import ProjectHeader from '@/components/ProjectHeader'
 import ProjectOverview from '@/components/ProjectOverview'
+import ProblemSection from '@/components/ProblemSection'
+import DemoSection from '@/components/DemoSection'
 import GridOverlay from '@/components/GridOverlay'
+import TabSection from '@/components/TabSection'
 
 export default function TaxiAggregatorSupportWorkspacePage() {
     const { theme } = useTheme()
@@ -56,26 +59,88 @@ export default function TaxiAggregatorSupportWorkspacePage() {
         },
     ]
 
+    const problemStats = [
+        {
+            value: '220k',
+            label: 'Registered drivers',
+        },
+        {
+            value: '15k',
+            label: 'Support Inquiries',
+            suffix: ' 7%',
+        },
+        {
+            value: '50',
+            label: 'Operators',
+        },
+        {
+            value: '3.6k',
+            label: 'Operators Daily Capacity',
+        },
+        {
+            value: '11.4k',
+            label: 'Unanswered Requests',
+        },
+    ]
+
     const description =
         'In a city where drivers can easily switch to another aggregator, losing a driver means losing money. And the only way to compete was through superior service. The company needed to scale without growing the team — and that meant completely rethinking the tools.'
+
+    const problemDescription =
+        'The company was operating in an extremely competitive market, where both drivers and passengers could easily switch to another platform. Since the number of drivers in the city was limited, losing them meant losing real revenue - and this often happened due to delayed or missing support responses. The support team was simply overwhelmed. There were only two options: scale the team massively - or rethink the entire system. To meet peak volume, the company would have needed nearly 200 operators - 4x the existing team.'
+
+    const demoTitle = 'City-Wide Support System'
+    const demoDescription =
+        'A comprehensive support system that helps operators handle thousands of requests efficiently. The interface provides real-time insights, automated responses, and smart routing to ensure no request goes unanswered.'
+
+    const processContent = (
+        <div className="space-y-8">
+            <ProjectOverview stats={stats} description={description} />
+            <ProblemSection
+                stats={problemStats}
+                description={problemDescription}
+            />
+        </div>
+    )
+
+    const resultContent = (
+        <div className="space-y-8">
+            <DemoSection
+                title={demoTitle}
+                description={demoDescription}
+                image="/city-demo.png"
+            />
+        </div>
+    )
 
     return (
         <>
             <GridOverlay show={isGridVisible} />
-            <main className="relative space-y-8 md:space-y-12">
+            <main className="relative">
                 <ProjectHeader
                     isGridVisible={isGridVisible}
                     onToggleGrid={() => setIsGridVisible(!isGridVisible)}
                 />
-                <ProjectHero
-                    title="Taxi Aggregator Support Workspace"
-                    description="Making sense of complex business interfaces. SaaS, project management, data visualization, and design systems — all to help people work smarter."
-                    mainImage={mainImage}
-                    forwardImage={forwardImage}
-                    clientLogo={clientLogo}
-                />
-                <div className="container mx-auto px-6">
-                    <ProjectOverview stats={stats} description={description} />
+                <div className="relative w-full max-w-7xl mx-auto px-6">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
+                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                            <ProjectHero
+                                title="Taxi Aggregator Support Workspace"
+                                description="Making sense of complex business interfaces. SaaS, project management, data visualization, and design systems — all to help people work smarter."
+                                mainImage="/actions-light.png"
+                                mainImageDark="/actions-dark.png"
+                                forwardImage="/forward-light.png"
+                                forwardImageDark="/forward-dark.png"
+                                clientLogo={clientLogo}
+                            />
+                        </div>
+                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                            <TabSection
+                                processContent={processContent}
+                                resultContent={resultContent}
+                            />
+                        </div>
+                    </div>
                 </div>
             </main>
         </>

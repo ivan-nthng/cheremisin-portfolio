@@ -44,7 +44,8 @@ const projects: Project[] = [
         title: 'Project 2',
         description:
             'A responsive e-commerce platform with a focus on user experience.',
-        image: '/message.png',
+        image: '/message-light.png',
+        darkImage: '/message-dark.png',
         technologies: ['React', 'Node.js', 'MongoDB'],
         link: '/projects/placeholder-project-2',
         companyName: 'Company 2',
@@ -52,7 +53,8 @@ const projects: Project[] = [
     {
         title: 'Project 3',
         description: 'A real-time chat application with WebSocket integration.',
-        image: '/message.png',
+        image: '/message-light.png',
+        darkImage: '/message-dark.png',
         technologies: ['Vue.js', 'Express', 'Socket.io'],
         link: '/projects/placeholder-project-3',
         companyName: 'Company 3',
@@ -66,6 +68,11 @@ export default function Projects() {
     const [isHovered, setIsHovered] = React.useState(false)
     const [hoveredTag, setHoveredTag] = React.useState<string | null>(null)
     const [tooltipPosition, setTooltipPosition] = React.useState({ x: 0, y: 0 })
+    const [mounted, setMounted] = React.useState(false)
+
+    React.useEffect(() => {
+        setMounted(true)
+    }, [])
 
     // Get unique tags from all projects with their counts
     const allTags = React.useMemo(() => {
@@ -146,7 +153,7 @@ export default function Projects() {
             id="projects"
             className="relative py-12 sm:py-16 md:py-24 bg-primary-50/80 dark:bg-primary-900/80 backdrop-blur-sm"
         >
-            <div className="container mx-auto px-4 sm:px-6">
+            <div className="container mx-auto px-6">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -242,7 +249,7 @@ export default function Projects() {
                 {/* Projects Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
                     <AnimatePresence>
-                        {filteredProjects.length > 0 ? (
+                        {mounted && filteredProjects.length > 0 ? (
                             filteredProjects.map((project, index) => (
                                 <motion.div
                                     key={project.title}

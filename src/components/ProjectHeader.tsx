@@ -35,7 +35,7 @@ export default function ProjectHeader({
 
     if (!mounted) {
         return (
-            <header className="fixed top-0 left-0 right-0 z-50 bg-transparent">
+            <header className="fixed sm:top-0 left-0 right-0 z-50 bg-transparent bottom-0 sm:bottom-auto">
                 <nav className="container mx-auto px-6 h-16 flex items-center justify-between">
                     <Link
                         href="/"
@@ -59,7 +59,7 @@ export default function ProjectHeader({
                 damping: 20,
                 duration: 0.6,
             }}
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+            className={`fixed sm:top-0 left-0 right-0 z-50 transition-all duration-300 bottom-0 sm:bottom-auto ${
                 isScrolled
                     ? 'bg-primary-50/80 dark:bg-primary-900/80 backdrop-blur-md'
                     : 'bg-transparent'

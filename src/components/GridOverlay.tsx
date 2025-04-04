@@ -24,13 +24,26 @@ export default function GridOverlay({ show }: GridOverlayProps) {
                     {/* Site-width container */}
                     <div className="relative w-full h-full max-w-7xl mx-auto px-6">
                         {/* Grid layout matching site's content grid */}
-                        <div className="w-full h-full grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 md:gap-6 lg:gap-8">
-                            {Array.from({ length: 12 }).map((_, i) => (
-                                <div
-                                    key={i}
-                                    className="h-full bg-primary-500/15 dark:bg-primary-400/15 backdrop-blur-[0.5px]"
-                                />
-                            ))}
+                        <div className="w-full h-full grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
+                            {/* First 2 columns - always visible */}
+                            <div className="h-full bg-primary-500/15 dark:bg-primary-400/15" />
+                            <div className="h-full bg-primary-500/15 dark:bg-primary-400/15" />
+
+                            {/* Next 2 columns - visible from sm up */}
+                            <div className="hidden sm:block h-full bg-primary-500/15 dark:bg-primary-400/15" />
+                            <div className="hidden sm:block h-full bg-primary-500/15 dark:bg-primary-400/15" />
+
+                            {/* Next 4 columns - visible from md up */}
+                            <div className="hidden md:block h-full bg-primary-500/15 dark:bg-primary-400/15" />
+                            <div className="hidden md:block h-full bg-primary-500/15 dark:bg-primary-400/15" />
+                            <div className="hidden md:block h-full bg-primary-500/15 dark:bg-primary-400/15" />
+                            <div className="hidden md:block h-full bg-primary-500/15 dark:bg-primary-400/15" />
+
+                            {/* Last 4 columns - visible from lg up */}
+                            <div className="hidden lg:block h-full bg-primary-500/15 dark:bg-primary-400/15" />
+                            <div className="hidden lg:block h-full bg-primary-500/15 dark:bg-primary-400/15" />
+                            <div className="hidden lg:block h-full bg-primary-500/15 dark:bg-primary-400/15" />
+                            <div className="hidden lg:block h-full bg-primary-500/15 dark:bg-primary-400/15" />
                         </div>
                     </div>
                 </motion.div>

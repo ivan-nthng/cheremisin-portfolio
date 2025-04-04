@@ -10,17 +10,76 @@ import MobileMenu from './MobileMenu'
 import GridOverlay from './GridOverlay'
 
 type MotionButtonProps = React.ComponentProps<'button'> & MotionProps
+type MotionDivProps = React.ComponentProps<'div'> & MotionProps
 
-const MotionButton = motion.button
+const MotionButton = motion.button as React.FC<MotionButtonProps>
+const MotionDiv = motion.div as React.FC<MotionDivProps>
 
-const Logo = () => (
-    <svg viewBox="0 0 128 128" className="w-full h-full">
-        <path
-            d="M64 0C28.656 0 0 28.656 0 64C0 99.344 28.656 128 64 128C99.344 128 128 99.344 128 64C128 28.656 99.344 0 64 0ZM97.248 68.464H73.024L90.144 85.584L83.728 92L66.608 74.88V99.104H57.52V74.88L40.4 92L33.984 85.584L55.648 63.92L33.984 42.256L40.4 35.84L57.52 52.96V28.736H66.608V59.376H97.248V68.464Z"
-            fill="currentColor"
-        />
-    </svg>
-)
+const Logo = () => {
+    const { theme } = useTheme()
+    return (
+        <div className="relative w-full h-full">
+            <svg
+                width="32"
+                height="32"
+                viewBox="0 0 97 65"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-full h-full"
+            >
+                <g clipPath="url(#clip0_920_900)">
+                    <path
+                        d="M0 32.36C0 48.36 32 64.36 48 64.36C64 64.36 96.24 48.36 96.24 32.36C96.24 16.36 64.24 0 48.12 0C32 0 0 16.36 0 32.36Z"
+                        className="text-primary-800 dark:text-primary-100"
+                        fill="currentColor"
+                    />
+                </g>
+                <defs>
+                    <clipPath id="clip0_920_900">
+                        <rect width="96.24" height="64.36" fill="white" />
+                    </clipPath>
+                </defs>
+            </svg>
+            <MotionDiv
+                className="absolute inset-0 pointer-events-none"
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 1, ease: 'easeInOut' }}
+            >
+                <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 97 65"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-full h-full"
+                >
+                    <g
+                        className={
+                            theme === 'dark' ? 'text-primary-800' : 'text-white'
+                        }
+                    >
+                        <path
+                            d="M52.7995 30.1799L63.5495 19.4299L60.7195 16.5999L49.9695 27.3499V12.1499H45.9695V27.3499L35.2195 16.5999L32.3995 19.4299L43.1395 30.1799H27.9395V34.1799H43.1395H45.9695H47.1395H48.7995H49.9695H52.7995H67.9995V30.1799H52.7995Z"
+                            fill="currentColor"
+                        />
+                        <path
+                            d="M32.4004 44.9299L35.2204 47.7499L44.8004 38.1799H39.1404L32.4004 44.9299Z"
+                            fill="currentColor"
+                        />
+                        <path
+                            d="M49.9688 38.1799H45.9688V52.2099H49.9688V38.1799Z"
+                            fill="currentColor"
+                        />
+                        <path
+                            d="M51.1387 38.1799L60.7187 47.7499L63.5487 44.9299L56.7987 38.1799H51.1387Z"
+                            fill="currentColor"
+                        />
+                    </g>
+                </svg>
+            </MotionDiv>
+        </div>
+    )
+}
 
 export default function Header() {
     const [mounted, setMounted] = React.useState(false)
@@ -91,18 +150,12 @@ export default function Header() {
                     className="flex items-center gap-3"
                     onClick={handleLogoClick}
                 >
-                    <motion.div
-                        animate={{ rotate: isSpinning ? 360 : 0 }}
-                        transition={{ duration: 1, ease: 'easeInOut' }}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="relative w-8 h-8 text-primary-800 dark:text-primary-100 transition-colors duration-300"
-                    >
+                    <div className="relative w-8 h-8 text-primary-800 dark:text-primary-100 transition-colors duration-300 hover:scale-105 active:scale-95">
                         <Logo />
-                    </motion.div>
+                    </div>
                     <AnimatePresence>
                         {showText && (
-                            <motion.span
+                            <MotionDiv
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -20 }}
@@ -112,7 +165,7 @@ export default function Header() {
                                 className="text-xl font-heading font-bold text-primary-800 dark:text-primary-100 cursor-pointer"
                             >
                                 Ivan Cheremisin
-                            </motion.span>
+                            </MotionDiv>
                         )}
                     </AnimatePresence>
                 </Link>
@@ -122,7 +175,7 @@ export default function Header() {
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center space-x-8">
                         {['Projects', 'About', 'Contact'].map((item) => (
-                            <motion.div
+                            <MotionDiv
                                 key={item}
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
@@ -134,20 +187,20 @@ export default function Header() {
                                 >
                                     {item}
                                 </Link>
-                            </motion.div>
+                            </MotionDiv>
                         ))}
                     </div>
 
                     {/* Theme, Grid Controls, and Mobile Menu */}
                     <div className="flex items-center space-x-4">
                         {/* Theme and Grid Controls - Always visible */}
-                        <motion.button
+                        <MotionButton
                             onClick={() => setShowGrid(!showGrid)}
                             className="p-2 rounded-md hover:bg-primary-100 dark:hover:bg-primary-800/50 transition-colors"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                         >
-                            <motion.div
+                            <MotionDiv
                                 key={showGrid ? 'grid-on' : 'grid-off'}
                                 initial={{
                                     opacity: 0,
@@ -169,9 +222,9 @@ export default function Header() {
                                             : 'text-primary-700'
                                     }`}
                                 />
-                            </motion.div>
-                        </motion.button>
-                        <motion.button
+                            </MotionDiv>
+                        </MotionButton>
+                        <MotionButton
                             onClick={() =>
                                 setTheme(theme === 'dark' ? 'light' : 'dark')
                             }
@@ -179,7 +232,7 @@ export default function Header() {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                         >
-                            <motion.div
+                            <MotionDiv
                                 key={theme}
                                 initial={{
                                     opacity: 0,
@@ -199,8 +252,8 @@ export default function Header() {
                                 ) : (
                                     <Moon className="w-5 h-5 text-primary-700" />
                                 )}
-                            </motion.div>
-                        </motion.button>
+                            </MotionDiv>
+                        </MotionButton>
 
                         {/* Mobile Menu Button */}
                         <MotionButton

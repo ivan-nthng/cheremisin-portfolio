@@ -5,9 +5,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowDown, Calendar } from 'lucide-react'
+import { useTheme } from 'next-themes'
 
 export default function Hero() {
     const [isHovered, setIsHovered] = React.useState(false)
+    const { theme, resolvedTheme } = useTheme()
+    const [mounted, setMounted] = React.useState(false)
     const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 })
     const [isTooltipVisible, setIsTooltipVisible] = React.useState(false)
     const [isProjectsTooltipVisible, setIsProjectsTooltipVisible] =
@@ -21,6 +24,16 @@ export default function Hero() {
         y: 0,
     })
     const [avatarPosition, setAvatarPosition] = React.useState({ x: 0, y: 0 })
+
+    React.useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    const avatarImage =
+        mounted &&
+        (resolvedTheme === 'dark'
+            ? '/ivan-avatar-dark.png'
+            : '/ivan-avatar-light.png')
 
     const handleMouseMove = (e: React.MouseEvent) => {
         const rect = e.currentTarget.getBoundingClientRect()
@@ -90,32 +103,34 @@ export default function Hero() {
                                         onMouseLeave={() => setIsHovered(false)}
                                         onMouseMove={handleAvatarMouseMove}
                                     >
-                                        <motion.span
-                                            className="inline-flex w-10 h-10 md:w-12 md:h-12 relative items-center"
-                                            animate={{
-                                                rotate: isHovered ? 360 : 0,
-                                                scale: isHovered ? 1.1 : 1,
-                                            }}
-                                            transition={{
-                                                rotate: {
-                                                    duration: 0.6,
-                                                    ease: 'easeInOut',
-                                                },
-                                                scale: { duration: 0.2 },
-                                            }}
-                                        >
-                                            <Image
-                                                src="/ivan-avatar.png"
-                                                alt="Ivan's avatar"
-                                                fill
-                                                className={`object-contain transition-all duration-300 ${
-                                                    isHovered
-                                                        ? 'brightness-120'
-                                                        : ''
-                                                }`}
-                                                priority
-                                            />
-                                        </motion.span>
+                                        {mounted && avatarImage && (
+                                            <motion.span
+                                                className="inline-flex w-10 h-10 md:w-12 md:h-12 relative items-center"
+                                                animate={{
+                                                    rotate: isHovered ? 360 : 0,
+                                                    scale: isHovered ? 1.1 : 1,
+                                                }}
+                                                transition={{
+                                                    rotate: {
+                                                        duration: 0.6,
+                                                        ease: 'easeInOut',
+                                                    },
+                                                    scale: { duration: 0.2 },
+                                                }}
+                                            >
+                                                <Image
+                                                    src={avatarImage}
+                                                    alt="Ivan's avatar"
+                                                    fill
+                                                    className={`object-contain transition-all duration-300 ${
+                                                        isHovered
+                                                            ? 'brightness-120'
+                                                            : ''
+                                                    }`}
+                                                    priority
+                                                />
+                                            </motion.span>
+                                        )}
                                     </Link>
                                     <AnimatePresence>
                                         {isHovered && (
@@ -186,27 +201,30 @@ export default function Hero() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.6 }}
-                            className="flex gap-4"
+                            className="flex flex-col md:flex-row gap-4 w-full md:w-auto max-w-[420px] md:max-w-none items-start"
                         >
                             <div className="relative">
-                                <motion.a
-                                    href="https://calendly.com/icheremisin/30min"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                <motion.div
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
-                                    onMouseEnter={() =>
-                                        setIsTooltipVisible(true)
-                                    }
-                                    onMouseLeave={() =>
-                                        setIsTooltipVisible(false)
-                                    }
-                                    onMouseMove={handleCalendlyMouseMove}
-                                    className="px-6 py-3 bg-primary-500 hover:bg-primary-600 dark:bg-primary-400 dark:hover:bg-primary-300 text-white rounded-md transition-colors duration-300 flex items-center gap-2"
                                 >
-                                    Book 15 Minutes Call
-                                    <Calendar className="w-4 h-4" />
-                                </motion.a>
+                                    <Link
+                                        href="https://calendly.com/icheremisin/30min"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onMouseEnter={() =>
+                                            setIsTooltipVisible(true)
+                                        }
+                                        onMouseLeave={() =>
+                                            setIsTooltipVisible(false)
+                                        }
+                                        onMouseMove={handleCalendlyMouseMove}
+                                        className="inline-flex w-full md:w-auto px-6 py-3 bg-primary-500 hover:bg-primary-600 dark:bg-primary-400 dark:hover:bg-primary-300 text-white rounded-md transition-colors duration-300 items-center justify-center gap-2"
+                                    >
+                                        Book 15 Minutes Call
+                                        <Calendar className="w-5 h-5 flex-shrink-0" />
+                                    </Link>
+                                </motion.div>
                                 <AnimatePresence>
                                     {isTooltipVisible && (
                                         <div className="absolute z-[100] pointer-events-none">
@@ -242,23 +260,26 @@ export default function Hero() {
                                 </AnimatePresence>
                             </div>
                             <div className="relative">
-                                <motion.a
-                                    href="#projects"
-                                    onClick={handleProjectsClick}
+                                <motion.div
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
-                                    onMouseEnter={() =>
-                                        setIsProjectsTooltipVisible(true)
-                                    }
-                                    onMouseLeave={() =>
-                                        setIsProjectsTooltipVisible(false)
-                                    }
-                                    onMouseMove={handleProjectsMouseMove}
-                                    className="px-6 py-3 border border-primary-200 dark:border-primary-700 text-primary-700 dark:text-primary-200 rounded-md hover:bg-primary-100 dark:hover:bg-primary-800/50 transition-colors flex items-center gap-2"
                                 >
-                                    Projects
-                                    <ArrowDown className="w-4 h-4" />
-                                </motion.a>
+                                    <Link
+                                        href="#projects"
+                                        onClick={handleProjectsClick}
+                                        onMouseEnter={() =>
+                                            setIsProjectsTooltipVisible(true)
+                                        }
+                                        onMouseLeave={() =>
+                                            setIsProjectsTooltipVisible(false)
+                                        }
+                                        onMouseMove={handleProjectsMouseMove}
+                                        className="inline-flex w-full md:w-auto px-6 py-3 bg-primary-100 hover:bg-primary-200 dark:bg-primary-800 dark:hover:bg-primary-700 text-primary-900 dark:text-primary-100 rounded-md transition-colors duration-300 items-center justify-center gap-2"
+                                    >
+                                        View Projects
+                                        <ArrowDown className="w-5 h-5 flex-shrink-0" />
+                                    </Link>
+                                </motion.div>
                                 <AnimatePresence>
                                     {isProjectsTooltipVisible && (
                                         <div className="absolute z-[100] pointer-events-none">
@@ -285,10 +306,9 @@ export default function Hero() {
                                                     duration: 0.2,
                                                     ease: 'easeOut',
                                                 }}
-                                                className="bg-primary-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap flex items-center gap-1 font-mono"
+                                                className="bg-primary-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap font-mono"
                                             >
-                                                Go to Projects
-                                                <ArrowDown className="w-4 h-4" />
+                                                Scroll to projects
                                             </motion.div>
                                         </div>
                                     )}
