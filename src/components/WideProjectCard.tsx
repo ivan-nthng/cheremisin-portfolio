@@ -34,6 +34,7 @@ export default function WideProjectCard({
     const cardRef = React.useRef<HTMLDivElement>(null)
     const [isVisible, setIsVisible] = React.useState(false)
     const [isHovered, setIsHovered] = React.useState(false)
+    const [isImageHovered, setIsImageHovered] = React.useState(false)
     const [cursorPosition, setCursorPosition] = React.useState({ x: 0, y: 0 })
     const [isCompanyHovered, setIsCompanyHovered] = React.useState(false)
     const [companyTooltipPosition, setCompanyTooltipPosition] = React.useState({
@@ -95,12 +96,9 @@ export default function WideProjectCard({
         visible: {
             x: 0,
             opacity: 1,
-            transition: { duration: 0.8, ease: 'easeOut' },
+            transition: { duration: 0.5, ease: 'easeOut' },
         },
-        hover: {
-            x: '100%',
-            transition: { duration: 0.3, ease: 'easeOut' },
-        },
+        exit: { x: '100%', opacity: 0 },
     }
 
     return (
@@ -164,26 +162,34 @@ export default function WideProjectCard({
             </div>
 
             <motion.div
+                onHoverStart={() => setIsImageHovered(true)}
+                onHoverEnd={() => setIsImageHovered(false)}
                 className="relative w-full md:w-1/2 aspect-[4/3] overflow-hidden"
                 variants={containerVariants}
                 initial="hidden"
                 animate={isVisible ? 'visible' : 'hidden'}
             >
                 <motion.div
-                    className="relative w-full h-full"
-                    variants={imageVariants}
+                    className="absolute inset-0 flex items-center justify-center"
+                    style={{ padding: '4%' }}
                     initial="hidden"
-                    animate={isVisible ? 'visible' : 'hidden'}
-                    whileHover="hover"
+                    animate={
+                        isVisible && !isImageHovered ? 'visible' : 'hidden'
+                    }
+                    variants={imageVariants}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3, ease: 'easeOut' }}
                 >
-                    <Image
-                        src={currentImage}
-                        alt={title}
-                        fill
-                        className="object-contain"
-                        priority
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                    />
+                    <div className="relative w-full h-full flex items-center justify-center">
+                        <Image
+                            src={currentImage}
+                            alt={title}
+                            fill
+                            className="object-contain"
+                            priority
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                    </div>
                 </motion.div>
             </motion.div>
         </motion.div>
