@@ -14,7 +14,7 @@ const TabSection: React.FC<TabSectionProps> = ({
     resultContent,
 }) => {
     const [activeTab, setActiveTab] = React.useState<'process' | 'result'>(
-        'process',
+        'result',
     )
     const [hasScrolled, setHasScrolled] = React.useState(false)
 
@@ -67,7 +67,7 @@ const TabSection: React.FC<TabSectionProps> = ({
                     <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12 flex justify-center">
                             <div className="flex gap-2 p-1 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-full shadow-lg pointer-events-auto">
-                                {['process', 'result'].map((tab) => (
+                                {['result', 'process'].map((tab) => (
                                     <button
                                         key={tab}
                                         onClick={() =>

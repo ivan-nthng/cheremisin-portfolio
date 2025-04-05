@@ -7,7 +7,6 @@ import { useTheme } from 'next-themes'
 interface StatBlock {
     value: string
     label: string
-    suffix?: string
 }
 
 interface ProblemSectionProps {
@@ -35,19 +34,18 @@ const MotionH2 = motion.h2 as React.ComponentType<
     }
 >
 
-function AnimatedCounter({
-    value,
-    suffix,
-    suffixClassName,
-}: {
-    value: string
-    suffix?: string
-    suffixClassName?: string
-}) {
+function AnimatedCounter({ value }: { value: string }) {
     const ref = React.useRef(null)
     const [isVisible, setIsVisible] = React.useState(false)
     const [number, setNumber] = React.useState(0)
-    const numericValue = parseInt(value.replace(/[^0-9]/g, ''))
+    const [isAnimationComplete, setIsAnimationComplete] = React.useState(false)
+
+    // Split value into main number and percentage if exists
+    const [mainValue, percentage] = value.split(' ')
+
+    // Extract numeric parts before and after decimal point if exists
+    const [beforeDecimal, afterDecimal] = mainValue.split('.')
+    const numericValue = parseInt(beforeDecimal.replace(/[^0-9]/g, ''))
 
     React.useEffect(() => {
         const observer = new IntersectionObserver(
@@ -84,10 +82,15 @@ function AnimatedCounter({
                 )
 
                 const easeOutQuart = 1 - Math.pow(1 - progress, 4)
-                setNumber(Math.floor(endValue * easeOutQuart))
+                const currentValue = endValue * easeOutQuart
+
+                // Always show integers during animation
+                setNumber(Math.floor(currentValue))
 
                 if (progress < 1) {
                     requestAnimationFrame(updateCounter)
+                } else {
+                    setIsAnimationComplete(true)
                 }
             }
 
@@ -95,15 +98,26 @@ function AnimatedCounter({
         }
     }, [isVisible, numericValue])
 
-    const prefix = value.match(/^[^0-9]*/)?.[0] || ''
+    // Format the number with the same prefix/suffix as the original value
+    const prefix = mainValue.match(/^[^0-9]*/)?.[0] || ''
+    const suffix = mainValue.match(/[^0-9]*$/)?.[0] || ''
+
+    // Construct the formatted value
+    const formattedValue = isAnimationComplete
+        ? afterDecimal
+            ? `${prefix}${number}.${afterDecimal}`
+            : `${prefix}${number}${suffix}`
+        : `${prefix}${number}${suffix}`
 
     return (
         <span ref={ref} className="font-poppins font-bold tracking-tight">
             {isVisible ? (
                 <>
-                    {`${prefix}${number}`}
-                    {suffix && (
-                        <span className={suffixClassName}>{suffix}</span>
+                    {formattedValue}
+                    {percentage && (
+                        <span className="text-[0.5em] opacity-60 ml-1">
+                            {percentage}
+                        </span>
                     )}
                 </>
             ) : (
@@ -207,15 +221,7 @@ export default function ProblemSection({
                                 className="flex flex-col items-center text-center space-y-2"
                             >
                                 <h1 className="text-4xl sm:text-5xl md:text-6xl tracking-tight leading-none">
-                                    <AnimatedCounter
-                                        value={stat.value}
-                                        suffix={stat.suffix}
-                                        suffixClassName={`text-[0.5em] ml-0.5 ${
-                                            theme === 'dark'
-                                                ? 'text-blue-800/60'
-                                                : 'text-blue-200/60'
-                                        }`}
-                                    />
+                                    <AnimatedCounter value={stat.value} />
                                 </h1>
                                 <div
                                     className={`text-xs sm:text-sm max-w-[200px] font-mono ${

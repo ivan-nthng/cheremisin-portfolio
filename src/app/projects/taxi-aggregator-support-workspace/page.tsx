@@ -9,6 +9,7 @@ import ProblemSection from '@/components/ProblemSection'
 import DemoSection from '@/components/DemoSection'
 import GridOverlay from '@/components/GridOverlay'
 import TabSection from '@/components/TabSection'
+import OptimizationSection from '@/components/OptimizationSection'
 
 export default function TaxiAggregatorSupportWorkspacePage() {
     const { theme } = useTheme()
@@ -65,9 +66,8 @@ export default function TaxiAggregatorSupportWorkspacePage() {
             label: 'Registered drivers',
         },
         {
-            value: '15k',
+            value: '15k 7%',
             label: 'Support Inquiries',
-            suffix: ' 7%',
         },
         {
             value: '50',
@@ -100,6 +100,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                 stats={problemStats}
                 description={problemDescription}
             />
+            <OptimizationSection />
         </div>
     )
 
