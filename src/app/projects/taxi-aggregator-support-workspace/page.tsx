@@ -10,6 +10,7 @@ import DemoSection from '@/components/DemoSection'
 import GridOverlay from '@/components/GridOverlay'
 import TabSection from '@/components/TabSection'
 import OptimizationSection from '@/components/OptimizationSection'
+import { GallerySection } from '@/components/GallerySection'
 
 export default function TaxiAggregatorSupportWorkspacePage() {
     const { theme } = useTheme()
@@ -93,6 +94,41 @@ export default function TaxiAggregatorSupportWorkspacePage() {
     const demoDescription =
         'A comprehensive support system that helps operators handle thousands of requests efficiently. The interface provides real-time insights, automated responses, and smart routing to ensure no request goes unanswered.'
 
+    const galleryItems = [
+        {
+            imageLight: '/vk/initiation-light.png',
+            imageDark: '/vk/initiation-dark.png',
+            alt: 'Support Dashboard Overview',
+            title: 'Unified Dashboard',
+            description:
+                'A centralized workspace showing real-time metrics, operator status, and request distribution across the city.',
+        },
+        {
+            videoLight: '/vk/info-script-light.mov',
+            videoDark: '/vk/info-script-dark.mov',
+            alt: 'Automated Response System',
+            title: 'Smart Automation',
+            description:
+                'AI-powered system that automatically handles common requests and routes complex cases to the right operator.',
+        },
+        {
+            videoLight: '/vk/actions-light.mov',
+            videoDark: '/vk/actions-dark.mov',
+            alt: 'Automated Response System',
+            title: 'Smart Automation',
+            description:
+                'AI-powered system that automatically handles common requests and routes complex cases to the right operator.',
+        },
+        {
+            imageLight: '/vk/analytics-light.png',
+            imageDark: '/vk/analytics-dark.png',
+            alt: 'Analytics Dashboard',
+            title: 'Performance Analytics',
+            description:
+                'Detailed insights into operator performance, response times, and customer satisfaction metrics.',
+        },
+    ]
+
     const processContent = (
         <div className="space-y-8">
             <ProjectOverview stats={stats} description={description} />
@@ -107,10 +143,12 @@ export default function TaxiAggregatorSupportWorkspacePage() {
     const resultContent = (
         <div className="space-y-8">
             <DemoSection
-                title={demoTitle}
-                description={demoDescription}
-                image="/city-demo.png"
+                title="Support Workspace Demo"
+                description="A unified workspace for managing support requests, optimizing operator workload, and improving response times."
+                image="demo"
+                caption="Support Workspace Interface - Streamlined request management and operator allocation"
             />
+            <GallerySection items={galleryItems} />
         </div>
     )
 
