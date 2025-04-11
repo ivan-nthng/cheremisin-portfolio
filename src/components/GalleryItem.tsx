@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import type { MotionProps } from 'framer-motion'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { Lightbox } from './Lightbox'
 import { useTheme } from 'next-themes'
@@ -16,6 +15,31 @@ interface GalleryItemProps {
     title: string
     description: string
     isReversed?: boolean
+}
+
+// Animation variants
+const fadeInAnimation = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.6,
+            ease: [0.16, 1, 0.3, 1],
+        },
+    },
+}
+
+const moveInAnimation = {
+    hidden: { opacity: 0, x: 20 },
+    visible: {
+        opacity: 1,
+        x: 0,
+        transition: {
+            duration: 0.6,
+            ease: [0.16, 1, 0.3, 1],
+        },
+    },
 }
 
 export function GalleryItem({
@@ -55,7 +79,7 @@ export function GalleryItem({
     const currentImage = effectiveTheme === 'dark' ? imageDark : imageLight
     const currentVideo = effectiveTheme === 'dark' ? videoDark : videoLight
 
-    const motionProps: MotionProps = {
+    const motionProps = {
         whileHover: { scale: 1.02 },
         transition: { duration: 0.2 },
     }
@@ -69,18 +93,22 @@ export function GalleryItem({
         <>
             <div
                 ref={containerRef}
-                className={`grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start ${
+                className={`grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-8 items-start ${
                     isReversed ? 'md:[&>*:first-child]:order-last' : ''
                 }`}
             >
                 {/* Media Container */}
-                <div
+                <motion.div
                     className="md:col-span-9 relative w-full rounded-2xl overflow-hidden bg-gradient-to-br from-orange-400/80 via-pink-500/50 to-blue-500/80 dark:from-blue-900/80 dark:via-purple-900/50 dark:to-blue-800/80 p-6"
                     onMouseMove={handleMouseMove}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                     onClick={() => setIsLightboxOpen(true)}
                     style={{ cursor: 'pointer' }}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: '-100px' }}
+                    variants={moveInAnimation}
                 >
                     <motion.div
                         className="relative w-full aspect-[16/9] flex items-center justify-center"
@@ -94,7 +122,7 @@ export function GalleryItem({
                                 muted
                                 playsInline
                                 preload="auto"
-                                className="w-auto h-full object-contain rounded-xl shadow-lg transition-all duration-300"
+                                className="w-auto h-auto max-h-[90%] object-contain rounded-lg shadow-lg transition-all duration-300"
                                 style={{
                                     filter: isHovered
                                         ? 'brightness(0.9)'
@@ -150,17 +178,23 @@ export function GalleryItem({
                             )}
                         </AnimatePresence>
                     </motion.div>
-                </div>
+                </motion.div>
 
                 {/* Text Content */}
-                <div className="md:col-span-3 flex flex-col gap-3 md:pt-6 sticky top-14">
+                <motion.div
+                    className="md:col-span-3 flex flex-col gap-3 md:pt-6 sticky top-14"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: '-100px' }}
+                    variants={moveInAnimation}
+                >
                     <h3 className="text-xl font-semibold font-poppins text-blue-900 dark:text-blue-100">
                         {title}
                     </h3>
                     <p className="text-sm font-mono text-blue-800/80 dark:text-blue-200/80 leading-relaxed">
                         {description}
                     </p>
-                </div>
+                </motion.div>
             </div>
 
             {/* Lightbox */}

@@ -120,6 +120,22 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                 'AI-powered system that automatically handles common requests and routes complex cases to the right operator.',
         },
         {
+            videoLight: '/vk/forward-light.mov',
+            videoDark: '/vk/forward-dark.mov',
+            alt: 'Automated Response System',
+            title: 'Smart Automation',
+            description:
+                'AI-powered system that automatically handles common requests and routes complex cases to the right operator.',
+        },
+        {
+            videoLight: '/vk/send-light.mov',
+            videoDark: '/vk/send-dark.mov',
+            alt: 'Automated Response System',
+            title: 'Smart Automation',
+            description:
+                'AI-powered system that automatically handles common requests and routes complex cases to the right operator.',
+        },
+        {
             imageLight: '/vk/analytics-light.png',
             imageDark: '/vk/analytics-dark.png',
             alt: 'Analytics Dashboard',

@@ -19,7 +19,7 @@ interface GallerySectionProps {
 export function GallerySection({ items }: GallerySectionProps) {
     return (
         <section className="w-full">
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-16 md:gap-24">
+            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-16">
                 {items.map((item, index) => (
                     <div
                         key={index}
