@@ -168,6 +168,31 @@ export default function TaxiAggregatorSupportWorkspacePage() {
         </div>
     )
 
+    const devContent = (
+        <div className="space-y-8">
+            <GallerySection
+                items={[
+                    {
+                        imageLight: '',
+                        imageDark: '',
+                        alt: 'Placeholder 1',
+                        title: 'Placeholder 1',
+                        description: 'Content coming soon',
+                        neutral: true,
+                    },
+                    {
+                        imageLight: '',
+                        imageDark: '',
+                        alt: 'Placeholder 2',
+                        title: 'Placeholder 2',
+                        description: 'Content coming soon',
+                        neutral: true,
+                    },
+                ]}
+            />
+        </div>
+    )
+
     return (
         <>
             <GridOverlay show={isGridVisible} />
@@ -193,6 +218,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                             <TabSection
                                 processContent={processContent}
                                 resultContent={resultContent}
+                                devContent={devContent}
                             />
                         </div>
                     </div>

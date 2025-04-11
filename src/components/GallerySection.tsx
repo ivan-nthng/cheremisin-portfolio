@@ -10,6 +10,7 @@ interface GalleryItemData {
     alt: string
     title: string
     description: string
+    neutral?: boolean
 }
 
 interface GallerySectionProps {

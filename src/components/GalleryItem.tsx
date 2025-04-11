@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { Lightbox } from './Lightbox'
 import { useTheme } from 'next-themes'
+import { cn } from '@/lib/utils'
 
 interface GalleryItemProps {
     imageLight?: string
@@ -15,6 +16,7 @@ interface GalleryItemProps {
     title: string
     description: string
     isReversed?: boolean
+    neutral?: boolean
 }
 
 // Animation variants
@@ -51,6 +53,7 @@ export function GalleryItem({
     title,
     description,
     isReversed = false,
+    neutral = false,
 }: GalleryItemProps) {
     const { theme, resolvedTheme } = useTheme()
     const [mounted, setMounted] = useState(false)
@@ -99,7 +102,12 @@ export function GalleryItem({
             >
                 {/* Media Container */}
                 <motion.div
-                    className="md:col-span-9 relative w-full rounded-2xl overflow-hidden bg-gradient-to-br from-orange-400/80 via-pink-500/50 to-blue-500/80 dark:from-blue-900/80 dark:via-purple-900/50 dark:to-blue-800/80 p-6"
+                    className={cn(
+                        'md:col-span-9 relative w-full rounded-2xl overflow-hidden p-6',
+                        neutral
+                            ? 'bg-blue-50/50 dark:bg-blue-950/50'
+                            : 'bg-gradient-to-br from-orange-400/80 via-pink-500/50 to-blue-500/80 dark:from-blue-900/80 dark:via-purple-900/50 dark:to-blue-800/80',
+                    )}
                     onMouseMove={handleMouseMove}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}

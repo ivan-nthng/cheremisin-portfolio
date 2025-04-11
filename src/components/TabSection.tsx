@@ -7,15 +7,17 @@ import { cn } from '@/lib/utils'
 interface TabSectionProps {
     processContent: React.ReactNode
     resultContent: React.ReactNode
+    devContent: React.ReactNode
 }
 
 const TabSection: React.FC<TabSectionProps> = ({
     processContent,
     resultContent,
+    devContent,
 }) => {
-    const [activeTab, setActiveTab] = React.useState<'process' | 'result'>(
-        'result',
-    )
+    const [activeTab, setActiveTab] = React.useState<
+        'process' | 'result' | 'dev'
+    >('result')
     const [hasScrolled, setHasScrolled] = React.useState(false)
 
     React.useEffect(() => {
@@ -43,7 +45,9 @@ const TabSection: React.FC<TabSectionProps> = ({
                         >
                             {activeTab === 'process'
                                 ? processContent
-                                : resultContent}
+                                : activeTab === 'result'
+                                ? resultContent
+                                : devContent}
                         </motion.div>
                     </div>
                 </div>
@@ -67,16 +71,19 @@ const TabSection: React.FC<TabSectionProps> = ({
                     <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12 flex justify-center">
                             <div className="flex gap-2 p-1 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-full shadow-lg pointer-events-auto">
-                                {['result', 'process'].map((tab) => (
+                                {['result', 'process', 'dev'].map((tab) => (
                                     <button
                                         key={tab}
                                         onClick={() =>
                                             setActiveTab(
-                                                tab as 'process' | 'result',
+                                                tab as
+                                                    | 'process'
+                                                    | 'result'
+                                                    | 'dev',
                                             )
                                         }
                                         className={cn(
-                                            'relative px-4 sm:px-6 py-2 sm:py-3 text-base sm:text-lg font-semibold rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
+                                            'relative px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base font-semibold rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
                                             {
                                                 'text-blue-900 dark:text-blue-100 bg-blue-100/50 dark:bg-blue-900/50':
                                                     activeTab === tab,
