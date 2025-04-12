@@ -75,27 +75,6 @@ export default function ProjectHero({
                                 {description}
                             </motion.p>
                         </div>
-
-                        {clientLogo && (
-                            <motion.div
-                                className="mt-6"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: 0.2 }}
-                            >
-                                <p className="text-sm text-blue-800/60 dark:text-blue-200/60 mb-4">
-                                    {clientName}
-                                </p>
-                                <Link
-                                    href={clientLogo.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-block"
-                                >
-                                    {clientLogo.svg}
-                                </Link>
-                            </motion.div>
-                        )}
                     </div>
 
                     {/* Right Column - Images */}
@@ -148,6 +127,30 @@ export default function ProjectHero({
                         )}
                     </div>
                 </div>
+
+                {/* Client Logo Section - Moved to bottom of container */}
+                {clientLogo && (
+                    <motion.div
+                        className="px-6 py-4 border-t border-blue-100 dark:border-blue-900/30"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                    >
+                        <div className="flex items-center">
+                            <p className="text-sm text-blue-800/60 dark:text-blue-200/60 mr-4">
+                                {clientName}
+                            </p>
+                            <Link
+                                href={clientLogo.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-block"
+                            >
+                                {clientLogo.svg}
+                            </Link>
+                        </div>
+                    </motion.div>
+                )}
             </motion.div>
         </div>
     )
