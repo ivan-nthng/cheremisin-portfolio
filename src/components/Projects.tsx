@@ -7,7 +7,7 @@ import WideProjectCard from './WideProjectCard'
 import NoResultsCard from './NoResultsCard'
 import { X, Star } from 'lucide-react'
 
-interface Project {
+export interface Project {
     title: string
     description: string
     image: string
@@ -18,7 +18,7 @@ interface Project {
     companyName?: string
 }
 
-const projects: Project[] = [
+export const projects: Project[] = [
     {
         title: 'Taxi Aggregator Support Workspace',
         description:
@@ -30,7 +30,7 @@ const projects: Project[] = [
         companyName: 'VK',
     },
     {
-        title: 'DS Hito',
+        title: 'Hito DS',
         description:
             'A comprehensive data science platform that helps users analyze and visualize complex datasets with ease. Built with modern web technologies and a focus on user experience.',
         image: '/ds-hito-light.png',

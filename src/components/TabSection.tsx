@@ -70,7 +70,7 @@ const TabSection: React.FC<TabSectionProps> = ({
                 <div className="relative w-full max-w-7xl mx-auto px-6">
                     <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12 flex justify-center">
-                            <div className="flex gap-2 p-1 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-full shadow-lg pointer-events-auto">
+                            <div className="flex gap-2 p-1 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl shadow-lg pointer-events-auto">
                                 {['result', 'process', 'dev'].map((tab) => (
                                     <button
                                         key={tab}
@@ -83,7 +83,7 @@ const TabSection: React.FC<TabSectionProps> = ({
                                             )
                                         }
                                         className={cn(
-                                            'relative px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base font-semibold rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
+                                            'relative px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
                                             {
                                                 'text-blue-900 dark:text-blue-100 bg-blue-100/50 dark:bg-blue-900/50':
                                                     activeTab === tab,

@@ -11,10 +11,18 @@ import GridOverlay from '@/components/GridOverlay'
 import TabSection from '@/components/TabSection'
 import OptimizationSection from '@/components/OptimizationSection'
 import { GallerySection } from '@/components/GallerySection'
+import ProjectNavigation from '@/components/ProjectNavigation'
+import { projects, type Project } from '@/components/Projects'
 
 export default function TaxiAggregatorSupportWorkspacePage() {
     const { theme } = useTheme()
     const [isGridVisible, setIsGridVisible] = React.useState(false)
+
+    // Find the current project index
+    const currentProjectIndex = projects.findIndex(
+        (project: Project) =>
+            project.link === '/projects/taxi-aggregator-support-workspace',
+    )
 
     const mainImage =
         theme === 'dark' ? '/actions-dark.png' : '/actions-light.png'
@@ -143,6 +151,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
             description:
                 'Detailed insights into operator performance, response times, and customer satisfaction metrics.',
             noDecor: true,
+            smallImage: true,
         },
     ]
 
@@ -220,6 +229,12 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                                 processContent={processContent}
                                 resultContent={resultContent}
                                 devContent={devContent}
+                            />
+                        </div>
+                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                            <ProjectNavigation
+                                projects={projects}
+                                currentProjectIndex={currentProjectIndex}
                             />
                         </div>
                     </div>
