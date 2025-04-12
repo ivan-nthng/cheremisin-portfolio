@@ -167,140 +167,136 @@ export default function UIDemo() {
         rightIconType === 'None' ? null : rightIcons.right
 
     const inputClasses =
-        'w-full px-4 py-2.5 rounded-lg bg-white dark:bg-gray-800 border border-blue-200/50 dark:border-blue-800/50 text-blue-900 dark:text-blue-100 font-mono text-sm transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed'
+        'w-full px- py-2.5 rounded-lg bg-white dark:bg-gray-800 border border-blue-200/50 dark:border-blue-800/50 text-blue-900 dark:text-blue-100 font-mono text-sm transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed'
 
     return (
         <section className="w-full">
-            <div className="bg-blue-50/80 dark:bg-blue-950/20 backdrop-blur-sm rounded-[32px] overflow-hidden">
-                <div className="p-6 sm:p-8 md:p-12 space-y-8 sm:space-y-12">
-                    <h2 className="text-2xl sm:text-3xl font-bold font-poppins text-blue-900 dark:text-blue-100">
-                        Button Component
-                    </h2>
+            <div className="space-y-8 sm:space-y-6">
+                <h2 className="text-2xl sm:text-3xl font-bold font-poppins text-blue-900 dark:text-blue-100">
+                    Button Component
+                </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
-                        {/* Left side - Button preview */}
-                        <div className="md:col-span-7 bg-blue-100/50 dark:bg-blue-900/50 rounded-2xl p-8 sm:p-12 flex items-center justify-center">
-                            <div className="transform md:scale-[2] transition-transform duration-300">
-                                <UIButton
-                                    state={buttonState}
-                                    style={buttonStyle}
-                                    size={buttonSize}
-                                    label="Button"
-                                    leftIcon={leftIconComponent}
-                                    rightIcon={rightIconComponent}
-                                />
-                            </div>
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-8">
+                    {/* Left side - Button preview */}
+                    <div className="md:col-span-3 bg-blue-100/50 dark:bg-blue-900/50 rounded-2xl p-8 sm:p-12 flex items-center justify-center">
+                        <div className="transform md:scale-[2] transition-transform duration-300">
+                            <UIButton
+                                state={buttonState}
+                                style={buttonStyle}
+                                size={buttonSize}
+                                label="Button"
+                                leftIcon={leftIconComponent}
+                                rightIcon={rightIconComponent}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Right side - Configuration form */}
+                    <div className="md:col-span-1 space-y-6">
+                        {/* State selector */}
+                        <div className="space-y-3">
+                            <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
+                                State
+                            </label>
+                            <select
+                                value={buttonState}
+                                onChange={(e) =>
+                                    setButtonState(
+                                        e.target.value as ButtonState,
+                                    )
+                                }
+                                className={inputClasses}
+                            >
+                                <option>Default</option>
+                                <option>Hover</option>
+                                <option>Focused</option>
+                                <option>Pushed</option>
+                                <option>Loading</option>
+                                <option>Disabled</option>
+                            </select>
                         </div>
 
-                        {/* Right side - Configuration form */}
-                        <div className="md:col-span-5 space-y-6">
-                            {/* State selector */}
-                            <div className="space-y-3">
-                                <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
-                                    State
-                                </label>
-                                <select
-                                    value={buttonState}
-                                    onChange={(e) =>
-                                        setButtonState(
-                                            e.target.value as ButtonState,
-                                        )
-                                    }
-                                    className={inputClasses}
-                                >
-                                    <option>Default</option>
-                                    <option>Hover</option>
-                                    <option>Focused</option>
-                                    <option>Pushed</option>
-                                    <option>Loading</option>
-                                    <option>Disabled</option>
-                                </select>
-                            </div>
+                        {/* Style selector */}
+                        <div className="space-y-3">
+                            <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
+                                Style
+                            </label>
+                            <select
+                                value={buttonStyle}
+                                onChange={(e) =>
+                                    setButtonStyle(
+                                        e.target.value as ButtonStyle,
+                                    )
+                                }
+                                className={inputClasses}
+                            >
+                                <option>Default</option>
+                                <option>Accent</option>
+                                <option>Error</option>
+                                <option>Success</option>
+                            </select>
+                        </div>
 
-                            {/* Style selector */}
-                            <div className="space-y-3">
-                                <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
-                                    Style
-                                </label>
-                                <select
-                                    value={buttonStyle}
-                                    onChange={(e) =>
-                                        setButtonStyle(
-                                            e.target.value as ButtonStyle,
-                                        )
-                                    }
-                                    className={inputClasses}
-                                >
-                                    <option>Default</option>
-                                    <option>Accent</option>
-                                    <option>Error</option>
-                                    <option>Success</option>
-                                </select>
-                            </div>
+                        {/* Size selector */}
+                        <div className="space-y-3">
+                            <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
+                                Size
+                            </label>
+                            <select
+                                value={buttonSize}
+                                onChange={(e) =>
+                                    setButtonSize(e.target.value as ButtonSize)
+                                }
+                                className={inputClasses}
+                            >
+                                <option>sm</option>
+                                <option>md</option>
+                                <option>lg</option>
+                                <option>xl</option>
+                            </select>
+                        </div>
 
-                            {/* Size selector */}
-                            <div className="space-y-3">
-                                <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
-                                    Size
-                                </label>
-                                <select
-                                    value={buttonSize}
-                                    onChange={(e) =>
-                                        setButtonSize(
-                                            e.target.value as ButtonSize,
-                                        )
-                                    }
-                                    className={inputClasses}
-                                >
-                                    <option>sm</option>
-                                    <option>md</option>
-                                    <option>lg</option>
-                                    <option>xl</option>
-                                </select>
-                            </div>
+                        {/* Icon selectors */}
+                        <div className="space-y-3">
+                            <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
+                                Left Icon
+                            </label>
+                            <select
+                                value={leftIconType}
+                                onChange={(e) =>
+                                    setLeftIconType(
+                                        e.target.value as IconOption,
+                                    )
+                                }
+                                className={inputClasses}
+                            >
+                                <option>None</option>
+                                <option>Arrow</option>
+                                <option>Send</option>
+                                <option>Mail</option>
+                                <option>Chevron</option>
+                            </select>
+                        </div>
 
-                            {/* Icon selectors */}
-                            <div className="space-y-3">
-                                <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
-                                    Left Icon
-                                </label>
-                                <select
-                                    value={leftIconType}
-                                    onChange={(e) =>
-                                        setLeftIconType(
-                                            e.target.value as IconOption,
-                                        )
-                                    }
-                                    className={inputClasses}
-                                >
-                                    <option>None</option>
-                                    <option>Arrow</option>
-                                    <option>Send</option>
-                                    <option>Mail</option>
-                                    <option>Chevron</option>
-                                </select>
-                            </div>
-
-                            <div className="space-y-3">
-                                <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
-                                    Right Icon
-                                </label>
-                                <select
-                                    value={rightIconType}
-                                    onChange={(e) =>
-                                        setRightIconType(
-                                            e.target.value as IconOption,
-                                        )
-                                    }
-                                    className={inputClasses}
-                                >
-                                    <option>None</option>
-                                    <option>Arrow</option>
-                                    <option>Send</option>
-                                    <option>Mail</option>
-                                    <option>Chevron</option>
-                                </select>
-                            </div>
+                        <div className="space-y-3">
+                            <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
+                                Right Icon
+                            </label>
+                            <select
+                                value={rightIconType}
+                                onChange={(e) =>
+                                    setRightIconType(
+                                        e.target.value as IconOption,
+                                    )
+                                }
+                                className={inputClasses}
+                            >
+                                <option>None</option>
+                                <option>Arrow</option>
+                                <option>Send</option>
+                                <option>Mail</option>
+                                <option>Chevron</option>
+                            </select>
                         </div>
                     </div>
                 </div>
