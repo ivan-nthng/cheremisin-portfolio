@@ -117,9 +117,9 @@ export default function WideProjectCard({
                 isHighlighted={isCompanyHovered}
             />
 
-            <div className="flex-1 space-y-4 sm:space-y-6">
-                <div className="space-y-1">
-                    <h3 className="text-xl sm:text-2xl font-bold text-primary-800 dark:text-primary-100">
+            <div className="flex-1 space-y-3 sm:space-y-4">
+                <div className="space-y-0.5">
+                    <h3 className="text-lg sm:text-xl font-bold text-primary-800 dark:text-primary-100">
                         {title}
                     </h3>
                     {companyName && (
@@ -144,8 +144,8 @@ export default function WideProjectCard({
                         </div>
                     )}
                 </div>
-                <div className="mt-2 sm:mt-3 space-y-3 sm:space-y-4">
-                    <p className="text-base sm:text-lg text-primary-600 dark:text-primary-300">
+                <div className="mt-1 sm:mt-2 space-y-2 sm:space-y-3">
+                    <p className="text-sm sm:text-base text-primary-600 dark:text-primary-300">
                         {description}
                     </p>
                 </div>
