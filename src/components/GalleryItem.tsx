@@ -64,22 +64,11 @@ export function GalleryItem({
     const [isHovered, setIsHovered] = useState(false)
     const [isLightboxOpen, setIsLightboxOpen] = useState(false)
     const containerRef = useRef<HTMLDivElement>(null)
-    const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 })
 
     // Handle mounting state
     useEffect(() => {
         setMounted(true)
     }, [])
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!containerRef.current) return
-
-        const rect = containerRef.current.getBoundingClientRect()
-        setTooltipPosition({
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top,
-        })
-    }
 
     // Use resolvedTheme to handle system preference
     const effectiveTheme = resolvedTheme || theme
@@ -105,104 +94,101 @@ export function GalleryItem({
                 }`}
             >
                 {/* Media Container */}
-                <motion.div
+                <div
                     className={cn(
                         'md:col-span-9 relative w-full rounded-2xl overflow-hidden p-6',
                         neutral
                             ? 'bg-blue-50/50 dark:bg-blue-950/50'
                             : 'bg-gradient-to-br from-orange-400/80 via-pink-500/50 to-blue-500/80 dark:from-blue-900/80 dark:via-purple-900/50 dark:to-blue-800/80',
-                        smallImage ? 'max-w-35% mx-auto' : '',
+                        smallImage ? 'max-w-60% mx-auto' : '',
                     )}
-                    onMouseMove={handleMouseMove}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                     onClick={() => setIsLightboxOpen(true)}
                     style={{ cursor: 'pointer' }}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: '-100px' }}
-                    variants={moveInAnimation}
                 >
-                    <motion.div
-                        className={cn(
-                            'relative w-full flex items-center justify-center',
-                            smallImage ? 'aspect-[16/9]' : 'aspect-[16/9]',
-                        )}
-                        {...motionProps}
-                    >
-                        {currentVideo ? (
-                            <video
-                                key={currentVideo} // Force remount when video source changes
-                                autoPlay
-                                loop
-                                muted
-                                playsInline
-                                preload="auto"
-                                className={cn(
-                                    'w-auto h-auto object-contain transition-all duration-300',
-                                    !noDecor && 'rounded-lg shadow-lg',
-                                    smallImage ? 'max-h-[75%]' : 'max-h-[90%]',
-                                )}
-                                style={{
-                                    filter: isHovered
-                                        ? 'brightness(0.9)'
-                                        : 'none',
-                                }}
-                            >
-                                <source
-                                    src={currentVideo}
-                                    type="video/quicktime"
-                                />
-                                <source src={currentVideo} type="video/mp4" />
-                                Your browser does not support the video tag.
-                            </video>
-                        ) : (
-                            currentImage && (
-                                <img
-                                    key={currentImage} // Force remount when image source changes
-                                    src={currentImage}
-                                    alt={alt}
+                    <div className="relative w-full">
+                        <motion.div
+                            className={cn(
+                                'relative w-full flex items-center justify-center',
+                                smallImage ? 'aspect-[16/9]' : 'aspect-[16/9]',
+                            )}
+                            whileHover={{ scale: 1.02 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            {currentVideo ? (
+                                <video
+                                    key={currentVideo} // Force remount when video source changes
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    preload="auto"
                                     className={cn(
                                         'w-auto h-auto object-contain transition-all duration-300',
-                                        !noDecor && 'rounded-xl shadow-lg',
-                                        smallImage ? 'max-h-[75%]' : 'h-full',
+                                        !noDecor && 'rounded-lg shadow-lg',
+                                        smallImage
+                                            ? 'max-h-[50%]'
+                                            : 'max-h-[90%]',
                                     )}
                                     style={{
                                         filter: isHovered
                                             ? 'brightness(0.9)'
                                             : 'none',
                                     }}
-                                />
-                            )
-                        )}
+                                >
+                                    <source
+                                        src={currentVideo}
+                                        type="video/quicktime"
+                                    />
+                                    <source
+                                        src={currentVideo}
+                                        type="video/mp4"
+                                    />
+                                    Your browser does not support the video tag.
+                                </video>
+                            ) : (
+                                currentImage && (
+                                    <img
+                                        key={currentImage} // Force remount when image source changes
+                                        src={currentImage}
+                                        alt={alt}
+                                        className={cn(
+                                            'w-auto h-auto object-contain transition-all duration-300',
+                                            !noDecor && 'rounded-xl shadow-lg',
+                                            smallImage
+                                                ? 'max-h-[60%]'
+                                                : 'h-full',
+                                        )}
+                                        style={{
+                                            filter: isHovered
+                                                ? 'brightness(0.9)'
+                                                : 'none',
+                                        }}
+                                    />
+                                )
+                            )}
+                        </motion.div>
 
-                        {/* Tooltip */}
+                        {/* Move Closer Badge */}
                         <AnimatePresence>
-                            {isHovered && (currentImage || currentVideo) && (
+                            {isHovered && (
                                 <motion.div
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{
-                                        opacity: 1,
-                                        scale: 1,
-                                        x: tooltipPosition.x + 20,
-                                        y: tooltipPosition.y - 20,
-                                    }}
-                                    exit={{ opacity: 0, scale: 0.8 }}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 10 }}
                                     transition={{
-                                        duration: 0.2,
+                                        duration: 0.3,
                                         ease: 'easeOut',
                                     }}
-                                    className="absolute z-[100] pointer-events-none"
+                                    className="absolute bottom-1 left-1 bg-blue-950/50 text-white px-3 py-1.5 rounded-lg text-sm font-medium backdrop-blur-sm"
                                 >
-                                    <div className="bg-primary-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap font-mono flex items-center gap-2">
-                                        <MagnifyingGlassIcon className="w-4 h-4 flex-shrink-0" />
-                                        <span>Zoom in</span>
-                                    </div>
+                                    Move Closer
                                 </motion.div>
                             )}
                         </AnimatePresence>
-                    </motion.div>
-                </motion.div>
+                    </div>
+                </div>
 
                 {/* Text Content */}
                 <motion.div
