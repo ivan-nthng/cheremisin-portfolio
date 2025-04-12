@@ -156,7 +156,8 @@ export default function Projects() {
             <div className="container mx-auto px-6">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-100px' }}
                     transition={{ duration: 0.6 }}
                     className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary-800 dark:text-primary-100 mb-8 sm:mb-12"
                 >
@@ -170,7 +171,8 @@ export default function Projects() {
                             <div key={tag} className="relative">
                                 <motion.button
                                     initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: '-100px' }}
                                     transition={{
                                         duration: 0.3,
                                         delay: index * 0.1,
@@ -232,8 +234,8 @@ export default function Projects() {
                         {selectedTags.size > 0 && (
                             <motion.button
                                 initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.8 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true, margin: '-100px' }}
                                 onClick={clearFilters}
                                 className="px-3 py-1.5 rounded-full text-sm font-medium border border-primary-500 text-primary-500 hover:bg-primary-500/10 dark:border-primary-400 dark:text-primary-400 dark:hover:bg-primary-400/10 transition-all duration-200 flex items-center gap-1"
                                 onMouseEnter={() => setIsHovered(true)}

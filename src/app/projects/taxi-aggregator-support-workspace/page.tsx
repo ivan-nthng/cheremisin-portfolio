@@ -136,12 +136,13 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                 'AI-powered system that automatically handles common requests and routes complex cases to the right operator.',
         },
         {
-            imageLight: '/vk/analytics-light.png',
-            imageDark: '/vk/analytics-dark.png',
+            imageLight: '/vk/media-drop-light.png',
+            imageDark: '/vk/media-drop-dark.png',
             alt: 'Analytics Dashboard',
             title: 'Performance Analytics',
             description:
                 'Detailed insights into operator performance, response times, and customer satisfaction metrics.',
+            noDecor: true,
         },
     ]
 

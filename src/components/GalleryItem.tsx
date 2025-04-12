@@ -17,6 +17,8 @@ interface GalleryItemProps {
     description: string
     isReversed?: boolean
     neutral?: boolean
+    smallImage?: boolean
+    noDecor?: boolean
 }
 
 // Animation variants
@@ -54,6 +56,8 @@ export function GalleryItem({
     description,
     isReversed = false,
     neutral = false,
+    smallImage = false,
+    noDecor = false,
 }: GalleryItemProps) {
     const { theme, resolvedTheme } = useTheme()
     const [mounted, setMounted] = useState(false)
@@ -107,6 +111,7 @@ export function GalleryItem({
                         neutral
                             ? 'bg-blue-50/50 dark:bg-blue-950/50'
                             : 'bg-gradient-to-br from-orange-400/80 via-pink-500/50 to-blue-500/80 dark:from-blue-900/80 dark:via-purple-900/50 dark:to-blue-800/80',
+                        smallImage ? 'max-w-35% mx-auto' : '',
                     )}
                     onMouseMove={handleMouseMove}
                     onMouseEnter={() => setIsHovered(true)}
@@ -119,7 +124,10 @@ export function GalleryItem({
                     variants={moveInAnimation}
                 >
                     <motion.div
-                        className="relative w-full aspect-[16/9] flex items-center justify-center"
+                        className={cn(
+                            'relative w-full flex items-center justify-center',
+                            smallImage ? 'aspect-[16/9]' : 'aspect-[16/9]',
+                        )}
                         {...motionProps}
                     >
                         {currentVideo ? (
@@ -130,7 +138,11 @@ export function GalleryItem({
                                 muted
                                 playsInline
                                 preload="auto"
-                                className="w-auto h-auto max-h-[90%] object-contain rounded-lg shadow-lg transition-all duration-300"
+                                className={cn(
+                                    'w-auto h-auto object-contain transition-all duration-300',
+                                    !noDecor && 'rounded-lg shadow-lg',
+                                    smallImage ? 'max-h-[75%]' : 'max-h-[90%]',
+                                )}
                                 style={{
                                     filter: isHovered
                                         ? 'brightness(0.9)'
@@ -150,7 +162,11 @@ export function GalleryItem({
                                     key={currentImage} // Force remount when image source changes
                                     src={currentImage}
                                     alt={alt}
-                                    className="w-auto h-full object-contain rounded-xl shadow-lg transition-all duration-300"
+                                    className={cn(
+                                        'w-auto h-auto object-contain transition-all duration-300',
+                                        !noDecor && 'rounded-xl shadow-lg',
+                                        smallImage ? 'max-h-[75%]' : 'h-full',
+                                    )}
                                     style={{
                                         filter: isHovered
                                             ? 'brightness(0.9)'
