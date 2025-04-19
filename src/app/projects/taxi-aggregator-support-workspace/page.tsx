@@ -13,6 +13,7 @@ import OptimizationSection from '@/components/OptimizationSection'
 import { GallerySection } from '@/components/GallerySection'
 import ProjectNavigation from '@/components/ProjectNavigation'
 import { projects, type Project } from '@/components/Projects'
+import UIDemo from '@/components/UIDemo'
 
 export default function TaxiAggregatorSupportWorkspacePage() {
     const { theme } = useTheme()
@@ -107,49 +108,65 @@ export default function TaxiAggregatorSupportWorkspacePage() {
             imageLight: '/vk/initiation-light.png',
             imageDark: '/vk/initiation-dark.png',
             alt: 'Support Dashboard Overview',
-            title: 'Unified Dashboard',
+            title: 'Omni-Channel Communication',
             description:
-                'A centralized workspace showing real-time metrics, operator status, and request distribution across the city.',
+                'Support agents handle messages from all platforms — app, web, and social — in one unified workspace.',
         },
         {
             videoLight: '/vk/info-script-light.mov',
             videoDark: '/vk/info-script-dark.mov',
             alt: 'Automated Response System',
-            title: 'Smart Automation',
+            title: 'Clarity',
             description:
-                'AI-powered system that automatically handles common requests and routes complex cases to the right operator.',
+                'Operators see all essential trip details upfront, with clear, AI-suggested next steps tailored to each request.',
         },
         {
             videoLight: '/vk/actions-light.mov',
             videoDark: '/vk/actions-dark.mov',
             alt: 'Automated Response System',
-            title: 'Smart Automation',
+            title: 'AI-Powered Decision Support',
             description:
-                'AI-powered system that automatically handles common requests and routes complex cases to the right operator.',
+                'The only variable left is human speed — the interface surfaces all relevant data and suggestions instantly, so operators can act with confidence.',
         },
         {
             videoLight: '/vk/forward-light.mov',
             videoDark: '/vk/forward-dark.mov',
             alt: 'Automated Response System',
-            title: 'Smart Automation',
+            title: 'Seamless Internal Collaboration',
             description:
-                'AI-powered system that automatically handles common requests and routes complex cases to the right operator.',
+                'Operators can quickly reassign, escalate, or annotate tickets — all within the same interface, without losing context.',
         },
         {
             videoLight: '/vk/send-light.mov',
             videoDark: '/vk/send-dark.mov',
             alt: 'Automated Response System',
-            title: 'Smart Automation',
+            title: 'Fast, Personalized Responses',
             description:
-                'AI-powered system that automatically handles common requests and routes complex cases to the right operator.',
+                'AI-generated replies adapt to each operator’s tone and style, enabling clear, human-like communication with customers in seconds. No attitional spredsheets.',
+        },
+        {
+            videoLight: '/vk/call-light.mov',
+            videoDark: '/vk/call-dark.mov',
+            alt: 'Automated Response System',
+            title: 'Voice and Chat, Unified',
+            description:
+                'Seamlessly manage voice calls and chat messages side by side — no switching tabs, no lost context.',
+        },
+        {
+            videoLight: '/vk/track-light.mov',
+            videoDark: '/vk/track-dark.mov',
+            alt: 'Automated Response System',
+            title: 'Ride Map Intelligence',
+            description:
+                'Quickly trace the full route of any trip — with clear context on driver and passenger movements, stops, and deto',
         },
         {
             imageLight: '/vk/media-drop-light.png',
             imageDark: '/vk/media-drop-dark.png',
             alt: 'Analytics Dashboard',
-            title: 'Performance Analytics',
+            title: 'Effortless Media Handling',
             description:
-                'Detailed insights into operator performance, response times, and customer satisfaction metrics.',
+                'View, download, and respond to images, videos, and files directly within the chat — no delays, no confusion.',
             noDecor: true,
             smallImage: true,
         },
@@ -180,26 +197,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
 
     const devContent = (
         <div className="space-y-8">
-            <GallerySection
-                items={[
-                    {
-                        imageLight: '',
-                        imageDark: '',
-                        alt: 'Placeholder 1',
-                        title: 'Placeholder 1',
-                        description: 'Content coming soon',
-                        neutral: true,
-                    },
-                    {
-                        imageLight: '',
-                        imageDark: '',
-                        alt: 'Placeholder 2',
-                        title: 'Placeholder 2',
-                        description: 'Content coming soon',
-                        neutral: true,
-                    },
-                ]}
-            />
+            <UIDemo />
         </div>
     )
 

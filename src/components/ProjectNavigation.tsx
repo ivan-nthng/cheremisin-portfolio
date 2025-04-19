@@ -63,11 +63,11 @@ export default function ProjectNavigation({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Previous Project */}
                 <motion.div variants={itemVariants} className="flex flex-col">
-                    <h3 className="text-base font-medium text-primary-600 dark:text-primary-300 mb-4">
+                    <h3 className="text-lg font-medium text-primary-600 dark:text-primary-300 mb-4">
                         Previous Project
                     </h3>
                     <div className="group cursor-pointer">
-                        <div className="transition-all duration-300 group-hover:brightness-90 [&_h3]:text-lg [&_p]:text-sm [&_span]:text-xs">
+                        <div className="transition-all duration-300 group-hover:brightness-90">
                             <WideProjectCard
                                 {...projects[prevIndex]}
                                 tags={[]}
@@ -79,11 +79,11 @@ export default function ProjectNavigation({
 
                 {/* Next Project */}
                 <motion.div variants={itemVariants} className="flex flex-col">
-                    <h3 className="text-base font-medium text-primary-600 dark:text-primary-300 mb-4">
+                    <h3 className="text-lg font-medium text-primary-600 dark:text-primary-300 mb-4">
                         Next Project
                     </h3>
                     <div className="group cursor-pointer">
-                        <div className="transition-all duration-300 group-hover:brightness-90 [&_h3]:text-lg [&_p]:text-sm [&_span]:text-xs">
+                        <div className="transition-all duration-300 group-hover:brightness-90">
                             <WideProjectCard
                                 {...projects[nextIndex]}
                                 tags={[]}

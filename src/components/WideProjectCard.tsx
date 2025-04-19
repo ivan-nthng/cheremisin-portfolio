@@ -145,7 +145,7 @@ export default function WideProjectCard({
                     )}
                 </div>
                 <div className="mt-1 sm:mt-2 space-y-2 sm:space-y-3">
-                    <p className="text-sm sm:text-base text-primary-600 dark:text-primary-300">
+                    <p className="text-sm font-mono text-blue-800/80 dark:text-blue-200/80 leading-relaxed">
                         {description}
                     </p>
                 </div>
