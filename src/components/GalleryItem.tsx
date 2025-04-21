@@ -19,6 +19,13 @@ interface GalleryItemProps {
     neutral?: boolean
     smallImage?: boolean
     noDecor?: boolean
+    onNext?: () => void
+    onPrevious?: () => void
+    hasNext?: boolean
+    hasPrevious?: boolean
+    isLightboxOpen?: boolean
+    onOpenLightbox?: () => void
+    onCloseLightbox?: () => void
 }
 
 // Animation variants
@@ -58,11 +65,17 @@ export function GalleryItem({
     neutral = false,
     smallImage = false,
     noDecor = false,
+    onNext,
+    onPrevious,
+    hasNext,
+    hasPrevious,
+    isLightboxOpen = false,
+    onOpenLightbox,
+    onCloseLightbox,
 }: GalleryItemProps) {
     const { theme, resolvedTheme } = useTheme()
     const [mounted, setMounted] = useState(false)
     const [isHovered, setIsHovered] = useState(false)
-    const [isLightboxOpen, setIsLightboxOpen] = useState(false)
     const containerRef = useRef<HTMLDivElement>(null)
 
     // Handle mounting state
@@ -104,7 +117,7 @@ export function GalleryItem({
                     )}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
-                    onClick={() => setIsLightboxOpen(true)}
+                    onClick={() => onOpenLightbox?.()}
                     style={{ cursor: 'pointer' }}
                 >
                     <div className="relative w-full">
@@ -193,10 +206,12 @@ export function GalleryItem({
                 {/* Text Content */}
                 <motion.div
                     className="md:col-span-3 flex flex-col gap-3 md:pt-6 sticky top-14"
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: '-100px' }}
-                    variants={moveInAnimation}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{
+                        duration: 0.6,
+                        ease: [0.16, 1, 0.3, 1],
+                    }}
                 >
                     <h3 className="text-xl font-semibold font-poppins text-blue-900 dark:text-blue-100">
                         {title}
@@ -210,11 +225,23 @@ export function GalleryItem({
             {/* Lightbox */}
             <Lightbox
                 isOpen={isLightboxOpen}
-                onClose={() => setIsLightboxOpen(false)}
+                onClose={onCloseLightbox}
                 image={currentImage}
                 video={currentVideo}
                 alt={alt}
                 caption={description}
+                onNext={() => {
+                    if (hasNext && onNext) {
+                        onNext()
+                    }
+                }}
+                onPrevious={() => {
+                    if (hasPrevious && onPrevious) {
+                        onPrevious()
+                    }
+                }}
+                hasNext={hasNext}
+                hasPrevious={hasPrevious}
             />
         </>
     )

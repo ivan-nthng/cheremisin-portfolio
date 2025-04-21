@@ -127,7 +127,7 @@ export function Lightbox({
                         {/* Main container with padding */}
                         <div className="relative w-full h-full pt-6">
                             {/* Close button */}
-                            <div className="absolute top-6 right-6 z-10">
+                            <div className="absolute top-6 right-6 z-20">
                                 <button
                                     onClick={(
                                         e: React.MouseEvent<HTMLButtonElement>,
@@ -138,29 +138,19 @@ export function Lightbox({
                                     className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
                                     aria-label="Close lightbox"
                                 >
-                                    <motion.div
-                                        initial={{ opacity: 0, y: -20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -20 }}
-                                        transition={{
-                                            duration: 0.7,
-                                            delay: 0.1,
-                                        }}
-                                    >
-                                        <XMarkIcon className="w-6 h-6 text-white" />
-                                    </motion.div>
+                                    <XMarkIcon className="w-6 h-6 text-white" />
                                 </button>
                             </div>
 
                             {/* Navigation arrows */}
                             {hasPrevious && (
-                                <div className="absolute left-6 top-1/2 -translate-y-1/2">
+                                <div className="absolute left-6 top-1/2 -translate-y-1/2 z-20">
                                     <button
                                         onClick={(
                                             e: React.MouseEvent<HTMLButtonElement>,
                                         ) => {
                                             e.stopPropagation()
-                                            onPrevious?.()
+                                            if (onPrevious) onPrevious()
                                         }}
                                         className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
                                         aria-label="Previous image"
@@ -181,13 +171,13 @@ export function Lightbox({
                             )}
 
                             {hasNext && (
-                                <div className="absolute right-6 top-1/2 -translate-y-1/2">
+                                <div className="absolute right-6 top-1/2 -translate-y-1/2 z-20">
                                     <button
                                         onClick={(
                                             e: React.MouseEvent<HTMLButtonElement>,
                                         ) => {
                                             e.stopPropagation()
-                                            onNext?.()
+                                            if (onNext) onNext()
                                         }}
                                         className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
                                         aria-label="Next image"
@@ -211,7 +201,7 @@ export function Lightbox({
                             <div className="h-full flex flex-col">
                                 {/* Image container */}
                                 <div
-                                    className="flex-1 flex items-center justify-center px-6 pb-6"
+                                    className="flex-1 flex items-center justify-center px-6 pb-6 z-10"
                                     onClick={(
                                         e: React.MouseEvent<HTMLDivElement>,
                                     ) => e.stopPropagation()}
