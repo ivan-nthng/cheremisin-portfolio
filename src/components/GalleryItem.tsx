@@ -26,6 +26,7 @@ interface GalleryItemProps {
     isLightboxOpen?: boolean
     onOpenLightbox?: () => void
     onCloseLightbox?: () => void
+    isVisible?: boolean
 }
 
 // Animation variants
@@ -72,6 +73,7 @@ export function GalleryItem({
     isLightboxOpen = false,
     onOpenLightbox,
     onCloseLightbox,
+    isVisible = false,
 }: GalleryItemProps) {
     const { theme, resolvedTheme } = useTheme()
     const [mounted, setMounted] = useState(false)
@@ -91,6 +93,13 @@ export function GalleryItem({
     const motionProps = {
         whileHover: { scale: 1.02 },
         transition: { duration: 0.2 },
+    }
+
+    // Handle click to open lightbox
+    const handleClick = () => {
+        if (onOpenLightbox) {
+            onOpenLightbox()
+        }
     }
 
     // Don't render anything until mounted to prevent hydration mismatch
@@ -117,7 +126,7 @@ export function GalleryItem({
                     )}
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
-                    onClick={() => onOpenLightbox?.()}
+                    onClick={handleClick}
                     style={{ cursor: 'pointer' }}
                 >
                     <div className="relative w-full">
@@ -207,7 +216,9 @@ export function GalleryItem({
                 <motion.div
                     className="md:col-span-3 flex flex-col gap-3 md:pt-6 sticky top-14"
                     initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    animate={
+                        isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }
+                    }
                     transition={{
                         duration: 0.6,
                         ease: [0.16, 1, 0.3, 1],
@@ -225,23 +236,17 @@ export function GalleryItem({
             {/* Lightbox */}
             <Lightbox
                 isOpen={isLightboxOpen}
-                onClose={onCloseLightbox}
+                onClose={() => onCloseLightbox?.()}
                 image={currentImage}
                 video={currentVideo}
-                alt={alt}
+                alt={title}
                 caption={description}
-                onNext={() => {
-                    if (hasNext && onNext) {
-                        onNext()
-                    }
-                }}
-                onPrevious={() => {
-                    if (hasPrevious && onPrevious) {
-                        onPrevious()
-                    }
-                }}
                 hasNext={hasNext}
                 hasPrevious={hasPrevious}
+                onNext={hasNext && onNext ? () => onNext() : undefined}
+                onPrevious={
+                    hasPrevious && onPrevious ? () => onPrevious() : undefined
+                }
             />
         </>
     )

@@ -14,6 +14,10 @@ import { GallerySection } from '@/components/GallerySection'
 import ProjectNavigation from '@/components/ProjectNavigation'
 import { projects, type Project } from '@/components/Projects'
 import UIDemo from '@/components/UIDemo'
+import ProjectBento from '@/components/ProjectBento'
+import HitoLink from '@/components/HitoLink'
+import { ContextImageSection } from '@/components/ContextImageSection'
+import { ProjectFooter } from '@/components/ProjectFooter'
 
 export default function TaxiAggregatorSupportWorkspacePage() {
     const { theme } = useTheme()
@@ -142,7 +146,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
             alt: 'Automated Response System',
             title: 'Fast, Personalized Responses',
             description:
-                'AI-generated replies adapt to each operator’s tone and style, enabling clear, human-like communication with customers in seconds. No attitional spredsheets.',
+                "AI-generated replies adapt to each operator's tone and style, enabling clear, human-like communication with customers in seconds. No attitional spredsheets.",
         },
         {
             videoLight: '/vk/call-light.mov',
@@ -180,24 +184,253 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                 description={problemDescription}
             />
             <OptimizationSection />
+            <ProjectBento />
+            <section className="w-full py-16 sm:py-24">
+                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
+                    {/* Left Column - Content */}
+                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-5 flex flex-col justify-center space-y-6">
+                        <h2 className="text-2xl sm:text-3xl font-bold font-poppins text-blue-900 dark:text-blue-100">
+                            Results
+                        </h2>
+                        <p className="text-base sm:text-lg text-blue-800/80 dark:text-blue-200/80">
+                            By optimizing the interface and automating routine
+                            tasks, we achieved significant improvements in
+                            operator efficiency and response times.
+                        </p>
+                    </div>
+
+                    {/* Right Column - Table */}
+                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-7 flex items-center">
+                        <div className="w-full overflow-hidden rounded-2xl bg-blue-50/50 dark:bg-blue-950/50 backdrop-blur-sm">
+                            <table className="w-full">
+                                <thead>
+                                    <tr className="bg-blue-100/50 dark:bg-blue-900/50">
+                                        <th className="px-6 py-4 text-left text-sm text-blue-900 dark:text-blue-100">
+                                            Metric
+                                        </th>
+                                        <th className="px-6 py-4 text-right text-sm text-blue-900 dark:text-blue-100">
+                                            Before
+                                        </th>
+                                        <th className="px-6 py-4 text-right text-sm text-blue-900 dark:text-blue-100">
+                                            After
+                                        </th>
+                                        <th className="px-6 py-4 text-right text-sm text-blue-900 dark:text-blue-100">
+                                            Improvement
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr className="border-b border-blue-200/20 dark:border-blue-800/20 transition-colors hover:bg-blue-100/50 dark:hover:bg-blue-900/50">
+                                        <td className="px-6 py-4 text-sm text-blue-800 dark:text-blue-200">
+                                            Daily Requests Handled
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            3,600
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            9,000
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            +150%
+                                        </td>
+                                    </tr>
+                                    <tr className="border-b border-blue-200/20 dark:border-blue-800/20 transition-colors hover:bg-blue-100/50 dark:hover:bg-blue-900/50">
+                                        <td className="px-6 py-4 text-sm text-blue-800 dark:text-blue-200">
+                                            Avg. Requests per Operator
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            72
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            180
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            +150%
+                                        </td>
+                                    </tr>
+                                    <tr className="border-b border-blue-200/20 dark:border-blue-800/20 transition-colors hover:bg-blue-100/50 dark:hover:bg-blue-900/50">
+                                        <td className="px-6 py-4 text-sm text-blue-800 dark:text-blue-200">
+                                            Failed Requests ({'>'}60s wait)
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            28%
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            6%
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            -79%
+                                        </td>
+                                    </tr>
+                                    <tr className="border-b border-blue-200/20 dark:border-blue-800/20 transition-colors hover:bg-blue-100/50 dark:hover:bg-blue-900/50">
+                                        <td className="px-6 py-4 text-sm text-blue-800 dark:text-blue-200">
+                                            Unanswered Requests
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            15,600+
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            Under 1,000
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            -94%
+                                        </td>
+                                    </tr>
+                                    <tr className="border-b border-blue-200/20 dark:border-blue-800/20 transition-colors hover:bg-blue-100/50 dark:hover:bg-blue-900/50">
+                                        <td className="px-6 py-4 text-sm text-blue-800 dark:text-blue-200">
+                                            Required Operators
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            ~200
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            50 (same team)
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            -75%
+                                        </td>
+                                    </tr>
+                                    <tr className="border-b border-blue-200/20 dark:border-blue-800/20 transition-colors hover:bg-blue-100/50 dark:hover:bg-blue-900/50">
+                                        <td className="px-6 py-4 text-sm text-blue-800 dark:text-blue-200">
+                                            Resolution Rate
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            —
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            +35%
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            +35%
+                                        </td>
+                                    </tr>
+                                    <tr className="transition-colors hover:bg-blue-100/50 dark:hover:bg-blue-900/50">
+                                        <td className="px-6 py-4 text-sm text-blue-800 dark:text-blue-200">
+                                            Customer Satisfaction
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            —
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            +21% CSAT, +23 NPS
+                                        </td>
+                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                            +22% avg
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <ProjectFooter
+                team={[
+                    { role: 'Design' },
+                    { role: 'Front-end Engineer' },
+                    { role: 'Back-end Engineer' },
+                    { role: 'Business Analyst' },
+                    { role: 'UX Researcher' },
+                ]}
+                technologies={[
+                    { name: 'React' },
+                    { name: 'TypeScript' },
+                    { name: 'Next.js' },
+                    { name: 'Tailwind CSS' },
+                    { name: 'Framer Motion' },
+                    { name: 'Node.js' },
+                    { name: 'PostgreSQL' },
+                ]}
+                email="ivan@example.com"
+                linkedin="https://linkedin.com/in/ivan"
+                github="https://github.com/ivan"
+                instagram="https://instagram.com/ivan"
+                bookingLink="https://calendly.com/ivan/15min"
+            />
         </div>
     )
 
     const resultContent = (
         <div className="space-y-8">
             <DemoSection
-                title="Support Workspace Demo"
-                description="A unified workspace for managing support requests, optimizing operator workload, and improving response times."
-                image="demo"
-                caption="Support Workspace Interface - Streamlined request management and operator allocation"
+                title={demoTitle}
+                description={demoDescription}
+                image="vk/demo"
+                caption="A comprehensive support system that helps operators handle thousands of requests efficiently."
             />
             <GallerySection items={galleryItems} />
+            <ContextImageSection
+                lightImage="/vk/context-light.png"
+                darkImage="/vk/context-dark.png"
+                header="Context-Aware Support"
+                description="The system automatically surfaces relevant trip details, driver history, and previous interactions, enabling operators to provide personalized support without manual research."
+                alt="Context-Aware Support Interface"
+            />
+            <ProjectFooter
+                team={[
+                    { role: 'Design' },
+                    { role: 'Front-end Engineer' },
+                    { role: 'Back-end Engineer' },
+                    { role: 'Business Analyst' },
+                    { role: 'UX Researcher' },
+                ]}
+                technologies={[
+                    { name: 'React' },
+                    { name: 'TypeScript' },
+                    { name: 'Next.js' },
+                    { name: 'Tailwind CSS' },
+                    { name: 'Framer Motion' },
+                    { name: 'Node.js' },
+                    { name: 'PostgreSQL' },
+                ]}
+                email="ivan@example.com"
+                linkedin="https://linkedin.com/in/ivan"
+                github="https://github.com/ivan"
+                instagram="https://instagram.com/ivan"
+                bookingLink="https://calendly.com/ivan/15min"
+            />
         </div>
     )
 
     const devContent = (
         <div className="space-y-8">
-            <UIDemo />
+            <section className="space-y-8 sm:space-y-12">
+                <div className="space-y-4 py-16 xl:w-1/2 lg:w-2/3">
+                    <h2 className="text-2xl sm:text-3xl font-bold font-poppins text-blue-900 dark:text-blue-100">
+                        Component Library
+                    </h2>
+                    <p className="text-base sm:text-lg text-blue-800/80 dark:text-blue-200/80 font-mono">
+                        The project was developed using a component-first
+                        approach, leveraging the <HitoLink /> — a scalable,
+                        semantic token-based system optimized for clarity and
+                        responsiveness.
+                    </p>
+                </div>
+                <UIDemo />
+            </section>
+            <ProjectFooter
+                team={[
+                    { role: 'Design' },
+                    { role: 'Front-end Engineer' },
+                    { role: 'Back-end Engineer' },
+                    { role: 'Business Analyst' },
+                    { role: 'UX Researcher' },
+                ]}
+                technologies={[
+                    { name: 'React' },
+                    { name: 'TypeScript' },
+                    { name: 'Next.js' },
+                    { name: 'Tailwind CSS' },
+                    { name: 'Framer Motion' },
+                    { name: 'Node.js' },
+                    { name: 'PostgreSQL' },
+                ]}
+                email="ivan@example.com"
+                linkedin="https://linkedin.com/in/ivan"
+                github="https://github.com/ivan"
+                instagram="https://instagram.com/ivan"
+                bookingLink="https://calendly.com/ivan/15min"
+            />
         </div>
     )
 
@@ -214,7 +447,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                             <ProjectHero
                                 title="Taxi Aggregator Support Workspace"
-                                description="Making sense of complex business interfaces. SaaS, project management, data visualization, and design systems — all to help people work smarter."
+                                description="A unified, context-aware interface designed for speed and clarity — helping operators resolve issues faster, with less stress and zero guesswork."
                                 mainImage="/actions-light.png"
                                 mainImageDark="/actions-dark.png"
                                 forwardImage="/forward-light.png"

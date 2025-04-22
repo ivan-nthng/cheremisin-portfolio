@@ -16,6 +16,7 @@ export interface Project {
     link: string
     isWide?: boolean
     companyName?: string
+    companyUrl?: string
 }
 
 export const projects: Project[] = [
@@ -28,6 +29,7 @@ export const projects: Project[] = [
         technologies: ['Next.js', 'TypeScript', 'Tailwind CSS'],
         link: '/projects/taxi-aggregator-support-workspace',
         companyName: 'VK',
+        companyUrl: 'https://vk.com',
     },
     {
         title: 'Hito DS',
@@ -39,25 +41,27 @@ export const projects: Project[] = [
         link: '/projects/ds-hito',
         isWide: true,
         companyName: 'DS Hito',
+        companyUrl: 'https://ds-hito.com',
     },
     {
-        title: 'Project 2',
-        description:
-            'A responsive e-commerce platform with a focus on user experience.',
-        image: '/message-light.png',
-        darkImage: '/message-dark.png',
+        title: 'LitRes.com',
+        description: 'An e-commerce platform and digital publisher.',
+        image: '/preview-light.png',
+        darkImage: '/preview-dark.png',
         technologies: ['React', 'Node.js', 'MongoDB'],
-        link: '/projects/placeholder-project-2',
-        companyName: 'Company 2',
+        link: '/projects/litres',
+        companyName: 'Litres.com',
+        companyUrl: 'https://litres.com',
     },
     {
-        title: 'Project 3',
-        description: 'A real-time chat application with WebSocket integration.',
-        image: '/message-light.png',
-        darkImage: '/message-dark.png',
-        technologies: ['Vue.js', 'Express', 'Socket.io'],
-        link: '/projects/placeholder-project-3',
-        companyName: 'Company 3',
+        title: 'Peruse.ml',
+        description: 'AI-powered file search and organization tool.',
+        image: '/files-light.png',
+        darkImage: '/files-dark.png',
+        technologies: ['Next.js', 'TypeScript', 'TensorFlow.js'],
+        link: '/projects/peruse',
+        companyName: 'Peruse.ml',
+        companyUrl: 'https://peruse.ml',
     },
 ]
 
@@ -280,6 +284,7 @@ export default function Projects() {
                                             tags={project.technologies}
                                             link={project.link}
                                             companyName={project.companyName}
+                                            companyUrl={project.companyUrl}
                                             tagCounts={tagCountsMap}
                                         />
                                     ) : (
@@ -291,6 +296,7 @@ export default function Projects() {
                                             tags={project.technologies}
                                             link={project.link}
                                             companyName={project.companyName}
+                                            companyUrl={project.companyUrl}
                                             tagCounts={tagCountsMap}
                                         />
                                     )}
