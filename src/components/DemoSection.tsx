@@ -10,7 +10,8 @@ import { Lightbox } from './Lightbox'
 interface DemoSectionProps {
     title: string
     description: string
-    image: string
+    image?: string
+    video?: string
     caption?: string
 }
 
@@ -23,6 +24,7 @@ export default function DemoSection({
     title,
     description,
     image,
+    video,
     caption,
 }: DemoSectionProps) {
     const [isLightboxOpen, setIsLightboxOpen] = useState(false)
@@ -36,9 +38,9 @@ export default function DemoSection({
 
     // Use resolvedTheme to handle system preference
     const effectiveTheme = resolvedTheme || theme
-    const imagePath = `/vk/${image}${
-        effectiveTheme === 'dark' ? '-dark' : '-light'
-    }.png`
+    const imagePath = image
+        ? `/${image}${effectiveTheme === 'dark' ? '-dark' : '-light'}.png`
+        : undefined
 
     // Don't render anything until mounted to prevent hydration mismatch
     if (!mounted) {
@@ -84,7 +86,7 @@ export default function DemoSection({
                         </motion.p>
                     </div>
 
-                    {/* Image Container */}
+                    {/* Media Container */}
                     <motion.div
                         {...motionProps}
                         transition={{
@@ -93,24 +95,40 @@ export default function DemoSection({
                             ease: [0.16, 1, 0.3, 1],
                         }}
                     >
-                        <ImageContainer
-                            key={imagePath} // Force remount when image source changes
-                            image={imagePath}
-                            alt={title}
-                            onImageClick={() => setIsLightboxOpen(true)}
-                        />
+                        {video ? (
+                            <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-blue-100 dark:bg-blue-900/50">
+                                <video
+                                    src={video}
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    className="w-full h-full object-cover"
+                                    onClick={() => setIsLightboxOpen(true)}
+                                />
+                            </div>
+                        ) : imagePath ? (
+                            <ImageContainer
+                                key={imagePath}
+                                image={imagePath}
+                                alt={title}
+                                onImageClick={() => setIsLightboxOpen(true)}
+                            />
+                        ) : null}
                     </motion.div>
                 </div>
             </div>
 
             {/* Lightbox */}
-            <Lightbox
-                isOpen={isLightboxOpen}
-                onClose={() => setIsLightboxOpen(false)}
-                image={imagePath}
-                alt={title}
-                caption={caption}
-            />
+            {imagePath && (
+                <Lightbox
+                    isOpen={isLightboxOpen}
+                    onClose={() => setIsLightboxOpen(false)}
+                    image={imagePath}
+                    alt={title}
+                    caption={caption}
+                />
+            )}
         </section>
     )
 }

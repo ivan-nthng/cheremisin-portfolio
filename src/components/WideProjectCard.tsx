@@ -18,6 +18,7 @@ interface WideProjectCardProps {
     darkImage?: string
     link: string
     companyName?: string
+    companyUrl?: string
 }
 
 export default function WideProjectCard({
@@ -28,6 +29,7 @@ export default function WideProjectCard({
     darkImage,
     link,
     companyName,
+    companyUrl,
 }: WideProjectCardProps) {
     const router = useRouter()
     const { theme } = useTheme()
@@ -125,7 +127,7 @@ export default function WideProjectCard({
                     {companyName && (
                         <div className="relative">
                             <Link
-                                href={link}
+                                href={companyUrl || link}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onMouseEnter={(e) => {

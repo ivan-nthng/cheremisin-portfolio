@@ -172,10 +172,18 @@ export default function UIDemo() {
     return (
         <section className="w-full">
             <div className="space-y-8 sm:space-y-6">
-                <h2 className="text-2xl sm:text-3xl font-bold font-poppins text-blue-900 dark:text-blue-100">
-                    Button Component
-                </h2>
-
+                <div className="xl:w-1/2 lg:w-2/3 sm:w-full space-y-4 pb-8">
+                    <h2 className="text-xl sm:text-md font-bold font-poppins text-blue-900 dark:text-blue-100">
+                        Button Component Logic
+                    </h2>
+                    <p className="text-sm sm:text-sm font-bold font-poppins text-blue-900 dark:text-blue-100">
+                        All components support four size presets, paddings, font
+                        sizes, and icon dimensions are controlled by a single
+                        semantic variable — auto-adjusted per component size.
+                        This ensures consistency and scalability across the
+                        system.
+                    </p>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-8">
                     {/* Left side - Button preview */}
                     <div className="md:col-span-3 bg-blue-100/50 dark:bg-blue-900/50 rounded-2xl p-8 sm:p-12 flex items-center justify-center">

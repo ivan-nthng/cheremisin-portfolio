@@ -17,6 +17,7 @@ interface ProjectCardProps {
     link: string
     darkImage?: string
     companyName?: string
+    companyUrl?: string
     tagCounts?: Map<string, number>
 }
 
@@ -28,6 +29,7 @@ export default function ProjectCard({
     darkImage,
     link,
     companyName,
+    companyUrl,
     tagCounts,
 }: ProjectCardProps) {
     const router = useRouter()
@@ -165,7 +167,7 @@ export default function ProjectCard({
                 {companyName && (
                     <div className="relative">
                         <Link
-                            href={link}
+                            href={companyUrl || link}
                             target="_blank"
                             rel="noopener noreferrer"
                             onMouseEnter={(e) => {
