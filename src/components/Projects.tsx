@@ -192,10 +192,10 @@ export default function Projects() {
                                         setHoveredTag(null)
                                     }}
                                     onMouseMove={handleTagMouseMove}
-                                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors duration-300 flex items-center gap-1 ${
+                                    className={`px-2 py-1 text-sm  bg-blue-100/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1 ${
                                         selectedTags.has(tag)
                                             ? 'bg-primary-500 text-white dark:bg-primary-400 dark:text-white'
-                                            : 'bg-primary-100 dark:bg-primary-800 text-primary-700 dark:text-primary-200 hover:bg-primary-200 dark:hover:bg-primary-700'
+                                            : 'bg-blue-100/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 hover:bg-primary-200 dark:hover:bg-primary-700'
                                     }`}
                                 >
                                     {count > 1 && (
@@ -241,7 +241,7 @@ export default function Projects() {
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true, margin: '-100px' }}
                                 onClick={clearFilters}
-                                className="px-3 py-1.5 rounded-full text-sm font-medium border border-primary-500 text-primary-500 hover:bg-primary-500/10 dark:border-primary-400 dark:text-primary-400 dark:hover:bg-primary-400/10 transition-all duration-200 flex items-center gap-1"
+                                className="px-2 py-1 text-sm font-medium border rounded border-primary-500 text-primary-500 hover:bg-primary-500/10 dark:border-primary-400 dark:text-primary-400 dark:hover:bg-primary-400/10 transition-all duration-200 flex items-center gap-1"
                                 onMouseEnter={() => setIsHovered(true)}
                                 onMouseLeave={() => setIsHovered(false)}
                             >

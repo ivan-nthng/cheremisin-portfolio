@@ -186,14 +186,14 @@ export default function ProjectCard({
                     </div>
                 )}
                 <div className="mt-2 sm:mt-3 space-y-3 sm:space-y-4">
-                    <p className="text-base sm:text-lg text-primary-600 dark:text-primary-300">
+                    <p className="text-md sm:text-md text-primary-600 dark:text-primary-300">
                         {description}
                     </p>
                     <div className="flex flex-wrap gap-2">
                         {tags.map((tag) => (
                             <span
                                 key={tag}
-                                className="px-2 py-1 text-sm bg-primary-100 dark:bg-primary-800 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1"
+                                className="px-2 py-1 text-sm  bg-blue-100/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1"
                             >
                                 {tagCounts?.get(tag) &&
                                     tagCounts.get(tag)! > 1 && (

@@ -155,7 +155,7 @@ export default function WideProjectCard({
                     {tags.map((tag) => (
                         <span
                             key={tag}
-                            className="px-3 py-1 text-sm bg-blue-200 dark:bg-blue-800 text-blue-900 dark:text-blue-100 rounded-md"
+                            className="px-2 py-1 text-sm bg-blue-200/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1"
                         >
                             {tag}
                         </span>
