@@ -13,7 +13,7 @@ export default function Home() {
 
     return (
         <>
-            <GridOverlay isVisible={isGridVisible} />
+            <GridOverlay show={isGridVisible} />
             <main className="relative">
                 <Header
                     isGridVisible={isGridVisible}
