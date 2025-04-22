@@ -4,13 +4,16 @@ import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 interface GridOverlayProps {
-    show: boolean
+    show?: boolean
+    isVisible?: boolean // For backward compatibility
 }
 
-export default function GridOverlay({ show }: GridOverlayProps) {
+export default function GridOverlay({ show, isVisible }: GridOverlayProps) {
+    const isShown = show ?? isVisible ?? false
+
     return (
         <AnimatePresence>
-            {show && (
+            {isShown && (
                 <motion.div
                     initial={{ opacity: 0, y: -100 }}
                     animate={{ opacity: 1, y: 0 }}
