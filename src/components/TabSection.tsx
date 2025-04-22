@@ -19,6 +19,7 @@ const TabSection: React.FC<TabSectionProps> = ({
         'process' | 'result' | 'dev'
     >('result')
     const [hasScrolled, setHasScrolled] = React.useState(false)
+    const contentRef = React.useRef<HTMLDivElement>(null)
 
     React.useEffect(() => {
         const handleScroll = () => {
@@ -30,10 +31,34 @@ const TabSection: React.FC<TabSectionProps> = ({
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
+    const handleTabChange = (tab: 'process' | 'result' | 'dev') => {
+        setActiveTab(tab)
+
+        // Wait for the next render cycle to ensure content is updated
+        setTimeout(() => {
+            if (contentRef.current) {
+                // Get the header height (64px = 16px * 4)
+                const headerHeight = 64
+                // Add extra padding (24px)
+                const extraPadding = 24
+
+                // Calculate the scroll position
+                const scrollPosition =
+                    contentRef.current.offsetTop - headerHeight - extraPadding
+
+                // Smooth scroll to the content
+                window.scrollTo({
+                    top: scrollPosition,
+                    behavior: 'smooth',
+                })
+            }
+        }, 50)
+    }
+
     return (
         <>
             {/* Content Section */}
-            <section className="w-full">
+            <section className="w-full" ref={contentRef}>
                 <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
                     <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                         <motion.div
@@ -75,7 +100,7 @@ const TabSection: React.FC<TabSectionProps> = ({
                                     <button
                                         key={tab}
                                         onClick={() =>
-                                            setActiveTab(
+                                            handleTabChange(
                                                 tab as
                                                     | 'process'
                                                     | 'result'
