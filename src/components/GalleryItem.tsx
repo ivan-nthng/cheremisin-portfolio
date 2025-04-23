@@ -30,30 +30,26 @@ interface GalleryItemProps {
 }
 
 // Animation variants
-const containerVariants = {
-    hidden: { opacity: 0, y: 50 },
+const fadeInAnimation = {
+    hidden: { opacity: 0, y: 20 },
     visible: {
         opacity: 1,
         y: 0,
         transition: {
-            type: 'spring',
-            stiffness: 40,
-            damping: 20,
-            mass: 1,
-            staggerChildren: 0.15,
+            duration: 0.6,
+            ease: [0.16, 1, 0.3, 1],
         },
     },
 }
 
-const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+const moveInAnimation = {
+    hidden: { opacity: 0, x: 20 },
     visible: {
         opacity: 1,
-        y: 0,
+        x: 0,
         transition: {
-            type: 'spring',
-            stiffness: 80,
-            damping: 20,
+            duration: 0.6,
+            ease: [0.16, 1, 0.3, 1],
         },
     },
 }
@@ -113,18 +109,14 @@ export function GalleryItem({
 
     return (
         <>
-            <motion.div
+            <div
                 ref={containerRef}
-                variants={containerVariants}
-                initial="hidden"
-                animate={isVisible ? 'visible' : 'hidden'}
                 className={`grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-8 items-start ${
                     isReversed ? 'md:[&>*:first-child]:order-last' : ''
                 }`}
             >
                 {/* Media Container */}
-                <motion.div
-                    variants={itemVariants}
+                <div
                     className={cn(
                         'md:col-span-9 relative w-full rounded-2xl overflow-hidden p-6',
                         neutral
@@ -218,27 +210,28 @@ export function GalleryItem({
                             )}
                         </AnimatePresence>
                     </div>
-                </motion.div>
+                </div>
 
                 {/* Text Content */}
                 <motion.div
-                    variants={itemVariants}
                     className="md:col-span-3 flex flex-col gap-3 md:pt-6 sticky top-14"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={
+                        isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }
+                    }
+                    transition={{
+                        duration: 0.6,
+                        ease: [0.16, 1, 0.3, 1],
+                    }}
                 >
-                    <motion.h3
-                        variants={itemVariants}
-                        className="text-xl font-semibold font-poppins text-blue-900 dark:text-blue-100"
-                    >
+                    <h3 className="text-xl font-semibold font-poppins text-blue-900 dark:text-blue-100">
                         {title}
-                    </motion.h3>
-                    <motion.p
-                        variants={itemVariants}
-                        className="text-sm font-mono text-blue-800/80 dark:text-blue-200/80 leading-relaxed"
-                    >
+                    </h3>
+                    <p className="text-sm font-mono text-blue-800/80 dark:text-blue-200/80 leading-relaxed">
                         {description}
-                    </motion.p>
+                    </p>
                 </motion.div>
-            </motion.div>
+            </div>
 
             {/* Lightbox */}
             <Lightbox
