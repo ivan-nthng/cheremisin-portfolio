@@ -41,7 +41,7 @@ export const projects: Project[] = [
         link: '/projects/ds-hito',
         isWide: true,
         companyName: 'DS Hito',
-        companyUrl: 'https://ds-hito.com',
+        companyUrl: 'https://hitocajon.com',
     },
     {
         title: 'LitRes.com',
