@@ -91,83 +91,95 @@ export default function Hero() {
                             transition={{ duration: 0.6, delay: 0.2 }}
                             className="text-4xl md:text-5xl font-bold mb-8 font-heading leading-[1.4] text-primary-800 dark:text-primary-100 xl:w-1/2 2xl:w-1/2 lg:w-2/3"
                         >
-                            <span className="inline-flex flex-wrap items-center gap-2">
-                                Hi 👋! I'm Ivan{' '}
-                                <div className="relative inline-flex">
-                                    <Link
-                                        href="https://calendly.com/icheremisin/30min"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex relative group items-center"
-                                        onMouseEnter={() => setIsHovered(true)}
-                                        onMouseLeave={() => setIsHovered(false)}
-                                        onMouseMove={handleAvatarMouseMove}
-                                    >
-                                        {mounted && avatarImage && (
-                                            <motion.span
-                                                className="inline-flex w-10 h-10 md:w-12 md:h-12 relative items-center"
-                                                animate={{
-                                                    rotate: isHovered ? 360 : 0,
-                                                    scale: isHovered ? 1.1 : 1,
-                                                }}
-                                                transition={{
-                                                    rotate: {
-                                                        duration: 0.6,
-                                                        ease: 'easeInOut',
-                                                    },
-                                                    scale: { duration: 0.2 },
-                                                }}
-                                            >
-                                                <Image
-                                                    src={avatarImage}
-                                                    alt="Ivan's avatar"
-                                                    fill
-                                                    className={`object-contain transition-all duration-300 ${
-                                                        isHovered
-                                                            ? 'brightness-120'
-                                                            : ''
-                                                    }`}
-                                                    priority
-                                                />
-                                            </motion.span>
-                                        )}
-                                    </Link>
-                                    <AnimatePresence>
-                                        {isHovered && (
-                                            <div className="absolute z-[100] pointer-events-none">
-                                                <motion.div
-                                                    initial={{
-                                                        opacity: 0,
-                                                        scale: 0.8,
-                                                    }}
+                            <span className="inline-flex flex-col items-start gap-2">
+                                <span className="inline-flex items-center gap-2">
+                                    Hi 👋! I'm Ivan{' '}
+                                    <div className="relative inline-flex">
+                                        <Link
+                                            href="https://calendly.com/icheremisin/30min"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex relative group items-center"
+                                            onMouseEnter={() =>
+                                                setIsHovered(true)
+                                            }
+                                            onMouseLeave={() =>
+                                                setIsHovered(false)
+                                            }
+                                            onMouseMove={handleAvatarMouseMove}
+                                        >
+                                            {mounted && avatarImage && (
+                                                <motion.span
+                                                    className="inline-flex w-10 h-10 md:w-12 md:h-12 relative items-center"
                                                     animate={{
-                                                        opacity: 1,
-                                                        scale: 1,
-                                                        x:
-                                                            avatarPosition.x +
-                                                            20,
-                                                        y:
-                                                            avatarPosition.y -
-                                                            20,
-                                                    }}
-                                                    exit={{
-                                                        opacity: 0,
-                                                        scale: 0.8,
+                                                        rotate: isHovered
+                                                            ? 360
+                                                            : 0,
+                                                        scale: isHovered
+                                                            ? 1.1
+                                                            : 1,
                                                     }}
                                                     transition={{
-                                                        duration: 0.2,
-                                                        ease: 'easeOut',
+                                                        rotate: {
+                                                            duration: 0.6,
+                                                            ease: 'easeInOut',
+                                                        },
+                                                        scale: {
+                                                            duration: 0.2,
+                                                        },
                                                     }}
-                                                    className="bg-primary-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap font-mono"
                                                 >
-                                                    Book a 15-minute call
-                                                </motion.div>
-                                            </div>
-                                        )}
-                                    </AnimatePresence>
-                                </div>{' '}
+                                                    <Image
+                                                        src={avatarImage}
+                                                        alt="Ivan's avatar"
+                                                        fill
+                                                        className={`object-contain transition-all duration-300 ${
+                                                            isHovered
+                                                                ? 'brightness-120'
+                                                                : ''
+                                                        }`}
+                                                        priority
+                                                    />
+                                                </motion.span>
+                                            )}
+                                        </Link>
+                                        <AnimatePresence>
+                                            {isHovered && (
+                                                <div className="absolute z-[100] pointer-events-none">
+                                                    <motion.div
+                                                        initial={{
+                                                            opacity: 0,
+                                                            scale: 0.8,
+                                                        }}
+                                                        animate={{
+                                                            opacity: 1,
+                                                            scale: 1,
+                                                            x:
+                                                                avatarPosition.x +
+                                                                20,
+                                                            y:
+                                                                avatarPosition.y -
+                                                                20,
+                                                        }}
+                                                        exit={{
+                                                            opacity: 0,
+                                                            scale: 0.8,
+                                                        }}
+                                                        transition={{
+                                                            duration: 0.2,
+                                                            ease: 'easeOut',
+                                                        }}
+                                                        className="bg-primary-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap font-mono"
+                                                    >
+                                                        Book a 15-minute call
+                                                    </motion.div>
+                                                </div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+                                </span>
                                 <motion.span
-                                    className="inline-block bg-clip-text text-transparent pb-1 block mt-2"
+                                    className="inline-block bg-clip-text text-transparent pb-1 text-5xl pt-2"
                                     animate={{
                                         backgroundImage: [
                                             'radial-gradient(circle at 0% 0%, #274284, #FF4E51)',
@@ -192,9 +204,9 @@ export default function Hero() {
                             transition={{ duration: 0.6, delay: 0.4 }}
                             className="text-lg md:text-xl text-primary-600 dark:text-primary-300 mb-12 max-w-2xl"
                         >
-                            Crafting digital experiences that blend creativity
-                            with functionality. Specialized in creating
-                            intuitive and engaging user interfaces.
+                            I make digital things better — whether building from
+                            scratch or refining what’s already there. Always
+                            with clarity, always with care.
                         </motion.p>
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
