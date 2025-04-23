@@ -124,7 +124,9 @@ export default function About() {
                                 I design digital and physical products. Outside
                                 of work, I surf,{' '}
                                 <Link
-                                    href="/photos"
+                                    href="https://unsplash.com/@vanya_nichego"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="group inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 transition-colors"
                                 >
                                     shoot photos
@@ -132,7 +134,9 @@ export default function About() {
                                 </Link>
                                 , read,{' '}
                                 <Link
-                                    href="/music"
+                                    href="https://soundcloud.com/vanya-nichego"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="group inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 transition-colors"
                                 >
                                     make music

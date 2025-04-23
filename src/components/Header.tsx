@@ -12,6 +12,11 @@ import GridOverlay from './GridOverlay'
 type MotionButtonProps = React.ComponentProps<'button'> & MotionProps
 type MotionDivProps = React.ComponentProps<'div'> & MotionProps
 
+interface HeaderProps {
+    isGridVisible?: boolean
+    onToggleGrid?: () => void
+}
+
 const MotionButton = motion.button as React.FC<MotionButtonProps>
 const MotionDiv = motion.div as React.FC<MotionDivProps>
 
@@ -81,7 +86,7 @@ const Logo = () => {
     )
 }
 
-export default function Header() {
+export default function Header({ isGridVisible, onToggleGrid }: HeaderProps) {
     const [mounted, setMounted] = React.useState(false)
     const [isScrolled, setIsScrolled] = React.useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
