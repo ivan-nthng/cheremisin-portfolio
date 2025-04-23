@@ -89,7 +89,7 @@ export default function Hero() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
-                            className="text-4xl md:text-5xl font-bold mb-8 font-heading leading-[1.4] text-primary-800 dark:text-primary-100"
+                            className="text-4xl md:text-5xl font-bold mb-8 font-heading leading-[1.4] text-primary-800 dark:text-primary-100 xl:w-1/2 2xl:w-1/2 lg:w-2/3"
                         >
                             <span className="inline-flex flex-wrap items-center gap-2">
                                 Hi 👋! I'm Ivan{' '}
@@ -166,9 +166,8 @@ export default function Hero() {
                                         )}
                                     </AnimatePresence>
                                 </div>{' '}
-                                <span className="whitespace-nowrap">– a</span>{' '}
                                 <motion.span
-                                    className="inline-block bg-clip-text text-transparent pb-1"
+                                    className="inline-block bg-clip-text text-transparent pb-1 block mt-2"
                                     animate={{
                                         backgroundImage: [
                                             'radial-gradient(circle at 0% 0%, #274284, #FF4E51)',
@@ -219,10 +218,10 @@ export default function Hero() {
                                             setIsTooltipVisible(false)
                                         }
                                         onMouseMove={handleCalendlyMouseMove}
-                                        className="inline-flex w-full md:w-auto px-6 py-3 bg-primary-500 hover:bg-primary-600 dark:bg-primary-400 dark:hover:bg-primary-300 text-white rounded-md transition-colors duration-300 items-center justify-center gap-2"
+                                        className="inline-flex w-full md:w-auto px-6 py-3 bg-primary-500 hover:bg-primary-600 dark:bg-primary-400 dark:hover:bg-primary-300 text-white rounded-md transition-colors duration-300 items-center justify-center gap-3"
                                     >
-                                        Book 15 Minutes Call
-                                        <Calendar className="w-5 h-5 flex-shrink-0" />
+                                        <Calendar className="w-5 h-5 flex-shrink-0 -mt-0.5" />
+                                        Book a Call
                                     </Link>
                                 </motion.div>
                                 <AnimatePresence>
