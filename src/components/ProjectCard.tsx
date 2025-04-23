@@ -19,6 +19,7 @@ interface ProjectCardProps {
     companyName?: string
     companyUrl?: string
     tagCounts?: Map<string, number>
+    noimg?: boolean
 }
 
 export default function ProjectCard({
@@ -31,6 +32,7 @@ export default function ProjectCard({
     companyName,
     companyUrl,
     tagCounts,
+    noimg = false,
 }: ProjectCardProps) {
     const router = useRouter()
     const { theme } = useTheme()
@@ -119,7 +121,9 @@ export default function ProjectCard({
             onHoverEnd={() => setIsHovered(false)}
             onMouseMove={handleMouseMove}
             onClick={() => router.push(link)}
-            className="flex flex-col gap-4 cursor-none relative"
+            className={`flex flex-col gap-4 cursor-none relative ${
+                noimg ? 'p-6 rounded-2xl bg-blue-50 dark:bg-blue-900/30' : ''
+            }`}
         >
             <CustomCursor
                 isVisible={isHovered}
@@ -128,37 +132,39 @@ export default function ProjectCard({
                 isHighlighted={isCompanyHovered}
             />
 
-            <motion.div
-                onHoverStart={() => setIsImageHovered(true)}
-                onHoverEnd={() => setIsImageHovered(false)}
-                className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-blue-100/80 dark:bg-blue-900/80 transition-colors duration-300"
-                variants={containerVariants}
-                initial="hidden"
-                animate={isVisible ? 'visible' : 'hidden'}
-            >
+            {!noimg && (
                 <motion.div
-                    className="absolute inset-0 flex items-center justify-center"
-                    style={{ padding: '4%' }}
+                    onHoverStart={() => setIsImageHovered(true)}
+                    onHoverEnd={() => setIsImageHovered(false)}
+                    className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-blue-100/80 dark:bg-blue-900/80 transition-colors duration-300"
+                    variants={containerVariants}
                     initial="hidden"
-                    animate={
-                        isVisible && !isImageHovered ? 'visible' : 'hidden'
-                    }
-                    variants={imageVariants}
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                    animate={isVisible ? 'visible' : 'hidden'}
                 >
-                    <div className="relative w-full h-full flex items-center justify-center">
-                        <Image
-                            src={currentImage}
-                            alt={title}
-                            width={800}
-                            height={450}
-                            className="w-auto h-auto max-w-full max-h-full object-contain rounded-xl"
-                            priority
-                        />
-                    </div>
+                    <motion.div
+                        className="absolute inset-0 flex items-center justify-center"
+                        style={{ padding: '4%' }}
+                        initial="hidden"
+                        animate={
+                            isVisible && !isImageHovered ? 'visible' : 'hidden'
+                        }
+                        variants={imageVariants}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3, ease: 'easeOut' }}
+                    >
+                        <div className="relative w-full h-full flex items-center justify-center">
+                            <Image
+                                src={currentImage}
+                                alt={title}
+                                width={800}
+                                height={450}
+                                className="w-auto h-auto max-w-full max-h-full object-contain rounded-xl"
+                                priority
+                            />
+                        </div>
+                    </motion.div>
                 </motion.div>
-            </motion.div>
+            )}
 
             <div className="flex-1">
                 <h3 className="text-xl sm:text-2xl font-bold text-primary-800 dark:text-primary-100">
