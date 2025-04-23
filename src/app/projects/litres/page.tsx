@@ -230,7 +230,7 @@ export default function LitresPage() {
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"
                 instagram="https://instagram.com/ivan"
-                bookingLink="https://calendly.com/ivan/15min"
+                bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
     )
@@ -265,7 +265,7 @@ export default function LitresPage() {
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"
                 instagram="https://instagram.com/ivan"
-                bookingLink="https://calendly.com/ivan/15min"
+                bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
     )
@@ -313,7 +313,7 @@ export default function LitresPage() {
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"
                 instagram="https://instagram.com/ivan"
-                bookingLink="https://calendly.com/ivan/15min"
+                bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
     )

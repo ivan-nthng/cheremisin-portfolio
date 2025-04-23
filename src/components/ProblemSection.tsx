@@ -10,29 +10,12 @@ interface StatBlock {
 }
 
 interface ProblemSectionProps {
-    stats: StatBlock[]
-    description: string
+    stats?: StatBlock[]
+    description?: string
 }
 
-const MotionDiv = motion.div as React.ComponentType<
-    React.HTMLAttributes<HTMLDivElement> & {
-        variants?: any
-        initial?: any
-        animate?: any
-        transition?: any
-        style?: any
-        ref?: any
-    }
->
-
-const MotionH2 = motion.h2 as React.ComponentType<
-    React.HTMLAttributes<HTMLHeadingElement> & {
-        variants?: any
-        initial?: any
-        animate?: any
-        transition?: any
-    }
->
+const MotionDiv = motion.div
+const MotionH2 = motion.h2
 
 function AnimatedCounter({ value }: { value: string }) {
     const ref = React.useRef(null)
@@ -128,8 +111,8 @@ function AnimatedCounter({ value }: { value: string }) {
 }
 
 export default function ProblemSection({
-    stats,
-    description,
+    stats = [],
+    description = '',
 }: ProblemSectionProps) {
     const ref = React.useRef(null)
     const [isVisible, setIsVisible] = React.useState(false)
@@ -189,7 +172,7 @@ export default function ProblemSection({
 
     return (
         <section className="w-full mb-16 sm:mb-24">
-            <MotionDiv
+            <motion.div
                 ref={ref}
                 variants={container}
                 initial="hidden"
@@ -202,20 +185,20 @@ export default function ProblemSection({
             >
                 <div className="p-6 sm:p-8 md:p-12 space-y-8 sm:space-y-12">
                     {/* Header */}
-                    <MotionH2
+                    <motion.h2
                         variants={item}
                         className="text-2xl sm:text-3xl font-bold font-poppins"
                     >
                         Problem
-                    </MotionH2>
+                    </motion.h2>
 
                     {/* Stats Grid */}
-                    <MotionDiv
+                    <motion.div
                         variants={container}
                         className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 sm:gap-12"
                     >
                         {stats.map((stat, index) => (
-                            <MotionDiv
+                            <motion.div
                                 key={index}
                                 variants={item}
                                 className="flex flex-col items-center text-center space-y-2"
@@ -232,12 +215,12 @@ export default function ProblemSection({
                                 >
                                     {stat.label}
                                 </div>
-                            </MotionDiv>
+                            </motion.div>
                         ))}
-                    </MotionDiv>
+                    </motion.div>
 
                     {/* Description */}
-                    <MotionDiv
+                    <motion.div
                         variants={item}
                         className={`grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-xs sm:text-sm leading-relaxed ${
                             theme === 'dark'
@@ -261,9 +244,9 @@ export default function ProblemSection({
                             company would have needed nearly 200 operators - 4x
                             the existing team.
                         </div>
-                    </MotionDiv>
+                    </motion.div>
                 </div>
-            </MotionDiv>
+            </motion.div>
         </section>
     )
 }

@@ -97,7 +97,7 @@ export default function NoResultsCard() {
                     <div className="flex flex-wrap gap-3 pt-4">
                         <div className="relative">
                             <Link
-                                href="https://calendly.com/your-link"
+                                href="https://calendly.com/icheremisin/30min"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 onMouseEnter={() => setIsCalendarHovered(true)}

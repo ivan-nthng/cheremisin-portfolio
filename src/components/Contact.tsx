@@ -12,22 +12,77 @@ import {
 import Link from 'next/link'
 
 export default function Contact() {
+    const ref = React.useRef(null)
+    const [isVisible, setIsVisible] = React.useState(false)
+
+    React.useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsVisible(entry.isIntersecting)
+            },
+            {
+                threshold: 0.25,
+                rootMargin: '-50px 0px',
+            },
+        )
+
+        if (ref.current) {
+            observer.observe(ref.current)
+        }
+
+        return () => {
+            if (ref.current) {
+                observer.unobserve(ref.current)
+            }
+        }
+    }, [])
+
+    const container = {
+        hidden: { opacity: 0, y: 50 },
+        show: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                type: 'spring',
+                stiffness: 40,
+                damping: 20,
+                mass: 1,
+                staggerChildren: 0.15,
+            },
+        },
+    }
+
+    const item = {
+        hidden: { opacity: 0, y: 30 },
+        show: {
+            opacity: 1,
+            y: 0,
+            transition: {
+                type: 'spring',
+                stiffness: 80,
+                damping: 20,
+            },
+        },
+    }
+
     return (
-        <section id="contact" className="relative py-24 sm:py-32">
+        <section id="contact" className="relative py-24 sm:py-32" ref={ref}>
             <div className="container mx-auto px-6">
-                <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="text-3xl font-bold text-blue-950 dark:text-blue-50 mb-8"
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    animate={isVisible ? 'show' : 'hidden'}
+                    className="max-w-2xl space-y-12"
                 >
-                    Get in Touch
-                </motion.h2>
-                <div className="max-w-2xl space-y-12">
+                    <motion.h2
+                        variants={item}
+                        className="text-3xl font-bold text-blue-950 dark:text-blue-50 mb-8"
+                    >
+                        Get in Touch
+                    </motion.h2>
+
                     <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
+                        variants={item}
                         className="text-lg text-blue-900/80 dark:text-blue-100/80 leading-relaxed"
                     >
                         I'm always interested in hearing about new projects and
@@ -36,12 +91,7 @@ export default function Contact() {
                     </motion.p>
 
                     {/* Social Links */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.3 }}
-                        className="flex flex-col gap-4"
-                    >
+                    <motion.div variants={item} className="flex flex-col gap-4">
                         <Link
                             href="https://github.com/ivan-nthng"
                             target="_blank"
@@ -82,11 +132,8 @@ export default function Contact() {
                         </Link>
                     </motion.div>
 
-                    {/* Footer Text */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
+                        variants={item}
                         className="text-sm text-blue-900/60 dark:text-blue-100/60 space-y-1 pt-8"
                     >
                         <p>No rights reserved.</p>
@@ -96,7 +143,7 @@ export default function Contact() {
                             appreciated but not required.
                         </p>
                     </motion.div>
-                </div>
+                </motion.div>
             </div>
         </section>
     )

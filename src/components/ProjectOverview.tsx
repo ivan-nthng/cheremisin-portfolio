@@ -9,8 +9,11 @@ interface StatBlock {
 }
 
 interface ProjectOverviewProps {
-    stats: StatBlock[]
-    description: string
+    stats?: StatBlock[]
+    description?: string
+    problem?: string
+    solution?: string
+    impact?: string
 }
 
 const MotionDiv = motion.div as React.ComponentType<
@@ -100,6 +103,9 @@ function AnimatedCounter({ value }: { value: string }) {
 export default function ProjectOverview({
     stats,
     description,
+    problem,
+    solution,
+    impact,
 }: ProjectOverviewProps) {
     const ref = React.useRef(null)
     const [isVisible, setIsVisible] = React.useState(false)
@@ -179,7 +185,7 @@ export default function ProjectOverview({
                         variants={container}
                         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12"
                     >
-                        {stats.map((stat, index) => (
+                        {stats?.map((stat, index) => (
                             <MotionDiv
                                 key={index}
                                 variants={item}

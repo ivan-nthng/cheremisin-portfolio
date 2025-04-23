@@ -28,13 +28,8 @@ export function GallerySection({ items }: GallerySectionProps) {
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true)
-                    // Once the section is visible, we can unobserve it
-                    if (sectionRef.current) {
-                        observer.unobserve(sectionRef.current)
-                    }
-                }
+                // Update visibility state based on intersection
+                setIsVisible(entry.isIntersecting)
             },
             {
                 threshold: 0.25,

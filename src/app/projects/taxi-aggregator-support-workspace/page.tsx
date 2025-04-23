@@ -295,7 +295,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                                             Resolution Rate
                                         </td>
                                         <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
-                                            —
+                                            --
                                         </td>
                                         <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
                                             +35%
@@ -309,7 +309,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                                             Customer Satisfaction
                                         </td>
                                         <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
-                                            —
+                                            --
                                         </td>
                                         <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
                                             +21% CSAT, +23 NPS
@@ -345,7 +345,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"
                 instagram="https://instagram.com/ivan"
-                bookingLink="https://calendly.com/ivan/15min"
+                bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
     )
@@ -387,7 +387,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"
                 instagram="https://instagram.com/ivan"
-                bookingLink="https://calendly.com/ivan/15min"
+                bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
     )
@@ -429,7 +429,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"
                 instagram="https://instagram.com/ivan"
-                bookingLink="https://calendly.com/ivan/15min"
+                bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
     )

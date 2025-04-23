@@ -114,7 +114,7 @@ export default function PerusePage() {
                 linkedin="https://www.linkedin.com/in/icheremisin/"
                 github="https://github.com/ivan-nthng"
                 instagram="https://www.instagram.com/cheremisin.co.uk/"
-                bookingLink="https://calendly.com/ivan/15min"
+                bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
     )
@@ -155,7 +155,7 @@ export default function PerusePage() {
                 linkedin="https://www.linkedin.com/in/icheremisin/"
                 github="https://github.com/ivan-nthng"
                 instagram="https://www.instagram.com/cheremisin.co.uk/"
-                bookingLink="https://calendly.com/ivan/15min"
+                bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
     )
@@ -208,7 +208,7 @@ export default function PerusePage() {
                 linkedin="https://www.linkedin.com/in/icheremisin/"
                 github="https://github.com/ivan-nthng"
                 instagram="https://www.instagram.com/cheremisin.co.uk/"
-                bookingLink="https://calendly.com/ivan/15min"
+                bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
     )

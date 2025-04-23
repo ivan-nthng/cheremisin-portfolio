@@ -1,15 +1,17 @@
+import { HTMLMotionProps } from 'framer-motion'
+
 declare module 'framer-motion' {
     import { ComponentType, ReactNode } from 'react'
 
-    interface MotionProps {
-        initial?: any
-        animate?: any
-        exit?: any
-        whileHover?: any
-        whileTap?: any
-        transition?: any
-        className?: string
-        children?: ReactNode
+    export interface MotionProps extends HTMLMotionProps<'div'> {
+        ref?: React.RefObject<HTMLDivElement>
+        style?: React.CSSProperties
+        onHoverStart?: () => void
+        onHoverEnd?: () => void
+        onClick?: () => void
+        variants?: any
+        whileInView?: any
+        viewport?: any
     }
 
     export const motion: {

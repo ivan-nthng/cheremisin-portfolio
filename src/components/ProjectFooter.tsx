@@ -28,7 +28,7 @@ export function ProjectFooter({
     linkedin = 'https://linkedin.com/in/ivan',
     github = 'https://github.com/ivan',
     instagram = 'https://instagram.com/ivan',
-    bookingLink = 'https://calendly.com/ivan/15min',
+    bookingLink = 'https://calendly.com/icheremisin/30min',
 }: ProjectFooterProps) {
     return (
         <div className="relative py-16 sm:py-20 md:py-24 border-t border-b border-blue-200/30 dark:border-blue-800/30">

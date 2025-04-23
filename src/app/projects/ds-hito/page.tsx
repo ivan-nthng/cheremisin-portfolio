@@ -15,7 +15,7 @@ import ProjectNavigation from '@/components/ProjectNavigation'
 import { projects, type Project } from '@/components/Projects'
 import { ProjectFooter } from '@/components/ProjectFooter'
 
-export default function HitoDSPage() {
+export default function DsHitoPage() {
     const { theme } = useTheme()
     const [isGridVisible, setIsGridVisible] = React.useState(false)
 
@@ -30,7 +30,7 @@ export default function HitoDSPage() {
         theme === 'dark' ? '/hito/forward-dark.png' : '/hito/forward-light.png'
 
     const clientLogo = {
-        href: 'https://ds-hito.com',
+        href: 'https://example.com',
         svg: (
             <svg
                 width="102"
@@ -53,6 +53,22 @@ export default function HitoDSPage() {
                         d="M64.62 19.43C67.06 19.23 67.47 18.24 68 17.77V6.14L45.88 8.35C45.62 9.34 45.35 10.35 45.07 11.36C44.61 12.99 44.14 14.51 43.66 15.91C43.25 19.35 43.22 22.78 44.35 24.23C44.6 24.55 44.98 24.88 45.83 24.81C46.21 24.78 47.58 24.37 49.55 20.4C50.73 18.02 51.47 15.63 51.48 15.61L54.18 16.18C54.03 17.52 53.93 21.7 55.47 23.28C55.93 23.76 56.51 23.95 57.3 23.88C58.38 23.79 59.23 22.95 59.85 21.76C58.74 21.42 57.75 20.9 56.91 20.21C55.29 18.88 54.29 16.95 54.12 14.79C53.85 11.43 55.54 8.65 57.97 8.45C60.48 8.25 63.35 10.25 63.75 15.14C63.86 16.46 63.78 17.99 63.48 19.5C63.85 19.5 64.24 19.48 64.63 19.45L64.62 19.43Z"
                         fill="currentColor"
                     />
+                    <path
+                        d="M64.84 22.19C64.07 22.25 63.34 22.27 62.64 22.23C61.65 24.58 59.99 26.43 57.51 26.64C55.9 26.77 54.5 26.27 53.46 25.2C52.65 24.36 52.13 23.25 51.81 22.09C50.41 24.77 48.44 27.39 46.04 27.58C44.43 27.71 43.08 27.15 42.14 25.94C41.52 25.14 41.09 24.05 40.84 22.66C38.88 26.41 36.83 28.33 34.57 28.51C33.3 28.61 32.22 28.17 31.45 27.24C30.22 25.74 30.01 22.99 30.23 20.19C30.14 20.33 30.06 20.48 29.97 20.62C25.31 28.33 23.06 29.46 21.62 29.57C19.66 29.73 18.63 28.97 18.12 28.3C16.41 26.1 17.8 22.07 19.14 18.17C19.57 16.93 20.17 15.17 20.32 14.23C18.97 14.41 13.76 16.13 7.59 31.41L7.31 31.99H67.99V21.03C66.95 21.56 66.59 22.04 64.83 22.18L64.84 22.19Z"
+                        fill="currentColor"
+                    />
+                    <path
+                        d="M46.58 5.52L68 3.36V0H47.78C47.46 1.58 47.06 3.47 46.57 5.52H46.58Z"
+                        fill="currentColor"
+                    />
+                    <path
+                        d="M5.02999 30.4L12.96 10.6C10.37 13.19 7.75999 14.84 5.54999 15.9C3.46999 16.9 1.55999 17.46 0.00999451 17.78V32.01H4.26999C4.59999 31.33 4.98999 30.52 5.03999 30.41L5.02999 30.4Z"
+                        fill="currentColor"
+                    />
+                    <path
+                        d="M4.49 13.33C9.76 10.77 13.98 6.29 17.06 0H0V14.93C1.29 14.63 2.83 14.13 4.49 13.33Z"
+                        fill="currentColor"
+                    />
                 </g>
                 <defs>
                     <clipPath id="clip0_5174_359">
@@ -65,39 +81,43 @@ export default function HitoDSPage() {
 
     const stats = [
         {
-            value: '85',
-            label: 'Components Built',
+            value: '0',
+            label: 'Placeholder Stat 1',
         },
         {
-            value: '12',
-            label: 'Design Tokens',
+            value: '0',
+            label: 'Placeholder Stat 2',
         },
         {
-            value: '95',
-            label: 'Accessibility Score',
+            value: '0',
+            label: 'Placeholder Stat 3',
         },
         {
-            value: '40',
-            label: 'Design System Users',
+            value: '0',
+            label: 'Placeholder Stat 4',
         },
     ]
 
     const problemStats = [
         {
-            value: '120',
-            label: 'Hours Saved Monthly',
+            value: '0',
+            label: 'Placeholder Problem Stat 1',
         },
         {
-            value: '60%',
-            label: 'Faster Development',
+            value: '0',
+            label: 'Placeholder Problem Stat 2',
         },
         {
-            value: '90%',
-            label: 'Design Consistency',
+            value: '0',
+            label: 'Placeholder Problem Stat 3',
         },
         {
-            value: '45%',
-            label: 'Code Reusability',
+            value: '0',
+            label: 'Placeholder Problem Stat 4',
+        },
+        {
+            value: '0',
+            label: 'Placeholder Problem Stat 5',
         },
     ]
 
@@ -105,36 +125,36 @@ export default function HitoDSPage() {
         'A semantic variable-based system for building scalable, adaptive UI components. Created to help designers and developers work with consistent spacing, typography, and tokens—tailored for any project with just a few root-level overrides.'
 
     const problemDescription =
-        'Before Hito DS, our teams struggled with inconsistent UI implementations, redundant code, and slow development cycles. Each project required rebuilding common components from scratch, leading to maintenance overhead and visual inconsistencies across products.'
+        'Placeholder problem description for the Hito DS project. Replace with actual problem description.'
 
     const demoTitle = "I'm just a placeholder - but I speak your language."
     const demoDescription =
-        'A semantically smart system that lets designers and developers communicate in human terms. Auto-adaptive. Scales instantly. Ready for any product, zero rework.'
+        'A semantically smart system that lets designers and developers communicate in human terms. Auto-adaptive. Scales instantly. Ready for any product, zero rework'
 
     const galleryItems = [
         {
             imageLight: '/hito/gallery1-light.png',
             imageDark: '/hito/gallery1-dark.png',
-            alt: 'Component Library',
-            title: 'Component Library',
+            alt: 'Placeholder Gallery Item 1',
+            title: 'Placeholder Title 1',
             description:
-                'A comprehensive library of reusable UI components, built with accessibility and performance in mind.',
+                'Placeholder description for gallery item 1. Replace with actual description.',
         },
         {
             imageLight: '/hito/gallery2-light.png',
             imageDark: '/hito/gallery2-dark.png',
-            alt: 'Design Tokens',
-            title: 'Design Tokens',
+            alt: 'Placeholder Gallery Item 2',
+            title: 'Placeholder Title 2',
             description:
-                'A flexible token system that adapts to any brand while maintaining consistent visual hierarchy.',
+                'Placeholder description for gallery item 2. Replace with actual description.',
         },
         {
             imageLight: '/hito/gallery3-light.png',
             imageDark: '/hito/gallery3-dark.png',
-            alt: 'Documentation',
-            title: 'Documentation',
+            alt: 'Placeholder Gallery Item 3',
+            title: 'Placeholder Title 3',
             description:
-                'Comprehensive documentation with live examples and code snippets for quick implementation.',
+                'Placeholder description for gallery item 3. Replace with actual description.',
         },
     ]
 
@@ -148,9 +168,10 @@ export default function HitoDSPage() {
             <OptimizationSection />
             <ProjectFooter
                 team={[
-                    { role: 'Design Lead' },
+                    { role: 'Design' },
                     { role: 'Front-end Engineer' },
-                    { role: 'Design System Architect' },
+                    { role: 'Back-end Engineer' },
+                    { role: 'Business Analyst' },
                     { role: 'UX Researcher' },
                 ]}
                 technologies={[
@@ -159,14 +180,14 @@ export default function HitoDSPage() {
                     { name: 'Next.js' },
                     { name: 'Tailwind CSS' },
                     { name: 'Framer Motion' },
-                    { name: 'Storybook' },
-                    { name: 'Figma' },
+                    { name: 'Node.js' },
+                    { name: 'PostgreSQL' },
                 ]}
                 email="ivan@example.com"
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"
                 instagram="https://instagram.com/ivan"
-                bookingLink="https://calendly.com/ivan/15min"
+                bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
     )
@@ -176,15 +197,16 @@ export default function HitoDSPage() {
             <DemoSection
                 title={demoTitle}
                 description={demoDescription}
-                video="/hito/demo.mp4"
-                caption="The Hito Design System in action, showing how components adapt to different contexts."
+                video="/hito/simple.mov"
+                caption="Placeholder caption for the demo section. Replace with actual caption."
             />
             <GallerySection items={galleryItems} />
             <ProjectFooter
                 team={[
-                    { role: 'Design Lead' },
+                    { role: 'Design' },
                     { role: 'Front-end Engineer' },
-                    { role: 'Design System Architect' },
+                    { role: 'Back-end Engineer' },
+                    { role: 'Business Analyst' },
                     { role: 'UX Researcher' },
                 ]}
                 technologies={[
@@ -193,14 +215,14 @@ export default function HitoDSPage() {
                     { name: 'Next.js' },
                     { name: 'Tailwind CSS' },
                     { name: 'Framer Motion' },
-                    { name: 'Storybook' },
-                    { name: 'Figma' },
+                    { name: 'Node.js' },
+                    { name: 'PostgreSQL' },
                 ]}
                 email="ivan@example.com"
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"
                 instagram="https://instagram.com/ivan"
-                bookingLink="https://calendly.com/ivan/15min"
+                bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
     )
@@ -210,29 +232,29 @@ export default function HitoDSPage() {
             <GallerySection
                 items={[
                     {
-                        imageLight: '/hito/dev1-light.png',
-                        imageDark: '/hito/dev1-dark.png',
-                        alt: 'Development Process',
-                        title: 'Development Process',
-                        description:
-                            'Our iterative approach to building the system.',
+                        imageLight: '',
+                        imageDark: '',
+                        alt: 'Placeholder 1',
+                        title: 'Placeholder 1',
+                        description: 'Content coming soon',
                         neutral: true,
                     },
                     {
-                        imageLight: '/hito/dev2-light.png',
-                        imageDark: '/hito/dev2-dark.png',
-                        alt: 'Technical Architecture',
-                        title: 'Technical Architecture',
-                        description: 'The technical foundation of Hito DS.',
+                        imageLight: '',
+                        imageDark: '',
+                        alt: 'Placeholder 2',
+                        title: 'Placeholder 2',
+                        description: 'Content coming soon',
                         neutral: true,
                     },
                 ]}
             />
             <ProjectFooter
                 team={[
-                    { role: 'Design Lead' },
+                    { role: 'Design' },
                     { role: 'Front-end Engineer' },
-                    { role: 'Design System Architect' },
+                    { role: 'Back-end Engineer' },
+                    { role: 'Business Analyst' },
                     { role: 'UX Researcher' },
                 ]}
                 technologies={[
@@ -241,14 +263,14 @@ export default function HitoDSPage() {
                     { name: 'Next.js' },
                     { name: 'Tailwind CSS' },
                     { name: 'Framer Motion' },
-                    { name: 'Storybook' },
-                    { name: 'Figma' },
+                    { name: 'Node.js' },
+                    { name: 'PostgreSQL' },
                 ]}
                 email="ivan@example.com"
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"
                 instagram="https://instagram.com/ivan"
-                bookingLink="https://calendly.com/ivan/15min"
+                bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
     )
@@ -265,12 +287,12 @@ export default function HitoDSPage() {
                     <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                             <ProjectHero
-                                title="Hito Design System"
-                                description={description}
-                                mainImage={mainImage}
-                                mainImageDark={mainImage}
-                                forwardImage={forwardImage}
-                                forwardImageDark={forwardImage}
+                                title="Hito Design Foundation"
+                                description="A semantic variable-based system for building scalable, adaptive UI components. Created to help designers and developers work with consistent spacing, typography, and tokens—tailored for any project with just a few root-level overrides."
+                                mainImage="/hito/main-light.png"
+                                mainImageDark="/hito/main-dark.png"
+                                forwardImage="/hito/foundation-light.png"
+                                forwardImageDark="/hito/foundation-dark.png"
                                 clientLogo={clientLogo}
                             />
                         </div>

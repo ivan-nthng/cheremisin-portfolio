@@ -172,7 +172,7 @@ export default function UIDemo() {
     return (
         <section className="w-full">
             <div className="space-y-8 sm:space-y-6">
-                <div className="xl:w-1/2 lg:w-2/3 sm:w-full space-y-4 pb-8">
+                <div className="xl:w-1/2 lg:w-2/3 space-y-4 pb-8">
                     <h2 className="text-xl sm:text-md font-bold font-poppins text-blue-900 dark:text-blue-100">
                         Button Component Logic
                     </h2>
