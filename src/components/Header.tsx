@@ -138,7 +138,7 @@ export default function Header() {
                 damping: 20,
                 duration: 0.6,
             }}
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+            className={`fixed sm:top-0 left-0 right-0 z-50 transition-all duration-300 bottom-0 sm:bottom-auto ${
                 isScrolled
                     ? 'bg-primary-50/80 dark:bg-primary-900/80 backdrop-blur-md'
                     : 'bg-transparent'
@@ -154,7 +154,7 @@ export default function Header() {
                         <Logo />
                     </div>
                     <AnimatePresence>
-                        {showText && (
+                        {false && showText && (
                             <MotionDiv
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
