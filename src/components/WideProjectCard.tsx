@@ -110,7 +110,7 @@ export default function WideProjectCard({
             onHoverEnd={() => setIsHovered(false)}
             onMouseMove={handleMouseMove}
             onClick={() => router.push(link)}
-            className="flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8 cursor-none relative bg-blue-100/80 dark:bg-blue-900/80 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 hover:bg-blue-200/80 dark:hover:bg-blue-800/80 transition-colors duration-300"
+            className="flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8 cursor-none relative lg:h-full sm:h-auto md:h-auto bg-blue-100/80 dark:bg-blue-900/80 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 hover:bg-blue-200/80 dark:hover:bg-blue-800/80 transition-colors duration-300"
         >
             <CustomCursor
                 isVisible={isHovered}

@@ -1,11 +1,12 @@
 'use client'
 
+// ===================================
+// Imports and Dependencies
+// ===================================
 import React from 'react'
 import { useTheme } from 'next-themes'
 import ProjectHero from '@/components/ProjectHero'
 import ProjectHeader from '@/components/ProjectHeader'
-import ProjectOverview from '@/components/ProjectOverview'
-import ProblemSection from '@/components/ProblemSection'
 import DemoSection from '@/components/DemoSection'
 import GridOverlay from '@/components/GridOverlay'
 import TabSection from '@/components/TabSection'
@@ -14,8 +15,14 @@ import { GallerySection } from '@/components/GallerySection'
 import ProjectNavigation from '@/components/ProjectNavigation'
 import { projects, type Project } from '@/components/Projects'
 import { ProjectFooter } from '@/components/ProjectFooter'
+import { ContextImageSection } from '@/components/ContextImageSection'
+import { CodeSnippet } from '@/components/CodeSnippet'
+import { cn } from '@/lib/utils'
 
 export default function DsHitoPage() {
+    // ===================================
+    // Hooks and State
+    // ===================================
     const { theme } = useTheme()
     const [isGridVisible, setIsGridVisible] = React.useState(false)
 
@@ -25,11 +32,17 @@ export default function DsHitoPage() {
     )
     const currentProject = projects[currentProjectIndex]
 
+    // ===================================
+    // Asset Configuration
+    // ===================================
     const mainImage =
         theme === 'dark' ? '/hito/main-dark.png' : '/hito/main-light.png'
     const forwardImage =
         theme === 'dark' ? '/hito/forward-dark.png' : '/hito/forward-light.png'
 
+    // ===================================
+    // Client Logo Configuration
+    // ===================================
     const clientLogo = {
         href: 'https://example.com',
         svg: (
@@ -80,192 +93,174 @@ export default function DsHitoPage() {
         ),
     }
 
-    const stats = [
-        {
-            value: '0',
-            label: 'Placeholder Stat 1',
-        },
-        {
-            value: '0',
-            label: 'Placeholder Stat 2',
-        },
-        {
-            value: '0',
-            label: 'Placeholder Stat 3',
-        },
-        {
-            value: '0',
-            label: 'Placeholder Stat 4',
-        },
-    ]
-
-    const problemStats = [
-        {
-            value: '0',
-            label: 'Placeholder Problem Stat 1',
-        },
-        {
-            value: '0',
-            label: 'Placeholder Problem Stat 2',
-        },
-        {
-            value: '0',
-            label: 'Placeholder Problem Stat 3',
-        },
-        {
-            value: '0',
-            label: 'Placeholder Problem Stat 4',
-        },
-        {
-            value: '0',
-            label: 'Placeholder Problem Stat 5',
-        },
-    ]
-
+    // ===================================
+    // Content Configuration
+    // ===================================
     const description =
         'A semantic variable-based system for building scalable, adaptive UI components. Created to help designers and developers work with consistent spacing, typography, and tokens—tailored for any project with just a few root-level overrides.'
-
-    const problemDescription =
-        'Placeholder problem description for the Hito DS project. Replace with actual problem description.'
 
     const demoTitle = "I'm just a placeholder - but I speak your language."
     const demoDescription =
         'A semantically smart system that lets designers and developers communicate in human terms. Auto-adaptive. Scales instantly. Ready for any product, zero rework'
 
+    // ===================================
+    // Gallery Configuration
+    // ===================================
     const galleryItems = [
         {
-            imageLight: '/hito/gallery1-light.png',
-            imageDark: '/hito/gallery1-dark.png',
-            alt: 'Placeholder Gallery Item 1',
-            title: 'Placeholder Title 1',
+            imageLight: '/hito/example-light.png',
+            imageDark: '/hito/example-dark.png',
+            alt: 'Design Tokens',
+            title: 'Design Tokens',
             description:
-                'Placeholder description for gallery item 1. Replace with actual description.',
+                'Raw value syncs with a Tailwind CSS or a custom primitive — then reused as multiple semantic variables across the system. One value, many roles. Clean, scalable, consistent',
+            neutral: true,
+            noDecor: true,
         },
         {
-            imageLight: '/hito/gallery2-light.png',
-            imageDark: '/hito/gallery2-dark.png',
-            alt: 'Placeholder Gallery Item 2',
-            title: 'Placeholder Title 2',
+            imageLight: '/hito/system-part-light.png',
+            imageDark: '/hito/system-part-dark.png',
+            alt: 'System part',
+            title: 'One button size — many behaviors',
             description:
-                'Placeholder description for gallery item 2. Replace with actual description.',
-        },
-        {
-            imageLight: '/hito/gallery3-light.png',
-            imageDark: '/hito/gallery3-dark.png',
-            alt: 'Placeholder Gallery Item 3',
-            title: 'Placeholder Title 3',
-            description:
-                'Placeholder description for gallery item 3. Replace with actual description.',
+                'In my component library, buttons have a single base size. Their actual size adapts automatically based on context — like screen size or layout — or can be customized manually when needed.',
         },
     ]
 
-    const processContent = (
-        <div className="space-y-8">
-            <ProjectOverview stats={stats} description={description} />
-            <ProblemSection
-                stats={problemStats}
-                description={problemDescription}
-            />
-            <OptimizationSection />
-            <ProjectFooter
-                team={[
-                    { role: 'Design' },
-                    { role: 'Front-end Engineer' },
-                    { role: 'Back-end Engineer' },
-                    { role: 'Business Analyst' },
-                    { role: 'UX Researcher' },
-                ]}
-                technologies={currentProject.technologies}
-                email="ivan@cheremisin.co.uk"
-                linkedin="https://www.linkedin.com/in/icheremisin/"
-                github="https://github.com/ivan-nthng"
-                instagram="https://www.instagram.com/cheremisin.co.uk/"
-                bookingLink="https://calendly.com/icheremisin/30min"
-            />
-        </div>
-    )
+    // ===================================
+    // Code States Configuration
+    // ===================================
+    const buttonSizes = [
+        {
+            name: 'SM',
+            code: `// Button component with SM size
+const Button = ({
+  size: 'sm',
+  state: 'default',
+  style: 'accent',
+  leftIcon: false,
+  rightIcon: false,
+  theme: '${theme}'
+}) => (
+  <button className={cn(
+    'rounded-lg font-medium',
+    'text-sm px-3 py-1.5'
+  )}>
+    Small Button
+  </button>
+)`,
+            lightImage: '/hito/button-1-light.png',
+            darkImage: '/hito/button-1-dark.png',
+            tokens: {
+                padding: '0.375rem 0.75rem',
+                borderRadius: '0.5rem',
+                fontSize: '0.875rem',
+            },
+        },
+        {
+            name: 'MD',
+            code: `// Button component with MD size
+const Button = ({
+  size: 'md',
+  state: 'default',
+  style: 'accent',
+  leftIcon: false,
+  rightIcon: false,
+  theme: '${theme}'
+}) => (
+  <button className={cn(
+    'rounded-lg font-medium',
+    'text-base px-4 py-2'
+  )}>
+    Medium Button
+  </button>
+)`,
+            lightImage: '/hito/button-2-light.png',
+            darkImage: '/hito/button-2-dark.png',
+            tokens: {
+                padding: '0.5rem 1rem',
+                borderRadius: '0.5rem',
+                fontSize: '1rem',
+            },
+        },
+        {
+            name: 'LG',
+            code: `// Button component with LG size
+const Button = ({
+  size: 'lg',
+  state: 'default',
+  style: 'accent',
+  leftIcon: false,
+  rightIcon: false,
+  theme: '${theme}'
+}) => (
+  <button className={cn(
+    'rounded-lg font-medium',
+    'text-lg px-5 py-2.5'
+  )}>
+    Large Button
+  </button>
+)`,
+            lightImage: '/hito/button-3-light.png',
+            darkImage: '/hito/button-3-dark.png',
+            tokens: {
+                padding: '0.625rem 1.25rem',
+                borderRadius: '0.5rem',
+                fontSize: '1.125rem',
+            },
+        },
+        {
+            name: 'XL',
+            code: `// Button component with XL size
+const Button = ({
+  size: 'xl',
+  state: 'default',
+  style: 'accent',
+  leftIcon: false,
+  rightIcon: false,
+  theme: '${theme}'
+}) => (
+  <button className={cn(
+    'rounded-lg font-medium',
+    'text-xl px-6 py-3'
+  )}>
+    Extra Large Button
+  </button>
+)`,
+            lightImage: '/hito/button-4-light.png',
+            darkImage: '/hito/button-4-dark.png',
+            tokens: {
+                padding: '0.75rem 1.5rem',
+                borderRadius: '0.5rem',
+                fontSize: '1.25rem',
+            },
+        },
+    ]
 
-    const resultContent = (
-        <div className="space-y-8">
-            <DemoSection
-                title={demoTitle}
-                description={demoDescription}
-                video="/hito/simple.mov"
-                caption="Placeholder caption for the demo section. Replace with actual caption."
-            />
-            <GallerySection items={galleryItems} />
-            <ProjectFooter
-                team={[
-                    { role: 'Design' },
-                    { role: 'Front-end Engineer' },
-                    { role: 'Back-end Engineer' },
-                    { role: 'Business Analyst' },
-                    { role: 'UX Researcher' },
-                ]}
-                technologies={currentProject.technologies}
-                email="ivan@cheremisin.co.uk"
-                linkedin="https://www.linkedin.com/in/icheremisin/"
-                github="https://github.com/ivan-nthng"
-                instagram="https://www.instagram.com/cheremisin.co.uk/"
-                bookingLink="https://calendly.com/icheremisin/30min"
-            />
-        </div>
-    )
-
-    const devContent = (
-        <div className="space-y-8">
-            <GallerySection
-                items={[
-                    {
-                        imageLight: '',
-                        imageDark: '',
-                        alt: 'Placeholder 1',
-                        title: 'Placeholder 1',
-                        description: 'Content coming soon',
-                        neutral: true,
-                    },
-                    {
-                        imageLight: '',
-                        imageDark: '',
-                        alt: 'Placeholder 2',
-                        title: 'Placeholder 2',
-                        description: 'Content coming soon',
-                        neutral: true,
-                    },
-                ]}
-            />
-            <ProjectFooter
-                team={[
-                    { role: 'Design' },
-                    { role: 'Front-end Engineer' },
-                    { role: 'Back-end Engineer' },
-                    { role: 'Business Analyst' },
-                    { role: 'UX Researcher' },
-                ]}
-                technologies={currentProject.technologies}
-                email="ivan@cheremisin.co.uk"
-                linkedin="https://www.linkedin.com/in/icheremisin/"
-                github="https://github.com/ivan-nthng"
-                instagram="https://www.instagram.com/cheremisin.co.uk/"
-                bookingLink="https://calendly.com/icheremisin/30min"
-            />
-        </div>
-    )
-
+    // ===================================
+    // Page Layout
+    // ===================================
     return (
         <>
+            {/* Grid Overlay */}
             <GridOverlay show={isGridVisible} />
+
+            {/* Main Content */}
             <main className="relative">
+                {/* Header */}
                 <ProjectHeader
                     isGridVisible={isGridVisible}
                     onToggleGrid={() => setIsGridVisible(!isGridVisible)}
                 />
+
+                {/* Content Container */}
                 <div className="relative w-full max-w-7xl mx-auto px-6">
                     <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
+                        {/* Hero Section */}
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                             <ProjectHero
                                 title="Hito Design Foundation"
-                                description="A semantic variable-based system for building scalable, adaptive UI components. Created to help designers and developers work with consistent spacing, typography, and tokens—tailored for any project with just a few root-level overrides."
+                                description={description}
                                 mainImage="/hito/main-light.png"
                                 mainImageDark="/hito/main-dark.png"
                                 forwardImage="/hito/foundation-light.png"
@@ -273,13 +268,59 @@ export default function DsHitoPage() {
                                 clientLogo={clientLogo}
                             />
                         </div>
+
+                        {/* Main Content Section */}
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
-                            <TabSection
-                                processContent={processContent}
-                                resultContent={resultContent}
-                                devContent={devContent}
-                            />
+                            <div className="space-y-8">
+                                {/* Main Demo Section */}
+                                <DemoSection
+                                    title={demoTitle}
+                                    description={demoDescription}
+                                    video="/hito/simple.mov"
+                                    caption="Placeholder caption for the demo section. Replace with actual caption."
+                                />
+
+                                {/* Variables Demo Section */}
+                                <ContextImageSection
+                                    lightVideo="/hito/var-demo-light.mov"
+                                    darkVideo="/hito/var-demo-dark.mov"
+                                    alt="Variable Demo"
+                                    header="Semantic Variables"
+                                    description="One variable — many contexts.
+Developers and designers don't need to think about sizes. Values adapt automatically across breakpoints and interface sizes. Just pick a semantically meaningful variable, and the system does the rest."
+                                />
+
+                                {/* Gallery Section */}
+                                <GallerySection items={galleryItems} />
+
+                                {/* Interactive Code Section */}
+                                <CodeSnippet
+                                    header="Button Sizes"
+                                    description="Each button size is defined using semantic tokens that adapt to different contexts while maintaining consistent relationships between padding, font size, and border radius."
+                                    alt="Button Size Variants"
+                                    sizes={buttonSizes}
+                                />
+
+                                {/* Footer Section */}
+                                <ProjectFooter
+                                    team={[
+                                        { role: 'Design' },
+                                        { role: 'Front-end Engineer' },
+                                        { role: 'Back-end Engineer' },
+                                        { role: 'Business Analyst' },
+                                        { role: 'UX Researcher' },
+                                    ]}
+                                    technologies={currentProject.technologies}
+                                    email="ivan@cheremisin.co.uk"
+                                    linkedin="https://www.linkedin.com/in/icheremisin/"
+                                    github="https://github.com/ivan-nthng"
+                                    instagram="https://www.instagram.com/cheremisin.co.uk/"
+                                    bookingLink="https://calendly.com/icheremisin/30min"
+                                />
+                            </div>
                         </div>
+
+                        {/* Project Navigation */}
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                             <ProjectNavigation
                                 projects={projects}

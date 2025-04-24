@@ -8,12 +8,18 @@ interface TabSectionProps {
     processContent: React.ReactNode
     resultContent: React.ReactNode
     devContent: React.ReactNode
+    hideProcess?: boolean
+    hideResult?: boolean
+    hideDev?: boolean
 }
 
 const TabSection: React.FC<TabSectionProps> = ({
     processContent,
     resultContent,
     devContent,
+    hideProcess = false,
+    hideResult = false,
+    hideDev = false,
 }) => {
     const [activeTab, setActiveTab] = React.useState<
         'process' | 'result' | 'dev'
@@ -54,6 +60,15 @@ const TabSection: React.FC<TabSectionProps> = ({
             }
         }, 50)
     }
+
+    const availableTabs = ['result', 'process', 'dev'].filter(
+        (tab) =>
+            !(
+                (tab === 'process' && hideProcess) ||
+                (tab === 'result' && hideResult) ||
+                (tab === 'dev' && hideDev)
+            ),
+    )
 
     return (
         <>
@@ -96,7 +111,7 @@ const TabSection: React.FC<TabSectionProps> = ({
                     <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12 flex justify-center">
                             <div className="flex gap-2 p-1 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl shadow-lg pointer-events-auto">
-                                {['result', 'process', 'dev'].map((tab) => (
+                                {availableTabs.map((tab) => (
                                     <button
                                         key={tab}
                                         onClick={() =>

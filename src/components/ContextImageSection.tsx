@@ -6,8 +6,10 @@ import { cn } from '@/lib/utils'
 import { Lightbox } from './Lightbox'
 
 interface ContextImageSectionProps {
-    lightImage: string
-    darkImage: string
+    lightImage?: string
+    darkImage?: string
+    lightVideo?: string
+    darkVideo?: string
     header: string
     description: string
     alt: string
@@ -16,6 +18,8 @@ interface ContextImageSectionProps {
 export function ContextImageSection({
     lightImage,
     darkImage,
+    lightVideo,
+    darkVideo,
     header,
     description,
     alt,
@@ -24,43 +28,58 @@ export function ContextImageSection({
     const [isLightboxOpen, setIsLightboxOpen] = useState(false)
     const [isHovered, setIsHovered] = useState(false)
 
-    const imageSrc = theme === 'dark' ? darkImage : lightImage
+    const isVideo = Boolean(lightVideo || darkVideo)
+    const source =
+        theme === 'dark'
+            ? darkVideo || darkImage || ''
+            : lightVideo || lightImage || ''
 
     return (
         <div className="py-16">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                {/* Image Column (8/12 width on large screens, full width on small) */}
-                <div className="lg:col-span-8">
+                {/* Media Column (8/12 width on large screens, full width on small) */}
+                <div className="lg:col-span-9">
                     <div
                         className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-background/50 backdrop-blur-sm transition-all duration-300"
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
-                        onClick={() => setIsLightboxOpen(true)}
-                        style={{ cursor: 'pointer' }}
+                        onClick={() => !isVideo && setIsLightboxOpen(true)}
+                        style={{ cursor: isVideo ? 'default' : 'pointer' }}
                     >
                         <motion.div
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
+                            whileHover={{ scale: isVideo ? 1 : 1.02 }}
+                            whileTap={{ scale: isVideo ? 1 : 0.98 }}
                             className="relative h-full w-full"
                         >
-                            <Image
-                                src={imageSrc}
-                                alt={alt}
-                                fill
-                                className="object-cover transition-all duration-300"
-                                style={{
-                                    filter: isHovered
-                                        ? 'brightness(0.9)'
-                                        : 'none',
-                                }}
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
-                                priority
-                            />
+                            {isVideo ? (
+                                <video
+                                    src={source}
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    className="h-full w-full object-cover"
+                                />
+                            ) : (
+                                <Image
+                                    src={source}
+                                    alt={alt}
+                                    fill
+                                    className="object-cover transition-all duration-300"
+                                    style={{
+                                        filter: isHovered
+                                            ? 'brightness(0.9)'
+                                            : 'none',
+                                    }}
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
+                                    priority
+                                />
+                            )}
                         </motion.div>
 
                         {/* Zoom Badge */}
                         <AnimatePresence>
-                            {isHovered && (
+                            {isHovered && !isVideo && (
                                 <motion.div
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -79,7 +98,7 @@ export function ContextImageSection({
                 </div>
 
                 {/* Content Column (4/12 width on large screens, full width on small) */}
-                <div className="lg:col-span-4 flex flex-col justify-center">
+                <div className="lg:col-span-3 flex flex-col justify-center">
                     <h3 className="mb-4 text-xl font-semibold tracking-tight text-blue-900 dark:text-blue-100">
                         {header}
                     </h3>
@@ -90,12 +109,14 @@ export function ContextImageSection({
             </div>
 
             {/* Lightbox */}
-            <Lightbox
-                isOpen={isLightboxOpen}
-                onClose={() => setIsLightboxOpen(false)}
-                image={imageSrc}
-                alt={alt}
-            />
+            {!isVideo && (
+                <Lightbox
+                    isOpen={isLightboxOpen}
+                    onClose={() => setIsLightboxOpen(false)}
+                    image={source}
+                    alt={alt}
+                />
+            )}
         </div>
     )
 }
