@@ -204,7 +204,7 @@ export default function Hero() {
                             transition={{ duration: 0.6, delay: 0.4 }}
                             className="text-lg md:text-xl text-primary-600 dark:text-primary-300 mb-12 max-w-2xl"
                         >
-                            I make digital things better — whether building from
+                            I create digital tools — whether building from
                             scratch or refining what’s already there. Always
                             with clarity, always with care.
                         </motion.p>
