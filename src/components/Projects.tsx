@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import ProjectCard from './ProjectCard'
 import WideProjectCard from './WideProjectCard'
 import NoResultsCard from './NoResultsCard'
+import ComingSoonCard from './ComingSoonCard'
 import { X, Star } from 'lucide-react'
 
 export interface Project {
@@ -17,6 +18,7 @@ export interface Project {
     isWide?: boolean
     companyName?: string
     companyUrl?: string
+    isComingSoon?: boolean
 }
 
 export const projects: Project[] = [
@@ -91,14 +93,12 @@ export const projects: Project[] = [
         companyUrl: 'https://peruse.ml',
     },
     {
-        title: 'Quext',
-        description: 'AI-powered file search and organization tool.',
-        image: '/files-light.png',
-        darkImage: '/files-dark.png',
-        technologies: ['Next.js', 'TypeScript', 'TensorFlow.js'],
-        link: '/projects/quext',
-        companyName: 'Quext',
-        companyUrl: 'https://quext.ai',
+        title: 'Coming Soon',
+        description: '',
+        image: '',
+        technologies: [],
+        link: '#',
+        isComingSoon: true,
     },
 ]
 
@@ -119,9 +119,11 @@ export default function Projects() {
     const allTags = React.useMemo(() => {
         const tagCounts = new Map<string, number>()
         projects.forEach((project) => {
-            project.technologies.forEach((tag) => {
-                tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
-            })
+            if (!project.isComingSoon) {
+                project.technologies.forEach((tag) => {
+                    tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1)
+                })
+            }
         })
         return Array.from(tagCounts.entries())
             .map(([tag, count]) => ({ tag, count }))
@@ -148,9 +150,11 @@ export default function Projects() {
     const tagCountsMap = React.useMemo(() => {
         const counts = new Map<string, number>()
         projects.forEach((project) => {
-            project.technologies.forEach((tag) => {
-                counts.set(tag, (counts.get(tag) || 0) + 1)
-            })
+            if (!project.isComingSoon) {
+                project.technologies.forEach((tag) => {
+                    counts.set(tag, (counts.get(tag) || 0) + 1)
+                })
+            }
         })
         return counts
     }, [])
@@ -158,10 +162,12 @@ export default function Projects() {
     // Filter projects based on selected tags
     const filteredProjects = React.useMemo(() => {
         if (selectedTags.size === 0) return projects
-        return projects.filter((project) =>
-            Array.from(selectedTags).every((tag) =>
-                project.technologies.includes(tag),
-            ),
+        return projects.filter(
+            (project) =>
+                !project.isComingSoon &&
+                Array.from(selectedTags).every((tag) =>
+                    project.technologies.includes(tag),
+                ),
         )
     }, [selectedTags])
 
@@ -216,91 +222,61 @@ export default function Projects() {
                     >
                         Something Specific?
                     </motion.h3>
-                    <div className="flex flex-wrap gap-2 sm:gap-3">
-                        {allTags.map(({ tag, count }, index) => (
-                            <div key={tag} className="relative">
-                                <motion.button
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, margin: '-100px' }}
-                                    transition={{
-                                        duration: 0.3,
-                                        delay: index * 0.1,
-                                    }}
-                                    onClick={() => toggleTag(tag)}
-                                    onMouseEnter={(
-                                        e: React.MouseEvent<HTMLButtonElement>,
-                                    ) => {
-                                        setIsHovered(true)
-                                        setHoveredTag(tag)
-                                        handleTagMouseMove(e)
-                                    }}
-                                    onMouseLeave={() => {
-                                        setIsHovered(false)
-                                        setHoveredTag(null)
-                                    }}
-                                    onMouseMove={handleTagMouseMove}
-                                    className={`px-2 py-1 text-sm  bg-blue-100/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1 ${
+
+                    <div className="flex flex-wrap gap-2">
+                        {allTags.map(({ tag, count }) => (
+                            <button
+                                key={tag}
+                                onClick={() => toggleTag(tag)}
+                                onMouseEnter={(e) => {
+                                    setHoveredTag(tag)
+                                    handleTagMouseMove(e)
+                                    setIsHovered(true)
+                                }}
+                                onMouseLeave={() => {
+                                    setHoveredTag(null)
+                                    setIsHovered(false)
+                                }}
+                                onMouseMove={handleTagMouseMove}
+                                className={`
+                                    group relative px-3 py-1.5 text-sm rounded-lg
+                                    transition-all duration-300
+                                    ${
                                         selectedTags.has(tag)
-                                            ? 'bg-primary-500 text-white dark:bg-primary-400 dark:text-white'
-                                            : 'bg-blue-100/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 hover:bg-primary-200 dark:hover:bg-primary-700'
-                                    }`}
-                                >
-                                    {count > 1 && (
-                                        <Star
-                                            className="w-3 h-3"
-                                            style={{
-                                                opacity: getStarOpacity(count),
-                                            }}
-                                        />
-                                    )}
-                                    {tag}
-                                </motion.button>
-                                <AnimatePresence>
-                                    {hoveredTag === tag && (
-                                        <motion.div
-                                            initial={{ opacity: 0, scale: 0.8 }}
-                                            animate={{
-                                                opacity: 1,
-                                                scale: 1,
-                                                x: tooltipPosition.x + 20,
-                                                y: tooltipPosition.y - 20,
-                                            }}
-                                            exit={{ opacity: 0, scale: 0.8 }}
-                                            transition={{
-                                                duration: 0.2,
-                                                ease: 'easeOut',
-                                            }}
-                                            className="absolute z-[100] pointer-events-none"
-                                        >
-                                            <div className="bg-primary-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap font-mono">
-                                                {selectedTags.has(tag)
-                                                    ? 'Remove Filter'
-                                                    : 'Add Filter'}
-                                            </div>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
-                        ))}
-                        {selectedTags.size > 0 && (
-                            <motion.button
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true, margin: '-100px' }}
-                                onClick={clearFilters}
-                                className="px-2 py-1 text-sm font-medium border rounded border-primary-500 text-primary-500 hover:bg-primary-500/10 dark:border-primary-400 dark:text-primary-400 dark:hover:bg-primary-400/10 transition-all duration-200 flex items-center gap-1"
-                                onMouseEnter={() => setIsHovered(true)}
-                                onMouseLeave={() => setIsHovered(false)}
+                                            ? 'bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100'
+                                            : 'bg-blue-50 dark:bg-blue-950 text-blue-800/60 dark:text-blue-200/60 hover:text-blue-900 dark:hover:text-blue-100'
+                                    }
+                                `}
                             >
-                                Clear Filters
-                                <X className="w-4 h-4" />
-                            </motion.button>
+                                <span className="flex items-center gap-1.5">
+                                    {tag}
+                                    {selectedTags.has(tag) && (
+                                        <X className="w-3 h-3" />
+                                    )}
+                                    <Star
+                                        className={`w-3 h-3 transition-opacity duration-300 ${
+                                            selectedTags.has(tag)
+                                                ? 'opacity-0'
+                                                : `opacity-${getStarOpacity(
+                                                      count,
+                                                  )}`
+                                        }`}
+                                    />
+                                </span>
+                            </button>
+                        ))}
+
+                        {selectedTags.size > 0 && (
+                            <button
+                                onClick={clearFilters}
+                                className="px-3 py-1.5 text-sm rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100"
+                            >
+                                Clear All
+                            </button>
                         )}
                     </div>
                 </div>
 
-                {/* Projects Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-4 sm:gap-6 md:gap-8">
                     <AnimatePresence>
                         {mounted && filteredProjects.length > 0 ? (
@@ -323,7 +299,9 @@ export default function Projects() {
                                         }
                                     `}
                                 >
-                                    {project.isWide ? (
+                                    {project.isComingSoon ? (
+                                        <ComingSoonCard />
+                                    ) : project.isWide ? (
                                         <WideProjectCard
                                             title={project.title}
                                             description={project.description}
