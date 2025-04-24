@@ -60,7 +60,14 @@ export default function ProjectNavigation({
             viewport={{ once: true, margin: '-100px' }}
             className="w-full space-y-8 py-16"
         >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-5">
+            <motion.h2
+                variants={itemVariants}
+                className="text-xl sm:text-2xl font-semibold text-blue-900 dark:text-blue-100 mb-8"
+            >
+                More Projects
+            </motion.h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
                 {/* Previous Project */}
                 <motion.div variants={itemVariants} className="flex flex-col">
                     <h3 className="text-lg font-medium text-primary-600 dark:text-primary-300 mb-4">
