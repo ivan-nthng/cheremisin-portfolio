@@ -179,7 +179,7 @@ export default function Hero() {
                                     </div>
                                 </span>
                                 <motion.span
-                                    className="inline-block bg-clip-text text-transparent pb-1 text-5xl pt-2"
+                                    className="inline-block bg-clip-text text-transparent pb-1 text-4xl md:text-5xl font-bold mb-8 font-heading leading-[1.4] pt-2"
                                     animate={{
                                         backgroundImage: [
                                             'radial-gradient(circle at 0% 0%, #274284, #FF4E51)',
