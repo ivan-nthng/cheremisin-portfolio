@@ -18,22 +18,26 @@ import ProjectBento from '@/components/ProjectBento'
 import HitoLink from '@/components/HitoLink'
 import { ContextImageSection } from '@/components/ContextImageSection'
 import { ProjectFooter } from '@/components/ProjectFooter'
+import { FigmaPreview } from '@/components/FigmaPreview'
 
 export default function TaxiAggregatorSupportWorkspacePage() {
     const { theme } = useTheme()
     const [isGridVisible, setIsGridVisible] = React.useState(false)
 
-    // Find the current project index
+    // Project navigation setup
     const currentProjectIndex = projects.findIndex(
         (project: Project) =>
             project.link === '/projects/taxi-aggregator-support-workspace',
     )
+    const currentProject = projects[currentProjectIndex]
 
+    // Dynamic image paths based on theme
     const mainImage =
         theme === 'dark' ? '/actions-dark.png' : '/actions-light.png'
     const forwardImage =
         theme === 'dark' ? '/forward-dark.png' : '/forward-light.png'
 
+    // Client logo component - customize SVG and link here
     const clientLogo = {
         href: 'https://vk.com',
         svg: (
@@ -55,6 +59,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
         ),
     }
 
+    // Project statistics - customize metrics here
     const stats = [
         {
             value: '14m',
@@ -74,6 +79,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
         },
     ]
 
+    // Problem section statistics - customize metrics here
     const problemStats = [
         {
             value: '220k',
@@ -97,6 +103,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
         },
     ]
 
+    // Project descriptions - customize text here
     const description =
         'In a city where drivers can easily switch to another aggregator, losing a driver means losing money. And the only way to compete was through superior service. The company needed to scale without growing the team — and that meant completely rethinking the tools.'
 
@@ -107,6 +114,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
     const demoDescription =
         'A comprehensive support system that helps operators handle thousands of requests efficiently. The interface provides real-time insights, automated responses, and smart routing to ensure no request goes unanswered.'
 
+    // Gallery items configuration - customize content here
     const galleryItems = [
         {
             imageLight: '/vk/initiation-light.png',
@@ -176,15 +184,25 @@ export default function TaxiAggregatorSupportWorkspacePage() {
         },
     ]
 
+    // Process tab content - includes Overview, Problem, Optimization, and Results sections
     const processContent = (
         <div className="space-y-8">
+            {/* Project Overview Section */}
             <ProjectOverview stats={stats} description={description} />
+
+            {/* Problem Analysis Section */}
             <ProblemSection
                 stats={problemStats}
                 description={problemDescription}
             />
+
+            {/* Optimization Strategy Section */}
             <OptimizationSection />
+
+            {/* Project Highlights Section */}
             <ProjectBento />
+
+            {/* Results Section with Statistics */}
             <section className="w-full py-16 sm:py-24">
                 <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
                     {/* Left Column - Content */}
@@ -324,6 +342,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                     </div>
                 </div>
             </section>
+            {/* Process Tab Footer */}
             <ProjectFooter
                 team={[
                     { role: 'Design' },
@@ -332,15 +351,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                     { role: 'Business Analyst' },
                     { role: 'UX Researcher' },
                 ]}
-                technologies={[
-                    { name: 'React' },
-                    { name: 'TypeScript' },
-                    { name: 'Next.js' },
-                    { name: 'Tailwind CSS' },
-                    { name: 'Framer Motion' },
-                    { name: 'Node.js' },
-                    { name: 'PostgreSQL' },
-                ]}
+                technologies={currentProject.technologies}
                 email="ivan@example.com"
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"
@@ -350,39 +361,39 @@ export default function TaxiAggregatorSupportWorkspacePage() {
         </div>
     )
 
+    // Results tab content - includes Demo, Gallery, and Context sections
     const resultContent = (
         <div className="space-y-8">
+            {/* Demo Section */}
             <DemoSection
                 title={demoTitle}
                 description={demoDescription}
                 image="vk/demo"
                 caption="A comprehensive support system that helps operators handle thousands of requests efficiently."
             />
+
+            {/* Gallery Section */}
             <GallerySection items={galleryItems} />
+
+            {/* Context Section */}
             <ContextImageSection
-                lightImage="/vk/context-light.png"
-                darkImage="/vk/context-dark.png"
+                lightImage="/vk/context-light@2x.png"
+                darkImage="/vk/context-dark@2x.png"
                 header="Context-Aware Support"
                 description="The system automatically surfaces relevant trip details, driver history, and previous interactions, enabling operators to provide personalized support without manual research."
                 alt="Context-Aware Support Interface"
             />
+
+            {/* Results Tab Footer */}
             <ProjectFooter
                 team={[
-                    { role: 'Design' },
+                    { role: 'QA' },
                     { role: 'Front-end Engineer' },
                     { role: 'Back-end Engineer' },
                     { role: 'Business Analyst' },
-                    { role: 'UX Researcher' },
+                    { role: 'PM' },
                 ]}
-                technologies={[
-                    { name: 'React' },
-                    { name: 'TypeScript' },
-                    { name: 'Next.js' },
-                    { name: 'Tailwind CSS' },
-                    { name: 'Framer Motion' },
-                    { name: 'Node.js' },
-                    { name: 'PostgreSQL' },
-                ]}
+                technologies={currentProject.technologies}
                 email="ivan@example.com"
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"
@@ -392,8 +403,10 @@ export default function TaxiAggregatorSupportWorkspacePage() {
         </div>
     )
 
+    // Development tab content - includes Component Library and Figma Preview
     const devContent = (
         <div className="space-y-8">
+            {/* Component Library Section */}
             <section className="space-y-8 sm:space-y-12">
                 <div className="space-y-4 py-16 xl:w-1/2 lg:w-2/3">
                     <h2 className="text-2xl sm:text-3xl font-bold font-poppins text-blue-900 dark:text-blue-100">
@@ -408,6 +421,15 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                 </div>
                 <UIDemo />
             </section>
+
+            {/* Figma Preview Section */}
+            <FigmaPreview
+                embedUrl="https://embed.figma.com/design/a1FIpM2QJ0y79EO170WQDG/CityMobil-Preview?embed-host=share"
+                title="Figma Demo File"
+                description="This Figma file is shared for preview purposes only. It includes a partial look at the design system: some components, applied variables, and a fragment of the interface. It’s not a complete or production-ready file — just a snapshot to give you a feel for the structure and logic behind the system."
+            />
+
+            {/* Dev Tab Footer */}
             <ProjectFooter
                 team={[
                     { role: 'Design' },
@@ -416,15 +438,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                     { role: 'Business Analyst' },
                     { role: 'UX Researcher' },
                 ]}
-                technologies={[
-                    { name: 'React' },
-                    { name: 'TypeScript' },
-                    { name: 'Next.js' },
-                    { name: 'Tailwind CSS' },
-                    { name: 'Framer Motion' },
-                    { name: 'Node.js' },
-                    { name: 'PostgreSQL' },
-                ]}
+                technologies={currentProject.technologies}
                 email="ivan@example.com"
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"
@@ -436,14 +450,21 @@ export default function TaxiAggregatorSupportWorkspacePage() {
 
     return (
         <>
+            {/* Grid Overlay Toggle */}
             <GridOverlay show={isGridVisible} />
+
+            {/* Main Content */}
             <main className="relative">
+                {/* Header with Grid Toggle */}
                 <ProjectHeader
                     isGridVisible={isGridVisible}
                     onToggleGrid={() => setIsGridVisible(!isGridVisible)}
                 />
+
+                {/* Content Container */}
                 <div className="relative w-full max-w-7xl mx-auto px-6">
                     <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
+                        {/* Hero Section */}
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                             <ProjectHero
                                 title="Taxi Aggregator Support Workspace"
@@ -455,6 +476,8 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                                 clientLogo={clientLogo}
                             />
                         </div>
+
+                        {/* Tab Section - Process, Results, Dev */}
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                             <TabSection
                                 processContent={processContent}
@@ -462,6 +485,8 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                                 devContent={devContent}
                             />
                         </div>
+
+                        {/* Project Navigation */}
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                             <ProjectNavigation
                                 projects={projects}

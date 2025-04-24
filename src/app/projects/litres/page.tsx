@@ -21,8 +21,9 @@ export default function LitresPage() {
 
     // Find the current project index
     const currentProjectIndex = projects.findIndex(
-        (project: Project) => project.link === '/projects/litres',
+        (p) => p.link === '/projects/litres',
     )
+    const currentProject = projects[currentProjectIndex]
 
     const mainImage =
         theme === 'dark' ? '/litres/≈' : '/litres/project-1-light.png'
@@ -217,15 +218,7 @@ export default function LitresPage() {
                     { role: 'Business Analyst' },
                     { role: 'UX Researcher' },
                 ]}
-                technologies={[
-                    { name: 'React' },
-                    { name: 'TypeScript' },
-                    { name: 'Next.js' },
-                    { name: 'Tailwind CSS' },
-                    { name: 'Framer Motion' },
-                    { name: 'Node.js' },
-                    { name: 'PostgreSQL' },
-                ]}
+                technologies={currentProject.technologies}
                 email="ivan@example.com"
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"
@@ -252,15 +245,7 @@ export default function LitresPage() {
                     { role: 'Business Analyst' },
                     { role: 'UX Researcher' },
                 ]}
-                technologies={[
-                    { name: 'React' },
-                    { name: 'TypeScript' },
-                    { name: 'Next.js' },
-                    { name: 'Tailwind CSS' },
-                    { name: 'Framer Motion' },
-                    { name: 'Node.js' },
-                    { name: 'PostgreSQL' },
-                ]}
+                technologies={currentProject.technologies}
                 email="ivan@example.com"
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"
@@ -300,15 +285,7 @@ export default function LitresPage() {
                     { role: 'Business Analyst' },
                     { role: 'UX Researcher' },
                 ]}
-                technologies={[
-                    { name: 'React' },
-                    { name: 'TypeScript' },
-                    { name: 'Next.js' },
-                    { name: 'Tailwind CSS' },
-                    { name: 'Framer Motion' },
-                    { name: 'Node.js' },
-                    { name: 'PostgreSQL' },
-                ]}
+                technologies={currentProject.technologies}
                 email="ivan@example.com"
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"

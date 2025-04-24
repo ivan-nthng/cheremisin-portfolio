@@ -26,7 +26,15 @@ export const projects: Project[] = [
             'A modern web application built with Next.js, TypeScript, and Tailwind CSS.',
         image: '/chat-light.png',
         darkImage: '/chat-dark.png',
-        technologies: ['Next.js', 'TypeScript', 'Tailwind CSS'],
+        technologies: [
+            'Figma',
+            'Design Systems',
+            'User Testing',
+            'User flows',
+            'Next.js',
+            'TypeScript',
+            'Tailwind CSS',
+        ],
         link: '/projects/taxi-aggregator-support-workspace',
         companyName: 'VK',
         companyUrl: 'https://vk.com',
@@ -37,7 +45,15 @@ export const projects: Project[] = [
             'A comprehensive data science platform that helps users analyze and visualize complex datasets with ease. Built with modern web technologies and a focus on user experience.',
         image: '/ds-hito-light.png',
         darkImage: '/ds-hito-dark.png',
-        technologies: ['Next.js', 'Python', 'TensorFlow', 'D3.js'],
+        technologies: [
+            'UI Design',
+            'Figma',
+            'Design Systems',
+            'Next.js',
+            'MVP',
+            'Design Handoff',
+            'Product Strategy',
+        ],
         link: '/projects/ds-hito',
         isWide: true,
         companyName: 'DS Hito',
@@ -48,7 +64,18 @@ export const projects: Project[] = [
         description: 'An e-commerce platform and digital publisher.',
         image: '/preview-light.png',
         darkImage: '/preview-dark.png',
-        technologies: ['React', 'Node.js', 'MongoDB'],
+        technologies: [
+            'UI Design',
+            'Figma',
+            'Design Systems',
+            'Quantitative Research',
+            'User Interviews',
+            'Design Handoff',
+            'Product Strategy',
+            'Mobile-first Design',
+            'A/B Testing',
+            'Collaboration',
+        ],
         link: '/projects/litres',
         companyName: 'Litres.com',
         companyUrl: 'https://litres.com',
@@ -62,6 +89,16 @@ export const projects: Project[] = [
         link: '/projects/peruse',
         companyName: 'Peruse.ml',
         companyUrl: 'https://peruse.ml',
+    },
+    {
+        title: 'Quext',
+        description: 'AI-powered file search and organization tool.',
+        image: '/files-light.png',
+        darkImage: '/files-dark.png',
+        technologies: ['Next.js', 'TypeScript', 'TensorFlow.js'],
+        link: '/projects/quext',
+        companyName: 'Quext',
+        companyUrl: 'https://quext.ai',
     },
 ]
 
@@ -182,7 +219,9 @@ export default function Projects() {
                                         delay: index * 0.1,
                                     }}
                                     onClick={() => toggleTag(tag)}
-                                    onMouseEnter={(e) => {
+                                    onMouseEnter={(
+                                        e: React.MouseEvent<HTMLButtonElement>,
+                                    ) => {
                                         setIsHovered(true)
                                         setHoveredTag(tag)
                                         handleTagMouseMove(e)
@@ -285,7 +324,6 @@ export default function Projects() {
                                             link={project.link}
                                             companyName={project.companyName}
                                             companyUrl={project.companyUrl}
-                                            tagCounts={tagCountsMap}
                                         />
                                     ) : (
                                         <ProjectCard
@@ -297,7 +335,6 @@ export default function Projects() {
                                             link={project.link}
                                             companyName={project.companyName}
                                             companyUrl={project.companyUrl}
-                                            tagCounts={tagCountsMap}
                                         />
                                     )}
                                 </motion.div>

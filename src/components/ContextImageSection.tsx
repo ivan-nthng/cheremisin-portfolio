@@ -28,9 +28,9 @@ export function ContextImageSection({
 
     return (
         <div className="py-16">
-            <div className="grid grid-cols-4 gap-8">
-                {/* Image Column (2/3 width) */}
-                <div className="col-span-3">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                {/* Image Column (8/12 width on large screens, full width on small) */}
+                <div className="lg:col-span-8">
                     <div
                         className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-background/50 backdrop-blur-sm transition-all duration-300"
                         onMouseEnter={() => setIsHovered(true)}
@@ -53,7 +53,7 @@ export function ContextImageSection({
                                         ? 'brightness(0.9)'
                                         : 'none',
                                 }}
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
                                 priority
                             />
                         </motion.div>
@@ -78,9 +78,9 @@ export function ContextImageSection({
                     </div>
                 </div>
 
-                {/* Content Column (1/3 width) */}
-                <div className="col-span-1 flex flex-col justify-center">
-                    <h3 className="mb-4 text-xl sm:text-md font-semibold tracking-tight text-blue-900 dark:text-blue-100">
+                {/* Content Column (4/12 width on large screens, full width on small) */}
+                <div className="lg:col-span-4 flex flex-col justify-center">
+                    <h3 className="mb-4 text-xl font-semibold tracking-tight text-blue-900 dark:text-blue-100">
                         {header}
                     </h3>
                     <p className="text-sm leading-relaxed text-blue-800/80 dark:text-blue-200/80">

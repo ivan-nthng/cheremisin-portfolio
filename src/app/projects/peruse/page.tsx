@@ -26,6 +26,7 @@ export default function PerusePage() {
     const currentProjectIndex = projects.findIndex(
         (p) => p.link === '/projects/peruse',
     )
+    const currentProject = projects[currentProjectIndex]
 
     // TODO: Update these with actual content
     const demoTitle = 'Intelligent File Organization'
@@ -99,21 +100,14 @@ export default function PerusePage() {
                     { role: 'Design' },
                     { role: 'Front-end Engineer' },
                     { role: 'Back-end Engineer' },
-                    { role: 'ML Engineer' },
+                    { role: 'Business Analyst' },
+                    { role: 'UX Researcher' },
                 ]}
-                technologies={[
-                    { name: 'Next.js' },
-                    { name: 'TypeScript' },
-                    { name: 'TensorFlow.js' },
-                    { name: 'Tailwind CSS' },
-                    { name: 'Framer Motion' },
-                    { name: 'Node.js' },
-                    { name: 'PostgreSQL' },
-                ]}
-                email="ivan@cheremisin.co.uk"
-                linkedin="https://www.linkedin.com/in/icheremisin/"
-                github="https://github.com/ivan-nthng"
-                instagram="https://www.instagram.com/cheremisin.co.uk/"
+                technologies={currentProject.technologies}
+                email="ivan@example.com"
+                linkedin="https://linkedin.com/in/ivan"
+                github="https://github.com/ivan"
+                instagram="https://instagram.com/ivan"
                 bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
@@ -140,21 +134,14 @@ export default function PerusePage() {
                     { role: 'Design' },
                     { role: 'Front-end Engineer' },
                     { role: 'Back-end Engineer' },
-                    { role: 'ML Engineer' },
+                    { role: 'Business Analyst' },
+                    { role: 'UX Researcher' },
                 ]}
-                technologies={[
-                    { name: 'Next.js' },
-                    { name: 'TypeScript' },
-                    { name: 'TensorFlow.js' },
-                    { name: 'Tailwind CSS' },
-                    { name: 'Framer Motion' },
-                    { name: 'Node.js' },
-                    { name: 'PostgreSQL' },
-                ]}
-                email="ivan@cheremisin.co.uk"
-                linkedin="https://www.linkedin.com/in/icheremisin/"
-                github="https://github.com/ivan-nthng"
-                instagram="https://www.instagram.com/cheremisin.co.uk/"
+                technologies={currentProject.technologies}
+                email="ivan@example.com"
+                linkedin="https://linkedin.com/in/ivan"
+                github="https://github.com/ivan"
+                instagram="https://instagram.com/ivan"
                 bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
@@ -193,21 +180,14 @@ export default function PerusePage() {
                     { role: 'Design' },
                     { role: 'Front-end Engineer' },
                     { role: 'Back-end Engineer' },
-                    { role: 'ML Engineer' },
+                    { role: 'Business Analyst' },
+                    { role: 'UX Researcher' },
                 ]}
-                technologies={[
-                    { name: 'Next.js' },
-                    { name: 'TypeScript' },
-                    { name: 'TensorFlow.js' },
-                    { name: 'Tailwind CSS' },
-                    { name: 'Framer Motion' },
-                    { name: 'Node.js' },
-                    { name: 'PostgreSQL' },
-                ]}
-                email="ivan@cheremisin.co.uk"
-                linkedin="https://www.linkedin.com/in/icheremisin/"
-                github="https://github.com/ivan-nthng"
-                instagram="https://www.instagram.com/cheremisin.co.uk/"
+                technologies={currentProject.technologies}
+                email="ivan@example.com"
+                linkedin="https://linkedin.com/in/ivan"
+                github="https://github.com/ivan"
+                instagram="https://instagram.com/ivan"
                 bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>

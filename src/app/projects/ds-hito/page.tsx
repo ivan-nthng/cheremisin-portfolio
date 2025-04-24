@@ -21,8 +21,9 @@ export default function DsHitoPage() {
 
     // Find the current project index
     const currentProjectIndex = projects.findIndex(
-        (project: Project) => project.link === '/projects/ds-hito',
+        (p) => p.link === '/projects/ds-hito',
     )
+    const currentProject = projects[currentProjectIndex]
 
     const mainImage =
         theme === 'dark' ? '/hito/main-dark.png' : '/hito/main-light.png'
@@ -174,15 +175,7 @@ export default function DsHitoPage() {
                     { role: 'Business Analyst' },
                     { role: 'UX Researcher' },
                 ]}
-                technologies={[
-                    { name: 'React' },
-                    { name: 'TypeScript' },
-                    { name: 'Next.js' },
-                    { name: 'Tailwind CSS' },
-                    { name: 'Framer Motion' },
-                    { name: 'Node.js' },
-                    { name: 'PostgreSQL' },
-                ]}
+                technologies={currentProject.technologies}
                 email="ivan@example.com"
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"
@@ -209,15 +202,7 @@ export default function DsHitoPage() {
                     { role: 'Business Analyst' },
                     { role: 'UX Researcher' },
                 ]}
-                technologies={[
-                    { name: 'React' },
-                    { name: 'TypeScript' },
-                    { name: 'Next.js' },
-                    { name: 'Tailwind CSS' },
-                    { name: 'Framer Motion' },
-                    { name: 'Node.js' },
-                    { name: 'PostgreSQL' },
-                ]}
+                technologies={currentProject.technologies}
                 email="ivan@example.com"
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"
@@ -257,15 +242,7 @@ export default function DsHitoPage() {
                     { role: 'Business Analyst' },
                     { role: 'UX Researcher' },
                 ]}
-                technologies={[
-                    { name: 'React' },
-                    { name: 'TypeScript' },
-                    { name: 'Next.js' },
-                    { name: 'Tailwind CSS' },
-                    { name: 'Framer Motion' },
-                    { name: 'Node.js' },
-                    { name: 'PostgreSQL' },
-                ]}
+                technologies={currentProject.technologies}
                 email="ivan@example.com"
                 linkedin="https://linkedin.com/in/ivan"
                 github="https://github.com/ivan"

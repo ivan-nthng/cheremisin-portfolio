@@ -213,24 +213,29 @@ export function GalleryItem({
                 </div>
 
                 {/* Text Content */}
-                <motion.div
-                    className="md:col-span-3 flex flex-col gap-3 md:pt-6 sticky top-14"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={
-                        isVisible ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }
-                    }
-                    transition={{
-                        duration: 0.6,
-                        ease: [0.16, 1, 0.3, 1],
-                    }}
-                >
-                    <h3 className="text-xl font-semibold font-poppins text-blue-900 dark:text-blue-100">
-                        {title}
-                    </h3>
-                    <p className="text-sm font-mono text-blue-800/80 dark:text-blue-200/80 leading-relaxed">
-                        {description}
-                    </p>
-                </motion.div>
+                <div className="md:col-span-3 flex flex-col gap-4 md:pt-6">
+                    <motion.div
+                        className="space-y-4"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{
+                            duration: 0.6,
+                            ease: [0.16, 1, 0.3, 1],
+                            delay: 0.2,
+                        }}
+                    >
+                        {title && (
+                            <h3 className="text-xl font-semibold tracking-tight text-blue-900 dark:text-blue-100">
+                                {title}
+                            </h3>
+                        )}
+                        {description && (
+                            <p className="text-sm leading-relaxed text-blue-800/80 dark:text-blue-200/80">
+                                {description}
+                            </p>
+                        )}
+                    </motion.div>
+                </div>
             </div>
 
             {/* Lightbox */}

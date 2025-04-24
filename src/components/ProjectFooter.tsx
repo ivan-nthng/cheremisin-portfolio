@@ -1,19 +1,15 @@
 import { cn } from '@/lib/utils'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Github, Linkedin, Mail, Calendar, Instagram } from 'lucide-react'
+import { Github, Linkedin, Mail, Calendar, Instagram, Star } from 'lucide-react'
 
 interface TeamMember {
     role: string
 }
 
-interface Technology {
-    name: string
-}
-
 interface ProjectFooterProps {
     team: TeamMember[]
-    technologies: Technology[]
+    technologies: string[]
     email?: string
     linkedin?: string
     github?: string
@@ -30,6 +26,21 @@ export function ProjectFooter({
     instagram = 'https://instagram.com/ivan',
     bookingLink = 'https://calendly.com/icheremisin/30min',
 }: ProjectFooterProps) {
+    // Count technology occurrences to determine star visibility
+    const technologyCounts = technologies.reduce((acc, tech) => {
+        acc[tech] = (acc[tech] || 0) + 1
+        return acc
+    }, {} as Record<string, number>)
+
+    // Get star opacity based on usage count (matching Projects.tsx logic)
+    const getStarOpacity = (count: number) => {
+        if (count >= 5) return 1
+        if (count === 4) return 0.8
+        if (count === 3) return 0.6
+        if (count === 2) return 0.4
+        return 0
+    }
+
     return (
         <div className="relative py-16 sm:py-20 md:py-24 border-t border-b border-blue-200/30 dark:border-blue-800/30">
             <motion.div
@@ -87,9 +98,19 @@ export function ProjectFooter({
                             {technologies.map((tech, index) => (
                                 <span
                                     key={index}
-                                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100/50 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200"
+                                    className="px-2 py-1 text-sm bg-blue-100/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1"
                                 >
-                                    {tech.name}
+                                    {technologyCounts[tech] > 1 && (
+                                        <Star
+                                            className="w-3 h-3"
+                                            style={{
+                                                opacity: getStarOpacity(
+                                                    technologyCounts[tech],
+                                                ),
+                                            }}
+                                        />
+                                    )}
+                                    {tech}
                                 </span>
                             ))}
                         </div>
@@ -148,10 +169,10 @@ export function ProjectFooter({
                                 href={bookingLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-900 dark:bg-blue-100 text-blue-50 dark:text-blue-900 text-sm font-medium hover:bg-blue-800 dark:hover:bg-blue-200 transition-colors"
+                                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-100/50 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 text-sm font-medium hover:bg-blue-200/50 dark:hover:bg-blue-800/50 transition-colors"
                             >
                                 <Calendar className="w-4 h-4" />
-                                <span>Book 15-minute call</span>
+                                <span>Book a Call</span>
                             </a>
                         </div>
                     </motion.div>
