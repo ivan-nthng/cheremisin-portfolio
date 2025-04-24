@@ -19,7 +19,7 @@ export function FigmaPreview({
         <div className="py-16">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-8 items-start">
                 {/* Figma Preview Container */}
-                <div className="md:col-span-8 relative w-full rounded-2xl overflow-hidden border border-blue-200/50 dark:border-blue-800/50">
+                <div className="md:col-span-9 relative w-full rounded-2xl overflow-hidden border border-blue-200/50 dark:border-blue-800/50">
                     <div className="relative w-full aspect-[16/9]">
                         <iframe
                             src={embedUrl}
@@ -31,7 +31,7 @@ export function FigmaPreview({
                 </div>
 
                 {/* Text Content */}
-                <div className="md:col-span-4 flex flex-col gap-4 md:pt-6">
+                <div className="md:col-span-3 flex flex-col gap-4 md:pt-6">
                     <motion.div
                         className="space-y-4"
                         initial={{ opacity: 0, x: 20 }}
