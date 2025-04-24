@@ -104,10 +104,10 @@ export default function PerusePage() {
                     { role: 'UX Researcher' },
                 ]}
                 technologies={currentProject.technologies}
-                email="ivan@example.com"
-                linkedin="https://linkedin.com/in/ivan"
-                github="https://github.com/ivan"
-                instagram="https://instagram.com/ivan"
+                email="ivan@cheremisin.co.uk"
+                linkedin="https://www.linkedin.com/in/icheremisin/"
+                github="https://github.com/ivan-nthng"
+                instagram="https://www.instagram.com/cheremisin.co.uk/"
                 bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
@@ -138,10 +138,10 @@ export default function PerusePage() {
                     { role: 'UX Researcher' },
                 ]}
                 technologies={currentProject.technologies}
-                email="ivan@example.com"
-                linkedin="https://linkedin.com/in/ivan"
-                github="https://github.com/ivan"
-                instagram="https://instagram.com/ivan"
+                email="ivan@cheremisin.co.uk"
+                linkedin="https://www.linkedin.com/in/icheremisin/"
+                github="https://github.com/ivan-nthng"
+                instagram="https://www.instagram.com/cheremisin.co.uk/"
                 bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
@@ -184,10 +184,10 @@ export default function PerusePage() {
                     { role: 'UX Researcher' },
                 ]}
                 technologies={currentProject.technologies}
-                email="ivan@example.com"
-                linkedin="https://linkedin.com/in/ivan"
-                github="https://github.com/ivan"
-                instagram="https://instagram.com/ivan"
+                email="ivan@cheremisin.co.uk"
+                linkedin="https://www.linkedin.com/in/icheremisin/"
+                github="https://github.com/ivan-nthng"
+                instagram="https://www.instagram.com/cheremisin.co.uk/"
                 bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>

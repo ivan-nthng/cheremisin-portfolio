@@ -20,10 +20,10 @@ interface ProjectFooterProps {
 export function ProjectFooter({
     team,
     technologies,
-    email = 'ivan@example.com',
-    linkedin = 'https://linkedin.com/in/ivan',
-    github = 'https://github.com/ivan',
-    instagram = 'https://instagram.com/ivan',
+    email = 'ivan@cheremisin.co.uk',
+    linkedin = 'https://www.linkedin.com/in/icheremisin/',
+    github = 'https://github.com/ivan-nthng',
+    instagram = 'https://www.instagram.com/cheremisin.co.uk/',
     bookingLink = 'https://calendly.com/icheremisin/30min',
 }: ProjectFooterProps) {
     // Count technology occurrences to determine star visibility

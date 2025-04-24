@@ -352,10 +352,10 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                     { role: 'UX Researcher' },
                 ]}
                 technologies={currentProject.technologies}
-                email="ivan@example.com"
-                linkedin="https://linkedin.com/in/ivan"
-                github="https://github.com/ivan"
-                instagram="https://instagram.com/ivan"
+                email="ivan@cheremisin.co.uk"
+                linkedin="https://www.linkedin.com/in/icheremisin/"
+                github="https://github.com/ivan-nthng"
+                instagram="https://www.instagram.com/cheremisin.co.uk/"
                 bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
@@ -394,10 +394,10 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                     { role: 'PM' },
                 ]}
                 technologies={currentProject.technologies}
-                email="ivan@example.com"
-                linkedin="https://linkedin.com/in/ivan"
-                github="https://github.com/ivan"
-                instagram="https://instagram.com/ivan"
+                email="ivan@cheremisin.co.uk"
+                linkedin="https://www.linkedin.com/in/icheremisin/"
+                github="https://github.com/ivan-nthng"
+                instagram="https://www.instagram.com/cheremisin.co.uk/"
                 bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
@@ -426,7 +426,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
             <FigmaPreview
                 embedUrl="https://embed.figma.com/design/a1FIpM2QJ0y79EO170WQDG/CityMobil-Preview?embed-host=share"
                 title="Figma Demo File"
-                description="This Figma file is shared for preview purposes only. It includes a partial look at the design system: some components, applied variables, and a fragment of the interface. It’s not a complete or production-ready file — just a snapshot to give you a feel for the structure and logic behind the system."
+                description="This Figma file is shared for preview purposes only. It includes a partial look at the design system: some components, applied variables, and a fragment of the interface. It's not a complete or production-ready file — just a snapshot to give you a feel for the structure and logic behind the system."
             />
 
             {/* Dev Tab Footer */}
@@ -439,10 +439,10 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                     { role: 'UX Researcher' },
                 ]}
                 technologies={currentProject.technologies}
-                email="ivan@example.com"
-                linkedin="https://linkedin.com/in/ivan"
-                github="https://github.com/ivan"
-                instagram="https://instagram.com/ivan"
+                email="ivan@cheremisin.co.uk"
+                linkedin="https://www.linkedin.com/in/icheremisin/"
+                github="https://github.com/ivan-nthng"
+                instagram="https://www.instagram.com/cheremisin.co.uk/"
                 bookingLink="https://calendly.com/icheremisin/30min"
             />
         </div>
