@@ -1,5 +1,8 @@
 'use client'
 
+// ===================================
+// Imports and Dependencies
+// ===================================
 import React from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -9,6 +12,9 @@ import { useTheme } from 'next-themes'
 import { ArrowUpRight, Star } from 'lucide-react'
 import Link from 'next/link'
 
+// ===================================
+// Types and Interfaces
+// ===================================
 interface ProjectCardProps {
     title: string
     description: string
@@ -22,6 +28,9 @@ interface ProjectCardProps {
     noimg?: boolean
 }
 
+// ===================================
+// Main Component
+// ===================================
 export default function ProjectCard({
     title,
     description,
@@ -34,6 +43,9 @@ export default function ProjectCard({
     tagCounts,
     noimg = false,
 }: ProjectCardProps) {
+    // ===================================
+    // Hooks and State Management
+    // ===================================
     const router = useRouter()
     const { theme } = useTheme()
     const cardRef = React.useRef<HTMLDivElement>(null)
@@ -49,6 +61,9 @@ export default function ProjectCard({
         y: 0,
     })
 
+    // ===================================
+    // Intersection Observer Setup
+    // ===================================
     React.useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -68,6 +83,9 @@ export default function ProjectCard({
         }
     }, [])
 
+    // ===================================
+    // Event Handlers
+    // ===================================
     const handleMouseMove = (e: React.MouseEvent) => {
         if (cardRef.current) {
             const rect = cardRef.current.getBoundingClientRect()
@@ -94,6 +112,9 @@ export default function ProjectCard({
         })
     }
 
+    // ===================================
+    // Animation Variants
+    // ===================================
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -114,6 +135,9 @@ export default function ProjectCard({
 
     const currentImage = theme === 'dark' && darkImage ? darkImage : image
 
+    // ===================================
+    // Component Render
+    // ===================================
     return (
         <motion.div
             ref={cardRef}
@@ -125,6 +149,7 @@ export default function ProjectCard({
                 noimg ? 'p-6 rounded-2xl bg-blue-50 dark:bg-blue-900/30' : ''
             }`}
         >
+            {/* Custom Cursor */}
             <CustomCursor
                 isVisible={isHovered}
                 position={cursorPosition}
@@ -132,6 +157,7 @@ export default function ProjectCard({
                 isHighlighted={isCompanyHovered}
             />
 
+            {/* Project Image Section */}
             {!noimg && (
                 <motion.div
                     onHoverStart={() => setIsImageHovered(true)}
@@ -166,10 +192,14 @@ export default function ProjectCard({
                 </motion.div>
             )}
 
+            {/* Project Content Section */}
             <div className="flex-1">
-                <h3 className="text-xl sm:text-2xl font-bold text-primary-800 dark:text-primary-100">
+                {/* Project Title */}
+                <h3 className="text-lg sm:text-xl font-bold text-primary-800 dark:text-primary-100">
                     {title}
                 </h3>
+
+                {/* Company Link */}
                 {companyName && (
                     <div className="relative">
                         <Link
@@ -191,23 +221,73 @@ export default function ProjectCard({
                         </Link>
                     </div>
                 )}
+
+                {/* Project Description and Tags */}
                 <div className="mt-2 sm:mt-3 space-y-3 sm:space-y-4">
-                    <p className="text-md sm:text-md text-primary-600 dark:text-primary-300">
+                    <p className="text-sm sm:text-md text-primary-600 dark:text-primary-300">
                         {description}
                     </p>
+                    {/* Technology Tags */}
                     <div className="flex flex-wrap gap-2">
                         {tags.map((tag) => (
                             <span
                                 key={tag}
-                                className="px-2 py-1 text-sm  bg-blue-100/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1"
+                                onMouseEnter={(e) => {
+                                    setIsTooltipVisible(true)
+                                    handleTooltipMouseMove(e)
+                                }}
+                                onMouseLeave={() => {
+                                    setIsTooltipVisible(false)
+                                }}
+                                onMouseMove={handleTooltipMouseMove}
+                                className="px-2 py-1 text-sm bg-blue-100/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1"
                             >
-                                {tagCounts?.get(tag) &&
-                                    tagCounts.get(tag)! > 1 && (
-                                        <Star className="w-3 h-3 opacity-50" />
-                                    )}
+                                {/* Tag Usage Indicator */}
+                                {tagCounts && tagCounts.get(tag)! > 1 && (
+                                    <Star
+                                        className="w-3 h-3"
+                                        style={{
+                                            opacity:
+                                                tagCounts.get(tag)! >= 5
+                                                    ? 1
+                                                    : tagCounts.get(tag)! === 4
+                                                    ? 0.8
+                                                    : tagCounts.get(tag)! === 3
+                                                    ? 0.6
+                                                    : tagCounts.get(tag)! === 2
+                                                    ? 0.4
+                                                    : 0,
+                                        }}
+                                    />
+                                )}
                                 {tag}
                             </span>
                         ))}
+
+                        {/* Tag Usage Tooltip */}
+                        <AnimatePresence>
+                            {isTooltipVisible && (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{
+                                        opacity: 1,
+                                        scale: 1,
+                                        x: tooltipPosition.x + 20,
+                                        y: tooltipPosition.y - 20,
+                                    }}
+                                    exit={{ opacity: 0, scale: 0.8 }}
+                                    transition={{
+                                        duration: 0.2,
+                                        ease: 'easeOut',
+                                    }}
+                                    className="absolute z-[100] pointer-events-none"
+                                >
+                                    <div className="bg-primary-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap font-mono">
+                                        Used in multiple projects
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
                 </div>
             </div>
