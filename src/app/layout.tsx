@@ -1,4 +1,5 @@
 import { Poppins, Azeret_Mono } from 'next/font/google'
+import Script from 'next/script'
 import Providers from '@/components/Providers'
 import './globals.css'
 import { Metadata } from 'next'
@@ -43,6 +44,18 @@ export default function RootLayout({
                 />
                 <link rel="alternate icon" href="/favicons/favicon.ico" />
                 <link rel="apple-touch-icon" href="/favicons/favicon.svg" />
+                <Script
+                    src="https://www.googletagmanager.com/gtag/js?id=G-2L6PPCSD6C"
+                    strategy="afterInteractive"
+                />
+                <Script id="google-analytics" strategy="afterInteractive">
+                    {`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'G-2L6PPCSD6C');
+                    `}
+                </Script>
             </head>
             <body
                 className={`${poppins.variable} ${azeretMono.variable} font-mono bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
