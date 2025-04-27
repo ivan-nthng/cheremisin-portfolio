@@ -12,6 +12,10 @@ interface ExperienceItem {
     period: string
 }
 
+// =============================
+// Experience Data
+// =============================
+// This array contains the user's work experience, including company, url, role, and period.
 const experience: ExperienceItem[] = [
     {
         company: 'Veritonic',
@@ -46,6 +50,10 @@ const experience: ExperienceItem[] = [
 ]
 
 export default function About() {
+    // =============================
+    // Visibility Animation State
+    // =============================
+    // Ref and state for triggering animations when the section enters the viewport.
     const ref = React.useRef(null)
     const [isVisible, setIsVisible] = React.useState(false)
 
@@ -71,6 +79,10 @@ export default function About() {
         }
     }, [])
 
+    // =============================
+    // Animation Variants
+    // =============================
+    // Framer Motion animation configs for container and items.
     const container = {
         hidden: { opacity: 0, y: 50 },
         show: {
@@ -100,10 +112,16 @@ export default function About() {
     }
 
     return (
+        // =============================
+        // About Section Root
+        // =============================
         <section id="about" className="relative py-24 sm:py-32" ref={ref}>
             <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
-                    {/* Manifesto Section */}
+                    {/* =============================
+                        Manifesto Section
+                        - Personal intro, hobbies, and links to photos/music/manifesto
+                    ============================= */}
                     <motion.div
                         variants={container}
                         initial="hidden"
@@ -120,6 +138,7 @@ export default function About() {
                             variants={item}
                             className="text-md text-blue-900/80 dark:text-blue-100/80 space-y-4"
                         >
+                            {/* Personal description and links */}
                             <p>
                                 I design digital and physical products. Outside
                                 of work, I surf,{' '}
@@ -160,12 +179,15 @@ export default function About() {
                         </motion.div>
                     </motion.div>
 
-                    {/* Overall Experience */}
+                    {/* =============================
+                        Overall Experience Section
+                        - Summary of total experience
+                    ============================= */}
                     <motion.div
                         variants={container}
                         initial="hidden"
                         animate={isVisible ? 'show' : 'hidden'}
-                        className="md:col-span-12"
+                        className="md:col-span-12 lg:w-2/3 md:w-2/3"
                     >
                         <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 sm:gap-8">
                             <motion.h2
@@ -183,12 +205,15 @@ export default function About() {
                         </div>
                     </motion.div>
 
-                    {/* Experience List */}
+                    {/* =============================
+                        Experience List Section
+                        - Detailed list of companies, roles, and periods
+                    ============================= */}
                     <motion.div
                         variants={container}
                         initial="hidden"
                         animate={isVisible ? 'show' : 'hidden'}
-                        className="md:col-span-12 space-y-8"
+                        className="md:col-span-12 space-y-8 lg:w-2/3 md:w-2/3"
                     >
                         {experience.map((item, index) => (
                             <motion.div
@@ -198,6 +223,7 @@ export default function About() {
                             >
                                 <div className="space-y-1">
                                     <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                                        {/* Company Name and Link */}
                                         <h3 className="text-xl font-bold text-blue-950 dark:text-blue-50">
                                             {item.company}
                                         </h3>
@@ -211,15 +237,18 @@ export default function About() {
                                             <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                                         </Link>
                                     </div>
+                                    {/* Role */}
                                     <p className="text-blue-950 dark:text-blue-100">
                                         {item.role}
                                     </p>
                                 </div>
+                                {/* Period */}
                                 <p className="text-blue-900/80 dark:text-blue-100/80 text-left sm:text-right whitespace-nowrap">
                                     {item.period}
                                 </p>
                             </motion.div>
                         ))}
+                        {/* Older Projects Entry */}
                         <motion.div
                             variants={item}
                             className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 sm:gap-8"
