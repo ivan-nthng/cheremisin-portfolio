@@ -8,6 +8,10 @@ import { ArrowDown, Calendar } from 'lucide-react'
 import { useTheme } from 'next-themes'
 
 export default function Hero() {
+    // =============================
+    // State and Theme
+    // =============================
+    // Handles hover, theme, tooltip, and animation state for the Hero section.
     const [isHovered, setIsHovered] = React.useState(false)
     const { theme, resolvedTheme } = useTheme()
     const [mounted, setMounted] = React.useState(false)
@@ -24,17 +28,38 @@ export default function Hero() {
         y: 0,
     })
     const [avatarPosition, setAvatarPosition] = React.useState({ x: 0, y: 0 })
+    const [gradientVisible, setGradientVisible] = React.useState(true)
 
+    // =============================
+    // Mount and Scroll Effect
+    // =============================
+    // Sets up mount state and fades out the gradient on scroll.
     React.useEffect(() => {
         setMounted(true)
+        const handleScroll = () => {
+            if (window.scrollY > 10) {
+                setGradientVisible(false)
+            } else {
+                setGradientVisible(true)
+            }
+        }
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
+    // =============================
+    // Avatar Image (theme-aware)
+    // =============================
     const avatarImage =
         mounted &&
         (resolvedTheme === 'dark'
             ? '/ivan-avatar-dark.png'
             : '/ivan-avatar-light.png')
 
+    // =============================
+    // Mouse and Button Position Handlers
+    // =============================
+    // Used for animated tooltips and cursor effects.
     const handleMouseMove = (e: React.MouseEvent) => {
         const rect = e.currentTarget.getBoundingClientRect()
         setMousePosition({
@@ -42,7 +67,6 @@ export default function Hero() {
             y: e.clientY - rect.top,
         })
     }
-
     const handleAvatarMouseMove = (e: React.MouseEvent) => {
         const rect = e.currentTarget.getBoundingClientRect()
         setAvatarPosition({
@@ -50,7 +74,6 @@ export default function Hero() {
             y: e.clientY - rect.top,
         })
     }
-
     const handleProjectsMouseMove = (e: React.MouseEvent) => {
         const rect = e.currentTarget.getBoundingClientRect()
         setProjectsButtonPosition({
@@ -58,7 +81,6 @@ export default function Hero() {
             y: e.clientY - rect.top,
         })
     }
-
     const handleCalendlyMouseMove = (e: React.MouseEvent) => {
         const rect = e.currentTarget.getBoundingClientRect()
         setCalendlyButtonPosition({
@@ -66,7 +88,7 @@ export default function Hero() {
             y: e.clientY - rect.top,
         })
     }
-
+    // Scroll to Projects Section
     const handleProjectsClick = (e: React.MouseEvent) => {
         e.preventDefault()
         const projectsSection = document.getElementById('projects')
@@ -76,9 +98,36 @@ export default function Hero() {
     }
 
     return (
-        <section className="min-h-screen flex items-center justify-center py-20 md:py-0 bg-primary-50 dark:bg-primary-900">
+        // =============================
+        // Hero Section Root
+        // =============================
+        <section className="min-h-screen flex items-center justify-center py-20 md:py-0  relative overflow-hidden">
+            {/* =============================
+                Animated Atmospheric Gradient Background
+                - Full-screen, animated, theme-aware, fades out on scroll
+            ============================= */}
+            <motion.div
+                aria-hidden
+                initial={{ opacity: 1 }}
+                animate={{ opacity: gradientVisible ? 1 : 0 }}
+                transition={{ duration: 0.7, ease: 'easeInOut' }}
+                className="fixed md:absolute left-0 bottom-0 w-screen h-screen pointer-events-none -z-10"
+                style={{
+                    background:
+                        mounted &&
+                        (resolvedTheme === 'dark' || theme === 'dark')
+                            ? 'radial-gradient(ellipse 120% 60% at 50% 85%, rgba(180,255,210,0.32) 0%, rgba(0,255,200,0.22) 30%, rgba(0,212,255,0.18) 60%, rgba(0,30,80,0.92) 90%, #000 100%)'
+                            : 'radial-gradient(ellipse 120% 60% at 50% 85%, rgba(180,235,255,0.38) 0%, rgba(0,255,255,0.22) 30%, rgba(0,212,255,0.18) 60%, rgba(0,80,255,0.12) 90%, #eaf6ff 100%)',
+                    filter: 'blur(4px)',
+                    transition: 'background 2s cubic-bezier(0.4,0,0.2,1)',
+                }}
+            />
             <div className="container mx-auto px-6">
                 <div className="flex flex-col items-start">
+                    {/* =============================
+                        Animated Headline and Avatar
+                        - Includes greeting, avatar, and animated text
+                    ============================= */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -95,6 +144,7 @@ export default function Hero() {
                                 <span className="inline-flex items-center gap-2">
                                     Hi 👋! I'm Ivan{' '}
                                     <div className="relative inline-flex">
+                                        {/* Avatar with hover spin and tooltip */}
                                         <Link
                                             href="https://calendly.com/icheremisin/30min"
                                             target="_blank"
@@ -143,6 +193,7 @@ export default function Hero() {
                                                 </motion.span>
                                             )}
                                         </Link>
+                                        {/* Avatar Tooltip */}
                                         <AnimatePresence>
                                             {isHovered && (
                                                 <div className="absolute z-[100] pointer-events-none">
@@ -178,6 +229,7 @@ export default function Hero() {
                                         </AnimatePresence>
                                     </div>
                                 </span>
+                                {/* Animated Headline Gradient Text */}
                                 <motion.span
                                     className="inline-block bg-clip-text text-transparent pb-1 text-4xl md:text-5xl font-bold mb-8 font-heading leading-[1.4] pt-2"
                                     animate={{
@@ -198,6 +250,7 @@ export default function Hero() {
                                 </motion.span>
                             </span>
                         </motion.h1>
+                        {/* Description Paragraph */}
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -205,15 +258,17 @@ export default function Hero() {
                             className="text-lg md:text-xl text-primary-600 dark:text-primary-300 mb-12 max-w-2xl"
                         >
                             I create digital tools — whether building from
-                            scratch or refining what’s already there. Always
+                            scratch or refining what's already there. Always
                             with clarity, always with care.
                         </motion.p>
+                        {/* CTA Buttons and Tooltips */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.6 }}
                             className="flex flex-col md:flex-row gap-4 w-full md:w-auto max-w-[420px] md:max-w-none items-start"
                         >
+                            {/* Calendly Button with Tooltip */}
                             <div className="relative">
                                 <motion.div
                                     whileHover={{ scale: 1.05 }}
@@ -270,6 +325,7 @@ export default function Hero() {
                                     )}
                                 </AnimatePresence>
                             </div>
+                            {/* Projects Button with Tooltip */}
                             <div className="relative">
                                 <motion.div
                                     whileHover={{ scale: 1.05 }}
