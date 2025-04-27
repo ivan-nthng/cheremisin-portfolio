@@ -13,6 +13,7 @@ interface Project {
     link: string
     isWide?: boolean
     companyName?: string
+    isComingSoon?: boolean
 }
 
 interface ProjectNavigationProps {
@@ -47,10 +48,17 @@ export default function ProjectNavigation({
     projects,
     currentProjectIndex,
 }: ProjectNavigationProps) {
+    // Filter out ComingSoon projects for navigation only
+    const navigableProjects = projects.filter((p) => !p.isComingSoon)
+    // Find the current project's index in the filtered array
+    const currentNavIndex = navigableProjects.findIndex(
+        (p) => p.link === projects[currentProjectIndex].link,
+    )
     // Calculate previous and next indices with circular navigation
     const prevIndex =
-        (currentProjectIndex - 1 + projects.length) % projects.length
-    const nextIndex = (currentProjectIndex + 1) % projects.length
+        (currentNavIndex - 1 + navigableProjects.length) %
+        navigableProjects.length
+    const nextIndex = (currentNavIndex + 1) % navigableProjects.length
 
     return (
         <motion.div
@@ -76,7 +84,7 @@ export default function ProjectNavigation({
                     <div className="group cursor-pointer">
                         <div className="transition-all duration-300 group-hover:brightness-90">
                             <WideProjectCard
-                                {...projects[prevIndex]}
+                                {...navigableProjects[prevIndex]}
                                 tags={[]}
                                 companyName=""
                             />
@@ -92,7 +100,7 @@ export default function ProjectNavigation({
                     <div className="group cursor-pointer">
                         <div className="transition-all duration-300 group-hover:brightness-90">
                             <WideProjectCard
-                                {...projects[nextIndex]}
+                                {...navigableProjects[nextIndex]}
                                 tags={[]}
                                 companyName=""
                             />
