@@ -116,8 +116,8 @@ export default function Hero() {
                     background:
                         mounted &&
                         (resolvedTheme === 'dark' || theme === 'dark')
-                            ? 'radial-gradient(ellipse 120% 60% at 50% 85%, rgba(180,255,210,0.32) 0%, rgba(0,255,200,0.22) 30%, rgba(0,212,255,0.18) 60%, rgba(0,30,80,0.92) 90%, #000 100%)'
-                            : 'radial-gradient(ellipse 120% 60% at 50% 85%, rgba(180,235,255,0.38) 0%, rgba(0,255,255,0.22) 30%, rgba(0,212,255,0.18) 60%, rgba(0,80,255,0.12) 90%, #eaf6ff 100%)',
+                            ? 'radial-gradient(ellipse 120% 60% at 50% 95%, rgba(180,255,210,0.32) 0%, rgba(0,255,200,0.22) 30%, rgba(0,212,255,0.18) 60%, rgba(0,30,80,0.92) 90%, #000 100%)'
+                            : 'radial-gradient(ellipse 120% 60% at 50% 95%, rgba(180,235,255,0.38) 0%, rgba(0,255,255,0.22) 30%, rgba(0,212,255,0.18) 60%, rgba(0,80,255,0.12) 90%, #eaf6ff 100%)',
                     filter: 'blur(4px)',
                     transition: 'background 2s cubic-bezier(0.4,0,0.2,1)',
                 }}
