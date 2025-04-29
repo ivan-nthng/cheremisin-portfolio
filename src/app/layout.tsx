@@ -35,7 +35,7 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <html lang="en" className="scroll-smooth">
+        <html lang="en" suppressHydrationWarning>
             <head>
                 <link
                     rel="icon"
@@ -59,6 +59,7 @@ export default function RootLayout({
             </head>
             <body
                 className={`${poppins.variable} ${azeretMono.variable} font-mono bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
+                suppressHydrationWarning
             >
                 <Providers>{children}</Providers>
             </body>

@@ -25,6 +25,11 @@ export default function LitresPage() {
     )
     const currentProject = projects[currentProjectIndex]
 
+    // =============================================
+    // Project Data and Configuration
+    // =============================================
+
+    // Theme-dependent image paths for the project
     const mainImage =
         theme === 'dark' ? '/litres/≈' : '/litres/project-1-light.png'
     const forwardImage =
@@ -32,6 +37,7 @@ export default function LitresPage() {
             ? '/litres/project-1-dark.png'
             : '/litres/project-1-light.png'
 
+    // Client branding configuration
     const clientLogo = {
         href: 'https://litres.com',
         svg: (
@@ -123,6 +129,7 @@ export default function LitresPage() {
         ),
     }
 
+    // Project performance metrics and statistics
     const stats = [
         {
             value: '0',
@@ -142,6 +149,7 @@ export default function LitresPage() {
         },
     ]
 
+    // Problem analysis metrics
     const problemStats = [
         {
             value: '0',
@@ -165,16 +173,16 @@ export default function LitresPage() {
         },
     ]
 
+    // Project content and descriptions
     const description =
         'Placeholder description for the Litres.com project. Replace with actual project description.'
-
     const problemDescription =
         'Placeholder problem description for the Litres.com project. Replace with actual problem description.'
-
     const demoTitle = 'Placeholder Demo Title'
     const demoDescription =
         'Placeholder demo description for the Litres.com project. Replace with actual demo description.'
 
+    // Gallery content configuration
     const galleryItems = [
         {
             imageLight: '/litres/gallery1-light.png',
@@ -202,14 +210,26 @@ export default function LitresPage() {
         },
     ]
 
+    // =============================================
+    // Component Layout Sections
+    // =============================================
+
+    // Process Section: Contains project overview, problem analysis, and optimization details
     const processContent = (
         <div className="space-y-8">
+            {/* Project Overview: Initial project context and metrics */}
             <ProjectOverview stats={stats} description={description} />
+
+            {/* Problem Analysis: Detailed problem breakdown and statistics */}
             <ProblemSection
                 stats={problemStats}
                 description={problemDescription}
             />
+
+            {/* Optimization Details: Performance improvements and technical optimizations */}
             <OptimizationSection />
+
+            {/* Project Footer: Team information and contact details */}
             <ProjectFooter
                 team={[
                     { role: 'Design' },
@@ -228,15 +248,21 @@ export default function LitresPage() {
         </div>
     )
 
+    // Results Section: Contains demo showcase and gallery
     const resultContent = (
         <div className="space-y-8">
+            {/* Demo Section: Interactive demonstration of the project */}
             <DemoSection
                 title={demoTitle}
                 description={demoDescription}
                 image="litres/main"
                 caption="Placeholder caption for the demo section. Replace with actual caption."
             />
+
+            {/* Gallery Section: Visual showcase of project features */}
             <GallerySection items={galleryItems} />
+
+            {/* Project Footer: Consistent footer across sections */}
             <ProjectFooter
                 team={[
                     { role: 'Design' },

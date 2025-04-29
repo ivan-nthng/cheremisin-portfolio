@@ -169,7 +169,12 @@ export default function ProjectCard({
                 >
                     <motion.div
                         className="absolute inset-0 flex items-center justify-center"
-                        style={{ padding: '4%' }}
+                        style={{
+                            paddingTop: '4%',
+                            paddingRight: '4%',
+                            paddingBottom: '4%',
+                            paddingLeft: '4%',
+                        }}
                         initial="hidden"
                         animate={
                             isVisible && !isImageHovered ? 'visible' : 'hidden'

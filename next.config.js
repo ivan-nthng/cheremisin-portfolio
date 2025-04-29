@@ -4,7 +4,6 @@ const nextConfig = {
         domains: ['images.unsplash.com'],
     },
     reactStrictMode: true,
-    swcMinify: true,
     eslint: {
         ignoreDuringBuilds: true,
     },

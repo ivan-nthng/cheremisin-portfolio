@@ -175,7 +175,7 @@ export default function WideProjectCard({
                 onHoverStart={() => setIsImageHovered(true)}
                 onHoverEnd={() => setIsImageHovered(false)}
                 className="relative w-full md:w-1/2 flex items-stretch justify-stretch bg-transparent py-2"
-                style={{ minHeight: 0 }}
+                style={{ minHeight: 320 }}
                 variants={containerVariants}
                 initial="hidden"
                 animate={isVisible ? 'visible' : 'hidden'}
@@ -183,7 +183,14 @@ export default function WideProjectCard({
                 {/* Project Image */}
                 <motion.div
                     className="relative w-full h-full flex items-center justify-center"
-                    style={{ padding: '4%', minHeight: 0, minWidth: 0 }}
+                    style={{
+                        paddingTop: '4%',
+                        paddingRight: '4%',
+                        paddingBottom: '4%',
+                        paddingLeft: '4%',
+                        minHeight: 0,
+                        minWidth: 0,
+                    }}
                     initial="hidden"
                     animate={
                         isVisible && !isImageHovered ? 'visible' : 'hidden'
