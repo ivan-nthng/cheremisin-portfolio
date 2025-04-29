@@ -58,7 +58,7 @@ export function ImageContainer({
     return (
         <div
             ref={containerRef}
-            className="relative w-full aspect-[16/10] max-w-[1380px] max-h-[860px] mx-auto group"
+            className="relative w-full mx-auto group"
             onMouseMove={handleMouseMove}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -66,13 +66,13 @@ export function ImageContainer({
             style={{ cursor: 'pointer' }}
         >
             {/* Container with border and shadow for visual depth */}
-            <div className="absolute inset-0 rounded-2xl border border-blue-200/50 dark:border-blue-800/50 shadow-lg overflow-hidden group-hover:shadow-xl transition-shadow duration-200">
+            <div className="relative rounded-2xl border border-blue-200/50 dark:border-blue-800/50 shadow-lg overflow-hidden group-hover:shadow-xl transition-shadow duration-200">
                 {/* Radial gradient background for visual interest */}
                 <div className="absolute inset-0 bg-gradient-radial from-blue-100/50 to-transparent dark:from-blue-900/50" />
 
                 {/* Image wrapper with hover animation */}
                 <motion.div
-                    className="relative w-auto h-auto"
+                    className="relative"
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.2 }}
                 >
@@ -80,7 +80,7 @@ export function ImageContainer({
                     <img
                         src={image}
                         alt={alt}
-                        className="w-full h-full object-cover transition-[filter] duration-200"
+                        className="w-full h-auto max-w-full object-contain transition-[filter] duration-200"
                         style={{
                             filter: isHovered ? 'brightness(0.7)' : 'none',
                         }}

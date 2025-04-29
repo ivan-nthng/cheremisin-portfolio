@@ -121,10 +121,11 @@ export default function DemoSection({
                             delay: 0.2,
                             ease: [0.16, 1, 0.3, 1],
                         }}
+                        className="w-full max-w-[1380px] mx-auto"
                     >
                         {video ? (
                             // Video player with autoplay and loop
-                            <div className="relative aspect-video w-full h- overflow-hidden rounded-2xl bg-blue-100 dark:bg-blue-900/50">
+                            <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-blue-100 dark:bg-blue-900/50">
                                 <video
                                     src={video}
                                     autoPlay
@@ -137,12 +138,14 @@ export default function DemoSection({
                             </div>
                         ) : imagePath ? (
                             // Image container with lightbox functionality
-                            <ImageContainer
-                                key={imagePath}
-                                image={imagePath}
-                                alt={title}
-                                onImageClick={() => setIsLightboxOpen(true)}
-                            />
+                            <div className="w-full">
+                                <ImageContainer
+                                    key={imagePath}
+                                    image={imagePath}
+                                    alt={title}
+                                    onImageClick={() => setIsLightboxOpen(true)}
+                                />
+                            </div>
                         ) : null}
                     </motion.div>
                 </div>
