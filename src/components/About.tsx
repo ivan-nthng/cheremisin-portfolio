@@ -187,7 +187,7 @@ export default function About() {
                         variants={container}
                         initial="hidden"
                         animate={isVisible ? 'show' : 'hidden'}
-                        className="md:col-span-12 lg:w-2/3 md:w-2/3"
+                        className="md:col-span-10 lg:col-span-8 space-y-8"
                     >
                         <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 sm:gap-8">
                             <motion.h2
@@ -213,7 +213,7 @@ export default function About() {
                         variants={container}
                         initial="hidden"
                         animate={isVisible ? 'show' : 'hidden'}
-                        className="md:col-span-12 space-y-8 lg:w-2/3 md:w-2/3"
+                        className="md:col-span-10 lg:col-span-8 space-y-8"
                     >
                         {experience.map((item, index) => (
                             <motion.div

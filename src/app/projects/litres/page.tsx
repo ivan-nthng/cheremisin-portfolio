@@ -1,5 +1,22 @@
 'use client'
 
+/**
+ * Litres Project Page Component
+ *
+ * A comprehensive showcase page for the Litres.com project, featuring:
+ * - Project hero section with theme-aware images
+ * - Interactive grid overlay for layout visualization
+ * - Tabbed sections for process, results, and development details
+ * - Responsive grid layout system
+ * - Project navigation for seamless browsing
+ *
+ * The page is organized into distinct sections:
+ * 1. Hero Section: Project introduction and branding
+ * 2. Process Section: Project overview, problem analysis, and optimizations
+ * 3. Results Section: Demo showcase and feature gallery
+ * 4. Development Section: Technical details and implementation
+ */
+
 import React from 'react'
 import { useTheme } from 'next-themes'
 import ProjectHero from '@/components/ProjectHero'
@@ -16,10 +33,12 @@ import { projects, type Project } from '@/components/Projects'
 import { ProjectFooter } from '@/components/ProjectFooter'
 
 export default function LitresPage() {
+    // Theme context for handling light/dark mode
     const { theme } = useTheme()
+    // State for toggling the grid overlay visualization
     const [isGridVisible, setIsGridVisible] = React.useState(false)
 
-    // Find the current project index
+    // Project identification and current context
     const currentProjectIndex = projects.findIndex(
         (p) => p.link === '/projects/litres',
     )
@@ -29,7 +48,10 @@ export default function LitresPage() {
     // Project Data and Configuration
     // =============================================
 
-    // Theme-dependent image paths for the project
+    /**
+     * Theme-aware image paths
+     * Automatically switches between light and dark versions based on the current theme
+     */
     const mainImage =
         theme === 'dark' ? '/litres/≈' : '/litres/project-1-light.png'
     const forwardImage =
@@ -37,7 +59,13 @@ export default function LitresPage() {
             ? '/litres/project-1-dark.png'
             : '/litres/project-1-light.png'
 
-    // Client branding configuration
+    /**
+     * Client branding configuration
+     * Includes:
+     * - External link to client website
+     * - SVG logo with theme-aware colors
+     * - Interactive hover states
+     */
     const clientLogo = {
         href: 'https://litres.com',
         svg: (
@@ -129,7 +157,11 @@ export default function LitresPage() {
         ),
     }
 
-    // Project performance metrics and statistics
+    /**
+     * Project performance metrics
+     * Key statistics and data points showcasing project impact
+     * TODO: Replace placeholder values with actual metrics
+     */
     const stats = [
         {
             value: '0',
@@ -149,7 +181,11 @@ export default function LitresPage() {
         },
     ]
 
-    // Problem analysis metrics
+    /**
+     * Problem analysis metrics
+     * Quantitative data points illustrating project challenges
+     * TODO: Replace placeholder values with actual metrics
+     */
     const problemStats = [
         {
             value: '0',
@@ -173,24 +209,43 @@ export default function LitresPage() {
         },
     ]
 
-    // Project content and descriptions
+    /**
+     * Project content and descriptions
+     * Core narrative elements describing the project's context and achievements
+     * TODO: Replace placeholder text with actual project content
+     */
     const description =
         'Placeholder description for the Litres.com project. Replace with actual project description.'
     const problemDescription =
         'Placeholder problem description for the Litres.com project. Replace with actual problem description.'
-    const demoTitle = 'Placeholder Demo Title'
+    const demoTitle = 'A smart dashboard'
     const demoDescription =
-        'Placeholder demo description for the Litres.com project. Replace with actual demo description.'
+        'Designed for both authors and publishers. Where writers see recognition and growth in real-time, and publishers dig into performance and sales strategy. One shared space, two completely different user needs — perfectly balanced.'
 
-    // Gallery content configuration
+    /**
+     * Gallery content configuration
+     * Visual showcase of project features and achievements
+     * Each item includes:
+     * - Theme-aware images (light/dark versions)
+     * - Alt text for accessibility
+     * - Title and description for context
+     */
     const galleryItems = [
         {
-            imageLight: '/litres/gallery1-light.png',
-            imageDark: '/litres/gallery1-dark.png',
+            imageLight: '/litres/sales-light.png',
+            imageDark: '/litres/sales-dark.png',
             alt: 'Placeholder Gallery Item 1',
-            title: 'Placeholder Title 1',
+            title: 'For Publishers',
             description:
-                'Placeholder description for gallery item 1. Replace with actual description.',
+                'A deep dive into performance — traffic sources, paid vs free dynamics, conversion patterns, and reader behavior breakdowns.',
+        },
+        {
+            videoLight: '/litres/custom-light.mov',
+            videoDark: '/litres/custom-dark.mov',
+            alt: 'Custom Dashboard',
+            title: 'Customizable Dashboard',
+            description:
+                'Flexible dashboard layout with quick configuration to match user roles.',
         },
         {
             imageLight: '/litres/gallery2-light.png',
@@ -214,22 +269,22 @@ export default function LitresPage() {
     // Component Layout Sections
     // =============================================
 
-    // Process Section: Contains project overview, problem analysis, and optimization details
+    /**
+     * Process Section
+     * Comprehensive overview of the project's journey:
+     * - Project context and initial metrics
+     * - Problem analysis and challenges
+     * - Technical optimizations and solutions
+     * - Team composition and contact information
+     */
     const processContent = (
         <div className="space-y-8">
-            {/* Project Overview: Initial project context and metrics */}
             <ProjectOverview stats={stats} description={description} />
-
-            {/* Problem Analysis: Detailed problem breakdown and statistics */}
             <ProblemSection
                 stats={problemStats}
                 description={problemDescription}
             />
-
-            {/* Optimization Details: Performance improvements and technical optimizations */}
             <OptimizationSection />
-
-            {/* Project Footer: Team information and contact details */}
             <ProjectFooter
                 team={[
                     { role: 'Design' },
@@ -248,21 +303,22 @@ export default function LitresPage() {
         </div>
     )
 
-    // Results Section: Contains demo showcase and gallery
+    /**
+     * Results Section
+     * Showcase of project outcomes:
+     * - Interactive demo of key features
+     * - Visual gallery of project highlights
+     * - Consistent footer with team and contact information
+     */
     const resultContent = (
         <div className="space-y-8">
-            {/* Demo Section: Interactive demonstration of the project */}
             <DemoSection
                 title={demoTitle}
                 description={demoDescription}
                 image="litres/main"
                 caption="Placeholder caption for the demo section. Replace with actual caption."
             />
-
-            {/* Gallery Section: Visual showcase of project features */}
             <GallerySection items={galleryItems} />
-
-            {/* Project Footer: Consistent footer across sections */}
             <ProjectFooter
                 team={[
                     { role: 'Design' },
@@ -281,6 +337,13 @@ export default function LitresPage() {
         </div>
     )
 
+    /**
+     * Development Section
+     * Technical implementation details:
+     * - Placeholder gallery for development artifacts
+     * - Consistent footer with team and contact information
+     * TODO: Add actual development content and documentation
+     */
     const devContent = (
         <div className="space-y-8">
             <GallerySection
@@ -323,25 +386,34 @@ export default function LitresPage() {
 
     return (
         <>
+            {/* Grid overlay for layout visualization */}
             <GridOverlay show={isGridVisible} />
+
             <main className="relative">
+                {/* Project header with grid toggle */}
                 <ProjectHeader
                     isGridVisible={isGridVisible}
                     onToggleGrid={() => setIsGridVisible(!isGridVisible)}
                 />
+
+                {/* Main content container with responsive grid */}
                 <div className="relative w-full max-w-7xl mx-auto px-6">
                     <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
+                        {/* Hero section */}
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                             <ProjectHero
                                 title="Litres.com"
-                                description="Placeholder description for the Litres.com project. Replace with actual project description."
+                                description="A platform for selling, distributing, and managing e-books and audiobooks. It serves as a digital bookstore, publishing tool, and library system."
                                 mainImage="/litres/project-2-light.png"
                                 mainImageDark="/litres/project-2-dark.png"
                                 forwardImage="/litres/project-1-light.png"
                                 forwardImageDark="/litres/project-1-dark.png"
                                 clientLogo={clientLogo}
+                                role="Lead Product Designer"
                             />
                         </div>
+
+                        {/* Tabbed content sections */}
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                             <TabSection
                                 processContent={processContent}
@@ -349,6 +421,8 @@ export default function LitresPage() {
                                 devContent={devContent}
                             />
                         </div>
+
+                        {/* Project navigation */}
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                             <ProjectNavigation
                                 projects={projects}

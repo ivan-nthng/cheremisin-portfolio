@@ -18,6 +18,7 @@ interface ProjectHeroProps {
         svg: React.ReactNode
     }
     clientName?: string
+    role?: string
 }
 
 export default function ProjectHero({
@@ -29,6 +30,7 @@ export default function ProjectHero({
     forwardImageDark,
     clientLogo,
     clientName = 'Made for',
+    role = 'Lead Product Designer',
 }: ProjectHeroProps) {
     const { resolvedTheme } = useTheme()
     const [mounted, setMounted] = React.useState(false)
@@ -74,6 +76,23 @@ export default function ProjectHero({
                             >
                                 {description}
                             </motion.p>
+
+                            {/* Role section - customize per project */}
+                            {role && (
+                                <motion.div
+                                    className="space-y-2"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5, delay: 0.2 }}
+                                >
+                                    <p className="text-sm font-medium text-blue-800/60 dark:text-blue-200/60">
+                                        Role
+                                    </p>
+                                    <p className="text-base text-blue-800/80 dark:text-blue-200/80">
+                                        {role}
+                                    </p>
+                                </motion.div>
+                            )}
                         </div>
 
                         {clientLogo && (

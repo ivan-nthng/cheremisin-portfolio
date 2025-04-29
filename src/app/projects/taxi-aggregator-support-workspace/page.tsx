@@ -173,14 +173,12 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                 'Quickly trace the full route of any trip — with clear context on driver and passenger movements, stops, and deto',
         },
         {
-            imageLight: '/vk/media-drop-light.png',
-            imageDark: '/vk/media-drop-dark.png',
-            alt: 'Analytics Dashboard',
-            title: 'Effortless Media Handling',
+            videoLight: '/vk/widget-light.mov',
+            videoDark: '/vk/widget-dark.mov',
+            alt: 'Contextual Widgets',
+            title: 'Contextual Widgets',
             description:
-                'View, download, and respond to images, videos, and files directly within the chat — no delays, no confusion.',
-            noDecor: true,
-            smallImage: true,
+                'Operators see only what matters — each widget adapts to the request type, cutting processing time by up to 80%',
         },
     ]
 
@@ -474,6 +472,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                                 forwardImage="/forward-light.png"
                                 forwardImageDark="/forward-dark.png"
                                 clientLogo={clientLogo}
+                                role="Lead Product Designer"
                             />
                         </div>
 

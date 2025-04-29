@@ -266,6 +266,7 @@ const Button = ({
                                 forwardImage="/hito/foundation-light.png"
                                 forwardImageDark="/hito/foundation-dark.png"
                                 clientLogo={clientLogo}
+                                role="Founder"
                             />
                         </div>
 
