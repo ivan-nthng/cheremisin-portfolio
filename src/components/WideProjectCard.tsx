@@ -199,14 +199,17 @@ export default function WideProjectCard({
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3, ease: 'easeOut' }}
                 >
-                    <Image
-                        src={currentImage}
-                        alt={title}
-                        fill
-                        className="object-contain rounded-xl w-full h-full"
-                        priority
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                    />
+                    <div className="relative w-full h-full flex items-center justify-center">
+                        <Image
+                            src={currentImage}
+                            alt={title}
+                            width={800}
+                            height={450}
+                            className="w-auto h-auto max-w-full max-h-full object-contain rounded-xl"
+                            priority
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                    </div>
                 </motion.div>
             </motion.div>
         </motion.div>

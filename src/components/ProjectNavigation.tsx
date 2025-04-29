@@ -81,8 +81,8 @@ export default function ProjectNavigation({
                     <h3 className="text-lg font-medium text-primary-600 dark:text-primary-300 mb-4">
                         Previous Project
                     </h3>
-                    <div className="group cursor-pointer">
-                        <div className="transition-all duration-300 group-hover:brightness-90">
+                    <div className="group cursor-pointer h-full">
+                        <div className="transition-all duration-300 group-hover:brightness-90 h-full">
                             <WideProjectCard
                                 {...navigableProjects[prevIndex]}
                                 tags={[]}
@@ -97,8 +97,8 @@ export default function ProjectNavigation({
                     <h3 className="text-lg font-medium text-primary-600 dark:text-primary-300 mb-4">
                         Next Project
                     </h3>
-                    <div className="group cursor-pointer">
-                        <div className="transition-all duration-300 group-hover:brightness-90">
+                    <div className="group cursor-pointer h-full">
+                        <div className="transition-all duration-300 group-hover:brightness-90 h-full">
                             <WideProjectCard
                                 {...navigableProjects[nextIndex]}
                                 tags={[]}

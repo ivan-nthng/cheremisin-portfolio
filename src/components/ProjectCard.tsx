@@ -15,6 +15,19 @@ import Link from 'next/link'
 // ===================================
 // Types and Interfaces
 // ===================================
+/**
+ * ProjectCardProps interface defines the properties for the ProjectCard component
+ * @property {string} title - The title of the project
+ * @property {string} description - A brief description of the project
+ * @property {string[]} tags - Array of technology tags used in the project
+ * @property {string} image - Path to the project's main image
+ * @property {string} link - URL to the project's page or external link
+ * @property {string} [darkImage] - Optional alternative image for dark mode
+ * @property {string} [companyName] - Optional name of the company associated with the project
+ * @property {string} [companyUrl] - Optional URL to the company's website
+ * @property {Map<string, number>} [tagCounts] - Optional map tracking tag usage across projects
+ * @property {boolean} [noimg] - Optional flag to render the card without an image
+ */
 interface ProjectCardProps {
     title: string
     description: string
@@ -31,6 +44,26 @@ interface ProjectCardProps {
 // ===================================
 // Main Component
 // ===================================
+/**
+ * ProjectCard Component
+ *
+ * A responsive card component that displays project information including:
+ * - Project image with hover animations
+ * - Project title and description
+ * - Company link (if provided)
+ * - Technology tags with usage indicators
+ * - Interactive elements with custom cursor
+ *
+ * Features:
+ * - Intersection Observer for scroll-based animations
+ * - Theme-aware image selection (light/dark mode)
+ * - Hover animations for images and interactive elements
+ * - Tag usage indicators showing how frequently a technology is used
+ * - Custom cursor that changes based on interactive elements
+ *
+ * @param {ProjectCardProps} props - Component properties
+ * @returns {JSX.Element} Rendered ProjectCard component
+ */
 export default function ProjectCard({
     title,
     description,
@@ -46,16 +79,27 @@ export default function ProjectCard({
     // ===================================
     // Hooks and State Management
     // ===================================
+    // Router for navigation
     const router = useRouter()
+    // Theme context for light/dark mode detection
     const { theme } = useTheme()
+    // Ref for the card element (used for intersection observer)
     const cardRef = React.useRef<HTMLDivElement>(null)
+    // State for tracking card visibility in viewport
     const [isVisible, setIsVisible] = React.useState(false)
+    // State for tracking card hover
     const [isHovered, setIsHovered] = React.useState(false)
+    // State for tracking image hover
     const [isImageHovered, setIsImageHovered] = React.useState(false)
+    // State for tracking cursor position relative to card
     const [cursorPosition, setCursorPosition] = React.useState({ x: 0, y: 0 })
+    // State for tracking tag tooltip visibility
     const [isTooltipVisible, setIsTooltipVisible] = React.useState(false)
+    // State for tracking tag tooltip position
     const [tooltipPosition, setTooltipPosition] = React.useState({ x: 0, y: 0 })
+    // State for tracking company link hover
     const [isCompanyHovered, setIsCompanyHovered] = React.useState(false)
+    // State for tracking company tooltip position
     const [companyTooltipPosition, setCompanyTooltipPosition] = React.useState({
         x: 0,
         y: 0,
@@ -64,18 +108,23 @@ export default function ProjectCard({
     // ===================================
     // Intersection Observer Setup
     // ===================================
+    /**
+     * Sets up an Intersection Observer to detect when the card enters the viewport
+     * This enables scroll-based animations and optimizes performance
+     */
     React.useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 setIsVisible(entry.isIntersecting)
             },
-            { threshold: 0.3 },
+            { threshold: 0.3 }, // Trigger when 30% of the element is visible
         )
 
         if (cardRef.current) {
             observer.observe(cardRef.current)
         }
 
+        // Cleanup function to disconnect the observer when component unmounts
         return () => {
             if (cardRef.current) {
                 observer.unobserve(cardRef.current)
@@ -86,6 +135,10 @@ export default function ProjectCard({
     // ===================================
     // Event Handlers
     // ===================================
+    /**
+     * Updates cursor position relative to the card element
+     * Used for positioning the custom cursor
+     */
     const handleMouseMove = (e: React.MouseEvent) => {
         if (cardRef.current) {
             const rect = cardRef.current.getBoundingClientRect()
@@ -96,6 +149,10 @@ export default function ProjectCard({
         }
     }
 
+    /**
+     * Updates tooltip position for tag usage indicators
+     * Ensures tooltip follows the cursor when hovering over tags
+     */
     const handleTooltipMouseMove = (e: React.MouseEvent) => {
         const rect = e.currentTarget.getBoundingClientRect()
         setTooltipPosition({
@@ -104,6 +161,10 @@ export default function ProjectCard({
         })
     }
 
+    /**
+     * Updates tooltip position for company link
+     * Ensures tooltip follows the cursor when hovering over company name
+     */
     const handleCompanyMouseMove = (e: React.MouseEvent) => {
         const rect = e.currentTarget.getBoundingClientRect()
         setCompanyTooltipPosition({
@@ -115,6 +176,10 @@ export default function ProjectCard({
     // ===================================
     // Animation Variants
     // ===================================
+    /**
+     * Animation variants for the card container
+     * Controls fade-in animation when card enters viewport
+     */
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -123,6 +188,10 @@ export default function ProjectCard({
         },
     }
 
+    /**
+     * Animation variants for the project image
+     * Controls slide-in animation from right when card enters viewport
+     */
     const imageVariants = {
         hidden: { x: '100%', opacity: 0 },
         visible: {
@@ -133,6 +202,10 @@ export default function ProjectCard({
         exit: { x: '100%', opacity: 0 },
     }
 
+    /**
+     * Determines which image to display based on current theme
+     * Uses darkImage if available and theme is dark, otherwise uses default image
+     */
     const currentImage = theme === 'dark' && darkImage ? darkImage : image
 
     // ===================================
@@ -149,7 +222,7 @@ export default function ProjectCard({
                 noimg ? 'p-6 rounded-2xl bg-blue-50 dark:bg-blue-900/30' : ''
             }`}
         >
-            {/* Custom Cursor */}
+            {/* Custom Cursor - Changes appearance based on interactive elements */}
             <CustomCursor
                 isVisible={isHovered}
                 position={cursorPosition}
@@ -157,7 +230,7 @@ export default function ProjectCard({
                 isHighlighted={isCompanyHovered}
             />
 
-            {/* Project Image Section */}
+            {/* Project Image Section - Only rendered if noimg prop is false */}
             {!noimg && (
                 <motion.div
                     onHoverStart={() => setIsImageHovered(true)}
@@ -197,14 +270,14 @@ export default function ProjectCard({
                 </motion.div>
             )}
 
-            {/* Project Content Section */}
+            {/* Project Content Section - Contains title, company link, description, and tags */}
             <div className="flex-1">
                 {/* Project Title */}
                 <h3 className="text-lg sm:text-xl font-bold text-primary-800 dark:text-primary-100">
                     {title}
                 </h3>
 
-                {/* Company Link */}
+                {/* Company Link - Only rendered if companyName prop is provided */}
                 {companyName && (
                     <div className="relative">
                         <Link
@@ -232,7 +305,7 @@ export default function ProjectCard({
                     <p className="text-sm sm:text-md text-primary-600 dark:text-primary-300">
                         {description}
                     </p>
-                    {/* Technology Tags */}
+                    {/* Technology Tags - Displays all tags with usage indicators if tagCounts is provided */}
                     <div className="flex flex-wrap gap-2">
                         {tags.map((tag) => (
                             <span
@@ -247,7 +320,7 @@ export default function ProjectCard({
                                 onMouseMove={handleTooltipMouseMove}
                                 className="px-2 py-1 text-sm bg-blue-100/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1"
                             >
-                                {/* Tag Usage Indicator */}
+                                {/* Tag Usage Indicator - Star icon with opacity based on usage count */}
                                 {tagCounts && tagCounts.get(tag)! > 1 && (
                                     <Star
                                         className="w-3 h-3"
@@ -269,7 +342,7 @@ export default function ProjectCard({
                             </span>
                         ))}
 
-                        {/* Tag Usage Tooltip */}
+                        {/* Tag Usage Tooltip - Appears when hovering over tags that are used in multiple projects */}
                         <AnimatePresence>
                             {isTooltipVisible && (
                                 <motion.div
