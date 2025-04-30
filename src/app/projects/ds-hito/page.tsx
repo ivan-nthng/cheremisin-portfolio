@@ -103,6 +103,12 @@ export default function DsHitoPage() {
     const demoDescription =
         'A semantically smart system that lets designers and developers communicate in human terms. Auto-adaptive. Scales instantly. Ready for any product, zero rework'
 
+    // Video path based on theme
+    const demoVideo =
+        theme === 'dark'
+            ? '/hito/var-demo-dark.mov'
+            : '/hito/var-demo-light.mov'
+
     // ===================================
     // Gallery Configuration
     // ===================================
@@ -277,8 +283,8 @@ const Button = ({
                                 <DemoSection
                                     title={demoTitle}
                                     description={demoDescription}
-                                    video="/hito/simple.mov"
-                                    caption="Placeholder caption for the demo section. Replace with actual caption."
+                                    video={demoVideo}
+                                    caption="Hito Design System Demo"
                                 />
 
                                 {/* Variables Demo Section */}
