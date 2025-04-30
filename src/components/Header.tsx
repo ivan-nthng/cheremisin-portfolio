@@ -167,7 +167,7 @@ export default function Header({ isGridVisible, onToggleGrid }: HeaderProps) {
                                 transition={{ duration: 0.3 }}
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="text-xl font-heading font-bold text-primary-800 dark:text-primary-100 cursor-pointer"
+                                className="hidden sm:block text-xl font-heading font-bold text-primary-800 dark:text-primary-100 cursor-pointer"
                             >
                                 Ivan Cheremisin
                             </MotionDiv>

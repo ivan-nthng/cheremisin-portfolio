@@ -2,14 +2,33 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import ProjectHeader from '@/components/ProjectHeader'
 import GridOverlay from '@/components/GridOverlay'
 
+/**
+ * ManifestoPage Component
+ *
+ * A personal manifesto page that displays core principles, beliefs, and professional values.
+ * Features smooth animations, intersection observer for scroll-based reveals, and responsive design.
+ *
+ * Key Features:
+ * - Animated content reveal on scroll
+ * - Grid overlay toggle for layout visualization
+ * - Responsive typography and spacing
+ * - Dark/light mode compatible
+ */
 export default function ManifestoPage() {
+    // State for grid visibility toggle and intersection observer
     const [isGridVisible, setIsGridVisible] = React.useState(false)
     const ref = React.useRef(null)
     const [isVisible, setIsVisible] = React.useState(false)
 
+    /**
+     * Intersection Observer Setup
+     * Tracks when the content enters viewport to trigger animations
+     * Uses a 25% visibility threshold and -50px top margin for earlier trigger
+     */
     React.useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -32,6 +51,14 @@ export default function ManifestoPage() {
         }
     }, [])
 
+    /**
+     * Animation Variants
+     *
+     * container: Parent animation settings for the entire content block
+     * - Slides up and fades in
+     * - Uses spring animation for natural movement
+     * - Staggers children animations for visual hierarchy
+     */
     const container = {
         hidden: { opacity: 0, y: 50 },
         show: {
@@ -42,11 +69,16 @@ export default function ManifestoPage() {
                 stiffness: 40,
                 damping: 20,
                 mass: 1,
-                staggerChildren: 0.15,
+                staggerChildren: 0.15, // Delay between each child animation
             },
         },
     }
 
+    /**
+     * Individual item animation settings
+     * Applied to each section (avatar, header, content blocks)
+     * Slightly bouncier spring animation for engaging micro-interactions
+     */
     const item = {
         hidden: { opacity: 0, y: 30 },
         show: {
@@ -62,20 +94,42 @@ export default function ManifestoPage() {
 
     return (
         <>
+            {/* Grid overlay for layout visualization */}
             <GridOverlay show={isGridVisible} />
+
             <main className="relative">
+                {/* Header with grid toggle functionality */}
                 <ProjectHeader
                     isGridVisible={isGridVisible}
                     onToggleGrid={() => setIsGridVisible(!isGridVisible)}
                 />
+
+                {/* Main content section with intersection observer reference */}
                 <section ref={ref} className="relative py-24 sm:py-32">
                     <div className="container mx-auto px-6">
+                        {/* Animated container for all content */}
                         <motion.div
                             variants={container}
                             initial="hidden"
                             animate={isVisible ? 'show' : 'hidden'}
                             className="max-w-3xl mx-auto space-y-16"
                         >
+                            {/* Avatar image */}
+                            <motion.div
+                                variants={item}
+                                className="flex justify-start"
+                            >
+                                <Image
+                                    src="/Avatar-256.png"
+                                    alt="Avatar"
+                                    width={128}
+                                    height={128}
+                                    className="rounded-none"
+                                    priority
+                                />
+                            </motion.div>
+
+                            {/* Page title */}
                             <motion.h1
                                 variants={item}
                                 className="text-4xl sm:text-5xl font-bold text-blue-950 dark:text-blue-50"
@@ -83,7 +137,9 @@ export default function ManifestoPage() {
                                 Manifesto
                             </motion.h1>
 
+                            {/* Content sections container */}
                             <motion.div variants={item} className="space-y-12">
+                                {/* Rules section - Core principles and daily guidelines */}
                                 <div>
                                     <h2 className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-6">
                                         Rules
@@ -130,6 +186,7 @@ export default function ManifestoPage() {
                                     </ul>
                                 </div>
 
+                                {/* Remember section - Important life lessons and philosophical insights */}
                                 <div>
                                     <h2 className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-6">
                                         Remember
@@ -179,6 +236,7 @@ export default function ManifestoPage() {
                                     </ul>
                                 </div>
 
+                                {/* Mindset section - Personal perspectives and creative philosophy */}
                                 <div>
                                     <h2 className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-6">
                                         Mindset
@@ -221,6 +279,7 @@ export default function ManifestoPage() {
                                     </ul>
                                 </div>
 
+                                {/* Professional section - Work principles and design philosophy */}
                                 <div>
                                     <h2 className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-6">
                                         Professional
