@@ -120,7 +120,7 @@ export default function ManifestoPage() {
                                 className="flex justify-start"
                             >
                                 <Image
-                                    src="/Avatar-256.png"
+                                    src="/avatar-256.png"
                                     alt="Avatar"
                                     width={128}
                                     height={128}
