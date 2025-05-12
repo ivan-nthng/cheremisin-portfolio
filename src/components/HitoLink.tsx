@@ -63,7 +63,7 @@ export default function HitoLink() {
         theme === 'dark' ? '/ds-hito-dark.png' : '/ds-hito-light.png'
 
     return (
-        <div className="relative inline-block">
+        <span className="relative inline-block">
             <Link
                 ref={linkRef}
                 href="/projects/ds-hito"
@@ -124,6 +124,6 @@ export default function HitoLink() {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </div>
+        </span>
     )
 }
