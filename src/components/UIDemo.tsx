@@ -10,6 +10,7 @@ import {
     Mail,
     ChevronRight,
     ChevronLeft,
+    ChevronDown,
 } from 'lucide-react'
 
 type ButtonState =
@@ -167,7 +168,7 @@ export default function UIDemo() {
         rightIconType === 'None' ? null : rightIcons.right
 
     const inputClasses =
-        'w-full px- py-2.5 rounded-lg bg-white dark:bg-gray-800 border border-blue-200/50 dark:border-blue-800/50 text-blue-900 dark:text-blue-100 font-mono text-sm transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed'
+        'w-full pl-4 py-2.5 rounded-lg bg-white dark:bg-gray-800 border border-blue-200/50 dark:border-blue-800/50 text-blue-900 dark:text-blue-100 font-mono text-sm transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed appearance-none pr-10'
 
     return (
         <section className="w-full">
@@ -202,109 +203,126 @@ export default function UIDemo() {
                     {/* Right side - Configuration form */}
                     <div className="md:col-span-1 space-y-6">
                         {/* State selector */}
-                        <div className="space-y-3">
+                        <div className="space-y-3 relative">
                             <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
                                 State
                             </label>
-                            <select
-                                value={buttonState}
-                                onChange={(e) =>
-                                    setButtonState(
-                                        e.target.value as ButtonState,
-                                    )
-                                }
-                                className={inputClasses}
-                            >
-                                <option>Default</option>
-                                <option>Hover</option>
-                                <option>Focused</option>
-                                <option>Pushed</option>
-                                <option>Loading</option>
-                                <option>Disabled</option>
-                            </select>
+                            <div className="relative">
+                                <select
+                                    value={buttonState}
+                                    onChange={(e) =>
+                                        setButtonState(
+                                            e.target.value as ButtonState,
+                                        )
+                                    }
+                                    className={inputClasses}
+                                >
+                                    <option>Default</option>
+                                    <option>Hover</option>
+                                    <option>Focused</option>
+                                    <option>Pushed</option>
+                                    <option>Loading</option>
+                                    <option>Disabled</option>
+                                </select>
+                                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-300 dark:text-blue-600" />
+                            </div>
                         </div>
 
                         {/* Style selector */}
-                        <div className="space-y-3">
+                        <div className="space-y-3 relative">
                             <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
                                 Style
                             </label>
-                            <select
-                                value={buttonStyle}
-                                onChange={(e) =>
-                                    setButtonStyle(
-                                        e.target.value as ButtonStyle,
-                                    )
-                                }
-                                className={inputClasses}
-                            >
-                                <option>Default</option>
-                                <option>Accent</option>
-                                <option>Error</option>
-                                <option>Success</option>
-                            </select>
+                            <div className="relative">
+                                <select
+                                    value={buttonStyle}
+                                    onChange={(e) =>
+                                        setButtonStyle(
+                                            e.target.value as ButtonStyle,
+                                        )
+                                    }
+                                    className={inputClasses}
+                                >
+                                    <option>Default</option>
+                                    <option>Accent</option>
+                                    <option>Error</option>
+                                    <option>Success</option>
+                                </select>
+                                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-300 dark:text-blue-600" />
+                            </div>
                         </div>
 
                         {/* Size selector */}
-                        <div className="space-y-3">
+                        <div className="space-y-3 relative">
                             <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
                                 Size
                             </label>
-                            <select
-                                value={buttonSize}
-                                onChange={(e) =>
-                                    setButtonSize(e.target.value as ButtonSize)
-                                }
-                                className={inputClasses}
-                            >
-                                <option>sm</option>
-                                <option>md</option>
-                                <option>lg</option>
-                                <option>xl</option>
-                            </select>
+                            <div className="relative">
+                                <select
+                                    value={buttonSize}
+                                    onChange={(e) =>
+                                        setButtonSize(
+                                            e.target.value as ButtonSize,
+                                        )
+                                    }
+                                    className={inputClasses}
+                                >
+                                    <option>sm</option>
+                                    <option>md</option>
+                                    <option>lg</option>
+                                    <option>xl</option>
+                                </select>
+                                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-300 dark:text-blue-600" />
+                            </div>
                         </div>
 
                         {/* Icon selectors */}
-                        <div className="space-y-3">
+                        <div className="space-y-3 relative">
                             <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
                                 Left Icon
                             </label>
-                            <select
-                                value={leftIconType}
-                                onChange={(e) =>
-                                    setLeftIconType(
-                                        e.target.value as IconOption,
-                                    )
-                                }
-                                className={inputClasses}
-                            >
-                                <option>None</option>
-                                <option>Arrow</option>
-                                <option>Send</option>
-                                <option>Mail</option>
-                                <option>Chevron</option>
-                            </select>
+                            <div className="relative">
+                                <select
+                                    value={leftIconType}
+                                    onChange={(e) =>
+                                        setLeftIconType(
+                                            e.target.value as IconOption,
+                                        )
+                                    }
+                                    className={inputClasses}
+                                >
+                                    <option>None</option>
+                                    <option>Arrow</option>
+                                    <option>Send</option>
+                                    <option>Mail</option>
+                                    <option>Chevron</option>
+                                </select>
+                                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-300 dark:text-blue-600" />
+                            </div>
                         </div>
 
-                        <div className="space-y-3">
+                        <div className="space-y-3 relative">
                             <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
                                 Right Icon
                             </label>
-                            <select
-                                value={rightIconType}
-                                onChange={(e) =>
-                                    setRightIconType(
-                                        e.target.value as IconOption,
-                                    )
-                                }
-                                className={inputClasses}
-                            >
-                                <option>None</option>
-                                <option>Arrow</option>
-                                <option>Send</option>
-                                <option>Mail</option>
-                                <option>Chevron</option>
-                            </select>
+                            <div className="relative">
+                                <select
+                                    value={rightIconType}
+                                    onChange={(e) =>
+                                        setRightIconType(
+                                            e.target.value as IconOption,
+                                        )
+                                    }
+                                    className={inputClasses}
+                                >
+                                    <option>None</option>
+                                    <option>Arrow</option>
+                                    <option>Send</option>
+                                    <option>Mail</option>
+                                    <option>Chevron</option>
+                                </select>
+                                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-300 dark:text-blue-600" />
+                            </div>
                         </div>
                     </div>
                 </div>
