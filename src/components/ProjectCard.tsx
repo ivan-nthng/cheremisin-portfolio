@@ -93,10 +93,6 @@ export default function ProjectCard({
     const [isImageHovered, setIsImageHovered] = React.useState(false)
     // State for tracking cursor position relative to card
     const [cursorPosition, setCursorPosition] = React.useState({ x: 0, y: 0 })
-    // State for tracking tag tooltip visibility
-    const [isTooltipVisible, setIsTooltipVisible] = React.useState(false)
-    // State for tracking tag tooltip position
-    const [tooltipPosition, setTooltipPosition] = React.useState({ x: 0, y: 0 })
     // State for tracking company link hover
     const [isCompanyHovered, setIsCompanyHovered] = React.useState(false)
     // State for tracking company tooltip position
@@ -147,18 +143,6 @@ export default function ProjectCard({
                 y: e.clientY - rect.top,
             })
         }
-    }
-
-    /**
-     * Updates tooltip position for tag usage indicators
-     * Ensures tooltip follows the cursor when hovering over tags
-     */
-    const handleTooltipMouseMove = (e: React.MouseEvent) => {
-        const rect = e.currentTarget.getBoundingClientRect()
-        setTooltipPosition({
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top,
-        })
     }
 
     /**
@@ -310,14 +294,6 @@ export default function ProjectCard({
                         {tags.map((tag) => (
                             <span
                                 key={tag}
-                                onMouseEnter={(e) => {
-                                    setIsTooltipVisible(true)
-                                    handleTooltipMouseMove(e)
-                                }}
-                                onMouseLeave={() => {
-                                    setIsTooltipVisible(false)
-                                }}
-                                onMouseMove={handleTooltipMouseMove}
                                 className="px-2 py-1 text-sm bg-blue-100/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1"
                             >
                                 {/* Tag Usage Indicator - Star icon with opacity based on usage count */}
@@ -341,31 +317,6 @@ export default function ProjectCard({
                                 {tag}
                             </span>
                         ))}
-
-                        {/* Tag Usage Tooltip - Appears when hovering over tags that are used in multiple projects */}
-                        <AnimatePresence>
-                            {isTooltipVisible && (
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{
-                                        opacity: 1,
-                                        scale: 1,
-                                        x: tooltipPosition.x + 20,
-                                        y: tooltipPosition.y - 20,
-                                    }}
-                                    exit={{ opacity: 0, scale: 0.8 }}
-                                    transition={{
-                                        duration: 0.2,
-                                        ease: 'easeOut',
-                                    }}
-                                    className="absolute z-[100] pointer-events-none"
-                                >
-                                    <div className="bg-primary-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap font-mono">
-                                        Used in multiple projects
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
                     </div>
                 </div>
             </div>
