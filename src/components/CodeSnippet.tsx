@@ -5,6 +5,7 @@ import { useTheme } from 'next-themes'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { ChevronDown } from 'lucide-react'
 
 interface CodeState {
     name: string
@@ -133,7 +134,7 @@ export function CodeSnippet({
                         </p>
 
                         {/* Size Selector */}
-                        <div className="mb-4">
+                        <div className="mb-4 relative">
                             <select
                                 value={selectedSize.name}
                                 onChange={(e) => {
@@ -142,7 +143,7 @@ export function CodeSnippet({
                                     )
                                     if (newSize) setSelectedSize(newSize)
                                 }}
-                                className="w-full px-3 py-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-sm text-blue-900 dark:text-blue-100"
+                                className="w-full pl-4 py-2.5 rounded-lg bg-white dark:bg-gray-800 border border-blue-200/50 dark:border-blue-800/50 text-blue-900 dark:text-blue-100 font-mono text-sm transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed appearance-none pr-10"
                             >
                                 {sizes.map((size) => (
                                     <option key={size.name} value={size.name}>
@@ -150,6 +151,7 @@ export function CodeSnippet({
                                     </option>
                                 ))}
                             </select>
+                            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-300 dark:text-blue-600" />
                         </div>
 
                         {/* Code Snippet */}

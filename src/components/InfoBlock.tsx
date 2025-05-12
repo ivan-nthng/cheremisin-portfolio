@@ -53,12 +53,12 @@ export function InfoBlock({
                 {/* Content container */}
                 <div className="flex-grow space-y-2">
                     {/* Header text */}
-                    <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-100">
+                    <h4 className="text-xs font-semibold text-blue-900 dark:text-blue-100">
                         {header}
                     </h4>
 
                     {/* Description text */}
-                    <p className="text-sm text-blue-800/80 dark:text-blue-200/80">
+                    <p className="text-xs text-blue-800/80 dark:text-blue-200/80">
                         {description}
                     </p>
 
@@ -68,7 +68,7 @@ export function InfoBlock({
                             {primaryAction && (
                                 <button
                                     onClick={primaryAction.onClick}
-                                    className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                                    className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
                                 >
                                     {primaryAction.label}
                                 </button>
@@ -76,7 +76,7 @@ export function InfoBlock({
                             {secondaryAction && (
                                 <button
                                     onClick={secondaryAction.onClick}
-                                    className="text-sm font-medium text-blue-600/70 dark:text-blue-400/70 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                                    className="text-xs font-medium text-blue-600/70 dark:text-blue-400/70 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
                                 >
                                     {secondaryAction.label}
                                 </button>
