@@ -140,7 +140,7 @@ export default function Hero() {
 
     return (
         // Hero Section: two-column responsive layout with animated background
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-gray-900">
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-gray-900 pb-[env(safe-area-inset-bottom)]">
             {/* Animated interactive gradient background (always behind content) */}
             <AnimatedGradientBackground />
             <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-6">
