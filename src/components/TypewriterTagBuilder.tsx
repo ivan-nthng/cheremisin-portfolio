@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { X } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 // Update this list to change the phrases
 const PHRASES = [
@@ -56,10 +57,12 @@ export default function TypewriterTagBuilder() {
     useEffect(() => {
         if (!isTyping && tags.length <= PHRASES.length && tags.length > 0) {
             if (tags.length === PHRASES.length) {
-                // All tags shown, immediately start over (no pause, no empty state)
-                setTags([])
-                setCurrentPhraseIdx(0)
-                setIsTyping(true)
+                // All tags shown, wait 2s, then animate out and restart
+                setTimeout(() => {
+                    setTags([])
+                    setCurrentPhraseIdx(0)
+                    setIsTyping(true)
+                }, 2000)
             } else {
                 typingTimeout.current = setTimeout(() => {
                     setCurrentPhraseIdx((idx) => idx + 1)
@@ -123,25 +126,34 @@ export default function TypewriterTagBuilder() {
                         }
                     `}</style>
                 </div>
-                {/* Tags row styled like ProjectCard tags */}
+                {/* Tags row styled like ProjectCard tags, with animation */}
                 <div className="flex flex-wrap gap-2 mt-4 w-full">
-                    {tags.map((tag, idx) => (
-                        <span
-                            key={tag + idx}
-                            className="px-2 py-1 text-sm bg-blue-100/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1"
-                        >
-                            {tag}
-                            <button
-                                className="ml-2 text-primary-400 hover:text-red-500 focus:outline-none"
-                                onClick={() => handleRemoveTag(idx)}
-                                aria-label={`Remove ${tag}`}
-                                tabIndex={0}
-                                type="button"
+                    <AnimatePresence initial={false}>
+                        {tags.map((tag, idx) => (
+                            <motion.span
+                                key={tag + idx}
+                                initial={{ opacity: 0, y: 16 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 16 }}
+                                transition={{
+                                    duration: 0.35,
+                                    ease: [0.4, 0, 0.2, 1],
+                                }}
+                                className="px-2 py-1 text-sm bg-blue-100/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1"
                             >
-                                <X className="w-4 h-4" />
-                            </button>
-                        </span>
-                    ))}
+                                {tag}
+                                <button
+                                    className="ml-2 text-primary-400 hover:text-red-500 focus:outline-none"
+                                    onClick={() => handleRemoveTag(idx)}
+                                    aria-label={`Remove ${tag}`}
+                                    tabIndex={0}
+                                    type="button"
+                                >
+                                    <X className="w-4 h-4" />
+                                </button>
+                            </motion.span>
+                        ))}
+                    </AnimatePresence>
                 </div>
             </div>
         </div>
