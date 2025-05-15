@@ -1,11 +1,13 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowDown, Calendar } from 'lucide-react'
 import { useTheme } from 'next-themes'
+import TypewriterTagBuilder from './TypewriterTagBuilder'
+import AnimatedGradientBackground from './AnimatedGradientBackground'
 
 export default function Hero() {
     // =============================
@@ -29,6 +31,38 @@ export default function Hero() {
     })
     const [avatarPosition, setAvatarPosition] = React.useState({ x: 0, y: 0 })
     const [gradientVisible, setGradientVisible] = React.useState(true)
+    const [isAtTop, setIsAtTop] = React.useState(true)
+
+    // Add interactive blob mouse tracking
+    const interactiveRef = useRef<HTMLDivElement>(null)
+    useEffect(() => {
+        const interBubble = interactiveRef.current
+        if (!interBubble) return
+        let curX = 0
+        let curY = 0
+        let tgX = 0
+        let tgY = 0
+        let running = true
+        function move() {
+            if (!interBubble) return
+            curX += (tgX - curX) / 20
+            curY += (tgY - curY) / 20
+            interBubble.style.transform = `translate(${Math.round(
+                curX,
+            )}px, ${Math.round(curY)}px)`
+            if (running) requestAnimationFrame(move)
+        }
+        function onMouseMove(event: MouseEvent) {
+            tgX = event.clientX
+            tgY = event.clientY
+        }
+        window.addEventListener('mousemove', onMouseMove)
+        move()
+        return () => {
+            running = false
+            window.removeEventListener('mousemove', onMouseMove)
+        }
+    }, [])
 
     // =============================
     // Mount and Scroll Effect
@@ -51,20 +85,18 @@ export default function Hero() {
     // Avatar Image (theme-aware)
     // =============================
     const avatarImage =
-        mounted &&
-        (resolvedTheme === 'dark'
+        resolvedTheme === 'dark' || theme === 'dark'
             ? '/ivan-avatar-dark.png'
-            : '/ivan-avatar-light.png')
+            : '/ivan-avatar-light.png'
 
     // =============================
     // Mouse and Button Position Handlers
     // =============================
     // Used for animated tooltips and cursor effects.
     const handleMouseMove = (e: React.MouseEvent) => {
-        const rect = e.currentTarget.getBoundingClientRect()
         setMousePosition({
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top,
+            x: e.clientX,
+            y: e.clientY,
         })
     }
     const handleAvatarMouseMove = (e: React.MouseEvent) => {
@@ -97,294 +129,113 @@ export default function Hero() {
         }
     }
 
+    React.useEffect(() => {
+        const handleScroll = () => {
+            setIsAtTop(window.scrollY === 0)
+        }
+        window.addEventListener('scroll', handleScroll)
+        handleScroll()
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
+
     return (
-        // =============================
-        // Hero Section Root
-        // =============================
-        <section className="min-h-screen flex items-center justify-center py-20 md:py-0  relative overflow-hidden">
-            {/* =============================
-                Animated Atmospheric Gradient Background
-                - Full-screen, animated, theme-aware, fades out on scroll
-            ============================= */}
-            <motion.div
-                aria-hidden
-                initial={{ opacity: 1 }}
-                animate={{ opacity: gradientVisible ? 1 : 0 }}
-                transition={{ duration: 0.7, ease: 'easeInOut' }}
-                className="fixed md:absolute left-0 bottom-0 w-screen h-screen pointer-events-none -z-10"
-                style={{
-                    background:
-                        mounted &&
-                        (resolvedTheme === 'dark' || theme === 'dark')
-                            ? 'radial-gradient(ellipse 120% 60% at 50% 95%, rgba(180,255,210,0.32) 0%, rgba(0,255,200,0.22) 30%, rgba(0,212,255,0.18) 60%, rgba(0,30,80,0.92) 90%, #000 100%)'
-                            : 'radial-gradient(ellipse 120% 60% at 50% 95%, rgba(180,235,255,0.38) 0%, rgba(0,255,255,0.22) 30%, rgba(0,212,255,0.18) 60%, rgba(0,80,255,0.12) 90%, #eaf6ff 100%)',
-                    filter: 'blur(4px)',
-                    transition: 'background 2s cubic-bezier(0.4,0,0.2,1)',
-                }}
-            />
-            <div className="container mx-auto px-6">
-                <div className="flex flex-col items-start">
-                    {/* =============================
-                        Animated Headline and Avatar
-                        - Includes greeting, avatar, and animated text
-                    ============================= */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="w-full"
-                    >
-                        <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                            className="text-4xl md:text-5xl font-bold mb-8 font-heading leading-[1.4] text-primary-800 dark:text-primary-100 xl:w-1/2 2xl:w-1/2 lg:w-2/3"
-                        >
-                            <span className="inline-flex flex-col items-start gap-2">
-                                <span className="inline-flex items-center gap-2">
-                                    Hi 👋! I'm Ivan{' '}
-                                    <div className="relative inline-flex">
-                                        {/* Avatar with hover spin and tooltip */}
-                                        <Link
-                                            href="https://calendly.com/icheremisin/30min"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="inline-flex relative group items-center"
-                                            onMouseEnter={() =>
-                                                setIsHovered(true)
-                                            }
-                                            onMouseLeave={() =>
-                                                setIsHovered(false)
-                                            }
-                                            onMouseMove={handleAvatarMouseMove}
-                                        >
-                                            {mounted && avatarImage && (
-                                                <motion.span
-                                                    className="inline-flex w-10 h-10 md:w-12 md:h-12 relative items-center"
-                                                    animate={{
-                                                        rotate: isHovered
-                                                            ? 360
-                                                            : 0,
-                                                        scale: isHovered
-                                                            ? 1.1
-                                                            : 1,
-                                                    }}
-                                                    transition={{
-                                                        rotate: {
-                                                            duration: 0.6,
-                                                            ease: 'easeInOut',
-                                                        },
-                                                        scale: {
-                                                            duration: 0.2,
-                                                        },
-                                                    }}
-                                                >
-                                                    <Image
-                                                        src={avatarImage}
-                                                        alt="Ivan's avatar"
-                                                        fill
-                                                        className={`object-contain transition-all duration-300 ${
-                                                            isHovered
-                                                                ? 'brightness-120'
-                                                                : ''
-                                                        }`}
-                                                        priority
-                                                    />
-                                                </motion.span>
-                                            )}
-                                        </Link>
-                                        {/* Avatar Tooltip */}
-                                        <AnimatePresence>
-                                            {isHovered && (
-                                                <div className="absolute z-[100] pointer-events-none">
-                                                    <motion.div
-                                                        initial={{
-                                                            opacity: 0,
-                                                            scale: 0.8,
-                                                        }}
-                                                        animate={{
-                                                            opacity: 1,
-                                                            scale: 1,
-                                                            x:
-                                                                avatarPosition.x +
-                                                                20,
-                                                            y:
-                                                                avatarPosition.y -
-                                                                20,
-                                                        }}
-                                                        exit={{
-                                                            opacity: 0,
-                                                            scale: 0.8,
-                                                        }}
-                                                        transition={{
-                                                            duration: 0.2,
-                                                            ease: 'easeOut',
-                                                        }}
-                                                        className="bg-primary-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap font-mono"
-                                                    >
-                                                        Book a 15-minute call
-                                                    </motion.div>
-                                                </div>
-                                            )}
-                                        </AnimatePresence>
-                                    </div>
-                                </span>
-                                {/* Animated Headline Gradient Text */}
-                                <motion.span
-                                    className="inline-block bg-clip-text text-transparent pb-1 text-4xl md:text-5xl font-bold mb-8 font-heading leading-[1.4] pt-2"
-                                    animate={{
-                                        backgroundImage: [
-                                            'radial-gradient(circle at 0% 0%, #274284, #FF4E51)',
-                                            'radial-gradient(circle at 100% 100%, #274284, #FF4E51)',
-                                            'radial-gradient(circle at 100% 0%, #274284, #FF4E51)',
-                                            'radial-gradient(circle at 0% 100%, #274284, #FF4E51)',
-                                        ],
-                                    }}
-                                    transition={{
-                                        duration: 8,
-                                        repeat: Infinity,
-                                        ease: 'linear',
-                                    }}
-                                >
-                                    Product Designer
-                                </motion.span>
-                            </span>
-                        </motion.h1>
-                        {/* Description Paragraph */}
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.4 }}
-                            className="text-lg md:text-xl text-primary-600 dark:text-primary-300 mb-12 max-w-2xl"
-                        >
-                            I create digital tools — whether building from
-                            scratch or refining what's already there. Always
-                            with clarity, always with care.
-                        </motion.p>
-                        {/* CTA Buttons and Tooltips */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.6 }}
-                            className="flex flex-col md:flex-row gap-4 w-full md:w-auto max-w-[420px] md:max-w-none items-start"
-                        >
-                            {/* Calendly Button with Tooltip */}
-                            <div className="relative">
-                                <motion.div
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                >
-                                    <Link
-                                        href="https://calendly.com/icheremisin/30min"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        onMouseEnter={() =>
-                                            setIsTooltipVisible(true)
-                                        }
-                                        onMouseLeave={() =>
-                                            setIsTooltipVisible(false)
-                                        }
-                                        onMouseMove={handleCalendlyMouseMove}
-                                        className="inline-flex w-full md:w-auto px-6 py-3 bg-primary-500 hover:bg-primary-600 dark:bg-primary-400 dark:hover:bg-primary-300 text-white rounded-md transition-colors duration-300 items-center justify-center gap-3"
-                                    >
-                                        <Calendar className="w-5 h-5 flex-shrink-0 -mt-0.5" />
-                                        Book a Call
-                                    </Link>
-                                </motion.div>
-                                <AnimatePresence>
-                                    {isTooltipVisible && (
-                                        <div className="absolute z-[100] pointer-events-none">
-                                            <motion.div
-                                                initial={{
-                                                    opacity: 0,
-                                                    scale: 0.8,
-                                                }}
-                                                animate={{
-                                                    opacity: 1,
-                                                    scale: 1,
-                                                    x:
-                                                        calendlyButtonPosition.x +
-                                                        20,
-                                                    y:
-                                                        calendlyButtonPosition.y -
-                                                        20,
-                                                }}
-                                                exit={{
-                                                    opacity: 0,
-                                                    scale: 0.8,
-                                                }}
-                                                transition={{
-                                                    duration: 0.2,
-                                                    ease: 'easeOut',
-                                                }}
-                                                className="bg-primary-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap font-mono"
-                                            >
-                                                Move to Calendly
-                                            </motion.div>
-                                        </div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
-                            {/* Projects Button with Tooltip */}
-                            <div className="relative">
-                                <motion.div
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                >
-                                    <Link
-                                        href="#projects"
-                                        onClick={handleProjectsClick}
-                                        onMouseEnter={() =>
-                                            setIsProjectsTooltipVisible(true)
-                                        }
-                                        onMouseLeave={() =>
-                                            setIsProjectsTooltipVisible(false)
-                                        }
-                                        onMouseMove={handleProjectsMouseMove}
-                                        className="inline-flex w-full md:w-auto px-6 py-3 bg-primary-100 hover:bg-primary-200 dark:bg-primary-800 dark:hover:bg-primary-700 text-primary-900 dark:text-primary-100 rounded-md transition-colors duration-300 items-center justify-center gap-2"
-                                    >
-                                        View Projects
-                                        <ArrowDown className="w-5 h-5 flex-shrink-0" />
-                                    </Link>
-                                </motion.div>
-                                <AnimatePresence>
-                                    {isProjectsTooltipVisible && (
-                                        <div className="absolute z-[100] pointer-events-none">
-                                            <motion.div
-                                                initial={{
-                                                    opacity: 0,
-                                                    scale: 0.8,
-                                                }}
-                                                animate={{
-                                                    opacity: 1,
-                                                    scale: 1,
-                                                    x:
-                                                        projectsButtonPosition.x +
-                                                        20,
-                                                    y:
-                                                        projectsButtonPosition.y -
-                                                        20,
-                                                }}
-                                                exit={{
-                                                    opacity: 0,
-                                                    scale: 0.8,
-                                                }}
-                                                transition={{
-                                                    duration: 0.2,
-                                                    ease: 'easeOut',
-                                                }}
-                                                className="bg-primary-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap font-mono"
-                                            >
-                                                Scroll to projects
-                                            </motion.div>
-                                        </div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
-                        </motion.div>
-                    </motion.div>
+        // Hero Section: two-column responsive layout with animated background
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-gray-900">
+            {/* Animated interactive gradient background (always behind content) */}
+            <AnimatedGradientBackground />
+            <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                {/* Responsive flex layout for mobile, grid for md+ */}
+                <div className="flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-24 min-h-screen md:min-h-0 justify-between items-start">
+                    {/*
+                      Top section: Typewriter (right on desktop, top on mobile)
+                      - Hugs content, does not push or overlap bottom section
+                      - Grows only downward
+                    */}
+                    <div className="order-1 md:order-2 flex flex-col items-start w-full max-w-md mx-auto md:mx-0 pt-8 md:pt-0 pb-4 md:pb-0">
+                        <div className="w-full bg-blue-50/80 dark:bg-blue-900/80 rounded-3xl shadow-md p-6 md:p-8 mt-8 md:mt-0 flex flex-col items-start max-w-md mx-auto md:mx-0">
+                            <TypewriterTagBuilder />
+                        </div>
+                    </div>
+                    {/*
+                      Bottom section: Main content (left on desktop, bottom on mobile)
+                      - Always sticks to the bottom on mobile
+                      - Balanced internal padding and spacing
+                    */}
+                    <div className="order-2 md:order-1 flex flex-col items-start justify-end w-full max-w-xl mx-auto md:mx-0 pb-8 pt-4 md:pt-0 min-h-[50vh] md:min-h-0">
+                        {/* Main header */}
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-primary-900 dark:text-primary-100 leading-tight text-left">
+                            Ivan Cheremisin
+                        </h1>
+                        {/* Subheader */}
+                        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold text-primary-700 dark:text-primary-200 mt-2 text-left">
+                            Product Designer
+                        </h2>
+                        {/* Description */}
+                        <p className="mt-4 sm:mt-6 text-md sm:text-md md:text-lg xl:text-xl text-primary-600 dark:text-primary-300 font-mono text-left max-w-lg">
+                            I build SaaS, AI-powered, and B2B collaborative
+                            tools from the ground up — clear for users, scalable
+                            for teams.
+                        </p>
+                        {/* Buttons block: unchanged styles */}
+                        <div className="flex flex-col lg:flex-row gap-4 mt-8 w-full max-w-md">
+                            <Link
+                                href="https://calendly.com/icheremisin/30min"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn gap-2 justify-center items-center px-6 py-3 text-base w-full sm:w-auto"
+                                onMouseEnter={() => setIsTooltipVisible(true)}
+                                onMouseLeave={() => setIsTooltipVisible(false)}
+                                onMouseMove={handleMouseMove}
+                            >
+                                <Calendar className="w-5 h-5 flex-shrink-0 -mt-0.5" />
+                                Book a Call
+                            </Link>
+                            <Link
+                                href="#projects"
+                                onClick={handleProjectsClick}
+                                className="btn-secondary gap-2 justify-center items-center px-6 py-3 text-base w-full sm:w-auto"
+                                onMouseEnter={() =>
+                                    setIsProjectsTooltipVisible(true)
+                                }
+                                onMouseLeave={() =>
+                                    setIsProjectsTooltipVisible(false)
+                                }
+                                onMouseMove={handleMouseMove}
+                            >
+                                View Projects
+                                <ArrowDown className="w-5 h-5 flex-shrink-0" />
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </div>
+            {/* Tooltips for the two buttons (Book a Call, View Projects) */}
+            {isTooltipVisible && (
+                <div
+                    className="fixed z-[100] pointer-events-none"
+                    style={{
+                        left: mousePosition.x + 15,
+                        top: mousePosition.y - 30,
+                    }}
+                >
+                    <div className="bg-primary-800 text-white px-3 py-1.5 rounded-md text-sm whitespace-nowrap font-mono shadow-lg backdrop-blur-sm">
+                        Move to Calendly
+                    </div>
+                </div>
+            )}
+            {isProjectsTooltipVisible && (
+                <div
+                    className="fixed z-[100] pointer-events-none"
+                    style={{
+                        left: mousePosition.x + 15,
+                        top: mousePosition.y - 30,
+                    }}
+                >
+                    <div className="bg-primary-800 text-white px-3 py-1.5 rounded-md text-sm whitespace-nowrap font-mono shadow-lg backdrop-blur-sm">
+                        Scroll to projects
+                    </div>
+                </div>
+            )}
         </section>
     )
 }

@@ -15,20 +15,23 @@ export default function GlobalError({
 
     return (
         <html>
-            <body>
-                <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
-                    <div className="text-center space-y-6">
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                            Something went wrong!
-                        </h2>
-                        <button
-                            onClick={reset}
-                            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-                        >
-                            Try again
-                        </button>
-                    </div>
-                </div>
+            <body style={{ padding: '2rem', textAlign: 'center' }}>
+                <h2>Global Error</h2>
+                <pre style={{ color: 'red', margin: '1rem 0' }}>
+                    {error?.message}
+                </pre>
+                <button
+                    style={{
+                        padding: '0.5rem 1.5rem',
+                        borderRadius: 6,
+                        background: '#eee',
+                        border: 'none',
+                        cursor: 'pointer',
+                    }}
+                    onClick={() => reset()}
+                >
+                    Try again
+                </button>
             </body>
         </html>
     )
