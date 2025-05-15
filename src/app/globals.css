@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  =============================
+  Base Layer: HTML & Typography
+  =============================
+  Sets up base font, smooth scrolling, and default heading styles.
+*/
 @layer base {
     html {
         @apply scroll-smooth;
@@ -37,6 +43,12 @@
     }
 }
 
+/*
+  =============================
+  Components Layer: Utility Classes
+  =============================
+  Defines reusable classes for containers, buttons, inputs, and labels.
+*/
 @layer components {
     .container {
         @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
@@ -59,7 +71,12 @@
     }
 }
 
-/* Responsive table scroll for small screens */
+/*
+  =============================
+  Responsive Table Scroll
+  =============================
+  Ensures tables are scrollable on small screens and content doesn't wrap.
+*/
 @media (max-width: 640px) {
     table {
         display: block;
@@ -71,20 +88,60 @@
     }
 }
 
-/* Animated Gradient Background Styles */
+/*
+  =============================
+  Animated Gradient Background Styles
+  =============================
+  Custom CSS for the full-screen animated, interactive background with gooey blobs.
+  Used by the <AnimatedGradientBackground /> component.
+*/
+
+/*
+  Light theme color palette for animated background and blobs
+  (applies by default)
+*/
 :root {
-    --color-bg1: rgb(108, 0, 162);
-    --color-bg2: rgb(0, 17, 82);
+    /* Main background gradient colors */
+    --color-bg1: rgb(241, 212, 255); /* purple for light mode */
+    --color-bg2: rgb(171, 182, 227);
+    /* Blob colors (R,G,B) */
     --color1: 18, 113, 255;
     --color2: 221, 74, 255;
     --color3: 100, 220, 255;
     --color4: 200, 50, 50;
     --color5: 180, 180, 50;
     --color-interactive: 140, 100, 255;
+    /* Blob size and blending mode */
     --circle-size: 80%;
     --blending: hard-light;
 }
 
+/*
+  Dark theme color palette for animated background and blobs
+  (applies when .dark class is present on <html>)
+*/
+.dark {
+    /* Main background gradient colors */
+    --color-bg1: rgb(60, 0, 90); /* deeper purple for dark mode */
+    --color-bg2: rgb(0, 10, 40);
+    /* Blob colors (R,G,B) */
+    --color1: 80, 140, 255;
+    --color2: 180, 90, 255;
+    --color3: 80, 200, 255;
+    --color4: 255, 80, 80;
+    --color5: 220, 220, 100;
+    --color-interactive: 180, 140, 255;
+    /* Blob size and blending mode */
+    --circle-size: 80%;
+    --blending: hard-light;
+}
+
+/*
+  Keyframes for animated blob movement
+  - moveInCircle: Rotates a blob in a circle
+  - moveVertical: Moves a blob up and down
+  - moveHorizontal: Moves a blob left and right
+*/
 @keyframes moveInCircle {
     0% {
         transform: rotate(0deg);
@@ -119,6 +176,11 @@
     }
 }
 
+/*
+  .gradient-bg: Main container for the animated background
+  - Fixed, full viewport, sits behind content
+  - Uses a linear gradient and contains all blobs
+*/
 .gradient-bg {
     width: 100vw;
     height: 100vh;
@@ -129,6 +191,7 @@
     left: 0;
     z-index: 0;
 }
+/* SVG filter for gooey blending of blobs */
 .gradient-bg svg {
     position: fixed;
     top: 0;
@@ -136,11 +199,20 @@
     width: 0;
     height: 0;
 }
+/* Container for all animated blobs, applies goo filter and blur */
 .gradient-bg .gradients-container {
     filter: url(#goo) blur(40px);
     width: 100%;
     height: 100%;
 }
+/*
+  Each .gN class is a different colored blob with its own animation:
+  - .g1: Blue, moves vertically
+  - .g2: Purple/pink, moves in a circle (reverse)
+  - .g3: Cyan, moves in a large circle
+  - .g4: Red, moves horizontally
+  - .g5: Yellow, moves in a large circle
+*/
 .gradient-bg .g1 {
     position: absolute;
     background: radial-gradient(
@@ -226,6 +298,10 @@
     animation: moveInCircle 20s ease infinite;
     opacity: 1;
 }
+/*
+  .interactive: Special blob that follows the mouse position
+  - Uses a blue color, covers the whole area, and is animated by JS
+*/
 .gradient-bg .interactive {
     position: absolute;
     background: radial-gradient(

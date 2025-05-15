@@ -82,11 +82,11 @@ export default function TypewriterTagBuilder() {
     }
 
     return (
-        <div className="w-full h-full flex items-center justify-center">
-            <div className="w-full max-w-xs md:max-w-sm flex flex-col items-start">
+        <div className="w-full h-full flex items-center justify-start">
+            <div className="w-full max-w-lg md:max-w-xl flex flex-col items-start">
                 {/* Input Label */}
                 <label className="mb-2 text-sm font-medium text-primary-500 dark:text-primary-400 select-none">
-                    Desired technologies
+                    My focus areas
                 </label>
                 {/* Fake input box styled like ProjectCard input */}
                 <div
