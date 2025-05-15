@@ -90,9 +90,9 @@ export default function TypewriterTagBuilder() {
                 </label>
                 {/* Fake input box styled like ProjectCard input */}
                 <div
-                    className={`w-full border bg-blue-50/80 dark:bg-blue-900/80 border-blue-200 dark:border-blue-700 rounded-xl px-4 py-2 font-mono text-primary-900 dark:text-primary-100 text-base sm:text-lg min-h-[2.5rem] flex items-center transition-colors transition-shadow duration-200 ${
+                    className={`w-full border bg-blue-50/80 dark:bg-blue-900/80 border-blue-200 dark:border-blue-600 rounded-xl px-4 py-2 font-mono text-primary-900 dark:text-primary-100 text-base sm:text-lg min-h-[2.5rem] flex items-center transition-colors duration-200 ${
                         isPressed
-                            ? 'bg-blue-100/80 dark:bg-blue-800/80 shadow-inner border-blue-400 dark:border-blue-600'
+                            ? 'bg-blue-200/80 dark:bg-blue-800/80 border-blue-500 dark:border-blue-600'
                             : ''
                     }`}
                     style={{ minHeight: '2.5rem' }}
@@ -139,7 +139,7 @@ export default function TypewriterTagBuilder() {
                                     duration: 0.35,
                                     ease: [0.4, 0, 0.2, 1],
                                 }}
-                                className="px-2 py-1 text-sm bg-blue-100/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1"
+                                className="px-2 py-1 text-sm bg-blue-50/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1"
                             >
                                 {tag}
                                 <button
