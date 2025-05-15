@@ -152,7 +152,7 @@ export default function Hero() {
                       - Grows only downward
                     */}
                     <div className="order-1 md:order-2 flex flex-col items-start w-full max-w-md mx-auto md:mx-0 pt-8 md:pt-0 pb-4 md:pb-0">
-                        <div className="w-full bg-blue-50/80 dark:bg-blue-900/80 rounded-3xl shadow-md p-6 md:p-8 mt-8 md:mt-0 flex flex-col items-start max-w-md mx-auto md:mx-0">
+                        <div className="w-full bg-blue-50/80 dark:bg-blue-900/80 rounded-2xl sm:rounded-3xl shadow-md  p-3 xs:p-4 md:p-8 mt-8 md:mt-0 flex flex-col items-start max-w-md mx-auto md:mx-0">
                             <TypewriterTagBuilder />
                         </div>
                     </div>
@@ -167,17 +167,17 @@ export default function Hero() {
                             Ivan Cheremisin
                         </h1>
                         {/* Subheader */}
-                        <h2 className="text-xl sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold text-primary-700 dark:text-primary-100 mt-4 text-left">
+                        <h2 className="text-xl sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold text-primary-700 dark:text-primary-100 mt-4 sm:mt-2 text-left">
                             Product Designer
                         </h2>
                         {/* Description */}
-                        <p className="mt-8 sm:mt-8 text-md sm:text-md md:text-lg xl:text-xl text-primary-600 dark:text-primary-100 font-mono text-left max-w-lg">
+                        <p className="mt-4 sm:mt-8 text-md sm:text-md md:text-lg xl:text-xl text-primary-600 dark:text-primary-100 font-mono text-left max-w-lg">
                             I build SaaS, AI-powered, and B2B collaborative
                             tools from the ground up — clear for users, scalable
                             for teams.
                         </p>
                         {/* Buttons block: unchanged styles */}
-                        <div className="flex flex-col lg:flex-row gap-4 mt-12 w-full max-w-md">
+                        <div className="flex flex-col lg:flex-row gap-2 sm:gap-4 mt-6 sm:mt-8 w-full max-w-md">
                             <Link
                                 href="https://calendly.com/icheremisin/30min"
                                 target="_blank"
