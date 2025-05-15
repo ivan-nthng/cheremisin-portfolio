@@ -1,24 +1,29 @@
-import type { Metadata } from 'next'
+import { Metadata } from 'next'
 
-export const metadata: Metadata = {
-    title: 'Ivan Cheremisin - Product Designer',
-    description:
-        'Portfolio of Ivan Cheremisin, a Product Designer specializing in user experience and interface design.',
-    icons: {
-        icon: [
-            { url: '/favicon.svg', type: 'image/svg+xml' },
-            { url: '/favicon.ico', sizes: 'any' },
-        ],
-        apple: [
-            {
-                url: '/apple-touch-icon.png',
-                sizes: '180x180',
-                type: 'image/png',
-            },
-        ],
-    },
-    manifest: '/site.webmanifest',
-    themeColor: '#274284',
-    viewport: 'width=device-width, initial-scale=1',
-    robots: 'index, follow',
+export const generateMetadata = (): Metadata => {
+    return {
+        title: 'Home',
+        description:
+            'Portfolio of Ivan Cheremisin, Product Designer specializing in AI Tools, B2B, and SaaS.',
+        openGraph: {
+            title: 'Ivan Cheremisin — Product Designer',
+            description:
+                'Portfolio of Ivan Cheremisin, Product Designer specializing in AI Tools, B2B, and SaaS.',
+            images: [
+                {
+                    url: '/og-image.jpg',
+                    width: 1200,
+                    height: 630,
+                    alt: 'Ivan Cheremisin Portfolio Preview',
+                },
+            ],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: 'Ivan Cheremisin — Product Designer',
+            description:
+                'Portfolio of Ivan Cheremisin, Product Designer specializing in AI Tools, B2B, and SaaS.',
+            images: ['/og-image.jpg'],
+        },
+    }
 }

@@ -163,21 +163,21 @@ export default function Hero() {
                     */}
                     <div className="order-2 md:order-1 flex flex-col items-start justify-end w-full max-w-xl mx-auto md:mx-0 pb-8 pt-4 md:pt-0 min-h-[50vh] md:min-h-0">
                         {/* Main header */}
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-primary-900 dark:text-primary-100 leading-tight text-left">
+                        <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-primary-900 dark:text-primary-100 leading-tight text-left">
                             Ivan Cheremisin
                         </h1>
                         {/* Subheader */}
-                        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold text-primary-700 dark:text-primary-200 mt-2 text-left">
+                        <h2 className="text-xl sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold text-primary-700 dark:text-primary-100 mt-4 text-left">
                             Product Designer
                         </h2>
                         {/* Description */}
-                        <p className="mt-4 sm:mt-6 text-md sm:text-md md:text-lg xl:text-xl text-primary-600 dark:text-primary-300 font-mono text-left max-w-lg">
+                        <p className="mt-8 sm:mt-8 text-md sm:text-md md:text-lg xl:text-xl text-primary-600 dark:text-primary-100 font-mono text-left max-w-lg">
                             I build SaaS, AI-powered, and B2B collaborative
                             tools from the ground up — clear for users, scalable
                             for teams.
                         </p>
                         {/* Buttons block: unchanged styles */}
-                        <div className="flex flex-col lg:flex-row gap-4 mt-8 w-full max-w-md">
+                        <div className="flex flex-col lg:flex-row gap-4 mt-12 w-full max-w-md">
                             <Link
                                 href="https://calendly.com/icheremisin/30min"
                                 target="_blank"
