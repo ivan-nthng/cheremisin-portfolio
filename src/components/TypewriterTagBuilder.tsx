@@ -142,15 +142,6 @@ export default function TypewriterTagBuilder() {
                                 className="px-2 py-1 text-sm bg-blue-50/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1"
                             >
                                 {tag}
-                                <button
-                                    className="ml-2 text-primary-400 hover:text-red-500 focus:outline-none"
-                                    onClick={() => handleRemoveTag(idx)}
-                                    aria-label={`Remove ${tag}`}
-                                    tabIndex={0}
-                                    type="button"
-                                >
-                                    <X className="w-4 h-4" />
-                                </button>
                             </motion.span>
                         ))}
                     </AnimatePresence>
