@@ -140,7 +140,7 @@ export default function Hero() {
 
     return (
         // Hero Section: two-column responsive layout with animated background
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-gray-900 pb-[env(safe-area-inset-bottom)]">
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-gray-900">
             {/* Animated interactive gradient background (always behind content) */}
             <AnimatedGradientBackground />
             <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-6">
@@ -161,7 +161,7 @@ export default function Hero() {
                       - Always sticks to the bottom on mobile
                       - Balanced internal padding and spacing
                     */}
-                    <div className="order-2 md:order-1 flex flex-col items-start justify-end w-full max-w-xl mx-auto md:mx-0 pb-8 pt-4 md:pt-0 min-h-[50vh] md:min-h-0">
+                    <div className="order-2 md:order-1 flex flex-col items-start justify-end w-full max-w-xl mx-auto md:mx-0 pb-8 pb-safe pt-4 md:pt-0 min-h-[50vh] md:min-h-0">
                         {/* Main header */}
                         <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-primary-900 dark:text-primary-100 leading-tight text-left">
                             Ivan Cheremisin
@@ -177,7 +177,7 @@ export default function Hero() {
                             for teams.
                         </p>
                         {/* Buttons block: unchanged styles */}
-                        <div className="flex flex-col lg:flex-row gap-2 sm:gap-4 mt-6 sm:mt-8 w-full max-w-md">
+                        <div className="flex flex-col lg:flex-row gap-2 sm:gap-4 mt-6 sm:mt-8 w-full max-w-md mb-4">
                             <Link
                                 href="https://calendly.com/icheremisin/30min"
                                 target="_blank"
