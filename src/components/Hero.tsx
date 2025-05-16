@@ -151,8 +151,8 @@ export default function Hero() {
                       - Hugs content, does not push or overlap bottom section
                       - Grows only downward
                     */}
-                    <div className="order-1 md:order-2 flex flex-col items-start w-full max-w-md mx-auto md:mx-0 pt-8 md:pt-0 pb-4 md:pb-0">
-                        <div className="w-full bg-blue-50/80 dark:bg-blue-900/80 rounded-2xl sm:rounded-3xl shadow-md  p-3 xs:p-4 md:p-8 mt-8 md:mt-0 flex flex-col items-start max-w-md mx-auto md:mx-0">
+                    <div className="order-1 md:order-2 flex flex-col items-start w-full max-w-md mx-auto md:mx-0 pt-8 md:pt-0 pb-4 md:pb-0 flex-grow md:flex-grow-0">
+                        <div className="w-full bg-blue-50/80 dark:bg-blue-900/80 rounded-2xl sm:rounded-3xl shadow-md  p-3 xs:p-4 md:p-8 mt-8 md:mt-0 flex flex-col items-start max-w-md mx-auto md:mx-0 h-full md:h-auto">
                             <TypewriterTagBuilder />
                         </div>
                     </div>
@@ -161,7 +161,7 @@ export default function Hero() {
                       - Always sticks to the bottom on mobile
                       - Balanced internal padding and spacing
                     */}
-                    <div className="order-2 md:order-1 flex flex-col items-start justify-end w-full max-w-xl mx-auto md:mx-0 pb-8 pb-safe pt-4 md:pt-0 min-h-[50vh] md:min-h-0">
+                    <div className="order-2 md:order-1 flex flex-col items-start justify-end w-full max-w-xl mx-auto md:mx-0 pb-8 pb-safe md:pt-0 mb-0 md:mb-0">
                         {/* Main header */}
                         <h1 className="text-3xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-primary-900 dark:text-primary-100 leading-tight text-left">
                             Ivan Cheremisin
