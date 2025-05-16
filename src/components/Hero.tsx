@@ -140,12 +140,12 @@ export default function Hero() {
 
     return (
         // Hero Section: two-column responsive layout with animated background
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-gray-900">
+        <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden bg-white dark:bg-gray-900">
             {/* Animated interactive gradient background (always behind content) */}
             <AnimatedGradientBackground />
             <div className="relative w-full max-w-7xl mx-auto px-6 lg:px-6">
                 {/* Responsive flex layout for mobile, grid for md+ */}
-                <div className="flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-24 min-h-screen md:min-h-0 justify-between items-start">
+                <div className="flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-24 min-h-[100dvh] md:min-h-0 justify-between items-start">
                     {/*
                       Top section: Typewriter (right on desktop, top on mobile)
                       - Hugs content, does not push or overlap bottom section
