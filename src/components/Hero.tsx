@@ -143,7 +143,7 @@ export default function Hero() {
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-gray-900">
             {/* Animated interactive gradient background (always behind content) */}
             <AnimatedGradientBackground />
-            <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-6">
+            <div className="relative w-full max-w-7xl mx-auto px-6 lg:px-6">
                 {/* Responsive flex layout for mobile, grid for md+ */}
                 <div className="flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-24 min-h-screen md:min-h-0 justify-between items-start">
                     {/*
