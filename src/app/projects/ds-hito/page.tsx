@@ -99,7 +99,7 @@ export default function DsHitoPage() {
     const description =
         'A semantic variable-based system for building scalable, adaptive UI components. Created to help designers and developers work with consistent spacing, typography, and tokens—tailored for any project with just a few root-level overrides.'
 
-    const demoTitle = "I'm just a placeholder - but I speak your language."
+    const demoTitle = 'Building Scalable Tools'
     const demoDescription =
         'A semantically smart system that lets designers and developers communicate in human terms. Auto-adaptive. Scales instantly. Ready for any product, zero rework'
 
