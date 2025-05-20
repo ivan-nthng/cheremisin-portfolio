@@ -164,20 +164,20 @@ export default function LitresPage() {
      */
     const stats = [
         {
-            value: '0',
-            label: 'Placeholder Stat 1',
+            value: '+22.5%',
+            label: 'Authors growt in the first half of 2020',
         },
         {
-            value: '0',
-            label: 'Placeholder Stat 2',
+            value: '9.5M',
+            label: 'Books sold in the first 6 months of 2020',
         },
         {
-            value: '0',
-            label: 'Placeholder Stat 3',
+            value: '92%',
+            label: 'Revenue increase driven by self-publishing',
         },
         {
-            value: '0',
-            label: 'Placeholder Stat 4',
+            value: '500+',
+            label: 'Partner publishers on the platform',
         },
     ]
 
@@ -188,24 +188,20 @@ export default function LitresPage() {
      */
     const problemStats = [
         {
-            value: '0',
-            label: 'Placeholder Problem Stat 1',
+            value: '281K+',
+            label: 'Registered independent authors in 2024',
+        },
+        {
+            value: '500+',
+            label: 'Partner publishing houses',
+        },
+        {
+            value: '92%',
+            label: 'Revenue growth from self-publishing in 2020',
         },
         {
             value: '0',
-            label: 'Placeholder Problem Stat 2',
-        },
-        {
-            value: '0',
-            label: 'Placeholder Problem Stat 3',
-        },
-        {
-            value: '0',
-            label: 'Placeholder Problem Stat 4',
-        },
-        {
-            value: '0',
-            label: 'Placeholder Problem Stat 5',
+            label: 'Tools for managing assets and sales for publishers and authors',
         },
     ]
 
@@ -215,9 +211,12 @@ export default function LitresPage() {
      * TODO: Replace placeholder text with actual project content
      */
     const description =
-        'Placeholder description for the Litres.com project. Replace with actual project description.'
+        "LitRes is Russia's leading platform for eBooks and audiobooks, connecting readers, authors, and publishers. In 2020, self-publishing revenue nearly doubled as author growth accelerated. The platform keeps expanding its publisher network, offering a unified space for digital distribution."
     const problemDescription =
-        'Placeholder problem description for the Litres.com project. Replace with actual problem description.'
+        'LitRes was scaling fast — but its infrastructure lagged behind.\n\n' +
+        'Authors struggled to manage growing portfolios, lacking tools for sales analytics, promo tools, or bulk editing.\n\n' +
+        "Publishers couldn't track performance across multiple titles or authors, and manual processes led to lost revenue opportunities.\n\n" +
+        'As author and publisher counts grew, the lack of scalable, data-driven dashboards became a bottleneck to further expansion.'
     const demoTitle = 'A smart dashboard'
     const demoDescription =
         'Designed for both authors and publishers. Where writers see recognition and growth in real-time, and publishers dig into performance and sales strategy. One shared space, two completely different user needs — perfectly balanced.'
@@ -247,21 +246,25 @@ export default function LitresPage() {
             description:
                 'Flexible dashboard layout with quick configuration to match user roles.',
         },
+    ]
+
+    // Additional gallery items for the second gallery section
+    const additionalGalleryItems = [
         {
-            imageLight: '/litres/gallery2-light.png',
-            imageDark: '/litres/gallery2-dark.png',
-            alt: 'Placeholder Gallery Item 2',
-            title: 'Placeholder Title 2',
+            imageLight: '/litres/users-light.png',
+            imageDark: '/litres/users-dark.png',
+            alt: 'User Management Dashboard',
+            title: 'User management for librarians',
             description:
-                'Placeholder description for gallery item 2. Replace with actual description.',
+                'Quickly group standard corporate users and apply bulk actions with ease — adjust access rules, update client types, or assign digital book quotas in just a few clicks.',
         },
         {
-            imageLight: '/litres/gallery3-light.png',
-            imageDark: '/litres/gallery3-dark.png',
-            alt: 'Placeholder Gallery Item 3',
-            title: 'Placeholder Title 3',
+            imageLight: '/litres/promo-light.png',
+            imageDark: '/litres/promo-dark.png',
+            alt: 'Promotion Tools',
+            title: 'Promotion Suite',
             description:
-                'Placeholder description for gallery item 3. Replace with actual description.',
+                'Integrated promotion tools for authors to manage campaigns, track performance, and optimize their marketing strategies.',
         },
     ]
 
@@ -319,6 +322,18 @@ export default function LitresPage() {
                 caption="Placeholder caption for the demo section. Replace with actual caption."
             />
             <GallerySection items={galleryItems} />
+
+            {/* Additional Demo Section */}
+            <DemoSection
+                title="E-Library Management Platform"
+                description="A lightweight internal tool for public library staff to manage digital readers, control access rights, and expand their e-book collections. It simplifies user management, allows bulk updates to borrowing permissions, and helps libraries grow and organize their digital catalogs with ease."
+                image="litres/libr"
+                caption="The author success platform provides tools for sales tracking, promotion management, and reader engagement."
+            />
+
+            {/* Additional Gallery Section */}
+            <GallerySection items={additionalGalleryItems} />
+
             <ProjectFooter
                 team={[
                     { role: 'Design' },
