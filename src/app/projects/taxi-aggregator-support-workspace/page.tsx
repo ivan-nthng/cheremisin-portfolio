@@ -86,7 +86,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
             label: 'Registered drivers',
         },
         {
-            value: '15k 7%',
+            value: '15k',
             label: 'Support Inquiries',
         },
         {
@@ -108,7 +108,10 @@ export default function TaxiAggregatorSupportWorkspacePage() {
         'In a city where drivers can easily switch to another aggregator, losing a driver means losing money. And the only way to compete was through superior service. The company needed to scale without growing the team — and that meant completely rethinking the tools.'
 
     const problemDescription =
-        'The company was operating in an extremely competitive market, where both drivers and passengers could easily switch to another platform. Since the number of drivers in the city was limited, losing them meant losing real revenue - and this often happened due to delayed or missing support responses. The support team was simply overwhelmed. There were only two options: scale the team massively - or rethink the entire system. To meet peak volume, the company would have needed nearly 200 operators - 4x the existing team.'
+        'The company was operating in an extremely competitive market, where both drivers and passengers could easily switch to another platform.\n\n' +
+        'Since the number of drivers in the city was limited, losing them meant losing real revenue - and this often happened due to delayed or missing support responses.\n\n' +
+        'The support team was simply overwhelmed. There were only two options: scale the team massively - or rethink the entire system.\n\n' +
+        'To meet peak volume, the company would have needed nearly 200 operators - 4x the existing team.'
 
     const demoTitle = 'City-Wide Support System'
     const demoDescription =

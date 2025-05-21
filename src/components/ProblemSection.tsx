@@ -195,19 +195,19 @@ export default function ProblemSection({
                     {/* Stats Grid */}
                     <motion.div
                         variants={container}
-                        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 sm:gap-12"
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12"
                     >
                         {stats.map((stat, index) => (
                             <motion.div
                                 key={index}
                                 variants={item}
-                                className="flex flex-col items-center text-center space-y-2"
+                                className="flex flex-col items-center text-center space-y-2 w-full"
                             >
-                                <h1 className="text-4xl sm:text-5xl md:text-6xl tracking-tight leading-none">
+                                <h1 className="text-4xl sm:text-5xl md:text-6xl tracking-tight leading-none w-full">
                                     <AnimatedCounter value={stat.value} />
                                 </h1>
                                 <div
-                                    className={`text-xs sm:text-sm max-w-[200px] font-mono ${
+                                    className={`text-xs sm:text-sm font-mono w-full ${
                                         theme === 'dark'
                                             ? 'text-blue-800/80'
                                             : 'text-blue-200/80'
@@ -228,22 +228,57 @@ export default function ProblemSection({
                                 : 'text-blue-200/80'
                         }`}
                     >
-                        <div>
-                            The company was operating in an extremely
-                            competitive market, where both drivers and
-                            passengers could easily switch to another platform.
-                            Since the number of drivers in the city was limited,
-                            losing them meant losing real revenue - and this
-                            often happened due to delayed or missing support
-                            responses.
-                        </div>
-                        <div>
-                            The support team was simply overwhelmed. There were
-                            only two options: scale the team massively - or
-                            rethink the entire system. To meet peak volume, the
-                            company would have needed nearly 200 operators - 4x
-                            the existing team.
-                        </div>
+                        {description ? (
+                            description.split('\n').length > 5 ? (
+                                <>
+                                    <div>
+                                        {description
+                                            .split('\n')
+                                            .slice(
+                                                0,
+                                                Math.ceil(
+                                                    description.split('\n')
+                                                        .length / 2,
+                                                ),
+                                            )
+                                            .join('\n')}
+                                    </div>
+                                    <div>
+                                        {description
+                                            .split('\n')
+                                            .slice(
+                                                Math.ceil(
+                                                    description.split('\n')
+                                                        .length / 2,
+                                                ),
+                                            )
+                                            .join('\n')}
+                                    </div>
+                                </>
+                            ) : (
+                                <div>{description}</div>
+                            )
+                        ) : (
+                            <>
+                                <div>
+                                    The company was operating in an extremely
+                                    competitive market, where both drivers and
+                                    passengers could easily switch to another
+                                    platform. Since the number of drivers in the
+                                    city was limited, losing them meant losing
+                                    real revenue - and this often happened due
+                                    to delayed or missing support responses.
+                                </div>
+                                <div>
+                                    The support team was simply overwhelmed.
+                                    There were only two options: scale the team
+                                    massively - or rethink the entire system. To
+                                    meet peak volume, the company would have
+                                    needed nearly 200 operators - 4x the
+                                    existing team.
+                                </div>
+                            </>
+                        )}
                     </motion.div>
                 </div>
             </motion.div>
