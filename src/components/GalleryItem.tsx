@@ -118,7 +118,7 @@ export function GalleryItem({
                 {/* Media Container */}
                 <div
                     className={cn(
-                        'md:col-span-9 relative w-full rounded-2xl overflow-hidden p-6',
+                        'md:col-span-9 relative w-full rounded-lg md:rounded-2xl overflow-hidden p-6',
                         neutral
                             ? 'bg-blue-50/50 dark:bg-blue-950/50'
                             : 'bg-gradient-to-br from-orange-400/80 via-pink-500/50 to-blue-500/80 dark:from-blue-900/80 dark:via-purple-900/50 dark:to-blue-800/80',
@@ -148,7 +148,8 @@ export function GalleryItem({
                                     preload="auto"
                                     className={cn(
                                         'w-auto h-auto object-contain transition-all duration-300',
-                                        !noDecor && 'rounded-lg shadow-lg',
+                                        !noDecor &&
+                                            'rounded-md md:rounded-xl shadow-lg',
                                         smallImage
                                             ? 'max-h-[50%]'
                                             : 'max-h-[90%]',
@@ -177,7 +178,8 @@ export function GalleryItem({
                                         alt={alt}
                                         className={cn(
                                             'w-auto h-auto object-contain transition-all duration-300',
-                                            !noDecor && 'rounded-xl shadow-lg',
+                                            !noDecor &&
+                                                'rounded-md md:rounded-xl shadow-lg',
                                             smallImage
                                                 ? 'max-h-[60%]'
                                                 : 'h-full',
