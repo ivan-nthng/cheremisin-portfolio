@@ -417,7 +417,7 @@ export default function LitresPage() {
                         {/* Hero section */}
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                             <ProjectHero
-                                title="Litres.com"
+                                title="Business administration tools"
                                 description="A platform for selling, distributing, and managing e-books and audiobooks. It serves as a digital bookstore, publishing tool, and library system."
                                 mainImage="/litres/project-2-light.png"
                                 mainImageDark="/litres/project-2-dark.png"

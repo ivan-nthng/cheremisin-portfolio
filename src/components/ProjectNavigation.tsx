@@ -3,18 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import WideProjectCard from './WideProjectCard'
-
-interface Project {
-    title: string
-    description: string
-    image: string
-    darkImage?: string
-    technologies: string[]
-    link: string
-    isWide?: boolean
-    companyName?: string
-    isComingSoon?: boolean
-}
+import { type Project } from './Projects'
 
 interface ProjectNavigationProps {
     projects: Project[]
@@ -60,6 +49,10 @@ export default function ProjectNavigation({
         navigableProjects.length
     const nextIndex = (currentNavIndex + 1) % navigableProjects.length
 
+    // Get previous and next projects
+    const prevProject = navigableProjects[prevIndex]
+    const nextProject = navigableProjects[nextIndex]
+
     return (
         <motion.div
             variants={containerVariants}
@@ -84,9 +77,14 @@ export default function ProjectNavigation({
                     <div className="group cursor-pointer h-full">
                         <div className="transition-all duration-300 group-hover:brightness-90 h-full">
                             <WideProjectCard
-                                {...navigableProjects[prevIndex]}
-                                tags={[]}
-                                companyName=""
+                                title={prevProject.title}
+                                description={prevProject.description}
+                                image={prevProject.image || '/placeholder.png'}
+                                darkImage={prevProject.darkImage}
+                                tags={prevProject.technologies}
+                                link={prevProject.link}
+                                companyName={prevProject.companyName}
+                                companyUrl={prevProject.companyUrl}
                             />
                         </div>
                     </div>
@@ -100,9 +98,14 @@ export default function ProjectNavigation({
                     <div className="group cursor-pointer h-full">
                         <div className="transition-all duration-300 group-hover:brightness-90 h-full">
                             <WideProjectCard
-                                {...navigableProjects[nextIndex]}
-                                tags={[]}
-                                companyName=""
+                                title={nextProject.title}
+                                description={nextProject.description}
+                                image={nextProject.image || '/placeholder.png'}
+                                darkImage={nextProject.darkImage}
+                                tags={nextProject.technologies}
+                                link={nextProject.link}
+                                companyName={nextProject.companyName}
+                                companyUrl={nextProject.companyUrl}
                             />
                         </div>
                     </div>
