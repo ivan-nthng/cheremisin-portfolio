@@ -110,7 +110,7 @@ export default function WideProjectCard({
             onHoverEnd={() => setIsHovered(false)}
             onMouseMove={handleMouseMove}
             onClick={() => router.push(link)}
-            className="flex flex-col md:flex-row w-full h-full cursor-none relative bg-blue-100/80 dark:bg-blue-900/80 rounded-2xl overflow-hidden transition-colors duration-300"
+            className="flex flex-col md:flex-row w-full cursor-none relative bg-blue-100/80 dark:bg-blue-900/80 rounded-xl overflow-hidden transition-colors duration-300"
             variants={containerVariants}
             initial="hidden"
             animate={isVisible ? 'visible' : 'hidden'}
@@ -118,7 +118,7 @@ export default function WideProjectCard({
             {/* =============================
                 Left: Text Content Section
             ============================= */}
-            <div className="flex-1 flex flex-col justify-top p-4 sm:p-6 md:p-6 lg:p-8">
+            <div className="flex-1 flex flex-col justify-top p-3 sm:p-4 md:p-5">
                 {/* Custom Cursor */}
                 <CustomCursor
                     isVisible={isHovered}
@@ -127,7 +127,7 @@ export default function WideProjectCard({
                     isHighlighted={isCompanyHovered}
                 />
                 {/* Title */}
-                <h3 className="text-lg sm:text-xl font-bold text-primary-800 dark:text-primary-100">
+                <h3 className="text-base sm:text-lg font-bold text-primary-800 dark:text-primary-100">
                     {title}
                 </h3>
                 {/* Company Link */}
@@ -153,11 +153,11 @@ export default function WideProjectCard({
                     </div>
                 )}
                 {/* Description */}
-                <p className="mt-2 text-sm sm:text-md text-primary-600 dark:text-primary-300">
+                <p className="mt-1 text-sm text-primary-600 dark:text-primary-300">
                     {description}
                 </p>
                 {/* Tags */}
-                <div className="mt-3 flex flex-wrap gap-2">
+                <div className="mt-2 flex flex-wrap gap-2">
                     {tags.map((tag) => (
                         <span
                             key={tag}
@@ -171,47 +171,48 @@ export default function WideProjectCard({
             {/* =============================
                 Right: Image Section
             ============================= */}
-            <motion.div
-                onHoverStart={() => setIsImageHovered(true)}
-                onHoverEnd={() => setIsImageHovered(false)}
-                className="relative w-full md:w-1/2 flex items-stretch justify-stretch bg-transparent py-2"
-                style={{ minHeight: 320 }}
-                variants={containerVariants}
-                initial="hidden"
-                animate={isVisible ? 'visible' : 'hidden'}
-            >
-                {/* Project Image */}
+            {image && (
                 <motion.div
-                    className="relative w-full h-full flex items-center justify-center"
-                    style={{
-                        paddingTop: '4%',
-                        paddingRight: '4%',
-                        paddingBottom: '4%',
-                        paddingLeft: '4%',
-                        minHeight: 0,
-                        minWidth: 0,
-                    }}
+                    onHoverStart={() => setIsImageHovered(true)}
+                    onHoverEnd={() => setIsImageHovered(false)}
+                    className="relative w-full md:w-1/2 flex items-stretch justify-stretch bg-transparent py-2"
+                    style={{ minHeight: 240 }}
+                    variants={containerVariants}
                     initial="hidden"
-                    animate={
-                        isVisible && !isImageHovered ? 'visible' : 'hidden'
-                    }
-                    variants={imageVariants}
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                    animate={isVisible ? 'visible' : 'hidden'}
                 >
-                    <div className="relative w-full h-full flex items-center justify-center">
-                        <Image
-                            src={currentImage}
-                            alt={title}
-                            width={800}
-                            height={450}
-                            className="w-auto h-auto max-w-full max-h-full object-contain rounded-xl"
-                            priority
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                        />
-                    </div>
+                    <motion.div
+                        className="relative w-full h-full flex items-center justify-center"
+                        style={{
+                            paddingTop: '3%',
+                            paddingRight: '3%',
+                            paddingBottom: '3%',
+                            paddingLeft: '3%',
+                            minHeight: 0,
+                            minWidth: 0,
+                        }}
+                        initial="hidden"
+                        animate={
+                            isVisible && !isImageHovered ? 'visible' : 'hidden'
+                        }
+                        variants={imageVariants}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3, ease: 'easeOut' }}
+                    >
+                        <div className="relative w-full h-full flex items-center justify-center">
+                            <Image
+                                src={currentImage}
+                                alt={title}
+                                width={800}
+                                height={450}
+                                className="w-auto h-auto max-w-full max-h-full object-contain rounded-lg"
+                                priority
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                            />
+                        </div>
+                    </motion.div>
                 </motion.div>
-            </motion.div>
+            )}
         </motion.div>
     )
 }
