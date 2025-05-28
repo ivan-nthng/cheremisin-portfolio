@@ -3,6 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { useTheme } from 'next-themes'
+import Image from 'next/image'
 
 interface StatBlock {
     value: string
@@ -10,8 +11,11 @@ interface StatBlock {
 }
 
 interface ProblemSectionProps {
-    stats?: StatBlock[]
+    title?: string
     description?: string
+    image?: string
+    imageDark?: string
+    stats?: StatBlock[]
 }
 
 const MotionDiv = motion.div
@@ -111,8 +115,11 @@ function AnimatedCounter({ value }: { value: string }) {
 }
 
 export default function ProblemSection({
-    stats = [],
+    title = 'Problem',
     description = '',
+    image,
+    imageDark,
+    stats = [],
 }: ProblemSectionProps) {
     const ref = React.useRef(null)
     const [isVisible, setIsVisible] = React.useState(false)
@@ -189,47 +196,66 @@ export default function ProblemSection({
                         variants={item}
                         className="text-2xl sm:text-3xl font-bold font-poppins"
                     >
-                        Problem
+                        {title}
                     </motion.h2>
 
+                    {/* Image */}
+                    {image && (
+                        <motion.div variants={item} className="w-full">
+                            <Image
+                                src={
+                                    theme === 'dark' && imageDark
+                                        ? imageDark
+                                        : image
+                                }
+                                alt={title}
+                                width={1200}
+                                height={675}
+                                className="w-full h-auto rounded-lg"
+                            />
+                        </motion.div>
+                    )}
+
                     {/* Stats Grid */}
-                    <motion.div
-                        variants={container}
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12"
-                    >
-                        {stats.map((stat, index) => (
-                            <motion.div
-                                key={index}
-                                variants={item}
-                                className="flex flex-col items-center text-center space-y-2 w-full"
-                            >
-                                <h1 className="text-4xl sm:text-5xl md:text-6xl tracking-tight leading-none w-full">
-                                    <AnimatedCounter value={stat.value} />
-                                </h1>
-                                <div
-                                    className={`text-xs sm:text-sm font-mono w-full ${
-                                        theme === 'dark'
-                                            ? 'text-blue-800/80'
-                                            : 'text-blue-200/80'
-                                    }`}
+                    {stats.length > 0 && (
+                        <motion.div
+                            variants={container}
+                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12"
+                        >
+                            {stats.map((stat, index) => (
+                                <motion.div
+                                    key={index}
+                                    variants={item}
+                                    className="flex flex-col items-center text-center space-y-2 w-full"
                                 >
-                                    {stat.label}
-                                </div>
-                            </motion.div>
-                        ))}
-                    </motion.div>
+                                    <h1 className="text-4xl sm:text-5xl md:text-6xl tracking-tight leading-none w-full">
+                                        <AnimatedCounter value={stat.value} />
+                                    </h1>
+                                    <div
+                                        className={`text-xs sm:text-sm font-mono w-full ${
+                                            theme === 'dark'
+                                                ? 'text-blue-800/80'
+                                                : 'text-blue-200/80'
+                                        }`}
+                                    >
+                                        {stat.label}
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    )}
 
                     {/* Description */}
-                    <motion.div
-                        variants={item}
-                        className={`grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-xs sm:text-sm leading-relaxed ${
-                            theme === 'dark'
-                                ? 'text-blue-800/80'
-                                : 'text-blue-200/80'
-                        }`}
-                    >
-                        {description ? (
-                            description.split('\n').length > 5 ? (
+                    {description && (
+                        <motion.div
+                            variants={item}
+                            className={`grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-xs sm:text-sm leading-relaxed ${
+                                theme === 'dark'
+                                    ? 'text-blue-800/80'
+                                    : 'text-blue-200/80'
+                            }`}
+                        >
+                            {description.split('\n').length > 5 ? (
                                 <>
                                     <div>
                                         {description
@@ -257,29 +283,9 @@ export default function ProblemSection({
                                 </>
                             ) : (
                                 <div>{description}</div>
-                            )
-                        ) : (
-                            <>
-                                <div>
-                                    The company was operating in an extremely
-                                    competitive market, where both drivers and
-                                    passengers could easily switch to another
-                                    platform. Since the number of drivers in the
-                                    city was limited, losing them meant losing
-                                    real revenue - and this often happened due
-                                    to delayed or missing support responses.
-                                </div>
-                                <div>
-                                    The support team was simply overwhelmed.
-                                    There were only two options: scale the team
-                                    massively - or rethink the entire system. To
-                                    meet peak volume, the company would have
-                                    needed nearly 200 operators - 4x the
-                                    existing team.
-                                </div>
-                            </>
-                        )}
-                    </motion.div>
+                            )}
+                        </motion.div>
+                    )}
                 </div>
             </motion.div>
         </section>

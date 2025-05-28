@@ -206,7 +206,7 @@ export default function PerusePage() {
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                             {/* TODO: Update with actual hero content */}
                             <ProjectHero
-                                title="AI-based document management tool"
+                                title="Peruse.ml"
                                 description="AI-powered file organization that understands your content and makes finding files effortless."
                                 mainImage="/peruse/hero-light.png"
                                 mainImageDark="/peruse/hero-dark.png"
