@@ -287,7 +287,25 @@ export default function LitresPage() {
                 stats={problemStats}
                 description={problemDescription}
             />
-            <OptimizationSection />
+            <OptimizationSection
+                items={[
+                    {
+                        title: 'Smart Analytics',
+                        description:
+                            'Comprehensive analytics dashboard for tracking sales, user engagement, and content performance.',
+                    },
+                    {
+                        title: 'Bulk Operations',
+                        description:
+                            'Efficient tools for managing multiple books, authors, and publishers simultaneously.',
+                    },
+                    {
+                        title: 'Automated Workflows',
+                        description:
+                            'Streamlined processes for content publishing, distribution, and royalty management.',
+                    },
+                ]}
+            />
             <ProjectFooter
                 team={[
                     { role: 'Design' },
@@ -417,11 +435,7 @@ export default function LitresPage() {
                         {/* Hero section */}
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                             <ProjectHero
-<<<<<<< HEAD
                                 title="Business administration tools"
-=======
-                                title="Litres.com"
->>>>>>> 9904d22160d9c1c361850c144ee8e19065b1f700
                                 description="A platform for selling, distributing, and managing e-books and audiobooks. It serves as a digital bookstore, publishing tool, and library system."
                                 mainImage="/litres/project-2-light.png"
                                 mainImageDark="/litres/project-2-dark.png"
