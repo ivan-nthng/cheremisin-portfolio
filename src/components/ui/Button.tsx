@@ -14,19 +14,20 @@ export type ButtonProps = {
 }
 
 const base =
-    'inline-flex items-center justify-center gap-2 rounded-[2px] px-3 py-1.5 text-base font-normal transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30 disabled:opacity-50 disabled:pointer-events-none select-none'
+    'inline-flex items-center justify-center gap-2 border border-border-strong px-3 py-1.5 text-xs font-medium uppercase tracking-[0.2em] transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 disabled:pointer-events-none disabled:opacity-50 select-none'
 
 const variantClasses = {
-    primary: 'bg-black text-white hover:bg-gray-800 active:bg-gray-600',
+    primary:
+        'bg-foreground text-background hover:bg-accent hover:text-foreground active:bg-foreground/90',
     secondary:
-        'border border-black text-black bg-white hover:bg-gray-100 active:bg-black active:text-white',
-    ghost: 'text-black bg-transparent hover:bg-gray-100 active:bg-black active:text-white border-none',
+        'bg-surface text-foreground hover:bg-surface-muted active:bg-foreground active:text-background',
+    ghost: 'border-border bg-transparent text-foreground hover:bg-surface-muted active:bg-surface',
 }
 
 const sizeClasses = {
-    sm: 'text-xs px-3 py-1.5',
-    md: 'text-sm px-4 py-2',
-    lg: 'text-md px-5 py-2.5',
+    sm: 'px-3 py-2 text-[11px]',
+    md: 'px-4 py-2 text-xs',
+    lg: 'px-5 py-3 text-sm',
 }
 
 export function Button({
