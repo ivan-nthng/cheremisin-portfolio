@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { XMarkIcon, InformationCircleIcon } from '@heroicons/react/24/outline'
-import { cn } from '@/lib/utils'
 
 // Props interface
 interface InfoBlockProps {
@@ -41,24 +40,24 @@ export function InfoBlock({
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="relative flex gap-3 px-3 py-3 rounded-lg bg-blue-50/80 dark:bg-blue-950/80 border border-blue-200/50 dark:border-blue-800/50"
+                className="relative flex gap-3 border border-border bg-surface px-3 py-3"
             >
                 {/* Optional info icon */}
                 {showIcon && (
                     <div className="flex-shrink-0 pt-0">
-                        <InformationCircleIcon className="w-5 h-5 text-blue-500 dark:text-blue-400" />
+                        <InformationCircleIcon className="h-5 w-5 text-accent" />
                     </div>
                 )}
 
                 {/* Content container */}
                 <div className="flex-grow space-y-2">
                     {/* Header text */}
-                    <h4 className="text-xs font-semibold text-blue-900 dark:text-blue-100">
+                    <h4 className="text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground">
                         {header}
                     </h4>
 
                     {/* Description text */}
-                    <p className="text-xs text-blue-800/80 dark:text-blue-200/80">
+                    <p className="text-xs leading-6 text-muted">
                         {description}
                     </p>
 
@@ -68,7 +67,7 @@ export function InfoBlock({
                             {primaryAction && (
                                 <button
                                     onClick={primaryAction.onClick}
-                                    className="text-xs font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                                    className="text-xs font-medium text-foreground transition-colors hover:text-accent"
                                 >
                                     {primaryAction.label}
                                 </button>
@@ -76,7 +75,7 @@ export function InfoBlock({
                             {secondaryAction && (
                                 <button
                                     onClick={secondaryAction.onClick}
-                                    className="text-xs font-medium text-blue-600/70 dark:text-blue-400/70 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                                    className="text-xs font-medium text-muted transition-colors hover:text-foreground"
                                 >
                                     {secondaryAction.label}
                                 </button>
@@ -89,7 +88,7 @@ export function InfoBlock({
                 {dismissible && (
                     <button
                         onClick={() => setIsVisible(false)}
-                        className="absolute top-2 right-2 text-blue-400 hover:text-blue-500 dark:text-blue-500 dark:hover:text-blue-400 transition-colors"
+                        className="absolute right-2 top-2 text-muted transition-colors hover:text-foreground"
                     >
                         <XMarkIcon className="w-4 h-4" />
                         <span className="sr-only">Dismiss</span>

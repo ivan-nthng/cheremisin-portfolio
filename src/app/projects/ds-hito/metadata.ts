@@ -4,11 +4,11 @@ export const generateMetadata = (): Metadata => {
     return {
         title: 'Design System Hito',
         description:
-            'A semantic variable-based system for building scalable, adaptive UI components. Created to help designers and developers work with consistent spacing, typography, and tokens.',
+            'A design system built on semantic tokens, helping teams keep components consistent across products and screen sizes.',
         openGraph: {
             title: 'Design System Hito — Ivan Cheremisin',
             description:
-                'A semantic variable-based system for building scalable, adaptive UI components. Created to help designers and developers work with consistent spacing, typography, and tokens.',
+                'A design system built on semantic tokens, helping teams keep components consistent across products and screen sizes.',
             images: [
                 {
                     url: '/hito/main-light.png',
@@ -22,7 +22,7 @@ export const generateMetadata = (): Metadata => {
             card: 'summary_large_image',
             title: 'Design System Hito — Ivan Cheremisin',
             description:
-                'A semantic variable-based system for building scalable, adaptive UI components. Created to help designers and developers work with consistent spacing, typography, and tokens.',
+                'A design system built on semantic tokens, helping teams keep components consistent across products and screen sizes.',
             images: ['/hito/main-light.png'],
         },
     }

@@ -2,40 +2,25 @@
 
 import { Check } from 'lucide-react'
 import { motion } from 'framer-motion'
+import {
+    DossierBar,
+    DossierFrame,
+    DossierSectionHeading,
+} from '@/components/ascii/Dossier'
 
-interface BentoCardProps {
+interface BentoItem {
     title: string
     description: string
-    index: number
+    image?: string
+    imageDark?: string
 }
 
-const BentoCard: React.FC<BentoCardProps> = ({ title, description, index }) => (
-    <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-            duration: 0.5,
-            delay: index * 0.1,
-            ease: [0.21, 0.47, 0.32, 0.98],
-        }}
-        className="bg-blue-100/50 dark:bg-blue-900/50 rounded-2xl p-6 sm:p-8 relative"
-    >
-        <div className="absolute top-6 sm:top-8 right-6 sm:right-8">
-            <Check className="w-5 h-5 text-green-500" />
-        </div>
-        <div className="space-y-3">
-            <h3 className="text-lg sm:text-xl font-bold font-poppins text-blue-900 dark:text-blue-100">
-                {title}
-            </h3>
-            <p className="text-sm sm:text-base text-blue-800/80 dark:text-blue-200/80 font-mono">
-                {description}
-            </p>
-        </div>
-    </motion.div>
-)
+interface ProjectBentoProps {
+    items?: BentoItem[]
+}
 
-export default function ProjectBento() {
-    const improvements = [
+export default function ProjectBento({ items }: ProjectBentoProps) {
+    const defaultImprovements: BentoItem[] = [
         {
             title: 'Context-Aware Interface',
             description:
@@ -49,49 +34,56 @@ export default function ProjectBento() {
         {
             title: 'Scenario-Based Widgets',
             description:
-                "Each request type triggers a dynamic layout showing only what's needed: fare breakdowns, map routes, payment logs, etc.",
+                "Each request type triggers a dynamic layout showing only what's needed: fare breakdowns, map routes, payment logs, and supporting context.",
         },
         {
             title: 'Pre-filtering Logic',
             description:
-                'Non-actionable requests (32% of total) are automatically triaged before reaching an operator.',
+                'Non-actionable requests are triaged before reaching an operator.',
         },
     ]
+    const improvements = items ?? defaultImprovements
 
     return (
         <motion.section
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="py-24 sm:py-32 space-y-8 sm:space-y-12"
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.24, ease: 'easeOut' }}
+            className="py-12 sm:py-16"
         >
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
-                className="space-y-4"
-            >
-                <h2 className="text-2xl sm:text-3xl font-bold font-poppins text-blue-900 dark:text-blue-100">
-                    What We Did
-                </h2>
-                <p className="text-base sm:text-lg xl:w-1/2 lg:w-2/3 text-blue-800/80 dark:text-blue-200/80 font-mono">
-                    Using insights from the Solver View and Support Request
-                    Analysis, we focused entirely on optimizing the top 4 most
-                    frequent scenarios. Instead of scaling the team, we scaled
-                    the interface.
-                </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-                {improvements.map((item, index) => (
-                    <BentoCard
-                        key={index}
-                        title={item.title}
-                        description={item.description}
-                        index={index}
+            <DossierFrame>
+                <DossierBar label="Section" index="08" state="Actions" />
+                <div className="space-y-8 px-4 py-6 sm:px-6 sm:py-8">
+                    <DossierSectionHeading
+                        label="Changes"
+                        title="What changed"
+                        description="The main changes in the product and the support workflow."
                     />
-                ))}
-            </div>
+
+                    <div className="grid gap-px border border-border bg-border md:grid-cols-2">
+                        {improvements.map((item, index) => (
+                            <div
+                                key={`${item.title}-${index}`}
+                                className="bg-surface px-4 py-4"
+                            >
+                                <div className="flex items-center justify-between gap-4">
+                                    <span className="text-[11px] uppercase tracking-[0.28em] text-muted">
+                                        [{String(index + 1).padStart(2, '0')}]
+                                    </span>
+                                    <Check className="h-4 w-4 text-accent" />
+                                </div>
+                                <h3 className="mt-3 text-lg font-bold text-foreground">
+                                    {item.title}
+                                </h3>
+                                <p className="mt-3 text-sm leading-7 text-muted">
+                                    {item.description}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </DossierFrame>
         </motion.section>
     )
 }

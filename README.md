@@ -1,80 +1,43 @@
-# Portfolio Website
+# Project Template
 
-A modern portfolio website built with Next.js, Tailwind CSS, and Framer Motion. This project showcases a responsive and animated portfolio website with dark mode support and a grid overlay feature.
+Generic project starter with:
 
-## Features
+- agent roles
+- execution rules
+- process docs
+- prompt templates
+- planning/doc folders
 
--   Responsive design that works on all devices
--   Dark mode support
--   Smooth scrolling navigation
--   Animated components using Framer Motion
--   Project showcase with detailed project pages
--   Contact form
--   Grid overlay feature
--   Modern and clean UI
+This template is intentionally not tied to Boca Boca domain logic.
 
-## Technologies Used
+## How To Use
 
--   Next.js 14
--   TypeScript
--   Tailwind CSS
--   Framer Motion
--   Heroicons
+1. Copy this folder into a new repo or workspace.
+2. Rename it if needed.
+3. Replace placeholder project context in:
+   - `AGENTS.md`
+   - `docs/context.md`
+   - `docs/current-system.md`
+   - `docs/current-product.md`
+4. Keep the agent workflow, plan structure, and prompt templates unless the new project truly needs a different operating model.
 
-## Getting Started
+## Included
 
-1. Clone the repository:
+- `AGENTS.md`
+- `agents/`
+- `docs/`
+- `docs/process/`
+- `docs/plans/active/`
+- `docs/plans/archive/`
+- `docs/tasks/product-briefs/`
+- `docs/tasks/frontend-specs/`
+- `prompts/`
 
-```bash
-git clone <repository-url>
-```
+## Intended Use
 
-2. Install dependencies:
+Use this when you want a new project to start with:
 
-```bash
-npm install
-```
-
-3. Run the development server:
-
-```bash
-npm run dev
-```
-
-4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Project Structure
-
-```
-src/
-├── app/
-│   ├── projects/
-│   │   └── [id]/
-│   │       └── page.tsx
-│   ├── layout.tsx
-│   └── page.tsx
-├── components/
-│   ├── About.tsx
-│   ├── Contact.tsx
-│   ├── GridOverlay.tsx
-│   ├── Header.tsx
-│   ├── Hero.tsx
-│   └── Projects.tsx
-└── types/
-    └── framer-motion.d.ts
-```
-
-## Customization
-
-1. Update the content in each component to match your personal information
-2. Replace the placeholder images with your own
-3. Modify the color scheme in `tailwind.config.ts`
-4. Add your own projects to the projects array in `Projects.tsx` and `[id]/page.tsx`
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+- explicit role-based agents
+- one canonical planning workflow
+- clear handoff rules
+- product / architecture / frontend / backend / QA collaboration structure

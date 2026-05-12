@@ -6,6 +6,12 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { ChevronDown } from 'lucide-react'
+import {
+    DossierBar,
+    DossierFrame,
+    DossierMediaViewport,
+    DossierSectionHeading,
+} from '@/components/ascii/Dossier'
 
 interface CodeState {
     name: string
@@ -67,20 +73,14 @@ export function CodeSnippet({
     // Handle initial SSR render
     if (!mounted) {
         return (
-            <div className="py-16">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    <div className="lg:col-span-7">
-                        <div className="lg:sticky lg:top-24">
-                            <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-background/50 backdrop-blur-sm border border-blue-200/50 dark:border-blue-800/50" />
-                        </div>
-                    </div>
-                    <div className="lg:col-span-5 flex flex-col">
-                        <div className="animate-pulse">
-                            <div className="h-8 w-48 bg-gray-200 dark:bg-gray-800 rounded mb-4" />
-                            <div className="h-20 w-full bg-gray-200 dark:bg-gray-800 rounded mb-6" />
-                            <div className="h-10 w-full bg-gray-200 dark:bg-gray-800 rounded mb-4" />
-                            <div className="h-40 w-full bg-gray-200 dark:bg-gray-800 rounded" />
-                        </div>
+            <div className="py-12 sm:py-16">
+                <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+                    <div className="aspect-[16/9] border border-border bg-surface-muted" />
+                    <div className="animate-pulse space-y-4 border border-border px-4 py-4">
+                        <div className="h-4 w-24 bg-surface-muted" />
+                        <div className="h-10 w-full bg-surface-muted" />
+                        <div className="h-12 w-full bg-surface-muted" />
+                        <div className="h-40 w-full bg-surface-muted" />
                     </div>
                 </div>
             </div>
@@ -94,47 +94,48 @@ export function CodeSnippet({
             : selectedSize.lightImage
 
     return (
-        <div className="py-16">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                {/* Image Column (9/12 width on large screens, full width on small) */}
-                <div className="lg:col-span-7">
-                    <div className="lg:sticky lg:top-24">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: '-100px' }}
-                            transition={{ duration: 0.6 }}
-                            className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-background/50 backdrop-blur-sm border border-blue-200/50 dark:border-blue-800/50"
-                        >
-                            <Image
-                                src={currentImage}
-                                alt={alt}
-                                fill
-                                className="object-cover"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 66vw"
-                                priority
-                            />
-                        </motion.div>
-                    </div>
-                </div>
-
-                {/* Content Column (3/12 width on large screens, full width on small) */}
-                <div className="lg:col-span-5 flex flex-col">
+        <div className="py-12 sm:py-16">
+            <DossierFrame>
+                <DossierBar label="Section" index="10" state="Code states" />
+                <div className="grid gap-8 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-[minmax(0,1fr)_320px]">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 12 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: '-100px' }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
+                        viewport={{ once: true, margin: '-80px' }}
+                        transition={{ duration: 0.24 }}
                     >
-                        <h3 className="mb-4 text-xl font-semibold tracking-tight text-blue-900 dark:text-blue-100">
-                            {header}
-                        </h3>
-                        <p className="text-sm leading-relaxed text-blue-800/80 dark:text-blue-200/80 mb-6">
-                            {description}
-                        </p>
+                        <DossierMediaViewport
+                            label="img 01"
+                            title={alt}
+                            note="light + dark"
+                        >
+                            <div className="relative aspect-[16/9] overflow-hidden border border-border bg-background">
+                                <Image
+                                    src={currentImage}
+                                    alt={alt}
+                                    fill
+                                    className="object-contain p-4"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 66vw"
+                                    priority
+                                />
+                            </div>
+                        </DossierMediaViewport>
+                    </motion.div>
 
-                        {/* Size Selector */}
-                        <div className="mb-4 relative">
+                    <motion.div
+                        initial={{ opacity: 0, y: 12 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: '-80px' }}
+                        transition={{ duration: 0.24, delay: 0.04 }}
+                        className="space-y-4 border border-border px-4 py-4"
+                    >
+                        <DossierSectionHeading
+                            label="Code / note"
+                            title={header}
+                            description={description}
+                        />
+
+                        <div className="relative">
                             <select
                                 value={selectedSize.name}
                                 onChange={(e) => {
@@ -143,7 +144,7 @@ export function CodeSnippet({
                                     )
                                     if (newSize) setSelectedSize(newSize)
                                 }}
-                                className="w-full pl-4 py-2.5 rounded-lg bg-white dark:bg-gray-800 border border-blue-200/50 dark:border-blue-800/50 text-blue-900 dark:text-blue-100 font-mono text-sm transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed appearance-none pr-10"
+                                className="w-full appearance-none border border-border bg-surface px-4 py-3 pr-10 text-sm text-foreground transition-colors hover:bg-surface-muted focus:outline-none focus:ring-2 focus:ring-accent/30"
                             >
                                 {sizes.map((size) => (
                                     <option key={size.name} value={size.name}>
@@ -151,56 +152,50 @@ export function CodeSnippet({
                                     </option>
                                 ))}
                             </select>
-                            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-300 dark:text-blue-600" />
+                            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
                         </div>
 
-                        {/* Code Snippet */}
                         <motion.div
                             key={`${selectedSize.name}-${currentTheme}`}
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            transition={{ duration: 0.3 }}
-                            className="relative space-y-4"
+                            transition={{ duration: 0.2 }}
+                            className="space-y-4"
                         >
                             <pre
                                 className={cn(
-                                    'p-4 rounded-lg overflow-x-auto',
+                                    'overflow-x-auto border p-4 text-xs',
                                     currentTheme === 'dark'
-                                        ? 'bg-gray-950'
-                                        : 'bg-gray-900',
+                                        ? 'border-border bg-black text-surface'
+                                        : 'border-border-strong bg-foreground text-background',
                                 )}
                             >
-                                <code className="text-xs text-blue-100 font-mono">
-                                    {currentCode}
-                                </code>
+                                <code>{currentCode}</code>
                             </pre>
 
-                            {/* Token Values */}
-                            {selectedSize.tokens && (
-                                <div className="space-y-2 p-4 rounded-lg bg-blue-50/80 dark:bg-blue-950/80">
-                                    <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100">
-                                        Token Values
+                            {selectedSize.tokens ? (
+                                <div className="space-y-2 border border-border px-4 py-4 text-xs text-muted">
+                                    <h4 className="text-[11px] uppercase tracking-[0.28em] text-foreground">
+                                        Token values
                                     </h4>
-                                    <div className="space-y-1 text-xs text-blue-800/80 dark:text-blue-200/80 font-mono">
-                                        <p>
-                                            --button-padding:{' '}
-                                            {selectedSize.tokens.padding}
-                                        </p>
-                                        <p>
-                                            --button-radius:{' '}
-                                            {selectedSize.tokens.borderRadius}
-                                        </p>
-                                        <p>
-                                            --button-font-size:{' '}
-                                            {selectedSize.tokens.fontSize}
-                                        </p>
-                                    </div>
+                                    <p>
+                                        --button-padding:{' '}
+                                        {selectedSize.tokens.padding}
+                                    </p>
+                                    <p>
+                                        --button-radius:{' '}
+                                        {selectedSize.tokens.borderRadius}
+                                    </p>
+                                    <p>
+                                        --button-font-size:{' '}
+                                        {selectedSize.tokens.fontSize}
+                                    </p>
                                 </div>
-                            )}
+                            ) : null}
                         </motion.div>
                     </motion.div>
                 </div>
-            </div>
+            </DossierFrame>
         </div>
     )
 }

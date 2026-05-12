@@ -77,27 +77,27 @@ const UIButton: React.FC<UIButtonProps> = ({
     label,
 }) => {
     const sizeClasses = {
-        sm: 'px-3 py-1.5 text-xs gap-1.5',
-        md: 'px-4 py-2 text-sm gap-2',
-        lg: 'px-5 py-2.5 text-base gap-2.5',
-        xl: 'px-6 py-3 text-lg gap-3',
+        sm: 'px-3 py-2 text-[11px] gap-1.5',
+        md: 'px-4 py-2 text-xs gap-2',
+        lg: 'px-5 py-3 text-sm gap-2.5',
+        xl: 'px-6 py-3 text-sm gap-3',
     }
 
     const baseClasses = cn(
-        'inline-flex items-center font-mono rounded-lg transition-all duration-200',
+        'inline-flex items-center border font-mono uppercase tracking-[0.18em] transition-all duration-200',
         sizeClasses[size],
     )
 
     const getStyleClasses = () => {
         switch (style) {
             case 'Accent':
-                return 'bg-blue-500 hover:bg-blue-600 text-white'
+                return 'border-border-strong bg-accent text-foreground hover:bg-foreground hover:text-background'
             case 'Error':
-                return 'bg-red-500 hover:bg-red-600 text-white'
+                return 'border-border-strong bg-red-700 text-white hover:bg-red-800'
             case 'Success':
-                return 'bg-green-500 hover:bg-green-600 text-white'
+                return 'border-border-strong bg-green-700 text-white hover:bg-green-800'
             default:
-                return 'bg-primary-600 hover:bg-primary-700 text-white'
+                return 'border-border-strong bg-foreground text-background hover:bg-accent hover:text-foreground'
         }
     }
 
@@ -168,16 +168,16 @@ export default function UIDemo() {
         rightIconType === 'None' ? null : rightIcons.right
 
     const inputClasses =
-        'w-full pl-4 py-2.5 rounded-lg bg-white dark:bg-gray-800 border border-blue-200/50 dark:border-blue-800/50 text-blue-900 dark:text-blue-100 font-mono text-sm transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed appearance-none pr-10'
+        'w-full appearance-none border border-border bg-surface px-4 py-3 pr-10 text-sm text-foreground transition-colors duration-200 hover:bg-surface-muted focus:outline-none focus:ring-2 focus:ring-accent/30 disabled:cursor-not-allowed disabled:opacity-50'
 
     return (
         <section className="w-full">
             <div className="space-y-8 sm:space-y-6">
                 <div className="xl:w-1/2 lg:w-2/3 space-y-4 pb-8">
-                    <h2 className="text-xl sm:text-md font-bold font-poppins text-blue-900 dark:text-blue-100">
+                    <h2 className="text-lg font-bold uppercase tracking-[0.18em] text-foreground">
                         Button Component Logic
                     </h2>
-                    <p className="text-sm sm:text-sm font-bold font-poppins text-blue-900 dark:text-blue-100">
+                    <p className="text-sm leading-7 text-muted">
                         All components support four size presets, paddings, font
                         sizes, and icon dimensions are controlled by a single
                         semantic variable — auto-adjusted per component size.
@@ -187,7 +187,7 @@ export default function UIDemo() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-8">
                     {/* Left side - Button preview */}
-                    <div className="md:col-span-3 bg-blue-100/50 dark:bg-blue-900/50 rounded-2xl p-8 sm:p-12 flex items-center justify-center">
+                    <div className="md:col-span-3 border border-border bg-surface p-8 sm:p-12 flex items-center justify-center">
                         <div className="transform md:scale-[2] transition-transform duration-300">
                             <UIButton
                                 state={buttonState}
@@ -204,7 +204,7 @@ export default function UIDemo() {
                     <div className="md:col-span-1 space-y-6">
                         {/* State selector */}
                         <div className="space-y-3 relative">
-                            <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
+                            <label className="block text-[11px] uppercase tracking-[0.24em] text-muted">
                                 State
                             </label>
                             <div className="relative">
@@ -224,13 +224,13 @@ export default function UIDemo() {
                                     <option>Loading</option>
                                     <option>Disabled</option>
                                 </select>
-                                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-300 dark:text-blue-600" />
+                                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted" />
                             </div>
                         </div>
 
                         {/* Style selector */}
                         <div className="space-y-3 relative">
-                            <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
+                            <label className="block text-[11px] uppercase tracking-[0.24em] text-muted">
                                 Style
                             </label>
                             <div className="relative">
@@ -248,13 +248,13 @@ export default function UIDemo() {
                                     <option>Error</option>
                                     <option>Success</option>
                                 </select>
-                                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-300 dark:text-blue-600" />
+                                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted" />
                             </div>
                         </div>
 
                         {/* Size selector */}
                         <div className="space-y-3 relative">
-                            <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
+                            <label className="block text-[11px] uppercase tracking-[0.24em] text-muted">
                                 Size
                             </label>
                             <div className="relative">
@@ -272,13 +272,13 @@ export default function UIDemo() {
                                     <option>lg</option>
                                     <option>xl</option>
                                 </select>
-                                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-300 dark:text-blue-600" />
+                                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
                             </div>
                         </div>
 
                         {/* Icon selectors */}
                         <div className="space-y-3 relative">
-                            <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
+                            <label className="block text-[11px] uppercase tracking-[0.24em] text-muted">
                                 Left Icon
                             </label>
                             <div className="relative">
@@ -297,12 +297,12 @@ export default function UIDemo() {
                                     <option>Mail</option>
                                     <option>Chevron</option>
                                 </select>
-                                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-300 dark:text-blue-600" />
+                                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
                             </div>
                         </div>
 
                         <div className="space-y-3 relative">
-                            <label className="block text-sm font-mono text-blue-900 dark:text-blue-100">
+                            <label className="block text-[11px] uppercase tracking-[0.24em] text-muted">
                                 Right Icon
                             </label>
                             <div className="relative">
@@ -321,7 +321,7 @@ export default function UIDemo() {
                                     <option>Mail</option>
                                     <option>Chevron</option>
                                 </select>
-                                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-300 dark:text-blue-600" />
+                                <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
                             </div>
                         </div>
                     </div>

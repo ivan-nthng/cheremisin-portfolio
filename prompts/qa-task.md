@@ -1,0 +1,1 @@
+Read the active plan and changed surfaces first. Validate the intended behavior with explicit evidence. Report compactly using scope, pass/fail, repro, severity, cleanup candidates, and final verdict.

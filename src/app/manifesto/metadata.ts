@@ -4,11 +4,11 @@ export const generateMetadata = (): Metadata => {
     return {
         title: 'Manifesto',
         description:
-            'Personal manifesto of Ivan Cheremisin - core principles, beliefs, and professional values that guide my work and life.',
+            'Notes on how Ivan Cheremisin designs, writes, and works with people.',
         openGraph: {
             title: 'Manifesto — Ivan Cheremisin',
             description:
-                'Personal manifesto of Ivan Cheremisin - core principles, beliefs, and professional values that guide my work and life.',
+                'Notes on how Ivan Cheremisin designs, writes, and works with people.',
             images: [
                 {
                     url: '/avatar-256.png',
@@ -22,7 +22,7 @@ export const generateMetadata = (): Metadata => {
             card: 'summary_large_image',
             title: 'Manifesto — Ivan Cheremisin',
             description:
-                'Personal manifesto of Ivan Cheremisin - core principles, beliefs, and professional values that guide my work and life.',
+                'Notes on how Ivan Cheremisin designs, writes, and works with people.',
             images: ['/avatar-256.png'],
         },
     }

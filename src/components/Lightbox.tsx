@@ -116,6 +116,7 @@ export function Lightbox({
                     role="dialog"
                     aria-modal="true"
                     aria-label="Image lightbox"
+                    data-lightbox-root="true"
                 >
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -135,7 +136,7 @@ export function Lightbox({
                                         e.stopPropagation()
                                         onClose()
                                     }}
-                                    className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                                    className="border border-white/20 bg-white/8 p-2 transition-colors hover:bg-white/14"
                                     aria-label="Close lightbox"
                                 >
                                     <XMarkIcon className="w-6 h-6 text-white" />
@@ -152,7 +153,7 @@ export function Lightbox({
                                             e.stopPropagation()
                                             if (onPrevious) onPrevious()
                                         }}
-                                        className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                                        className="border border-white/20 bg-white/8 p-2 transition-colors hover:bg-white/14"
                                         aria-label="Previous image"
                                     >
                                         <motion.div
@@ -179,7 +180,7 @@ export function Lightbox({
                                             e.stopPropagation()
                                             if (onNext) onNext()
                                         }}
-                                        className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                                        className="border border-white/20 bg-white/8 p-2 transition-colors hover:bg-white/14"
                                         aria-label="Next image"
                                     >
                                         <motion.div
@@ -222,7 +223,7 @@ export function Lightbox({
                                                 loop
                                                 muted
                                                 playsInline
-                                                className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                                                className="max-h-full max-w-full object-contain"
                                             >
                                                 <source
                                                     src={video}
@@ -239,7 +240,7 @@ export function Lightbox({
                                             <img
                                                 src={image}
                                                 alt={alt}
-                                                className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                                                className="max-h-full max-w-full object-contain"
                                             />
                                         )}
                                     </motion.div>

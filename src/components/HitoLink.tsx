@@ -60,7 +60,9 @@ export default function HitoLink() {
     }, [isHovered, tooltipPosition])
 
     const currentImage =
-        theme === 'dark' ? '/ds-hito-dark.png' : '/ds-hito-light.png'
+        theme === 'dark'
+            ? '/ds-hito/project-1-dark.png'
+            : '/ds-hito/project-1-light.png'
 
     return (
         <span className="relative inline-block">
@@ -72,9 +74,9 @@ export default function HitoLink() {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onMouseMove={handleMouseMove}
-                className="inline-flex items-center gap-1 text-blue-700 dark:text-blue-300 hover:text-blue-900 dark:hover:text-blue-100 transition-colors underline underline-offset-2"
+                className="inline-flex items-center gap-2 border-b border-border text-foreground transition-colors hover:text-accent"
             >
-                Hito Design System
+                [CASE] Hito Design System
                 <ArrowUpRight className="w-4 h-4" />
             </Link>
 
@@ -89,26 +91,29 @@ export default function HitoLink() {
                             y: popupPlacement.y,
                         }}
                         exit={{ opacity: 0, scale: 0.8 }}
-                        transition={{ duration: 0.2, ease: 'easeOut' }}
+                        transition={{ duration: 0.18, ease: 'easeOut' }}
                         className="absolute z-[100] pointer-events-none"
                     >
                         <div
                             ref={popupRef}
-                            className="bg-blue-100/60 dark:bg-blue-900/60 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden w-[500px]"
+                            className="w-[500px] overflow-hidden border border-border-strong bg-surface"
                         >
                             <div className="flex">
                                 <div className="flex-1 p-6">
-                                    <h3 className="text-lg font-bold text-primary-800 dark:text-primary-100 mb-3">
+                                    <div className="text-[11px] uppercase tracking-[0.28em] text-muted">
+                                        linked project
+                                    </div>
+                                    <h3 className="mb-3 mt-3 text-lg font-bold text-foreground">
                                         Hito Design System
                                     </h3>
-                                    <p className="text-sm text-primary-600 dark:text-primary-300 leading-relaxed">
-                                        A semantic variable-based system for
-                                        building scalable, adaptive UI
-                                        components.
+                                    <p className="text-sm leading-7 text-muted">
+                                        A design system built on semantic
+                                        tokens, so teams can scale components
+                                        without rewriting them.
                                     </p>
                                 </div>
-                                <div className="w-2/5 relative">
-                                    <div className="relative w-full h-full flex items-center justify-center p-4">
+                                <div className="relative w-2/5 border-l border-border bg-surface-muted">
+                                    <div className="relative flex h-full w-full items-center justify-center p-4">
                                         <Image
                                             src={currentImage}
                                             alt="Hito Design System"

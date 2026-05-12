@@ -3,6 +3,11 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import {
+    DossierBar,
+    DossierFrame,
+    DossierSectionHeading,
+} from '@/components/ascii/Dossier'
 
 interface OptimizationItem {
     title: string
@@ -11,13 +16,31 @@ interface OptimizationItem {
 
 interface OptimizationSectionProps {
     className?: string
-    items: OptimizationItem[]
+    items?: OptimizationItem[]
 }
 
 export default function OptimizationSection({
     className,
     items,
 }: OptimizationSectionProps) {
+    const defaultItems: OptimizationItem[] = [
+        {
+            title: 'Interface clarity',
+            description:
+                'The layout puts the most useful actions and information first.',
+        },
+        {
+            title: 'Faster decision-making',
+            description:
+                'Operators can move through common cases with less switching and fewer manual checks.',
+        },
+        {
+            title: 'Scalable support patterns',
+            description:
+                'Shared patterns keep the experience consistent as the product grows.',
+        },
+    ]
+    const resolvedItems = items ?? defaultItems
     const [isVisible, setIsVisible] = React.useState(false)
     const sectionRef = React.useRef<HTMLDivElement>(null)
 
@@ -45,82 +68,49 @@ export default function OptimizationSection({
         }
     }, [])
 
-    const container = {
-        hidden: { opacity: 0, y: 50 },
-        show: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                type: 'spring',
-                stiffness: 40,
-                damping: 20,
-                mass: 1,
-                staggerChildren: 0.15,
-            },
-        },
-    }
-
-    const item = {
-        hidden: { opacity: 0, y: 30 },
-        show: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                type: 'spring',
-                stiffness: 80,
-                damping: 20,
-            },
-        },
-    }
-
     return (
         <section
-            className={cn('w-full py-16 sm:py-24', className)}
+            className={cn('w-full py-12 sm:py-16', className)}
             ref={sectionRef}
         >
             <motion.div
-                variants={container}
-                initial="hidden"
-                animate={isVisible ? 'show' : 'hidden'}
-                className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8"
+                initial={{ opacity: 0, y: 12 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : undefined}
+                transition={{ duration: 0.24, ease: 'easeOut' }}
             >
-                {/* Left Column - Content */}
-                <motion.div
-                    variants={item}
-                    className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-5 flex flex-col justify-center space-y-6"
-                >
-                    <h2 className="text-2xl sm:text-3xl font-bold font-poppins text-blue-900 dark:text-blue-100">
-                        Optimizations
-                    </h2>
-                    <p className="text-base sm:text-lg text-blue-800/80 dark:text-blue-200/80">
-                        Key improvements and optimizations made to enhance the
-                        user experience and system performance.
-                    </p>
-                </motion.div>
+                <DossierFrame>
+                    <DossierBar
+                        label="Section"
+                        index="07"
+                        state="Improvements"
+                    />
+                    <div className="space-y-8 px-4 py-6 sm:px-6 sm:py-8">
+                        <DossierSectionHeading
+                            label="Improvements"
+                            title="What improved"
+                            description="The main product and workflow changes in this part of the project."
+                        />
 
-                {/* Right Column - Items */}
-                <motion.div
-                    variants={item}
-                    className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-7 flex items-center"
-                >
-                    <div className="w-full overflow-hidden rounded-2xl bg-blue-50/50 dark:bg-blue-950/50 backdrop-blur-sm">
-                        <div className="divide-y divide-blue-200/20 dark:divide-blue-800/20">
-                            {items.map((item, index) => (
+                        <div className="grid gap-px border border-border bg-border md:grid-cols-3">
+                            {resolvedItems.map((item) => (
                                 <div
-                                    key={index}
-                                    className="p-6 transition-colors hover:bg-blue-100/50 dark:hover:bg-blue-900/50"
+                                    key={item.title}
+                                    className="bg-surface px-4 py-4"
                                 >
-                                    <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-2">
+                                    <div className="text-[11px] uppercase tracking-[0.28em] text-muted">
+                                        Change
+                                    </div>
+                                    <h3 className="mt-3 text-lg font-bold text-foreground">
                                         {item.title}
                                     </h3>
-                                    <p className="text-sm text-blue-800/80 dark:text-blue-200/80">
+                                    <p className="mt-3 text-sm leading-7 text-muted">
                                         {item.description}
                                     </p>
                                 </div>
                             ))}
                         </div>
                     </div>
-                </motion.div>
+                </DossierFrame>
             </motion.div>
         </section>
     )

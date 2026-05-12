@@ -1,158 +1,114 @@
 'use client'
 
-import React from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { Grid, Moon, Sun } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
-import { motion, AnimatePresence } from 'framer-motion'
-import type { MotionProps } from 'framer-motion'
-import { Sun, Moon, Grid, ArrowLeft } from 'lucide-react'
-
-const MotionButton = motion.button as React.ComponentType<
-    React.ButtonHTMLAttributes<HTMLButtonElement> & MotionProps
->
 
 interface ProjectHeaderProps {
     isGridVisible?: boolean
     onToggleGrid?: () => void
 }
 
+function getRouteLabel(pathname: string) {
+    if (pathname === '/manifesto') {
+        return {
+            index: 'M',
+            label: 'Readme',
+            state: 'Manifesto',
+        }
+    }
+
+    const slug = pathname.split('/').filter(Boolean).pop() ?? 'index'
+    return {
+        index: 'P',
+        label: 'Case file',
+        state: slug.replace(/-/g, ' '),
+    }
+}
+
 export default function ProjectHeader({
     isGridVisible = false,
     onToggleGrid,
 }: ProjectHeaderProps) {
-    const [mounted, setMounted] = React.useState(false)
-    const [isScrolled, setIsScrolled] = React.useState(false)
-    const { theme, setTheme } = useTheme()
+    const pathname = usePathname()
+    const { resolvedTheme, setTheme } = useTheme()
+    const [mounted, setMounted] = useState(false)
+    const routeMeta = getRouteLabel(pathname)
 
-    React.useEffect(() => {
+    useEffect(() => {
         setMounted(true)
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 0)
-        }
-        window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
-    if (!mounted) {
-        return (
-            <header className="fixed sm:top-0 left-0 right-0 z-50 bg-transparent bottom-0 sm:bottom-auto">
-                <nav className="container mx-auto px-6 h-16 flex items-center justify-between">
-                    <Link
-                        href="/"
-                        className="flex items-center gap-2 text-primary-800 dark:text-primary-100 hover:text-primary-900 dark:hover:text-primary-50 transition-colors"
-                    >
-                        <ArrowLeft className="w-5 h-5" />
-                        <span>Home</span>
-                    </Link>
-                </nav>
-            </header>
-        )
-    }
+    const isDark = mounted && resolvedTheme === 'dark'
 
     return (
         <motion.header
-            initial={{ y: -100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-                type: 'spring',
-                stiffness: 100,
-                damping: 20,
-                duration: 0.6,
-            }}
-            className={`fixed sm:top-0 left-0 right-0 z-50 transition-all duration-300 bottom-0 sm:bottom-auto ${
-                isScrolled
-                    ? 'bg-primary-50/80 dark:bg-primary-900/80 backdrop-blur-md'
-                    : 'bg-transparent'
-            }`}
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.24, ease: 'easeOut' }}
+            className="fixed inset-x-0 top-0 z-50 border-b border-dashed border-border bg-background/98"
         >
-            <nav className="container mx-auto px-6 h-16 flex items-center justify-between">
-                <Link
-                    href="/"
-                    className="flex items-center gap-2 text-primary-800 dark:text-primary-100 hover:text-primary-900 dark:hover:text-primary-50 transition-colors"
-                >
-                    <motion.div
-                        whileHover={{ x: -4 }}
-                        transition={{ duration: 0.2 }}
+            <div className="mx-auto flex w-full max-w-[1120px] items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <Link
+                        href="/"
+                        className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] text-foreground transition-colors hover:text-accent"
                     >
-                        <ArrowLeft className="w-5 h-5" />
-                    </motion.div>
-                    <motion.span
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
+                        <span>[00]</span>
+                        <span>Index</span>
+                    </Link>
+                    <Link
+                        href="/manifesto"
+                        className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] text-muted transition-colors hover:text-foreground"
                     >
-                        Home
-                    </motion.span>
-                </Link>
-
-                {/* Right side controls */}
-                <div className="flex items-center space-x-4">
-                    {/* Grid Controls */}
-                    {onToggleGrid && (
-                        <MotionButton
-                            onClick={onToggleGrid}
-                            className="p-2 rounded-md hover:bg-primary-100 dark:hover:bg-primary-800/50 transition-colors"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            <motion.div
-                                key={isGridVisible ? 'grid-on' : 'grid-off'}
-                                initial={{
-                                    opacity: 0,
-                                    rotate: -180,
-                                    scale: 0.5,
-                                }}
-                                animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                                exit={{ opacity: 0, rotate: 180, scale: 0.5 }}
-                                transition={{
-                                    duration: 0.3,
-                                    ease: [0.4, 0, 0.2, 1],
-                                    scale: { duration: 0.2 },
-                                }}
-                            >
-                                <Grid
-                                    className={`w-5 h-5 ${
-                                        isGridVisible
-                                            ? 'text-primary-200'
-                                            : 'text-primary-700'
-                                    }`}
-                                />
-                            </motion.div>
-                        </MotionButton>
-                    )}
-
-                    {/* Theme Toggle */}
-                    <MotionButton
-                        onClick={() =>
-                            setTheme(theme === 'dark' ? 'light' : 'dark')
-                        }
-                        className="p-2 rounded-md hover:bg-primary-100 dark:hover:bg-primary-800/50 transition-colors"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        <motion.div
-                            key={theme}
-                            initial={{
-                                opacity: 0,
-                                rotate: -180,
-                                scale: 0.5,
-                            }}
-                            animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                            exit={{ opacity: 0, rotate: 180, scale: 0.5 }}
-                            transition={{
-                                duration: 0.3,
-                                ease: [0.4, 0, 0.2, 1],
-                                scale: { duration: 0.2 },
-                            }}
-                        >
-                            {theme === 'dark' ? (
-                                <Sun className="w-5 h-5 text-primary-200" />
-                            ) : (
-                                <Moon className="w-5 h-5 text-primary-700" />
-                            )}
-                        </motion.div>
-                    </MotionButton>
+                        <span>[M]</span>
+                        <span>Readme</span>
+                    </Link>
                 </div>
-            </nav>
+
+                <div className="hidden text-center sm:block">
+                    <div className="text-[11px] uppercase tracking-[0.28em] text-muted">
+                        [{routeMeta.index}] {routeMeta.label}
+                    </div>
+                    <div className="text-xs uppercase tracking-[0.22em] text-foreground">
+                        {routeMeta.state}
+                    </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    {onToggleGrid ? (
+                        <button
+                            type="button"
+                            onClick={onToggleGrid}
+                            className="inline-flex h-10 w-10 items-center justify-center border border-dashed border-border text-foreground transition-colors hover:text-accent"
+                            aria-label="Toggle grid overlay"
+                        >
+                            <Grid
+                                className={`h-4 w-4 ${
+                                    isGridVisible ? 'text-accent' : ''
+                                }`}
+                            />
+                        </button>
+                    ) : null}
+                    <button
+                        type="button"
+                        className="inline-flex h-10 w-10 items-center justify-center border border-dashed border-border text-foreground transition-colors hover:text-accent"
+                        onClick={() => setTheme(isDark ? 'light' : 'dark')}
+                        aria-label="Toggle theme"
+                    >
+                        {mounted ? isDark ? (
+                            <Sun className="h-4 w-4" />
+                        ) : (
+                            <Moon className="h-4 w-4" />
+                        ) : (
+                            <span className="h-4 w-4" aria-hidden="true" />
+                        )}
+                    </button>
+                </div>
+            </div>
         </motion.header>
     )
 }

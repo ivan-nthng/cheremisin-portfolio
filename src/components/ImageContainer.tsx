@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { AsciiAssetFallback } from '@/components/ascii/AsciiAssetFallback'
 
 /**
  * Props interface for the ImageContainer component
@@ -34,86 +34,41 @@ export function ImageContainer({
     alt,
     onImageClick,
 }: ImageContainerProps) {
-    // State for tracking hover status and tooltip positioning
-    const [isHovered, setIsHovered] = useState(false)
-    const containerRef = useRef<HTMLDivElement>(null)
-    const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 })
-
-    /**
-     * Updates the tooltip position based on mouse movement
-     * Calculates relative position within the container
-     *
-     * @param {React.MouseEvent<HTMLDivElement>} e - Mouse event
-     */
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!containerRef.current) return
-
-        const rect = containerRef.current.getBoundingClientRect()
-        setTooltipPosition({
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top,
-        })
-    }
+    const [hasError, setHasError] = useState(false)
+    const canOpen = Boolean(image) && !hasError
 
     return (
-        <div
-            ref={containerRef}
-            className="relative w-full mx-auto group"
-            onMouseMove={handleMouseMove}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            onClick={onImageClick}
-            style={{ cursor: 'pointer' }}
+        <button
+            type="button"
+            className="group relative mx-auto block w-full text-left"
+            onClick={canOpen ? onImageClick : undefined}
+            aria-label={canOpen ? `Open ${alt}` : `${alt} unavailable`}
+            disabled={!canOpen}
         >
-            {/* Container with border and shadow for visual depth */}
-            <div className="relative rounded-2xl border border-blue-200/50 dark:border-blue-800/50 shadow-lg overflow-hidden group-hover:shadow-xl transition-shadow duration-200">
-                {/* Radial gradient background for visual interest */}
-                <div className="absolute inset-0 bg-gradient-radial from-blue-100/50 to-transparent dark:from-blue-900/50" />
-
-                {/* Image wrapper with hover animation */}
-                <motion.div
-                    className="relative"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.2 }}
-                >
-                    {/* The actual image with hover effect */}
+            <div className="relative overflow-hidden border border-border bg-background transition-colors duration-200 group-hover:bg-surface group-focus-visible:outline-none group-focus-visible:ring-2 group-focus-visible:ring-accent/30">
+                {canOpen ? (
                     <img
                         src={image}
                         alt={alt}
-                        className="w-full h-auto max-w-full object-contain transition-[filter] duration-200"
-                        style={{
-                            filter: isHovered ? 'brightness(0.7)' : 'none',
-                        }}
+                        className="h-auto w-full max-w-full object-contain transition-opacity duration-200 group-hover:opacity-95"
+                        onError={() => setHasError(true)}
                     />
-                </motion.div>
+                ) : (
+                    <AsciiAssetFallback
+                        title="Preview unavailable"
+                        label={alt}
+                        kind="img"
+                        compact
+                    />
+                )}
             </div>
 
-            {/* Interactive tooltip that follows the cursor */}
-            <AnimatePresence>
-                {isHovered && (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{
-                            opacity: 1,
-                            scale: 1,
-                            x: tooltipPosition.x + 20,
-                            y: tooltipPosition.y - 20,
-                        }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        transition={{
-                            duration: 0.2,
-                            ease: 'easeOut',
-                        }}
-                        className="absolute z-[100] pointer-events-none"
-                    >
-                        {/* Tooltip content with icon and text */}
-                        <div className="bg-primary-800 text-white px-3 py-1 rounded text-sm whitespace-nowrap font-mono flex items-center gap-2">
-                            <MagnifyingGlassIcon className="w-4 h-4 flex-shrink-0" />
-                            <span>Zoom in</span>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </div>
+            {canOpen ? (
+                <div className="pointer-events-none absolute right-3 top-3 flex items-center gap-2 border border-border bg-background/92 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-muted opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100">
+                    <MagnifyingGlassIcon className="h-4 w-4 flex-shrink-0" />
+                    <span>Inspect</span>
+                </div>
+            ) : null}
+        </button>
     )
 }

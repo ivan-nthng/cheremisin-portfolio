@@ -1,8 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { cn } from '@/lib/utils'
 import { InfoBlock } from './InfoBlock'
+import {
+    DossierBar,
+    DossierFrame,
+    DossierMediaViewport,
+    DossierSectionHeading,
+} from '@/components/ascii/Dossier'
 
 interface FigmaPreviewProps {
     embedUrl: string
@@ -16,51 +21,45 @@ export function FigmaPreview({
     description,
 }: FigmaPreviewProps) {
     return (
-        <div className="py-16">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-8 items-start">
-                {/* Figma Preview Container */}
-                <div className="md:col-span-9 relative w-full rounded-2xl overflow-hidden border border-blue-200/50 dark:border-blue-800/50">
-                    <div className="relative w-full aspect-[16/9]">
-                        <iframe
-                            src={embedUrl}
-                            className="absolute inset-0 w-full h-full"
-                            style={{ border: 'none' }}
-                            allowFullScreen
-                        />
-                    </div>
-                </div>
-
-                {/* Text Content */}
-                <div className="md:col-span-3 flex flex-col gap-4 md:pt-6">
-                    <motion.div
-                        className="space-y-4"
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{
-                            duration: 0.6,
-                            ease: [0.16, 1, 0.3, 1],
-                            delay: 0.2,
-                        }}
+        <div className="py-12 sm:py-16">
+            <DossierFrame>
+                <DossierBar label="Section" index="09" state="Figma preview" />
+                <div className="grid gap-8 px-4 py-6 sm:px-6 sm:py-8 md:grid-cols-[minmax(0,1fr)_280px]">
+                    <DossierMediaViewport
+                        label="fig 01"
+                        title={title}
+                        note="embedded preview"
                     >
-                        {title && (
-                            <h3 className="text-xl font-semibold tracking-tight text-blue-900 dark:text-blue-100">
-                                {title}
-                            </h3>
-                        )}
-                        {description && (
-                            <p className="text-sm leading-relaxed text-blue-800/80 dark:text-blue-200/80">
-                                {description}
-                            </p>
-                        )}
+                        <div className="relative aspect-[16/9] w-full border border-border bg-background">
+                            <iframe
+                                src={embedUrl}
+                                className="absolute inset-0 h-full w-full"
+                                style={{ border: 'none' }}
+                                allowFullScreen
+                            />
+                        </div>
+                    </DossierMediaViewport>
+
+                    <motion.div
+                        className="space-y-4 border border-border px-4 py-4"
+                        initial={{ opacity: 0, x: 12 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.24, delay: 0.04 }}
+                    >
+                        <DossierSectionHeading
+                            label="Figma"
+                            title={title}
+                            description={description}
+                        />
                         <InfoBlock
-                            header="Work in Progress"
-                            description="This demo file is not final — some sections are still in progress and content may be incomplete"
+                            header="Note"
+                            description="This file is not final. Some parts are still unfinished."
                             showIcon={true}
                             dismissible={false}
                         />
                     </motion.div>
                 </div>
-            </div>
+            </DossierFrame>
         </div>
     )
 }

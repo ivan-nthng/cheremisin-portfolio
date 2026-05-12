@@ -1,7 +1,13 @@
-import { cn } from '@/lib/utils'
+'use client'
+
+import { Link2, Code2, Mail, Calendar, Camera } from 'lucide-react'
 import { motion } from 'framer-motion'
-import Link from 'next/link'
-import { Github, Linkedin, Mail, Calendar, Instagram, Star } from 'lucide-react'
+import {
+    DossierBar,
+    DossierFrame,
+    DossierSectionHeading,
+    DossierTagList,
+} from '@/components/ascii/Dossier'
 
 interface TeamMember {
     role: string
@@ -17,6 +23,12 @@ interface ProjectFooterProps {
     bookingLink?: string
 }
 
+const socialLinks = [
+    { label: 'LinkedIn', icon: Link2, field: 'linkedin' },
+    { label: 'GitHub', icon: Code2, field: 'github' },
+    { label: 'Instagram', icon: Camera, field: 'instagram' },
+] as const
+
 export function ProjectFooter({
     team,
     technologies,
@@ -26,158 +38,85 @@ export function ProjectFooter({
     instagram = 'https://www.instagram.com/cheremisin.co.uk/',
     bookingLink = 'https://calendly.com/icheremisin/30min',
 }: ProjectFooterProps) {
-    // Count technology occurrences to determine star visibility
-    const technologyCounts = technologies.reduce((acc, tech) => {
-        acc[tech] = (acc[tech] || 0) + 1
-        return acc
-    }, {} as Record<string, number>)
-
-    // Get star opacity based on usage count (matching Projects.tsx logic)
-    const getStarOpacity = (count: number) => {
-        if (count >= 5) return 1
-        if (count === 4) return 0.8
-        if (count === 3) return 0.6
-        if (count === 2) return 0.4
-        return 0
-    }
+    const linkMap = { linkedin, github, instagram }
 
     return (
-        <div className="relative py-16 sm:py-20 md:py-24 border-t border-b border-blue-200/30 dark:border-blue-800/30">
-            <motion.div
-                className="overflow-hidden"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-            >
-                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
-                    {/* Header - Full width */}
-                    <motion.div
-                        className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12 mb-8"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <h1 className="text-2xl sm:text-2xl md:text-2xl font-bold text-blue-900 dark:text-blue-100">
-                            Thanks for watching!
-                        </h1>
-                    </motion.div>
+        <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.24, ease: 'easeOut' }}
+        >
+            <DossierFrame>
+                <DossierBar label="Footer" index="98" state="Contact" />
+                <div className="px-4 py-6 sm:px-6 sm:py-8">
+                    <DossierSectionHeading
+                        label="Contact"
+                        title="Get in touch"
+                        description="If this project is close to what you are building, feel free to reach out."
+                    />
 
-                    {/* Team Column */}
-                    <motion.div
-                        className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-4"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.1 }}
-                    >
-                        <h3 className="text-xl font-semibold tracking-tight text-blue-900 dark:text-blue-100 mb-6">
-                            Team
-                        </h3>
-                        <ul className="space-y-2">
-                            {team.map((member, index) => (
-                                <li
-                                    key={index}
-                                    className="text-sm text-blue-800/80 dark:text-blue-200/80"
-                                >
-                                    {member.role}
-                                </li>
-                            ))}
-                        </ul>
-                    </motion.div>
+                    <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)_minmax(0,0.9fr)]">
+                        <section className="border border-border px-4 py-4">
+                            <div className="text-[11px] uppercase tracking-[0.28em] text-muted">
+                                Team
+                            </div>
+                            <ul className="mt-4 space-y-3 text-sm leading-7 text-muted">
+                                {team.map((member, index) => (
+                                    <li key={`${member.role}-${index}`}>
+                                        {member.role}
+                                    </li>
+                                ))}
+                            </ul>
+                        </section>
 
-                    {/* Technologies Column */}
-                    <motion.div
-                        className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-4"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                    >
-                        <h3 className="text-xl font-semibold tracking-tight text-blue-900 dark:text-blue-100 mb-6">
-                            Technologies
-                        </h3>
-                        <div className="flex flex-wrap gap-2">
-                            {technologies.map((tech, index) => (
-                                <span
-                                    key={index}
-                                    className="px-2 py-1 text-sm bg-blue-100/80 dark:bg-blue-200/20 text-primary-700 dark:text-primary-200 rounded flex items-center gap-1"
-                                >
-                                    {technologyCounts[tech] > 1 && (
-                                        <Star
-                                            className="w-3 h-3"
-                                            style={{
-                                                opacity: getStarOpacity(
-                                                    technologyCounts[tech],
-                                                ),
-                                            }}
-                                        />
-                                    )}
-                                    {tech}
-                                </span>
-                            ))}
-                        </div>
-                    </motion.div>
+                        <section className="border border-border px-4 py-4">
+                            <div className="text-[11px] uppercase tracking-[0.28em] text-muted">
+                                Stack
+                            </div>
+                            <DossierTagList items={technologies} className="mt-4" />
+                        </section>
 
-                    {/* Contacts Column */}
-                    <motion.div
-                        className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-4"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.3 }}
-                    >
-                        <h3 className="text-xl font-semibold tracking-tight text-blue-900 dark:text-blue-100 mb-6">
-                            Contacts
-                        </h3>
-                        <div className="space-y-4">
-                            {/* Email */}
-                            <a
-                                href={`mailto:${email}`}
-                                className="flex items-center gap-2 text-sm text-blue-800/80 dark:text-blue-200/80 hover:text-blue-900 dark:hover:text-blue-100 transition-colors"
-                            >
-                                <Mail className="w-4 h-4" />
-                                <span>{email}</span>
-                            </a>
-
-                            {/* Social Links */}
-                            <div className="flex gap-4">
+                        <section className="border border-border px-4 py-4">
+                            <div className="text-[11px] uppercase tracking-[0.28em] text-muted">
+                                Contact
+                            </div>
+                            <div className="mt-4 space-y-3 text-sm text-foreground">
                                 <a
-                                    href={linkedin}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="p-2 rounded-full bg-blue-100/50 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 hover:bg-blue-200/50 dark:hover:bg-blue-800/50 transition-colors"
+                                    href={`mailto:${email}`}
+                                    className="flex items-center gap-3 border border-border px-3 py-3 transition-colors hover:bg-surface-muted"
                                 >
-                                    <Linkedin className="w-5 h-5" />
+                                    <Mail className="h-4 w-4 text-accent" />
+                                    <span>{email}</span>
                                 </a>
+
+                                {socialLinks.map(({ label, icon: Icon, field }) => (
+                                    <a
+                                        key={label}
+                                        href={linkMap[field]}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="flex items-center gap-3 border border-border px-3 py-3 transition-colors hover:bg-surface-muted"
+                                    >
+                                        <Icon className="h-4 w-4 text-accent" />
+                                        <span>{label}</span>
+                                    </a>
+                                ))}
+
                                 <a
-                                    href={github}
+                                    href={bookingLink}
                                     target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="p-2 rounded-full bg-blue-100/50 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 hover:bg-blue-200/50 dark:hover:bg-blue-800/50 transition-colors"
+                                    rel="noreferrer"
+                                    className="flex items-center gap-3 border border-border-strong bg-foreground px-3 py-3 text-background transition-colors hover:bg-accent hover:text-foreground"
                                 >
-                                    <Github className="w-5 h-5" />
-                                </a>
-                                <a
-                                    href={instagram}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="p-2 rounded-full bg-blue-100/50 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 hover:bg-blue-200/50 dark:hover:bg-blue-800/50 transition-colors"
-                                >
-                                    <Instagram className="w-5 h-5" />
+                                    <Calendar className="h-4 w-4" />
+                                    <span>Book a call</span>
                                 </a>
                             </div>
-
-                            {/* Book Call Button */}
-                            <a
-                                href={bookingLink}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-100/50 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 text-sm font-medium hover:bg-blue-200/50 dark:hover:bg-blue-800/50 transition-colors"
-                            >
-                                <Calendar className="w-4 h-4" />
-                                <span>Book a Call</span>
-                            </a>
-                        </div>
-                    </motion.div>
+                        </section>
+                    </div>
                 </div>
-            </motion.div>
-        </div>
+            </DossierFrame>
+        </motion.div>
     )
 }

@@ -2,6 +2,11 @@
 
 import { useState, useCallback, useRef, useEffect } from 'react'
 import { GalleryItem } from './GalleryItem'
+import {
+    DossierBar,
+    DossierFrame,
+    DossierSectionHeading,
+} from '@/components/ascii/Dossier'
 
 interface GalleryItemData {
     imageLight?: string
@@ -77,30 +82,37 @@ export function GallerySection({ items }: GallerySectionProps) {
     }, [])
 
     return (
-        <section ref={sectionRef} className="w-full py-16">
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-16">
-                {items.map((item, index) => (
-                    <div
-                        key={index}
-                        className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12"
-                    >
-                        <GalleryItem
-                            {...item}
-                            isReversed={index % 2 === 1}
-                            onNext={handleNext}
-                            onPrevious={handlePrevious}
-                            hasNext={index < items.length - 1}
-                            hasPrevious={index > 0}
-                            isLightboxOpen={
-                                isLightboxOpen && index === currentIndex
-                            }
-                            onOpenLightbox={() => handleOpenLightbox(index)}
-                            onCloseLightbox={handleCloseLightbox}
-                            isVisible={isVisible}
-                        />
+        <section ref={sectionRef} className="w-full py-12 sm:py-16">
+            <DossierFrame>
+                <DossierBar label="Section" index="05" state="Gallery" />
+                <div className="space-y-8 px-4 py-6 sm:px-6 sm:py-8">
+                    <DossierSectionHeading
+                        label="Gallery"
+                        title="More screens"
+                        description="A closer look at the product in use."
+                    />
+
+                    <div className="space-y-6">
+                        {items.map((item, index) => (
+                            <GalleryItem
+                                key={index}
+                                {...item}
+                                isReversed={index % 2 === 1}
+                                onNext={handleNext}
+                                onPrevious={handlePrevious}
+                                hasNext={index < items.length - 1}
+                                hasPrevious={index > 0}
+                                isLightboxOpen={
+                                    isLightboxOpen && index === currentIndex
+                                }
+                                onOpenLightbox={() => handleOpenLightbox(index)}
+                                onCloseLightbox={handleCloseLightbox}
+                                isVisible={isVisible}
+                            />
+                        ))}
                     </div>
-                ))}
-            </div>
+                </div>
+            </DossierFrame>
         </section>
     )
 }

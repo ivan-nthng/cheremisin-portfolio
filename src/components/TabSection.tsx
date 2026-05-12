@@ -69,6 +69,11 @@ const TabSection: React.FC<TabSectionProps> = ({
                 (tab === 'dev' && hideDev)
             ),
     )
+    const tabLabels: Record<'process' | 'result' | 'dev', string> = {
+        process: 'Process',
+        result: 'Results',
+        dev: 'Build',
+    }
 
     return (
         <>
@@ -103,14 +108,14 @@ const TabSection: React.FC<TabSectionProps> = ({
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                 className={cn(
                     'fixed z-50 pointer-events-none w-full',
-                    'sm:bottom-8 sm:left-0 sm:right-0', // Position for larger screens
-                    'bottom-[4.5rem] left-0 right-0', // Position for small screens
+                    'sm:bottom-6 sm:left-0 sm:right-0',
+                    'bottom-4 left-0 right-0',
                 )}
             >
-                <div className="relative w-full max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
+                <div className="relative mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12 flex justify-center">
-                            <div className="flex gap-2 p-1 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl shadow-lg pointer-events-auto">
+                            <div className="pointer-events-auto flex gap-2 border border-border-strong bg-background/96 p-2 backdrop-blur-sm">
                                 {availableTabs.map((tab) => (
                                     <button
                                         key={tab}
@@ -123,11 +128,11 @@ const TabSection: React.FC<TabSectionProps> = ({
                                             )
                                         }
                                         className={cn(
-                                            'relative px-3 sm:px-4 py-1.5 sm:py-2 text-sm sm:text-base font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
+                                            'relative border px-3 py-2 text-[11px] uppercase tracking-[0.24em] transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-accent/30',
                                             {
-                                                'text-blue-900 dark:text-blue-100 bg-blue-100/50 dark:bg-blue-900/50':
+                                                'border-border-strong bg-foreground text-background':
                                                     activeTab === tab,
-                                                'text-blue-600/60 dark:text-blue-400/60 hover:text-blue-900 dark:hover:text-blue-100':
+                                                'border-border bg-surface text-muted hover:bg-surface-muted hover:text-foreground':
                                                     activeTab !== tab,
                                             },
                                         )}
@@ -136,8 +141,8 @@ const TabSection: React.FC<TabSectionProps> = ({
                                         aria-controls={`${tab}-panel`}
                                         tabIndex={activeTab === tab ? 0 : -1}
                                     >
-                                        {tab.charAt(0).toUpperCase() +
-                                            tab.slice(1)}
+                                        [{tabLabels[tab as 'process' | 'result' | 'dev'].charAt(0)}]{' '}
+                                        {tabLabels[tab as 'process' | 'result' | 'dev']}
                                     </button>
                                 ))}
                             </div>

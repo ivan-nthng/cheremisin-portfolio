@@ -1,32 +1,17 @@
-'use client'
-
 // ===================================
 // Imports and Dependencies
 // ===================================
-import React from 'react'
-import { useTheme } from 'next-themes'
+import { ProjectPageShell } from '@/components/ProjectPageShell'
 import ProjectHero from '@/components/ProjectHero'
-import ProjectHeader from '@/components/ProjectHeader'
 import DemoSection from '@/components/DemoSection'
-import GridOverlay from '@/components/GridOverlay'
-import TabSection from '@/components/TabSection'
-import OptimizationSection from '@/components/OptimizationSection'
 import { GallerySection } from '@/components/GallerySection'
 import ProjectNavigation from '@/components/ProjectNavigation'
-import { projects, type Project } from '@/components/Projects'
+import { projects } from '@/lib/projects'
 import { ProjectFooter } from '@/components/ProjectFooter'
 import { ContextImageSection } from '@/components/ContextImageSection'
 import { CodeSnippet } from '@/components/CodeSnippet'
-import { cn } from '@/lib/utils'
 
 export default function DsHitoPage() {
-    // ===================================
-    // Hooks and State
-    // ===================================
-    const { theme } = useTheme()
-    const [isGridVisible, setIsGridVisible] = React.useState(false)
-
-    // Find the current project index
     const currentProjectIndex = projects.findIndex(
         (p) => p.link === '/projects/ds-hito',
     )
@@ -35,16 +20,11 @@ export default function DsHitoPage() {
     // ===================================
     // Asset Configuration
     // ===================================
-    const mainImage =
-        theme === 'dark' ? '/hito/main-dark.png' : '/hito/main-light.png'
-    const forwardImage =
-        theme === 'dark' ? '/hito/forward-dark.png' : '/hito/forward-light.png'
-
     // ===================================
     // Client Logo Configuration
     // ===================================
     const clientLogo = {
-        href: 'https://example.com',
+        href: 'https://hitocajon.com',
         svg: (
             <svg
                 width="102"
@@ -97,17 +77,11 @@ export default function DsHitoPage() {
     // Content Configuration
     // ===================================
     const description =
-        'A semantic variable-based system for building scalable, adaptive UI components. Created to help designers and developers work with consistent spacing, typography, and tokens—tailored for any project with just a few root-level overrides.'
+        'A design system built on semantic tokens. It helped designers and developers keep components consistent across products, screen sizes, and use cases.'
 
-    const demoTitle = 'Building Scalable Tools'
+    const demoTitle = 'Semantic tokens in practice'
     const demoDescription =
-        'A semantically smart system that lets designers and developers communicate in human terms. Auto-adaptive. Scales instantly. Ready for any product, zero rework'
-
-    // Video path based on theme
-    const demoVideo =
-        theme === 'dark'
-            ? '/hito/var-demo-dark.mov'
-            : '/hito/var-demo-light.mov'
+        'Teams could work with names that describe meaning instead of raw values. Change the root tokens once, and the rest of the system stays in sync.'
 
     // ===================================
     // Gallery Configuration
@@ -119,7 +93,7 @@ export default function DsHitoPage() {
             alt: 'Design Tokens',
             title: 'Design Tokens',
             description:
-                'Raw value syncs with a Tailwind CSS or a custom primitive — then reused as multiple semantic variables across the system. One value, many roles. Clean, scalable, consistent',
+                'One raw value could feed several semantic tokens, which made the system easier to update and scale.',
             neutral: true,
             noDecor: true,
         },
@@ -129,7 +103,7 @@ export default function DsHitoPage() {
             alt: 'System part',
             title: 'One button size — many behaviors',
             description:
-                'In my component library, buttons have a single base size. Their actual size adapts automatically based on context — like screen size or layout — or can be customized manually when needed.',
+                'Buttons follow one logic. Their size adapts to context, while spacing, type, and radius stay consistent.',
         },
     ]
 
@@ -146,7 +120,7 @@ const Button = ({
   style: 'accent',
   leftIcon: false,
   rightIcon: false,
-  theme: '${theme}'
+  theme: 'light'
 }) => (
   <button className={cn(
     'rounded-lg font-medium',
@@ -172,7 +146,7 @@ const Button = ({
   style: 'accent',
   leftIcon: false,
   rightIcon: false,
-  theme: '${theme}'
+  theme: 'light'
 }) => (
   <button className={cn(
     'rounded-lg font-medium',
@@ -198,7 +172,7 @@ const Button = ({
   style: 'accent',
   leftIcon: false,
   rightIcon: false,
-  theme: '${theme}'
+  theme: 'light'
 }) => (
   <button className={cn(
     'rounded-lg font-medium',
@@ -224,7 +198,7 @@ const Button = ({
   style: 'accent',
   leftIcon: false,
   rightIcon: false,
-  theme: '${theme}'
+  theme: 'light'
 }) => (
   <button className={cn(
     'rounded-lg font-medium',
@@ -247,96 +221,74 @@ const Button = ({
     // Page Layout
     // ===================================
     return (
-        <>
-            {/* Grid Overlay */}
-            <GridOverlay show={isGridVisible} />
-
-            {/* Main Content */}
-            <main className="relative">
-                {/* Header */}
-                <ProjectHeader
-                    isGridVisible={isGridVisible}
-                    onToggleGrid={() => setIsGridVisible(!isGridVisible)}
-                />
-
-                {/* Content Container */}
-                <div className="relative w-full max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
-                        {/* Hero Section */}
-                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
-                            <ProjectHero
-                                title="A Semantically-Driven Design System"
-                                description="A comprehensive data science platform that helps users analyze and visualize complex datasets with ease. Built with modern web technologies and a focus on user experience."
-                                mainImage="/ds-hito/project-1-light.png"
-                                mainImageDark="/ds-hito/project-1-dark.png"
-                                forwardImage="/ds-hito/project-2-light.png"
-                                forwardImageDark="/ds-hito/project-2-dark.png"
-                                clientLogo={clientLogo}
-                                role="Lead Product Designer"
+        <ProjectPageShell>
+            <div className="relative mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
+                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                        <ProjectHero
+                            title="DS Hito Design System"
+                            description="A design system built on semantic tokens, helping teams scale components without rewriting them for every product."
+                            mainImage="/ds-hito/project-1-light.png"
+                            mainImageDark="/ds-hito/project-1-dark.png"
+                            forwardImage="/ds-hito/project-2-light.png"
+                            forwardImageDark="/ds-hito/project-2-dark.png"
+                            clientLogo={clientLogo}
+                            role="Lead Product Designer"
+                        />
+                    </div>
+                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                        <div className="space-y-8">
+                            <DemoSection
+                                title={demoTitle}
+                                description={demoDescription}
+                                lightVideo="/hito/var-demo-light.mov"
+                                darkVideo="/hito/var-demo-dark.mov"
+                                caption="Semantic token demo"
                             />
-                        </div>
 
-                        {/* Main Content Section */}
-                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
-                            <div className="space-y-8">
-                                {/* Main Demo Section */}
-                                <DemoSection
-                                    title={demoTitle}
-                                    description={demoDescription}
-                                    video={demoVideo}
-                                    caption="Hito Design System Demo"
-                                />
+                            <ContextImageSection
+                                lightVideo="/hito/var-demo-light.mov"
+                                darkVideo="/hito/var-demo-dark.mov"
+                                alt="Variable Demo"
+                                header="Semantic variables"
+                                description="One variable — many contexts.
+Designers and developers choose tokens by purpose, not by hardcoded size. The system handles the rest across breakpoints and layouts."
+                            />
 
-                                {/* Variables Demo Section */}
-                                <ContextImageSection
-                                    lightVideo="/hito/var-demo-light.mov"
-                                    darkVideo="/hito/var-demo-dark.mov"
-                                    alt="Variable Demo"
-                                    header="Semantic Variables"
-                                    description="One variable — many contexts.
-Developers and designers don't need to think about sizes. Values adapt automatically across breakpoints and interface sizes. Just pick a semantically meaningful variable, and the system does the rest."
-                                />
+                            <GallerySection items={galleryItems} />
 
-                                {/* Gallery Section */}
-                                <GallerySection items={galleryItems} />
+                            <CodeSnippet
+                                header="Button sizes"
+                                description="Each size is built from semantic tokens, so padding, type, and radius stay in proportion."
+                                alt="Button Size Variants"
+                                sizes={buttonSizes}
+                            />
 
-                                {/* Interactive Code Section */}
-                                <CodeSnippet
-                                    header="Button Sizes"
-                                    description="Each button size is defined using semantic tokens that adapt to different contexts while maintaining consistent relationships between padding, font size, and border radius."
-                                    alt="Button Size Variants"
-                                    sizes={buttonSizes}
-                                />
-
-                                {/* Footer Section */}
-                                <ProjectFooter
-                                    team={[
-                                        { role: 'Design' },
-                                        { role: 'Front-end Engineer' },
-                                        { role: 'Back-end Engineer' },
-                                        { role: 'Business Analyst' },
-                                        { role: 'UX Researcher' },
-                                    ]}
-                                    technologies={currentProject.technologies}
-                                    email="ivan@cheremisin.co.uk"
-                                    linkedin="https://www.linkedin.com/in/icheremisin/"
-                                    github="https://github.com/ivan-nthng"
-                                    instagram="https://www.instagram.com/cheremisin.co.uk/"
-                                    bookingLink="https://calendly.com/icheremisin/30min"
-                                />
-                            </div>
-                        </div>
-
-                        {/* Project Navigation */}
-                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
-                            <ProjectNavigation
-                                projects={projects}
-                                currentProjectIndex={currentProjectIndex}
+                            <ProjectFooter
+                                team={[
+                                    { role: 'Design' },
+                                    { role: 'Front-end Engineer' },
+                                    { role: 'Back-end Engineer' },
+                                    { role: 'Business Analyst' },
+                                    { role: 'UX Researcher' },
+                                ]}
+                                technologies={currentProject.technologies}
+                                email="ivan@cheremisin.co.uk"
+                                linkedin="https://www.linkedin.com/in/icheremisin/"
+                                github="https://github.com/ivan-nthng"
+                                instagram="https://www.instagram.com/cheremisin.co.uk/"
+                                bookingLink="https://calendly.com/icheremisin/30min"
                             />
                         </div>
                     </div>
+                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                        <ProjectNavigation
+                            projects={projects}
+                            currentProjectIndex={currentProjectIndex}
+                        />
+                    </div>
                 </div>
-            </main>
-        </>
+            </div>
+        </ProjectPageShell>
     )
 }

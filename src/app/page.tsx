@@ -1,29 +1,12 @@
-'use client'
+import type { Metadata } from 'next'
+import { HomePage } from '@/components/layout/HomePage'
 
-import React, { useState } from 'react'
-import Header from '@/components/Header'
-import Hero from '@/components/Hero'
-import Projects from '@/components/Projects'
-import About from '@/components/About'
-import Contact from '@/components/Contact'
-import GridOverlay from '@/components/GridOverlay'
+export const metadata: Metadata = {
+    title: 'Ivan Cheremisin',
+    description:
+        'Portfolio of Ivan Cheremisin, a product designer and engineer working on internal tools, AI features, design systems, and workflow-heavy software.',
+}
 
 export default function Home() {
-    const [isGridVisible, setIsGridVisible] = useState(false)
-
-    return (
-        <>
-            <GridOverlay show={isGridVisible} />
-            <main className="relative">
-                <Header
-                    isGridVisible={isGridVisible}
-                    onToggleGrid={() => setIsGridVisible(!isGridVisible)}
-                />
-                <Hero />
-                <Projects />
-                <About />
-                <Contact />
-            </main>
-        </>
-    )
+    return <HomePage />
 }

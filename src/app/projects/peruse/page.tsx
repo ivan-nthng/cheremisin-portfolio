@@ -1,28 +1,18 @@
-'use client'
-
-import React, { useState } from 'react'
-import { useTheme } from 'next-themes'
+import { ProjectPageShell } from '@/components/ProjectPageShell'
 import ProjectHero from '@/components/ProjectHero'
-import ProjectHeader from '@/components/ProjectHeader'
 import ProjectOverview from '@/components/ProjectOverview'
 import ProblemSection from '@/components/ProblemSection'
 import DemoSection from '@/components/DemoSection'
-import GridOverlay from '@/components/GridOverlay'
 import TabSection from '@/components/TabSection'
 import OptimizationSection from '@/components/OptimizationSection'
 import { GallerySection } from '@/components/GallerySection'
 import ProjectNavigation from '@/components/ProjectNavigation'
-import { projects } from '@/components/Projects'
-import UIDemo from '@/components/UIDemo'
+import { projects } from '@/lib/projects'
 import ProjectBento from '@/components/ProjectBento'
 import { ContextImageSection } from '@/components/ContextImageSection'
 import { ProjectFooter } from '@/components/ProjectFooter'
 
 export default function PerusePage() {
-    const { theme } = useTheme()
-    const [isGridVisible, setIsGridVisible] = useState(false)
-
-    // Find current project index for navigation
     const currentProjectIndex = projects.findIndex(
         (p) => p.link === '/projects/peruse',
     )
@@ -71,70 +61,70 @@ export default function PerusePage() {
         ),
     }
 
-    // TODO: Update these with actual content
-    const demoTitle = 'Intelligent File Organization'
-    const demoDescription =
-        'Peruse.ml uses AI to automatically organize and tag your files, making them instantly searchable and accessible.'
+    const overviewDescription =
+        'Peruse explored a different way to work with large document libraries. Instead of asking teams to keep folders perfectly organised, the product tried to understand what a file is about, how it relates to other files, and how people naturally search for it later.'
 
-    // TODO: Update with actual gallery items
+    const demoTitle = 'Finding files by meaning'
+    const demoDescription =
+        'The product grouped related documents, added context, and made search less dependent on folder structure.'
+
     const galleryItems = [
         {
             imageLight: '/peruse/feature1-light.png',
             imageDark: '/peruse/feature1-dark.png',
             alt: 'Smart File Organization',
-            title: 'Smart Organization',
+            title: 'Automatic grouping',
             description:
-                'Files are automatically categorized and tagged based on their content.',
+                'Files are grouped and tagged by what they contain, not only by where they are stored.',
             neutral: true,
         },
         {
             imageLight: '/peruse/feature2-light.png',
             imageDark: '/peruse/feature2-dark.png',
             alt: 'Natural Language Search',
-            title: 'Natural Search',
+            title: 'Natural-language search',
             description:
-                'Find files using natural language - just describe what you are looking for.',
+                'People can describe what they need instead of guessing the exact file name.',
         },
         {
             imageLight: '/peruse/feature3-light.png',
             imageDark: '/peruse/feature3-dark.png',
             alt: 'File Analytics',
-            title: 'Smart Analytics',
+            title: 'Usage patterns',
             description:
-                'Get insights about your file usage and organization patterns.',
+                'The product helps teams see how documents are used and where the structure breaks down.',
         },
     ]
 
     const processContent = (
         <div className="space-y-8">
-            {/* TODO: Replace with actual process content */}
-            <ProjectOverview
-                problem="Managing large collections of files is time-consuming and error-prone."
-                solution="AI-powered file organization that understands file content and context."
-                impact="50% reduction in time spent searching for files, improved team collaboration."
-            />
+            <ProjectOverview description={overviewDescription} />
             <ProblemSection
-                title="The Challenge"
-                description="Traditional file systems rely on manual organization, leading to inconsistent structures and difficulty finding files."
+                title="Problem"
+                description={
+                    'Traditional folder systems work until the volume gets high.\n\n' +
+                    'Then naming drifts, duplicates multiply, and search starts depending on exact words or someone else remembering where a file was put.\n\n' +
+                    'For teams working across research, briefs, drafts, and reference material, the real challenge is not storage. It is finding the right document again with enough context to use it.'
+                }
                 image="/peruse/problem-light.png"
                 imageDark="/peruse/problem-dark.png"
             />
             <OptimizationSection
                 items={[
                     {
-                        title: 'Smart Categorization',
+                        title: 'Meaning before folders',
                         description:
-                            'Files are automatically analyzed and categorized based on their content.',
+                            'The system grouped files by content and topic, so structure did not depend only on manual filing.',
                     },
                     {
-                        title: 'Natural Language Search',
+                        title: 'Natural-language search',
                         description:
-                            'Find files by describing what you are looking for in plain English.',
+                            'Search could start from what the person remembers, not only from exact names or paths.',
                     },
                     {
-                        title: 'Usage Analytics',
+                        title: 'Connected context',
                         description:
-                            'Understand how your files are used and optimize your workflow.',
+                            'Related files stayed connected, which made it easier to move from one useful document to the next.',
                     },
                 ]}
             />
@@ -162,14 +152,14 @@ export default function PerusePage() {
                 title={demoTitle}
                 description={demoDescription}
                 image="peruse/demo"
-                caption="AI-powered file organization that makes finding files effortless."
+                caption="Search and organisation based on document meaning"
             />
             <GallerySection items={galleryItems} />
             <ContextImageSection
                 lightImage="/peruse/context-light.png"
                 darkImage="/peruse/context-dark.png"
-                header="Context-Aware Organization"
-                description="The system understands file relationships and automatically creates meaningful connections between related files."
+                header="Connected context"
+                description="The system links related files by topic, source, and use case, so people can move through connected material instead of isolated documents."
                 alt="Context-Aware File Organization Interface"
             />
             <ProjectFooter
@@ -192,29 +182,27 @@ export default function PerusePage() {
 
     const devContent = (
         <div className="space-y-8">
-            {/* TODO: Replace with actual development content */}
             <ProjectBento
                 items={[
                     {
-                        title: 'Machine Learning Pipeline',
+                        title: 'Tagging model',
                         description:
-                            'Built with TensorFlow.js for client-side file analysis and categorization.',
-                        image: '/peruse/ml-light.png',
-                        imageDark: '/peruse/ml-dark.png',
+                            'The product needed a tagging system that stayed useful even when teams uploaded mixed document types and inconsistent source material.',
                     },
                     {
-                        title: 'Search Engine',
+                        title: 'Search language',
                         description:
-                            'Natural language processing for intuitive file search.',
-                        image: '/peruse/search-light.png',
-                        imageDark: '/peruse/search-dark.png',
+                            'The search experience was shaped around user intent: what people mean, remember, or expect to find next.',
                     },
                     {
-                        title: 'Analytics Dashboard',
+                        title: 'Related-file logic',
                         description:
-                            'Real-time insights into file organization and usage patterns.',
-                        image: '/peruse/analytics-light.png',
-                        imageDark: '/peruse/analytics-dark.png',
+                            'A useful result was not just one file. It was the surrounding context: adjacent documents, linked topics, and likely follow-up material.',
+                    },
+                    {
+                        title: 'Shared document hygiene',
+                        description:
+                            'The product direction also pushed toward healthier shared libraries by reducing duplicate filing and making structure easier to maintain.',
                     },
                 ]}
             />
@@ -237,41 +225,34 @@ export default function PerusePage() {
     )
 
     return (
-        <>
-            <GridOverlay show={isGridVisible} />
-            <main className="relative">
-                <ProjectHeader
-                    isGridVisible={isGridVisible}
-                    onToggleGrid={() => setIsGridVisible(!isGridVisible)}
-                />
-                <div className="relative w-full max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
-                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
-                            <ProjectHero
-                                title="Peruse.ml"
-                                description="AI-powered file organization that understands your content and makes finding files effortless."
-                                mainImage="/peruse/hero.png"
-                                forwardImage="/peruse/forward.png"
-                                clientLogo={clientLogo}
-                                role="Lead Product Designer"
-                            />
-                        </div>
-                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
-                            <TabSection
-                                processContent={processContent}
-                                resultContent={resultContent}
-                                devContent={devContent}
-                            />
-                        </div>
-                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
-                            <ProjectNavigation
-                                projects={projects}
-                                currentProjectIndex={currentProjectIndex}
-                            />
-                        </div>
+        <ProjectPageShell>
+            <div className="relative mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
+                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                        <ProjectHero
+                            title="Peruse.ml"
+                            description="An AI document workspace that helps teams sort, find, and connect files faster."
+                            mainImage="/peruse/hero.png"
+                            forwardImage="/peruse/forward.png"
+                            clientLogo={clientLogo}
+                            role="Lead Product Designer"
+                        />
+                    </div>
+                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                        <TabSection
+                            processContent={processContent}
+                            resultContent={resultContent}
+                            devContent={devContent}
+                        />
+                    </div>
+                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                        <ProjectNavigation
+                            projects={projects}
+                            currentProjectIndex={currentProjectIndex}
+                        />
                     </div>
                 </div>
-            </main>
-        </>
+            </div>
+        </ProjectPageShell>
     )
 }

@@ -2,6 +2,12 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
+import {
+    DossierBar,
+    DossierFrame,
+    DossierMetaStrip,
+    DossierSectionHeading,
+} from '@/components/ascii/Dossier'
 
 interface StatBlock {
     value: string
@@ -94,7 +100,7 @@ function AnimatedCounter({ value }: { value: string }) {
     const suffix = value.match(/[^0-9]*$/)?.[0] || ''
 
     return (
-        <span ref={ref} className="font-poppins font-bold tracking-tight">
+        <span ref={ref} className="font-bold tracking-tight">
             {isVisible ? `${prefix}${number}${suffix}` : value}
         </span>
     )
@@ -169,46 +175,36 @@ export default function ProjectOverview({
                 variants={container}
                 initial="hidden"
                 animate={isVisible ? 'show' : 'hidden'}
-                className="bg-blue-50/80 dark:bg-blue-950/20 backdrop-blur-sm rounded-[32px] overflow-hidden"
             >
-                <div className="p-6 sm:p-8 md:p-12 space-y-8 sm:space-y-12">
-                    {/* Header */}
-                    <MotionH2
-                        variants={item}
-                        className="text-2xl sm:text-3xl font-bold font-poppins text-blue-900 dark:text-blue-100"
-                    >
-                        Overview
-                    </MotionH2>
+                <DossierFrame>
+                    <DossierBar label="Section" index="02" state="Overview" />
+                    <div className="space-y-8 px-4 py-6 sm:px-6 sm:py-8">
+                        <MotionDiv variants={item}>
+                            <DossierSectionHeading
+                                label="Story / overview"
+                                title="Overview"
+                                description={description}
+                            />
+                        </MotionDiv>
 
-                    {/* Stats Grid */}
-                    <MotionDiv
-                        variants={container}
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12"
-                    >
-                        {stats?.map((stat, index) => (
-                            <MotionDiv
-                                key={index}
-                                variants={item}
-                                className="flex flex-col items-center text-center space-y-2"
-                            >
-                                <h1 className="text-4xl sm:text-5xl md:text-6xl tracking-tight text-blue-900 dark:text-blue-100 leading-none">
-                                    <AnimatedCounter value={stat.value} />
-                                </h1>
-                                <div className="text-xs sm:text-sm text-blue-800/80 dark:text-blue-200/80 max-w-[200px] font-mono">
-                                    {stat.label}
-                                </div>
+                        {stats?.length ? (
+                            <MotionDiv variants={container}>
+                                <DossierMetaStrip
+                                    items={stats.map((stat) => ({
+                                        label: stat.label,
+                                        value: (
+                                            <span className="text-3xl font-bold leading-none text-foreground sm:text-4xl">
+                                                <AnimatedCounter
+                                                    value={stat.value}
+                                                />
+                                            </span>
+                                        ),
+                                    }))}
+                                />
                             </MotionDiv>
-                        ))}
-                    </MotionDiv>
-
-                    {/* Description */}
-                    <MotionDiv
-                        variants={item}
-                        className="md:w-1/2 text-sm sm:text-base text-blue-800/80 dark:text-blue-200/80 leading-relaxed"
-                    >
-                        {description}
-                    </MotionDiv>
-                </div>
+                        ) : null}
+                    </div>
+                </DossierFrame>
             </MotionDiv>
         </section>
     )

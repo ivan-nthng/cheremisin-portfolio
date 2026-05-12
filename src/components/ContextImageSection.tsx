@@ -1,9 +1,16 @@
-import { useState } from 'react'
+'use client'
+
+import { useEffect, useState } from 'react'
 import { useTheme } from 'next-themes'
 import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
-import { cn } from '@/lib/utils'
 import { Lightbox } from './Lightbox'
+import { AsciiAssetFallback } from '@/components/ascii/AsciiAssetFallback'
+import {
+    DossierBar,
+    DossierFrame,
+    DossierMediaViewport,
+    DossierSectionHeading,
+} from '@/components/ascii/Dossier'
 
 interface ContextImageSectionProps {
     lightImage?: string
@@ -24,99 +31,95 @@ export function ContextImageSection({
     description,
     alt,
 }: ContextImageSectionProps) {
-    const { theme } = useTheme()
+    const { theme, resolvedTheme } = useTheme()
     const [isLightboxOpen, setIsLightboxOpen] = useState(false)
-    const [isHovered, setIsHovered] = useState(false)
+    const [mounted, setMounted] = useState(false)
+    const [mediaError, setMediaError] = useState(false)
 
     const isVideo = Boolean(lightVideo || darkVideo)
+    const effectiveTheme = mounted ? resolvedTheme || theme : 'light'
     const source =
-        theme === 'dark'
+        effectiveTheme === 'dark'
             ? darkVideo || darkImage || ''
             : lightVideo || lightImage || ''
 
+    useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    useEffect(() => {
+        setMediaError(false)
+    }, [source])
+
     return (
-        <div className="py-16">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                {/* Media Column (8/12 width on large screens, full width on small) */}
-                <div className="lg:col-span-9">
-                    <div
-                        className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-background/50 backdrop-blur-sm transition-all duration-300"
-                        onMouseEnter={() => setIsHovered(true)}
-                        onMouseLeave={() => setIsHovered(false)}
-                        onClick={() => !isVideo && setIsLightboxOpen(true)}
-                        style={{ cursor: isVideo ? 'default' : 'pointer' }}
+        <section className="py-12 sm:py-16">
+            <DossierFrame>
+                <DossierBar label="Section" index="06" state={header} />
+                <div className="grid gap-8 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-[minmax(0,1fr)_280px]">
+                    <DossierMediaViewport
+                        label={isVideo ? 'vid 01' : 'img 01'}
+                        title={header}
+                        note={isVideo ? 'autoplay loop' : 'click to inspect'}
                     >
-                        <motion.div
-                            whileHover={{ scale: isVideo ? 1 : 1.02 }}
-                            whileTap={{ scale: isVideo ? 1 : 0.98 }}
-                            className="relative h-full w-full"
+                        <div
+                            className="relative aspect-[4/3] overflow-hidden border border-border bg-background"
+                            onClick={() =>
+                                !isVideo && source && !mediaError
+                                    ? setIsLightboxOpen(true)
+                                    : undefined
+                            }
+                            style={{ cursor: isVideo ? 'default' : 'pointer' }}
                         >
-                            {isVideo ? (
+                            {!source || mediaError ? (
+                                <AsciiAssetFallback
+                                    title="Preview unavailable"
+                                    label={header}
+                                    kind={isVideo ? 'vid' : 'img'}
+                                    compact
+                                    className="min-h-0"
+                                />
+                            ) : isVideo ? (
                                 <video
                                     src={source}
                                     autoPlay
                                     loop
                                     muted
                                     playsInline
-                                    className="h-full w-full object-cover"
+                                    className="h-full w-full object-contain"
+                                    onError={() => setMediaError(true)}
                                 />
                             ) : (
                                 <Image
                                     src={source}
                                     alt={alt}
                                     fill
-                                    className="object-cover transition-all duration-300"
-                                    style={{
-                                        filter: isHovered
-                                            ? 'brightness(0.9)'
-                                            : 'none',
-                                    }}
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 50vw"
+                                    className="object-contain p-4"
+                                    sizes="(max-width: 1024px) 100vw, 60vw"
                                     priority
+                                    onError={() => setMediaError(true)}
                                 />
                             )}
-                        </motion.div>
+                        </div>
+                    </DossierMediaViewport>
 
-                        {/* Zoom Badge */}
-                        <AnimatePresence>
-                            {isHovered && !isVideo && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: 10 }}
-                                    transition={{
-                                        duration: 0.3,
-                                        ease: 'easeOut',
-                                    }}
-                                    className="absolute bottom-4 left-4 bg-black/50 text-white px-3 py-1.5 rounded-lg text-sm font-medium backdrop-blur-sm"
-                                >
-                                    Move Closer
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                    <div className="border border-border px-4 py-4">
+                        <DossierSectionHeading
+                            label="Context / note"
+                            title={header}
+                            description={description}
+                        />
                     </div>
                 </div>
+            </DossierFrame>
 
-                {/* Content Column (4/12 width on large screens, full width on small) */}
-                <div className="lg:col-span-3 flex flex-col justify-center">
-                    <h3 className="mb-4 text-xl font-semibold tracking-tight text-blue-900 dark:text-blue-100">
-                        {header}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-blue-800/80 dark:text-blue-200/80">
-                        {description}
-                    </p>
-                </div>
-            </div>
-
-            {/* Lightbox */}
-            {!isVideo && (
+            {!isVideo && source && !mediaError ? (
                 <Lightbox
                     isOpen={isLightboxOpen}
                     onClose={() => setIsLightboxOpen(false)}
                     image={source}
                     alt={alt}
                 />
-            )}
-        </div>
+            ) : null}
+        </section>
     )
 }

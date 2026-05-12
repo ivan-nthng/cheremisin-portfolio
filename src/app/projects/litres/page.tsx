@@ -1,5 +1,3 @@
-'use client'
-
 /**
  * Litres Project Page Component
  *
@@ -18,27 +16,25 @@
  */
 
 import React from 'react'
-import { useTheme } from 'next-themes'
+import { ProjectPageShell } from '@/components/ProjectPageShell'
 import ProjectHero from '@/components/ProjectHero'
-import ProjectHeader from '@/components/ProjectHeader'
 import ProjectOverview from '@/components/ProjectOverview'
 import ProblemSection from '@/components/ProblemSection'
 import DemoSection from '@/components/DemoSection'
-import GridOverlay from '@/components/GridOverlay'
 import TabSection from '@/components/TabSection'
 import OptimizationSection from '@/components/OptimizationSection'
 import { GallerySection } from '@/components/GallerySection'
 import ProjectNavigation from '@/components/ProjectNavigation'
-import { projects, type Project } from '@/components/Projects'
+import { projects } from '@/lib/projects'
 import { ProjectFooter } from '@/components/ProjectFooter'
+import {
+    DossierBar,
+    DossierFrame,
+    DossierMetaStrip,
+    DossierSectionHeading,
+} from '@/components/ascii/Dossier'
 
 export default function LitresPage() {
-    // Theme context for handling light/dark mode
-    const { theme } = useTheme()
-    // State for toggling the grid overlay visualization
-    const [isGridVisible, setIsGridVisible] = React.useState(false)
-
-    // Project identification and current context
     const currentProjectIndex = projects.findIndex(
         (p) => p.link === '/projects/litres',
     )
@@ -52,13 +48,6 @@ export default function LitresPage() {
      * Theme-aware image paths
      * Automatically switches between light and dark versions based on the current theme
      */
-    const mainImage =
-        theme === 'dark' ? '/litres/≈' : '/litres/project-1-light.png'
-    const forwardImage =
-        theme === 'dark'
-            ? '/litres/project-1-dark.png'
-            : '/litres/project-1-light.png'
-
     /**
      * Client branding configuration
      * Includes:
@@ -157,35 +146,25 @@ export default function LitresPage() {
         ),
     }
 
-    /**
-     * Project performance metrics
-     * Key statistics and data points showcasing project impact
-     * TODO: Replace placeholder values with actual metrics
-     */
     const stats = [
         {
             value: '+22.5%',
-            label: 'Authors growt in the first half of 2020',
+            label: 'Author growth in H1 2020',
         },
         {
             value: '9.5M',
-            label: 'Books sold in the first 6 months of 2020',
+            label: 'Books sold in H1 2020',
         },
         {
             value: '92%',
-            label: 'Revenue increase driven by self-publishing',
+            label: 'Revenue growth from self-publishing',
         },
         {
             value: '500+',
-            label: 'Partner publishers on the platform',
+            label: 'Publishing partners',
         },
     ]
 
-    /**
-     * Problem analysis metrics
-     * Quantitative data points illustrating project challenges
-     * TODO: Replace placeholder values with actual metrics
-     */
     const problemStats = [
         {
             value: '281K+',
@@ -205,21 +184,16 @@ export default function LitresPage() {
         },
     ]
 
-    /**
-     * Project content and descriptions
-     * Core narrative elements describing the project's context and achievements
-     * TODO: Replace placeholder text with actual project content
-     */
     const description =
-        "LitRes is Russia's leading platform for eBooks and audiobooks, connecting readers, authors, and publishers. In 2020, self-publishing revenue nearly doubled as author growth accelerated. The platform keeps expanding its publisher network, offering a unified space for digital distribution."
+        'Litres is a large ebooks and audiobooks platform. As self-publishing grew, authors and publishers needed better tools to manage catalogues, sales, and promotions.'
     const problemDescription =
-        'LitRes was scaling fast — but its infrastructure lagged behind.\n\n' +
-        'Authors struggled to manage growing portfolios, lacking tools for sales analytics, promo tools, or bulk editing.\n\n' +
-        "Publishers couldn't track performance across multiple titles or authors, and manual processes led to lost revenue opportunities.\n\n" +
-        'As author and publisher counts grew, the lack of scalable, data-driven dashboards became a bottleneck to further expansion.'
-    const demoTitle = 'A smart dashboard'
+        'Litres was growing fast, but the internal tools were not keeping up.\n\n' +
+        'Authors had no clear way to track sales, manage promotions, or update many books at once.\n\n' +
+        "Publishers also lacked a good view across titles, authors, and performance, so too much work stayed manual.\n\n" +
+        'As the platform scaled, better dashboards and bulk actions became necessary.'
+    const demoTitle = 'Dashboard for authors and publishers'
     const demoDescription =
-        'Designed for both authors and publishers. Where writers see recognition and growth in real-time, and publishers dig into performance and sales strategy. One shared space, two completely different user needs — perfectly balanced.'
+        'The same product had to serve two very different needs. Authors needed day-to-day visibility. Publishers needed portfolio-level performance and control.'
 
     /**
      * Gallery content configuration
@@ -233,10 +207,10 @@ export default function LitresPage() {
         {
             imageLight: '/litres/sales-light.png',
             imageDark: '/litres/sales-dark.png',
-            alt: 'Placeholder Gallery Item 1',
+            alt: 'Publisher dashboard',
             title: 'For Publishers',
             description:
-                'A deep dive into performance — traffic sources, paid vs free dynamics, conversion patterns, and reader behavior breakdowns.',
+                'Publishers could track traffic, conversions, paid versus free reads, and reader behaviour in one place.',
         },
         {
             videoLight: '/litres/custom-light.mov',
@@ -244,7 +218,7 @@ export default function LitresPage() {
             alt: 'Custom Dashboard',
             title: 'Customizable Dashboard',
             description:
-                'Flexible dashboard layout with quick configuration to match user roles.',
+                'Users could arrange the dashboard around the data and actions they needed most.',
         },
     ]
 
@@ -262,9 +236,9 @@ export default function LitresPage() {
             imageLight: '/litres/promo-light.png',
             imageDark: '/litres/promo-dark.png',
             alt: 'Promotion Tools',
-            title: 'Promotion Suite',
+            title: 'Promotion tools',
             description:
-                'Integrated promotion tools for authors to manage campaigns, track performance, and optimize their marketing strategies.',
+                'Authors could launch promotions, track results, and adjust campaigns without leaving the product.',
         },
     ]
 
@@ -290,19 +264,19 @@ export default function LitresPage() {
             <OptimizationSection
                 items={[
                     {
-                        title: 'Smart Analytics',
+                        title: 'Sales analytics',
                         description:
-                            'Comprehensive analytics dashboard for tracking sales, user engagement, and content performance.',
+                            'Clear dashboards for sales, engagement, and content performance.',
                     },
                     {
-                        title: 'Bulk Operations',
+                        title: 'Bulk actions',
                         description:
-                            'Efficient tools for managing multiple books, authors, and publishers simultaneously.',
+                            'Tools for updating many books, authors, and publishers at once.',
                     },
                     {
-                        title: 'Automated Workflows',
+                        title: 'Publishing workflows',
                         description:
-                            'Streamlined processes for content publishing, distribution, and royalty management.',
+                            'Simpler flows for publishing, distribution, and royalty operations.',
                     },
                 ]}
             />
@@ -337,16 +311,16 @@ export default function LitresPage() {
                 title={demoTitle}
                 description={demoDescription}
                 image="litres/main"
-                caption="Placeholder caption for the demo section. Replace with actual caption."
+                caption="Main dashboard for authors and publishers"
             />
             <GallerySection items={galleryItems} />
 
             {/* Additional Demo Section */}
             <DemoSection
-                title="E-Library Management Platform"
-                description="A lightweight internal tool for public library staff to manage digital readers, control access rights, and expand their e-book collections. It simplifies user management, allows bulk updates to borrowing permissions, and helps libraries grow and organize their digital catalogs with ease."
+                title="Library management tools"
+                description="A lightweight internal tool for library staff to manage readers, access rights, and digital book collections."
                 image="litres/libr"
-                caption="The author success platform provides tools for sales tracking, promotion management, and reader engagement."
+                caption="Library staff tools for users, access, and collections"
             />
 
             {/* Additional Gallery Section */}
@@ -370,35 +344,41 @@ export default function LitresPage() {
         </div>
     )
 
-    /**
-     * Development Section
-     * Technical implementation details:
-     * - Placeholder gallery for development artifacts
-     * - Consistent footer with team and contact information
-     * TODO: Add actual development content and documentation
-     */
     const devContent = (
         <div className="space-y-8">
-            <GallerySection
-                items={[
-                    {
-                        imageLight: '',
-                        imageDark: '',
-                        alt: 'Placeholder 1',
-                        title: 'Placeholder 1',
-                        description: 'Content coming soon',
-                        neutral: true,
-                    },
-                    {
-                        imageLight: '',
-                        imageDark: '',
-                        alt: 'Placeholder 2',
-                        title: 'Placeholder 2',
-                        description: 'Content coming soon',
-                        neutral: true,
-                    },
-                ]}
-            />
+            <section className="py-12 sm:py-16">
+                <DossierFrame>
+                    <DossierBar
+                        label="Section"
+                        index="08"
+                        state="Implementation notes"
+                    />
+                    <div className="space-y-8 px-4 py-6 sm:px-6 sm:py-8">
+                        <DossierSectionHeading
+                            label="Implementation"
+                            title="A shared system behind different user roles"
+                            description="This case study keeps the implementation section intentionally short. The main work here was not a standalone technical feature, but a shared product structure that could support authors, publishers, and library teams without turning into three separate tools."
+                        />
+                        <DossierMetaStrip
+                            items={[
+                                {
+                                    label: 'Shared logic',
+                                    value: 'Dashboards, permissions, and bulk actions had to stay coherent across very different workflows.',
+                                },
+                                {
+                                    label: 'Design focus',
+                                    value: 'Information structure mattered as much as the screens themselves.',
+                                },
+                                {
+                                    label: 'Why it mattered',
+                                    value: 'The product had to scale with the business without forcing every user group into the same narrow view.',
+                                },
+                            ]}
+                            className="lg:grid-cols-3"
+                        />
+                    </div>
+                </DossierFrame>
+            </section>
             <ProjectFooter
                 team={[
                     { role: 'Design' },
@@ -418,53 +398,36 @@ export default function LitresPage() {
     )
 
     return (
-        <>
-            {/* Grid overlay for layout visualization */}
-            <GridOverlay show={isGridVisible} />
-
-            <main className="relative">
-                {/* Project header with grid toggle */}
-                <ProjectHeader
-                    isGridVisible={isGridVisible}
-                    onToggleGrid={() => setIsGridVisible(!isGridVisible)}
-                />
-
-                {/* Main content container with responsive grid */}
-                <div className="relative w-full max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
-                        {/* Hero section */}
-                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
-                            <ProjectHero
-                                title="Business administration tools"
-                                description="A platform for selling, distributing, and managing e-books and audiobooks. It serves as a digital bookstore, publishing tool, and library system."
-                                mainImage="/litres/project-2-light.png"
-                                mainImageDark="/litres/project-2-dark.png"
-                                forwardImage="/litres/project-1-light.png"
-                                forwardImageDark="/litres/project-1-dark.png"
-                                clientLogo={clientLogo}
-                                role="Lead Product Designer"
-                            />
-                        </div>
-
-                        {/* Tabbed content sections */}
-                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
-                            <TabSection
-                                processContent={processContent}
-                                resultContent={resultContent}
-                                devContent={devContent}
-                            />
-                        </div>
-
-                        {/* Project navigation */}
-                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
-                            <ProjectNavigation
-                                projects={projects}
-                                currentProjectIndex={currentProjectIndex}
-                            />
-                        </div>
+        <ProjectPageShell>
+            <div className="relative mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
+                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                        <ProjectHero
+                            title="Litres Internal Tools"
+                            description="Internal tools for authors, publishers, and library teams working with ebooks and audiobooks."
+                            mainImage="/litres/project-2-light.png"
+                            mainImageDark="/litres/project-2-dark.png"
+                            forwardImage="/litres/project-1-light.png"
+                            forwardImageDark="/litres/project-1-dark.png"
+                            clientLogo={clientLogo}
+                            role="Lead Product Designer"
+                        />
+                    </div>
+                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                        <TabSection
+                            processContent={processContent}
+                            resultContent={resultContent}
+                            devContent={devContent}
+                        />
+                    </div>
+                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                        <ProjectNavigation
+                            projects={projects}
+                            currentProjectIndex={currentProjectIndex}
+                        />
                     </div>
                 </div>
-            </main>
-        </>
+            </div>
+        </ProjectPageShell>
     )
 }

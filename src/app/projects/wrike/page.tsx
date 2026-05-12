@@ -1,19 +1,24 @@
-'use client'
-
-import React, { useState } from 'react'
+import { ProjectPageShell } from '@/components/ProjectPageShell'
 import ProjectHero from '@/components/ProjectHero'
-import ProjectHeader from '@/components/ProjectHeader'
-import GridOverlay from '@/components/GridOverlay'
+import ProjectOverview from '@/components/ProjectOverview'
+import ProblemSection from '@/components/ProblemSection'
+import ProjectBento from '@/components/ProjectBento'
+import { ContextImageSection } from '@/components/ContextImageSection'
+import { ProjectFooter } from '@/components/ProjectFooter'
 import ProjectNavigation from '@/components/ProjectNavigation'
-import { projects } from '@/components/Projects'
+import {
+    DossierBar,
+    DossierFrame,
+    DossierMetaStrip,
+    DossierSectionHeading,
+} from '@/components/ascii/Dossier'
+import { projects } from '@/lib/projects'
 
 export default function WrikePage() {
-    const [isGridVisible, setIsGridVisible] = useState(false)
-
-    // Find current project index for navigation
     const currentProjectIndex = projects.findIndex(
         (p) => p.link === '/projects/wrike',
     )
+    const currentProject = projects[currentProjectIndex]
 
     const clientLogo = {
         href: 'https://www.wrike.com',
@@ -82,35 +87,120 @@ export default function WrikePage() {
         ),
     }
 
+    const overviewDescription =
+        'Wrike is a work management product used by teams planning projects across shared boards, priorities, and workload. This case focused on making a board-based planning view easier to read when many people, tasks, and timelines had to stay aligned.'
+
+    const problemDescription =
+        'Board views are fast when work is simple, but they get harder to trust as more teams, dependencies, and deadlines pile up.\n\n' +
+        'People need to understand status, ownership, and capacity without opening each item one by one or switching into separate planning tools.\n\n' +
+        'The product challenge was not to invent a new workflow, but to make the existing one easier to scan, discuss, and act on.'
+
+    const changeItems = [
+        {
+            title: 'Board first, but not board only',
+            description:
+                'The planning view stayed board-based, but gave teams more context without forcing them out of the flow.',
+        },
+        {
+            title: 'Workload closer to the task view',
+            description:
+                'Capacity and task planning were brought closer together, so tradeoffs were easier to spot earlier.',
+        },
+        {
+            title: 'Clearer shared status',
+            description:
+                'The interface made it easier for teams to see what was moving, blocked, or overloaded at a glance.',
+        },
+        {
+            title: 'Less coordination outside the tool',
+            description:
+                'More of the planning conversation could stay inside one surface instead of spreading across updates and follow-up checks.',
+        },
+    ]
+
     return (
-        <>
-            <GridOverlay show={isGridVisible} />
-            <main className="relative">
-                <ProjectHeader
-                    isGridVisible={isGridVisible}
-                    onToggleGrid={() => setIsGridVisible(!isGridVisible)}
-                />
-                <div className="relative w-full max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
-                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
-                            <ProjectHero
-                                title="Wrike — Agile Project Management Tool"
-                                description="I designed a flexible project management tool based on a BoardView interface."
-                                mainImage="/wrike/hero.png"
-                                forwardImage="/wrike/forward.png"
-                                clientLogo={clientLogo}
-                                role="Senior Product Designer"
-                            />
-                        </div>
-                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
-                            <ProjectNavigation
-                                projects={projects}
-                                currentProjectIndex={currentProjectIndex}
-                            />
-                        </div>
+        <ProjectPageShell>
+            <div className="relative mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
+                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                        <ProjectHero
+                            title="Wrike"
+                            description="A board-based planning tool for teams managing projects, priorities, and workload in one place."
+                            mainImage="/wrike/hero.png"
+                            forwardImage="/wrike/forward.png"
+                            clientLogo={clientLogo}
+                            role="Senior Product Designer"
+                        />
+                    </div>
+                    <div className="col-span-2 space-y-8 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                        <ProjectOverview description={overviewDescription} />
+
+                        <ProblemSection
+                            title="Problem"
+                            description={problemDescription}
+                        />
+
+                        <ProjectBento items={changeItems} />
+
+                        <ContextImageSection
+                            lightImage="/wrike/forward.png"
+                            header="Planning view"
+                            description="The direction here was simple: keep the board fast to scan, make workload easier to read, and help teams understand priorities without extra digging."
+                            alt="Wrike planning view"
+                        />
+
+                        <section className="py-12 sm:py-16">
+                            <DossierFrame>
+                                <DossierBar
+                                    label="Section"
+                                    index="09"
+                                    state="Outcome"
+                                />
+                                <div className="space-y-8 px-4 py-6 sm:px-6 sm:py-8">
+                                    <DossierSectionHeading
+                                        label="Outcome"
+                                        title="A clearer planning surface"
+                                        description="This case study is intentionally shorter than some of the others in the portfolio, but the outcome was clear: make planning easier to read, keep workload visible, and help teams align around one shared view of work."
+                                    />
+                                    <DossierMetaStrip
+                                        items={[
+                                            {
+                                                label: 'Product context',
+                                                value: 'Enterprise project and workload planning',
+                                            },
+                                            {
+                                                label: 'Core improvement',
+                                                value: 'Priority, ownership, and capacity became easier to read together',
+                                            },
+                                            {
+                                                label: 'Why it mattered',
+                                                value: 'Teams could spend less time hunting for status and more time moving work forward',
+                                            },
+                                        ]}
+                                        className="lg:grid-cols-3"
+                                    />
+                                </div>
+                            </DossierFrame>
+                        </section>
+
+                        <ProjectFooter
+                            team={[{ role: 'Product Design' }]}
+                            technologies={currentProject.technologies}
+                            email="ivan@cheremisin.co.uk"
+                            linkedin="https://www.linkedin.com/in/icheremisin/"
+                            github="https://github.com/ivan-nthng"
+                            instagram="https://www.instagram.com/cheremisin.co.uk/"
+                            bookingLink="https://calendly.com/icheremisin/30min"
+                        />
+                    </div>
+                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                        <ProjectNavigation
+                            projects={projects}
+                            currentProjectIndex={currentProjectIndex}
+                        />
                     </div>
                 </div>
-            </main>
-        </>
+            </div>
+        </ProjectPageShell>
     )
 }

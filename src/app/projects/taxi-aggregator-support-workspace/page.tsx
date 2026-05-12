@@ -1,41 +1,31 @@
-'use client'
-
 import React from 'react'
-import { useTheme } from 'next-themes'
+import { ProjectPageShell } from '@/components/ProjectPageShell'
 import ProjectHero from '@/components/ProjectHero'
-import ProjectHeader from '@/components/ProjectHeader'
 import ProjectOverview from '@/components/ProjectOverview'
 import ProblemSection from '@/components/ProblemSection'
 import DemoSection from '@/components/DemoSection'
-import GridOverlay from '@/components/GridOverlay'
 import TabSection from '@/components/TabSection'
 import OptimizationSection from '@/components/OptimizationSection'
 import { GallerySection } from '@/components/GallerySection'
 import ProjectNavigation from '@/components/ProjectNavigation'
-import { projects, type Project } from '@/components/Projects'
+import { projects } from '@/lib/projects'
 import UIDemo from '@/components/UIDemo'
 import ProjectBento from '@/components/ProjectBento'
 import HitoLink from '@/components/HitoLink'
 import { ContextImageSection } from '@/components/ContextImageSection'
 import { ProjectFooter } from '@/components/ProjectFooter'
 import { FigmaPreview } from '@/components/FigmaPreview'
+import {
+    DossierBar,
+    DossierFrame,
+    DossierSectionHeading,
+} from '@/components/ascii/Dossier'
 
 export default function TaxiAggregatorSupportWorkspacePage() {
-    const { theme } = useTheme()
-    const [isGridVisible, setIsGridVisible] = React.useState(false)
-
-    // Project navigation setup
     const currentProjectIndex = projects.findIndex(
-        (project: Project) =>
-            project.link === '/projects/taxi-aggregator-support-workspace',
+        (project) => project.link === '/projects/taxi-aggregator-support-workspace',
     )
     const currentProject = projects[currentProjectIndex]
-
-    // Dynamic image paths based on theme
-    const mainImage =
-        theme === 'dark' ? '/actions-dark.png' : '/actions-light.png'
-    const forwardImage =
-        theme === 'dark' ? '/forward-dark.png' : '/forward-light.png'
 
     // Client logo component - customize SVG and link here
     const clientLogo = {
@@ -115,7 +105,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
 
     const demoTitle = 'City-Wide Support System'
     const demoDescription =
-        'A comprehensive support system that helps operators handle thousands of requests efficiently. The interface provides real-time insights, automated responses, and smart routing to ensure no request goes unanswered.'
+        'Operators could see the issue, the trip context, and the next step in one screen. That reduced delays, handoffs, and missed requests.'
 
     // Gallery items configuration - customize content here
     const galleryItems = [
@@ -123,65 +113,65 @@ export default function TaxiAggregatorSupportWorkspacePage() {
             imageLight: '/vk/initiation-light.png',
             imageDark: '/vk/initiation-dark.png',
             alt: 'Support Dashboard Overview',
-            title: 'Omni-Channel Communication',
+            title: 'One inbox',
             description:
-                'Support agents handle messages from all platforms — app, web, and social — in one unified workspace.',
+                'Messages from the app, the web, and social channels come into one workspace.',
         },
         {
             videoLight: '/vk/info-script-light.mov',
             videoDark: '/vk/info-script-dark.mov',
             alt: 'Automated Response System',
-            title: 'Clarity',
+            title: 'Relevant trip context',
             description:
-                'Operators see all essential trip details upfront, with clear, AI-suggested next steps tailored to each request.',
+                'Operators see the key trip details right away, along with the next likely action.',
         },
         {
             videoLight: '/vk/actions-light.mov',
             videoDark: '/vk/actions-dark.mov',
             alt: 'Automated Response System',
-            title: 'AI-Powered Decision Support',
+            title: 'Suggested actions',
             description:
-                'The only variable left is human speed — the interface surfaces all relevant data and suggestions instantly, so operators can act with confidence.',
+                'The product suggests likely next steps, so operators can move faster without second-guessing.',
         },
         {
             videoLight: '/vk/forward-light.mov',
             videoDark: '/vk/forward-dark.mov',
             alt: 'Automated Response System',
-            title: 'Seamless Internal Collaboration',
+            title: 'Internal handoff',
             description:
-                'Operators can quickly reassign, escalate, or annotate tickets — all within the same interface, without losing context.',
+                'Operators can reassign, escalate, and annotate requests without losing context.',
         },
         {
             videoLight: '/vk/send-light.mov',
             videoDark: '/vk/send-dark.mov',
             alt: 'Automated Response System',
-            title: 'Fast, Personalized Responses',
+            title: 'Faster replies',
             description:
-                "AI-generated replies adapt to each operator's tone and style, enabling clear, human-like communication with customers in seconds. No attitional spredsheets.",
+                'AI draft replies helped operators answer faster without copying text across extra tools.',
         },
         {
             videoLight: '/vk/call-light.mov',
             videoDark: '/vk/call-dark.mov',
             alt: 'Automated Response System',
-            title: 'Voice and Chat, Unified',
+            title: 'Voice and chat together',
             description:
-                'Seamlessly manage voice calls and chat messages side by side — no switching tabs, no lost context.',
+                'Operators can handle calls and chat side by side without switching tabs.',
         },
         {
             videoLight: '/vk/track-light.mov',
             videoDark: '/vk/track-dark.mov',
             alt: 'Automated Response System',
-            title: 'Ride Map Intelligence',
+            title: 'Trip history on the map',
             description:
-                'Quickly trace the full route of any trip — with clear context on driver and passenger movements, stops, and deto',
+                'Operators can review the full route, stops, and timing without leaving the case.',
         },
         {
             videoLight: '/vk/widget-light.mov',
             videoDark: '/vk/widget-dark.mov',
             alt: 'Contextual Widgets',
-            title: 'Contextual Widgets',
+            title: 'Only the tools you need',
             description:
-                'Operators see only what matters — each widget adapts to the request type, cutting processing time by up to 80%',
+                'The interface changes by request type, so operators see fewer irrelevant controls.',
         },
     ]
 
@@ -204,136 +194,130 @@ export default function TaxiAggregatorSupportWorkspacePage() {
             <ProjectBento />
 
             {/* Results Section with Statistics */}
-            <section className="w-full py-16 sm:py-24">
-                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
-                    {/* Left Column - Content */}
-                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-5 flex flex-col justify-center space-y-6">
-                        <h2 className="text-2xl sm:text-3xl font-bold font-poppins text-blue-900 dark:text-blue-100">
-                            Results
-                        </h2>
-                        <p className="text-base sm:text-lg text-blue-800/80 dark:text-blue-200/80">
-                            By optimizing the interface and automating routine
-                            tasks, we achieved significant improvements in
-                            operator efficiency and response times.
-                        </p>
-                    </div>
+            <section className="w-full py-12 sm:py-16">
+                <DossierFrame>
+                    <DossierBar label="Section" index="09" state="Results" />
+                    <div className="grid gap-8 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+                        <DossierSectionHeading
+                            label="Story / results"
+                            title="Results"
+                            description="The redesign helped the same team handle more requests with fewer missed messages."
+                        />
 
-                    {/* Right Column - Table */}
-                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-7 flex items-center">
-                        <div className="w-full overflow-hidden rounded-2xl bg-blue-50/50 dark:bg-blue-950/50 backdrop-blur-sm">
-                            <table className="w-full">
+                        <div className="w-full overflow-hidden border border-border">
+                            <table className="w-full text-sm">
                                 <thead>
-                                    <tr className="bg-blue-100/50 dark:bg-blue-900/50">
-                                        <th className="px-6 py-4 text-left text-sm text-blue-900 dark:text-blue-100">
+                                    <tr className="bg-surface-muted">
+                                        <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.24em] text-foreground sm:px-6">
                                             Metric
                                         </th>
-                                        <th className="px-6 py-4 text-right text-sm text-blue-900 dark:text-blue-100">
+                                        <th className="px-4 py-3 text-right text-[11px] uppercase tracking-[0.24em] text-foreground sm:px-6">
                                             Before
                                         </th>
-                                        <th className="px-6 py-4 text-right text-sm text-blue-900 dark:text-blue-100">
+                                        <th className="px-4 py-3 text-right text-[11px] uppercase tracking-[0.24em] text-foreground sm:px-6">
                                             After
                                         </th>
-                                        <th className="px-6 py-4 text-right text-sm text-blue-900 dark:text-blue-100">
+                                        <th className="px-4 py-3 text-right text-[11px] uppercase tracking-[0.24em] text-foreground sm:px-6">
                                             Improvement
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="border-b border-blue-200/20 dark:border-blue-800/20 transition-colors hover:bg-blue-100/50 dark:hover:bg-blue-900/50">
-                                        <td className="px-6 py-4 text-sm text-blue-800 dark:text-blue-200">
+                                    <tr className="border-t border-border transition-colors hover:bg-surface-muted">
+                                        <td className="px-4 py-4 text-muted sm:px-6">
                                             Daily Requests Handled
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             3,600
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             9,000
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             +150%
                                         </td>
                                     </tr>
-                                    <tr className="border-b border-blue-200/20 dark:border-blue-800/20 transition-colors hover:bg-blue-100/50 dark:hover:bg-blue-900/50">
-                                        <td className="px-6 py-4 text-sm text-blue-800 dark:text-blue-200">
+                                    <tr className="border-t border-border transition-colors hover:bg-surface-muted">
+                                        <td className="px-4 py-4 text-muted sm:px-6">
                                             Avg. Requests per Operator
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             72
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             180
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             +150%
                                         </td>
                                     </tr>
-                                    <tr className="border-b border-blue-200/20 dark:border-blue-800/20 transition-colors hover:bg-blue-100/50 dark:hover:bg-blue-900/50">
-                                        <td className="px-6 py-4 text-sm text-blue-800 dark:text-blue-200">
+                                    <tr className="border-t border-border transition-colors hover:bg-surface-muted">
+                                        <td className="px-4 py-4 text-muted sm:px-6">
                                             Failed Requests ({'>'}60s wait)
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             28%
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             6%
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             -79%
                                         </td>
                                     </tr>
-                                    <tr className="border-b border-blue-200/20 dark:border-blue-800/20 transition-colors hover:bg-blue-100/50 dark:hover:bg-blue-900/50">
-                                        <td className="px-6 py-4 text-sm text-blue-800 dark:text-blue-200">
+                                    <tr className="border-t border-border transition-colors hover:bg-surface-muted">
+                                        <td className="px-4 py-4 text-muted sm:px-6">
                                             Unanswered Requests
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             15,600+
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             Under 1,000
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             -94%
                                         </td>
                                     </tr>
-                                    <tr className="border-b border-blue-200/20 dark:border-blue-800/20 transition-colors hover:bg-blue-100/50 dark:hover:bg-blue-900/50">
-                                        <td className="px-6 py-4 text-sm text-blue-800 dark:text-blue-200">
+                                    <tr className="border-t border-border transition-colors hover:bg-surface-muted">
+                                        <td className="px-4 py-4 text-muted sm:px-6">
                                             Required Operators
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             ~200
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             50 (same team)
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             -75%
                                         </td>
                                     </tr>
-                                    <tr className="border-b border-blue-200/20 dark:border-blue-800/20 transition-colors hover:bg-blue-100/50 dark:hover:bg-blue-900/50">
-                                        <td className="px-6 py-4 text-sm text-blue-800 dark:text-blue-200">
+                                    <tr className="border-t border-border transition-colors hover:bg-surface-muted">
+                                        <td className="px-4 py-4 text-muted sm:px-6">
                                             Resolution Rate
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             --
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             +35%
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             +35%
                                         </td>
                                     </tr>
-                                    <tr className="transition-colors hover:bg-blue-100/50 dark:hover:bg-blue-900/50">
-                                        <td className="px-6 py-4 text-sm text-blue-800 dark:text-blue-200">
+                                    <tr className="border-t border-border transition-colors hover:bg-surface-muted">
+                                        <td className="px-4 py-4 text-muted sm:px-6">
                                             Customer Satisfaction
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             --
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             +21% CSAT, +23 NPS
                                         </td>
-                                        <td className="px-6 py-4 text-right text-sm font-mono text-blue-800 dark:text-blue-200">
+                                        <td className="px-4 py-4 text-right text-foreground sm:px-6">
                                             +22% avg
                                         </td>
                                     </tr>
@@ -341,7 +325,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                             </table>
                         </div>
                     </div>
-                </div>
+                </DossierFrame>
             </section>
             {/* Process Tab Footer */}
             <ProjectFooter
@@ -370,7 +354,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                 title={demoTitle}
                 description={demoDescription}
                 image="vk/demo"
-                caption="A comprehensive support system that helps operators handle thousands of requests efficiently."
+                caption="Main support workspace"
             />
 
             {/* Gallery Section */}
@@ -380,8 +364,8 @@ export default function TaxiAggregatorSupportWorkspacePage() {
             <ContextImageSection
                 lightImage="/vk/context-light@2x.png"
                 darkImage="/vk/context-dark@2x.png"
-                header="Context-Aware Support"
-                description="The system automatically surfaces relevant trip details, driver history, and previous interactions, enabling operators to provide personalized support without manual research."
+                header="Full request context"
+                description="Trip details, driver history, and previous interactions are visible in one place, so operators do not need to dig through separate tools."
                 alt="Context-Aware Support Interface"
             />
 
@@ -409,17 +393,26 @@ export default function TaxiAggregatorSupportWorkspacePage() {
         <div className="space-y-8">
             {/* Component Library Section */}
             <section className="space-y-8 sm:space-y-12">
-                <div className="space-y-4 py-16 xl:w-1/2 lg:w-2/3">
-                    <h2 className="text-2xl sm:text-3xl font-bold font-poppins text-blue-900 dark:text-blue-100">
-                        Component Library
-                    </h2>
-                    <p className="text-base sm:text-lg text-blue-800/80 dark:text-blue-200/80 font-mono">
-                        The project was developed using a component-first
-                        approach, leveraging the <HitoLink /> — a scalable,
-                        semantic token-based system optimized for clarity and
-                        responsiveness.
-                    </p>
-                </div>
+                <DossierFrame>
+                    <DossierBar
+                        label="Section"
+                        index="10"
+                        state="Component library"
+                    />
+                    <div className="px-4 py-6 sm:px-6 sm:py-8 xl:w-1/2 lg:w-2/3">
+                        <DossierSectionHeading
+                            label="Development / components"
+                            title="Component Library"
+                            description={
+                                <>
+                        The interface was built from reusable components and the{' '}
+                        <HitoLink />. That kept the product consistent and made
+                        changes easier to roll out.
+                                </>
+                            }
+                        />
+                    </div>
+                </DossierFrame>
                 <UIDemo />
             </section>
 
@@ -427,7 +420,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
             <FigmaPreview
                 embedUrl="https://embed.figma.com/design/a1FIpM2QJ0y79EO170WQDG/CityMobil-Preview?embed-host=share"
                 title="Figma Demo File"
-                description="This Figma file is shared for preview purposes only. It includes a partial look at the design system: some components, applied variables, and a fragment of the interface. It's not a complete or production-ready file — just a snapshot to give you a feel for the structure and logic behind the system."
+                description="This Figma file shows part of the system: a few components, the token setup, and a fragment of the interface."
             />
 
             {/* Dev Tab Footer */}
@@ -450,54 +443,36 @@ export default function TaxiAggregatorSupportWorkspacePage() {
     )
 
     return (
-        <>
-            {/* Grid Overlay Toggle */}
-            <GridOverlay show={isGridVisible} />
-
-            {/* Main Content */}
-            <main className="relative">
-                {/* Header with Grid Toggle */}
-                <ProjectHeader
-                    isGridVisible={isGridVisible}
-                    onToggleGrid={() => setIsGridVisible(!isGridVisible)}
-                />
-
-                {/* Content Container */}
-                <div className="relative w-full max-w-7xl mx-auto px-6">
-                    <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
-                        {/* Hero Section */}
-                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
-                            <ProjectHero
-                                title="Taxi Aggregator Support Workspace"
-                                description="A unified, context-aware interface designed for speed and clarity — helping operators resolve issues faster, with less stress and zero guesswork."
-                                mainImage="/actions-light.png"
-                                mainImageDark="/actions-dark.png"
-                                forwardImage="/forward-light.png"
-                                forwardImageDark="/forward-dark.png"
-                                clientLogo={clientLogo}
-                                role="Lead Product Designer"
-                            />
-                        </div>
-
-                        {/* Tab Section - Process, Results, Dev */}
-                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
-                            <TabSection
-                                processContent={processContent}
-                                resultContent={resultContent}
-                                devContent={devContent}
-                            />
-                        </div>
-
-                        {/* Project Navigation */}
-                        <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
-                            <ProjectNavigation
-                                projects={projects}
-                                currentProjectIndex={currentProjectIndex}
-                            />
-                        </div>
+        <ProjectPageShell>
+            <div className="relative mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
+                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                        <ProjectHero
+                            title="Taxi Aggregator Support Workspace"
+                            description="A support workspace for taxi operators, built to reduce response time, stress, and guesswork."
+                            mainImage="/vk/demo-light.png"
+                            mainImageDark="/vk/demo-dark.png"
+                            forwardImage="/vk/order-light.png"
+                            forwardImageDark="/vk/order-dark.png"
+                            clientLogo={clientLogo}
+                            role="Lead Product Designer"
+                        />
+                    </div>
+                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                        <TabSection
+                            processContent={processContent}
+                            resultContent={resultContent}
+                            devContent={devContent}
+                        />
+                    </div>
+                    <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
+                        <ProjectNavigation
+                            projects={projects}
+                            currentProjectIndex={currentProjectIndex}
+                        />
                     </div>
                 </div>
-            </main>
-        </>
+            </div>
+        </ProjectPageShell>
     )
 }

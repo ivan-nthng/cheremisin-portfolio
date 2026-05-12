@@ -1,10 +1,16 @@
 'use client'
 
-import React from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useState, type ReactNode } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useTheme } from 'next-themes'
+import { motion } from 'framer-motion'
+import { AsciiAssetFallback } from '@/components/ascii/AsciiAssetFallback'
+import {
+    DossierBar,
+    DossierFrame,
+    DossierMediaViewport,
+    DossierMetaStrip,
+} from '@/components/ascii/Dossier'
 
 interface ProjectHeroProps {
     title: string
@@ -15,10 +21,75 @@ interface ProjectHeroProps {
     forwardImageDark?: string
     clientLogo?: {
         href: string
-        svg: React.ReactNode
+        svg: ReactNode
     }
     clientName?: string
     role?: string
+}
+
+function ThemePreview({
+    lightSrc,
+    darkSrc,
+    alt,
+    priority = false,
+}: {
+    lightSrc: string
+    darkSrc?: string
+    alt: string
+    priority?: boolean
+}) {
+    const [lightError, setLightError] = useState(false)
+    const [darkError, setDarkError] = useState(false)
+
+    useEffect(() => {
+        setLightError(false)
+        setDarkError(false)
+    }, [lightSrc, darkSrc])
+
+    const hasLight = Boolean(lightSrc) && !lightError
+    const hasDark = Boolean(darkSrc) && !darkError
+
+    if (!hasLight && !hasDark) {
+        return (
+            <AsciiAssetFallback
+                title="Preview unavailable"
+                label={alt}
+                kind="img"
+                compact
+            />
+        )
+    }
+
+    return (
+        <div className="relative aspect-[4/3] bg-background">
+            {hasLight ? (
+                <Image
+                    src={lightSrc}
+                    alt={alt}
+                    fill
+                    className={
+                        hasDark
+                            ? 'object-contain p-3 dark:hidden'
+                            : 'object-contain p-3'
+                    }
+                    priority={priority}
+                    sizes="(max-width: 1024px) 100vw, 32vw"
+                    onError={() => setLightError(true)}
+                />
+            ) : null}
+            {hasDark ? (
+                <Image
+                    src={darkSrc as string}
+                    alt={alt}
+                    fill
+                    className="hidden object-contain p-3 dark:block"
+                    priority={priority}
+                    sizes="(max-width: 1024px) 100vw, 32vw"
+                    onError={() => setDarkError(true)}
+                />
+            ) : null}
+        </div>
+    )
 }
 
 export default function ProjectHero({
@@ -32,142 +103,83 @@ export default function ProjectHero({
     clientName = 'Made for',
     role = 'Lead Product Designer',
 }: ProjectHeroProps) {
-    const { resolvedTheme } = useTheme()
-    const [mounted, setMounted] = React.useState(false)
-
-    React.useEffect(() => {
-        setMounted(true)
-    }, [])
-
-    const currentMainImage =
-        mounted && resolvedTheme === 'dark' && mainImageDark
-            ? mainImageDark
-            : mainImage
-    const currentForwardImage =
-        mounted && resolvedTheme === 'dark' && forwardImageDark
-            ? forwardImageDark
-            : forwardImage
-
     return (
-        <div className="relative pt-8 pb-4 sm:pt-12 sm:pb-6 md:pt-16 md:pb-8">
-            <motion.div
-                className="bg-blue-50/80 dark:bg-blue-950/20 backdrop-blur-sm rounded-[32px] overflow-hidden"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-            >
-                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
-                    {/* Left Column - Content */}
-                    <div className="col-span-2 sm:col-span-4 md:col-span-4 lg:col-span-6 p-6 flex flex-col h-full">
-                        <div className="space-y-6 flex-grow">
-                            <motion.h1
-                                className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 dark:text-blue-100"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5 }}
-                            >
-                                {title}
-                            </motion.h1>
-                            <motion.p
-                                className="text-base sm:text-lg text-blue-800/80 dark:text-blue-200/80"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: 0.1 }}
-                            >
-                                {description}
-                            </motion.p>
-
-                            {/* Role section - customize per project */}
-                            {role && (
-                                <motion.div
-                                    className="space-y-2"
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.5, delay: 0.2 }}
-                                >
-                                    <p className="text-sm font-medium text-blue-800/60 dark:text-blue-200/60">
-                                        Role
-                                    </p>
-                                    <p className="text-base text-blue-800/80 dark:text-blue-200/80">
-                                        {role}
-                                    </p>
-                                </motion.div>
-                            )}
-                        </div>
-
-                        {clientLogo && (
-                            <motion.div
-                                className="mt-auto pt-6"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: 0.2 }}
-                            >
-                                <p className="text-sm text-blue-800/60 dark:text-blue-200/60 mb-4">
-                                    {clientName}
+        <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.24, ease: 'easeOut' }}
+        >
+            <DossierFrame>
+                <DossierBar label="Intro" index="01" state="Project" />
+                <div className="grid lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+                    <div className="px-4 py-6 sm:px-6 sm:py-8">
+                        <div className="space-y-6">
+                            <div className="terminal-divider">Project</div>
+                            <div className="space-y-4">
+                                <h1 className="text-3xl font-bold leading-tight text-foreground sm:text-4xl">
+                                    {title}
+                                </h1>
+                                <p className="max-w-2xl text-sm leading-7 text-muted sm:text-[15px]">
+                                    {description}
                                 </p>
-                                <Link
-                                    href={clientLogo.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-block"
-                                >
-                                    {clientLogo.svg}
-                                </Link>
-                            </motion.div>
-                        )}
+                            </div>
+
+                            <DossierMetaStrip
+                                items={[
+                                    { label: 'Role', value: role },
+                                    {
+                                        label: 'Client',
+                                        value: clientLogo ? (
+                                            <Link
+                                                href={clientLogo.href}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="inline-flex items-center gap-3 hover:text-accent"
+                                            >
+                                                <span>{clientName}</span>
+                                                <span className="inline-flex max-h-8 items-center opacity-60 grayscale dark:invert">
+                                                    {clientLogo.svg}
+                                                </span>
+                                            </Link>
+                                        ) : (
+                                            clientName
+                                        ),
+                                    },
+                                ]}
+                                className="lg:grid-cols-2"
+                            />
+                        </div>
                     </div>
 
-                    {/* Right Column - Images */}
-                    <div className="col-span-2 sm:col-span-4 md:col-span-4 lg:col-span-6 relative h-[566px] overflow-visible -mt-12 lg:-mt-0">
-                        {mounted && (
-                            <>
-                                {/* First Image Container */}
-                                <motion.div
-                                    className="absolute bottom-[15%] right-0 w-full h-[80%]"
-                                    initial={{ x: '100%' }}
-                                    animate={{ x: 0 }}
-                                    transition={{
-                                        duration: 0.8,
-                                        ease: [0.16, 1, 0.3, 1],
-                                    }}
-                                >
-                                    <div className="relative w-full h-full">
-                                        <Image
-                                            src={currentMainImage}
-                                            alt={`${title} Main View`}
-                                            fill
-                                            className="object-contain object-bottom"
-                                            priority
-                                        />
-                                    </div>
-                                </motion.div>
-
-                                {/* Second Image Container */}
-                                <motion.div
-                                    className="absolute bottom-[-15%] right-0 w-full h-[80%] translate-x-[30%]"
-                                    initial={{ x: '130%' }}
-                                    animate={{ x: '30%' }}
-                                    transition={{
-                                        duration: 0.8,
-                                        delay: 0.2,
-                                        ease: [0.16, 1, 0.3, 1],
-                                    }}
-                                >
-                                    <div className="relative w-full h-full">
-                                        <Image
-                                            src={currentForwardImage}
-                                            alt={`${title} Forward View`}
-                                            fill
-                                            className="object-contain object-bottom"
-                                            priority
-                                        />
-                                    </div>
-                                </motion.div>
-                            </>
-                        )}
+                    <div className="border-t border-dashed border-border pt-4 lg:border-l lg:border-dashed lg:border-t-0 lg:pl-6">
+                        <div className="grid gap-4">
+                            <DossierMediaViewport
+                                label="img 01"
+                                title="Main screen"
+                                note="preview"
+                            >
+                                <ThemePreview
+                                    lightSrc={mainImage}
+                                    darkSrc={mainImageDark}
+                                    alt={`${title} primary view`}
+                                    priority
+                                />
+                            </DossierMediaViewport>
+                            <DossierMediaViewport
+                                label="img 02"
+                                title="Second screen"
+                                note="preview"
+                            >
+                                <ThemePreview
+                                    lightSrc={forwardImage}
+                                    darkSrc={forwardImageDark}
+                                    alt={`${title} secondary view`}
+                                />
+                            </DossierMediaViewport>
+                        </div>
                     </div>
                 </div>
-            </motion.div>
-        </div>
+            </DossierFrame>
+        </motion.div>
     )
 }
