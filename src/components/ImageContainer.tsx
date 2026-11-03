@@ -45,12 +45,12 @@ export function ImageContainer({
             aria-label={canOpen ? `Open ${alt}` : `${alt} unavailable`}
             disabled={!canOpen}
         >
-            <div className="relative overflow-hidden border border-border bg-background transition-colors duration-200 group-hover:bg-surface group-focus-visible:outline-none group-focus-visible:ring-2 group-focus-visible:ring-accent/30">
+            <div className="relative overflow-hidden border-[length:var(--stroke-thin)] border-border bg-background transition-colors duration-[var(--motion-control-duration)] group-hover:bg-surface group-focus-visible:outline-none group-focus-visible:ring-[length:var(--stroke-focus)] group-focus-visible:ring-[color:var(--focus-ring-color)]">
                 {canOpen ? (
                     <img
                         src={image}
                         alt={alt}
-                        className="h-auto w-full max-w-full object-contain transition-opacity duration-200 group-hover:opacity-95"
+                        className="h-auto w-full max-w-full object-contain transition-opacity duration-[var(--motion-control-duration)] group-hover:opacity-95"
                         onError={() => setHasError(true)}
                     />
                 ) : (
@@ -64,7 +64,7 @@ export function ImageContainer({
             </div>
 
             {canOpen ? (
-                <div className="pointer-events-none absolute right-3 top-3 flex items-center gap-2 border border-border bg-background/92 px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-muted opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100">
+                <div className="pointer-events-none absolute right-3 top-3 flex items-center gap-2 border-[length:var(--stroke-thin)] border-border bg-[color:var(--surface-media-hint)] px-3 py-1 text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-media-note)] text-muted opacity-0 transition-opacity duration-[var(--motion-fast-duration)] group-hover:opacity-100 group-focus-visible:opacity-100">
                     <MagnifyingGlassIcon className="h-4 w-4 flex-shrink-0" />
                     <span>Inspect</span>
                 </div>

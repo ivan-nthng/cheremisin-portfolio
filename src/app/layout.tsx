@@ -1,32 +1,22 @@
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { ThemeProvider } from 'next-themes'
 import { Header } from '@/components/layout/Header'
-
-const geistSans = Geist({
-    variable: '--font-geist-sans',
-    subsets: ['latin'],
-})
-
-const geistMono = Geist_Mono({
-    variable: '--font-geist-mono',
-    subsets: ['latin'],
-})
+import { homeEyeBootstrap } from '@/components/layout/home-eye-bootstrap'
+import { homeDescription, homeTitle, siteUrl } from '@/lib/seo'
 
 export const metadata: Metadata = {
-    title: {
-        default: 'Ivan Cheremisin',
-        template: '%s | Ivan Cheremisin',
-    },
-    description:
-        'Portfolio of Ivan Cheremisin, a product designer and engineer working on internal tools, AI features, design systems, and workflow-heavy software.',
+    metadataBase: new URL(siteUrl),
+    title: homeTitle,
+    description: homeDescription,
     icons: {
-        icon: '/favicon.svg',
-        shortcut: '/favicon.svg',
-        apple: '/favicon.svg',
+        icon: { url: `${siteUrl}/favicon.svg`, type: 'image/svg+xml' },
+        shortcut: `${siteUrl}/favicon.svg`,
+        apple: { url: `${siteUrl}/apple-icon`, sizes: '180x180', type: 'image/png' },
     },
 }
+
+export const viewport: Viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover', themeColor: '#3A0823' }
 
 export default function RootLayout({
     children,
@@ -36,7 +26,7 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <body
-                className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground min-h-screen`}
+                className="bg-background text-foreground min-h-screen"
                 suppressHydrationWarning
             >
                 <ThemeProvider
@@ -45,8 +35,16 @@ export default function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <Header />
-                    {children}
+                    <>
+                        <a
+                            href="#main-content"
+                            className="fixed left-3 top-3 z-[var(--layer-overlay)] -translate-y-20 bg-foreground px-4 py-2 text-sm text-background focus:translate-y-0"
+                        >
+                            Skip to main content
+                        </a>
+                        <Header homeEyeBootstrap={homeEyeBootstrap} />
+                        {children}
+                    </>
                 </ThemeProvider>
             </body>
         </html>

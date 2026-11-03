@@ -1,0 +1,7 @@
+Fictional Citymobil demo — DEMO-PICKUP-01
+14 January 2026, 12:00
+Passenger: Jason McBright
+Driver: Ivan Cheremisin
+Pickup: main entrance, Praça da Alegria, Lisbon.
+Please remain at the main entrance while the driver moves from the north entrance.
+This bundled demonstration document is not a real trip record.

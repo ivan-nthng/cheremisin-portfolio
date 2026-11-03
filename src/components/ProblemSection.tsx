@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { motion } from 'framer-motion'
 import { useTheme } from 'next-themes'
 import Image from 'next/image'
 import {
@@ -25,84 +24,7 @@ interface ProblemSectionProps {
     stats?: StatBlock[]
 }
 
-function AnimatedCounter({ value }: { value: string }) {
-    const ref = React.useRef(null)
-    const [isVisible, setIsVisible] = React.useState(false)
-    const [number, setNumber] = React.useState(0)
-    const [isAnimationComplete, setIsAnimationComplete] = React.useState(false)
-    const [mainValue, percentage] = value.split(' ')
-    const [beforeDecimal, afterDecimal] = mainValue.split('.')
-    const numericValue = parseInt(beforeDecimal.replace(/[^0-9]/g, ''))
-
-    React.useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true)
-                }
-            },
-            { threshold: 0.1 },
-        )
-
-        if (ref.current) {
-            observer.observe(ref.current)
-        }
-
-        return () => {
-            if (ref.current) {
-                observer.unobserve(ref.current)
-            }
-        }
-    }, [])
-
-    React.useEffect(() => {
-        if (!isVisible) return
-
-        const duration = 1200
-        const startTime = Date.now()
-
-        const updateCounter = () => {
-            const currentTime = Date.now()
-            const progress = Math.min((currentTime - startTime) / duration, 1)
-            const eased = 1 - Math.pow(1 - progress, 4)
-
-            setNumber(Math.floor(numericValue * eased))
-
-            if (progress < 1) {
-                requestAnimationFrame(updateCounter)
-            } else {
-                setIsAnimationComplete(true)
-            }
-        }
-
-        requestAnimationFrame(updateCounter)
-    }, [isVisible, numericValue])
-
-    const prefix = mainValue.match(/^[^0-9]*/)?.[0] || ''
-    const suffix = mainValue.match(/[^0-9]*$/)?.[0] || ''
-    const formattedValue = isAnimationComplete
-        ? afterDecimal
-            ? `${prefix}${number}.${afterDecimal}`
-            : `${prefix}${number}${suffix}`
-        : `${prefix}${number}${suffix}`
-
-    return (
-        <span ref={ref} className="font-bold tracking-tight">
-            {isVisible ? (
-                <>
-                    {formattedValue}
-                    {percentage ? (
-                        <span className="ml-1 text-[0.5em] opacity-60">
-                            {percentage}
-                        </span>
-                    ) : null}
-                </>
-            ) : (
-                value
-            )}
-        </span>
-    )
-}
+function AnimatedCounter({ value }: { value: string }) { return <span>{value}</span> }
 
 export default function ProblemSection({
     title = 'Problem',
@@ -111,8 +33,6 @@ export default function ProblemSection({
     imageDark,
     stats = [],
 }: ProblemSectionProps) {
-    const ref = React.useRef(null)
-    const [isVisible, setIsVisible] = React.useState(false)
     const [mounted, setMounted] = React.useState(false)
     const { theme, resolvedTheme } = useTheme()
 
@@ -124,68 +44,21 @@ export default function ProblemSection({
     const currentImage =
         effectiveTheme === 'dark' && imageDark ? imageDark : image
 
-    React.useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true)
-                }
-            },
-            {
-                threshold: 0.25,
-                rootMargin: '-50px 0px',
-            },
-        )
-
-        if (ref.current) {
-            observer.observe(ref.current)
-        }
-
-        return () => {
-            if (ref.current) {
-                observer.unobserve(ref.current)
-            }
-        }
-    }, [])
-
-    const container = {
-        hidden: { opacity: 0, y: 12 },
-        show: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.24,
-                ease: 'easeOut',
-                staggerChildren: 0.08,
-            },
-        },
-    }
-
-    const item = {
-        hidden: { opacity: 0, y: 12 },
-        show: { opacity: 1, y: 0, transition: { duration: 0.2 } },
-    }
-
     return (
         <section className="mb-16 w-full sm:mb-24">
-            <motion.div
-                ref={ref}
-                variants={container}
-                initial="hidden"
-                animate={isVisible ? 'show' : 'hidden'}
-            >
+            <div>
                 <DossierFrame>
                     <DossierBar label="Section" index="03" state={title} />
                     <div className="space-y-8 px-4 py-6 sm:px-6 sm:py-8">
-                        <motion.div variants={item}>
+                        <div>
                             <DossierSectionHeading
                                 label={`Story / ${title.toLowerCase()}`}
                                 title={title}
                             />
-                        </motion.div>
+                        </div>
 
                         {image ? (
-                            <motion.div variants={item}>
+                            <div>
                                 <DossierMediaViewport
                                     label="img 01"
                                     title={title}
@@ -200,14 +73,14 @@ export default function ProblemSection({
                                         alt={title}
                                         width={1200}
                                         height={675}
-                                        className="h-auto w-full border border-border bg-background object-contain"
+                                        className="h-auto w-full border-[length:var(--stroke-thin)] border-border bg-background object-contain"
                                     />
                                 </DossierMediaViewport>
-                            </motion.div>
+                            </div>
                         ) : null}
 
                         {stats.length > 0 ? (
-                            <motion.div variants={item}>
+                            <div>
                                 <DossierMetaStrip
                                     items={stats.map((stat) => ({
                                         label: stat.label,
@@ -220,12 +93,12 @@ export default function ProblemSection({
                                         ),
                                     }))}
                                 />
-                            </motion.div>
+                            </div>
                         ) : null}
 
                         {description ? (
-                            <motion.div
-                                variants={item}
+                            <div
+
                                 className="grid gap-6 text-sm leading-7 text-muted md:grid-cols-2"
                             >
                                 {description.split('\n').length > 5 ? (
@@ -257,11 +130,11 @@ export default function ProblemSection({
                                 ) : (
                                     <div className="md:max-w-xl">{description}</div>
                                 )}
-                            </motion.div>
+                            </div>
                         ) : null}
                     </div>
                 </DossierFrame>
-            </motion.div>
+            </div>
         </section>
     )
 }

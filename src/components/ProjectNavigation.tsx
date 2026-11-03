@@ -3,7 +3,6 @@
 import { useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import {
     DossierBar,
@@ -28,13 +27,13 @@ function PagerCard({
     return (
         <Link
             href={project.link}
-            className="block border-t border-dashed border-border pt-4 transition-colors hover:text-foreground"
+            className="block border-t-[length:var(--stroke-thin)] border-dashed border-border pt-4 transition-colors hover:text-foreground"
         >
-            <div className="flex min-h-10 items-center justify-between gap-3 py-2 text-[11px] uppercase tracking-[0.28em] text-muted">
+            <div className="flex min-h-10 items-center justify-between gap-3 py-2 text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-label)] text-muted">
                 <span>{direction}</span>
                 <span>{project.companyName || 'Independent'}</span>
             </div>
-            <div className="grid gap-4 md:grid-cols-[minmax(0,0.95fr)_minmax(240px,0.85fr)]">
+            <div className="grid gap-4 md:grid-cols-[minmax(0,0.95fr)_minmax(var(--case-pager-media-min),0.85fr)]">
                 <div className="py-3">
                     <h3 className="text-lg font-bold text-foreground">
                         {project.title}
@@ -76,7 +75,7 @@ function PagerCard({
                                 ) : null}
                             </div>
                         ) : (
-                            <div className="flex aspect-[4/3] items-center justify-center border border-dashed border-border text-[11px] uppercase tracking-[0.28em] text-muted">
+                            <div className="flex aspect-[4/3] items-center justify-center border-[length:var(--stroke-thin)] border-dashed border-border text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-label)] text-muted">
                                 No preview available
                             </div>
                         )}
@@ -106,18 +105,30 @@ export default function ProjectNavigation({
     currentProjectIndex,
 }: ProjectNavigationProps) {
     const router = useRouter()
-    const navigableProjects = projects.filter((p) => !p.isComingSoon)
+    const currentProject = projects[currentProjectIndex]
+    const navigableProjects = projects.filter((p) => p.isActive)
     const currentNavIndex = navigableProjects.findIndex(
-        (p) => p.link === projects[currentProjectIndex].link,
+        (p) => p.link === currentProject?.link,
     )
-    const prevIndex =
-        (currentNavIndex - 1 + navigableProjects.length) %
-        navigableProjects.length
-    const nextIndex = (currentNavIndex + 1) % navigableProjects.length
-    const prevProject = navigableProjects[prevIndex]
-    const nextProject = navigableProjects[nextIndex]
+    const canNavigate =
+        !!currentProject &&
+        navigableProjects.length > 1 &&
+        currentNavIndex !== -1
+    const prevIndex = canNavigate
+        ? (currentNavIndex - 1 + navigableProjects.length) %
+          navigableProjects.length
+        : -1
+    const nextIndex = canNavigate
+        ? (currentNavIndex + 1) % navigableProjects.length
+        : -1
+    const prevProject = canNavigate ? navigableProjects[prevIndex] : null
+    const nextProject = canNavigate ? navigableProjects[nextIndex] : null
 
     useEffect(() => {
+        if (!canNavigate || !prevProject || !nextProject) {
+            return
+        }
+
         const handleKeyDown = (event: KeyboardEvent) => {
             if (
                 event.defaultPrevented ||
@@ -144,14 +155,14 @@ export default function ProjectNavigation({
 
         window.addEventListener('keydown', handleKeyDown)
         return () => window.removeEventListener('keydown', handleKeyDown)
-    }, [nextProject.link, prevProject.link, router])
+    }, [canNavigate, nextProject?.link, prevProject?.link, router])
+
+    if (!canNavigate || !prevProject || !nextProject) {
+        return null
+    }
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.24, ease: 'easeOut' }}
+        <div
         >
             <DossierFrame>
                 <DossierBar label="Navigation" index="99" state="More projects" />
@@ -161,13 +172,12 @@ export default function ProjectNavigation({
                         title="Continue browsing"
                         description="Open the previous or next project, or go back to the home page."
                         actions={
-                            <div className="flex flex-col gap-2 text-[11px] uppercase tracking-[0.22em] text-muted sm:items-end">
+                            <div className="flex flex-col gap-2 text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-media-note)] text-muted sm:items-end">
                                 <span>Keys: &larr; previous / &rarr; next</span>
                                 <Link
                                     href="/"
                                     className="inline-flex items-center gap-2 text-foreground transition-colors hover:text-accent"
                                 >
-                                    <span>[00]</span>
                                     <span>Back to home</span>
                                 </Link>
                             </div>
@@ -179,6 +189,6 @@ export default function ProjectNavigation({
                     </div>
                 </div>
             </DossierFrame>
-        </motion.div>
+        </div>
     )
 }

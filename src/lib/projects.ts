@@ -7,16 +7,19 @@ export interface Project {
     link: string
     isWide?: boolean
     isSingleColumn?: boolean
+    role?: string
+    companyContext?: string
     companyName?: string
     companyUrl?: string
     isComingSoon?: boolean
+    isActive?: boolean
 }
 
 export const projects: Project[] = [
     {
         title: 'Taxi Aggregator Support Workspace',
         description:
-            'Support workspace for a taxi service. It helped operators answer more requests with less switching and less guesswork.',
+            'Messages, trip details, and previous interactions in one support workspace.',
         image: '/vk/demo-light.png',
         darkImage: '/vk/demo-dark.png',
         technologies: [
@@ -28,14 +31,17 @@ export const projects: Project[] = [
             'TypeScript',
             'Tailwind CSS',
         ],
+        role: 'Lead Product Designer',
         link: '/projects/taxi-aggregator-support-workspace',
         companyName: 'VK',
-        companyUrl: 'https://vk.com',
+        companyUrl: 'https://vk.com/',
+        companyContext: '/ Citymobil',
+        isActive: true,
     },
     {
         title: 'DS Hito Design System',
         description:
-            'A design system built on semantic tokens, so teams could scale components without rewriting them for every product.',
+            'A design system organized around semantic tokens and reusable component behavior.',
         image: '/ds-hito/project-1-light.png',
         darkImage: '/ds-hito/project-1-dark.png',
         technologies: [
@@ -47,10 +53,11 @@ export const projects: Project[] = [
             'Design Handoff',
             'Product Strategy',
         ],
+        role: 'Lead Product Designer',
         link: '/projects/ds-hito',
         isWide: true,
-        companyName: 'DS Hito',
-        companyUrl: 'https://hitocajon.com',
+        companyName: 'Personal project',
+        isActive: true,
     },
     {
         title: 'Litres Internal Tools',
@@ -70,14 +77,16 @@ export const projects: Project[] = [
             'A/B Testing',
             'Collaboration',
         ],
+        role: 'Lead Product Designer',
         link: '/projects/litres',
-        companyName: 'Litres.com',
-        companyUrl: 'https://litres.com',
+        companyName: 'LitRes',
+        companyUrl: 'https://www.litres.ru/',
+        isActive: true,
     },
     {
         title: 'Peruse',
         description:
-            'An AI document tool that organizes files by meaning, not just by folder structure.',
+            'An AI document-workspace concept for organizing, finding, and connecting files by meaning.',
         technologies: [
             'AI',
             'File Management',
@@ -85,15 +94,17 @@ export const projects: Project[] = [
             'Product Design',
             'Machine Learning',
         ],
+        role: 'Lead Product Designer',
         link: '/projects/peruse',
         isSingleColumn: true,
         companyName: 'Peruse',
         companyUrl: 'https://www.peruse.ml/',
+        isActive: true,
     },
     {
         title: 'Wrike',
         description:
-            'Project planning and workload management for large teams that need a clearer view of priorities and capacity.',
+            'Board-based project planning and workload management for teams.',
         technologies: [
             'SaaS',
             'Productivity',
@@ -101,10 +112,12 @@ export const projects: Project[] = [
             'Project Management',
             'Dashboard',
         ],
+        role: 'Senior Product Designer',
         link: '/projects/wrike',
         isSingleColumn: true,
         companyName: 'Wrike',
-        companyUrl: 'https://www.wrike.com',
+        companyUrl: 'https://www.wrike.com/',
+        isActive: true,
     },
     {
         title: 'Coming Soon',
@@ -113,5 +126,8 @@ export const projects: Project[] = [
         technologies: [],
         link: '#',
         isComingSoon: true,
+        isActive: false,
     },
 ]
+
+export const activeProjects = projects.filter((project) => project.isActive)

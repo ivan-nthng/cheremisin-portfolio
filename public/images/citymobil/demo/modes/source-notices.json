@@ -1,0 +1,30 @@
+{
+  "fileKey": "a1FIpM2QJ0y79EO170WQDG",
+  "trackNode": "6242:2704",
+  "mapImageNode": "6242:2705",
+  "mapImageSource": "https://www.figma.com/api/mcp/asset/5bf81059-1e69-4f6a-8998-701f5d67fae7.png",
+  "routeVectors": [
+    "6242:2708",
+    "6242:2713"
+  ],
+  "forwardIcon": "I6649:14768;4292:727",
+  "method": "Native SVG_STRING exports and unmodified context map PNG. Exact route geometry retained in track-source.json; not a live map or proof that fixture addresses are plotted. No source Figma mutation.",
+  "files": [
+    {
+      "path": "public/images/citymobil/demo/modes/fact.svg",
+      "sha256": "ef858f32f2487d89cd77ed2278152cce9135e9650e9987e7fcd23cc5558923a4"
+    },
+    {
+      "path": "public/images/citymobil/demo/modes/lisbon-source.png",
+      "sha256": "79335222fe5ccdbd2529339a7bb8003dbdda9c1930dde20eb6ba1377d9112bf5"
+    },
+    {
+      "path": "public/images/citymobil/demo/modes/planned.svg",
+      "sha256": "78abe1a9fd3ac3a488dd8bdb9efd7ac9082116de013e1c2a26a26a381b995dc4"
+    },
+    {
+      "path": "public/images/citymobil/demo/modes/forward.svg",
+      "sha256": "07acb8ec64290f1ef6d078adb54f029733fea2d51379bfe5c110c5b0cf982b61"
+    }
+  ]
+}

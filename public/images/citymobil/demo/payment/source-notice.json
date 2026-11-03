@@ -1,0 +1,38 @@
+{
+  "source": "Figma a1FIpM2QJ0y79EO170WQDG 6409:11274",
+  "session": "cdacb547-9720-4c41-aeb5-bfe771779771",
+  "method": "Unmodified native SVG_STRING exports, read-only; full native card miniatures, not redrawn gradients.",
+  "assets": [
+    {
+      "file": "mastercard.svg",
+      "node": "6409:11305",
+      "width": 70,
+      "height": 44
+    },
+    {
+      "file": "visa.svg",
+      "node": "6409:11319",
+      "width": 70,
+      "height": 44
+    },
+    {
+      "file": "brand.svg",
+      "node": "6409:11289",
+      "width": 16,
+      "height": 16
+    },
+    {
+      "file": "add.svg",
+      "node": "I6409:11328;4867:3263",
+      "width": 20,
+      "height": 20
+    },
+    {
+      "file": "pending.svg",
+      "node": "I6409:11283;6210:2223",
+      "width": 16,
+      "height": 16
+    }
+  ],
+  "history": "6409 History tab links only to hover state4883:3880; related6530:15768 is another Payment state, not History contents. Existing admitted fictional history row composition retained with native card/tab material; exact History content parity is not claimed."
+}

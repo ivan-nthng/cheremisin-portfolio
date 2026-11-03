@@ -1,7 +1,6 @@
 'use client'
 
 import { Link2, Code2, Mail, Calendar, Camera } from 'lucide-react'
-import { motion } from 'framer-motion'
 import {
     DossierBar,
     DossierFrame,
@@ -41,11 +40,7 @@ export function ProjectFooter({
     const linkMap = { linkedin, github, instagram }
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.24, ease: 'easeOut' }}
+        <div
         >
             <DossierFrame>
                 <DossierBar label="Footer" index="98" state="Contact" />
@@ -57,8 +52,8 @@ export function ProjectFooter({
                     />
 
                     <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1fr)_minmax(0,0.9fr)]">
-                        <section className="border border-border px-4 py-4">
-                            <div className="text-[11px] uppercase tracking-[0.28em] text-muted">
+                        <section className="border-[length:var(--stroke-thin)] border-border px-4 py-4">
+                            <div className="text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-label)] text-muted">
                                 Team
                             </div>
                             <ul className="mt-4 space-y-3 text-sm leading-7 text-muted">
@@ -70,21 +65,21 @@ export function ProjectFooter({
                             </ul>
                         </section>
 
-                        <section className="border border-border px-4 py-4">
-                            <div className="text-[11px] uppercase tracking-[0.28em] text-muted">
+                        <section className="border-[length:var(--stroke-thin)] border-border px-4 py-4">
+                            <div className="text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-label)] text-muted">
                                 Stack
                             </div>
                             <DossierTagList items={technologies} className="mt-4" />
                         </section>
 
-                        <section className="border border-border px-4 py-4">
-                            <div className="text-[11px] uppercase tracking-[0.28em] text-muted">
+                        <section className="border-[length:var(--stroke-thin)] border-border px-4 py-4">
+                            <div className="text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-label)] text-muted">
                                 Contact
                             </div>
                             <div className="mt-4 space-y-3 text-sm text-foreground">
                                 <a
                                     href={`mailto:${email}`}
-                                    className="flex items-center gap-3 border border-border px-3 py-3 transition-colors hover:bg-surface-muted"
+                                    className="flex items-center gap-3 border-[length:var(--stroke-thin)] border-border px-3 py-3 transition-colors hover:bg-surface-muted"
                                 >
                                     <Mail className="h-4 w-4 text-accent" />
                                     <span>{email}</span>
@@ -96,7 +91,7 @@ export function ProjectFooter({
                                         href={linkMap[field]}
                                         target="_blank"
                                         rel="noreferrer"
-                                        className="flex items-center gap-3 border border-border px-3 py-3 transition-colors hover:bg-surface-muted"
+                                        className="flex items-center gap-3 border-[length:var(--stroke-thin)] border-border px-3 py-3 transition-colors hover:bg-surface-muted"
                                     >
                                         <Icon className="h-4 w-4 text-accent" />
                                         <span>{label}</span>
@@ -107,7 +102,7 @@ export function ProjectFooter({
                                     href={bookingLink}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="flex items-center gap-3 border border-border-strong bg-foreground px-3 py-3 text-background transition-colors hover:bg-accent hover:text-foreground"
+                                    className="flex items-center gap-3 border-[length:var(--stroke-thin)] border-border-strong bg-foreground px-3 py-3 text-background transition-colors hover:bg-accent hover:text-foreground"
                                 >
                                     <Calendar className="h-4 w-4" />
                                     <span>Book a call</span>
@@ -117,6 +112,6 @@ export function ProjectFooter({
                     </div>
                 </div>
             </DossierFrame>
-        </motion.div>
+        </div>
     )
 }

@@ -3,6 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import cn from 'classnames'
+import { cssNumber } from '@/lib/utils'
 import {
     ArrowRight,
     ArrowLeft,
@@ -77,14 +78,14 @@ const UIButton: React.FC<UIButtonProps> = ({
     label,
 }) => {
     const sizeClasses = {
-        sm: 'px-3 py-2 text-[11px] gap-1.5',
+        sm: 'px-3 py-2 text-[length:var(--type-meta-size)] gap-1.5',
         md: 'px-4 py-2 text-xs gap-2',
         lg: 'px-5 py-3 text-sm gap-2.5',
         xl: 'px-6 py-3 text-sm gap-3',
     }
 
     const baseClasses = cn(
-        'inline-flex items-center border font-mono uppercase tracking-[0.18em] transition-all duration-200',
+        'inline-flex items-center border-[length:var(--stroke-thin)] font-mono uppercase tracking-[var(--tracking-demo-label)] transition-all duration-[var(--motion-control-duration)]',
         sizeClasses[size],
     )
 
@@ -104,13 +105,13 @@ const UIButton: React.FC<UIButtonProps> = ({
     const getStateClasses = () => {
         switch (state) {
             case 'Hover':
-                return 'shadow-md scale-[1.02]'
+                return 'shadow-md scale-[var(--demo-hover-scale)]'
             case 'Focused':
-                return 'ring-2 ring-offset-2 ring-blue-500'
+                return 'ring-[length:var(--stroke-focus)] ring-offset-[length:var(--stroke-focus)] ring-blue-500'
             case 'Pushed':
-                return 'scale-95'
+                return 'scale-[var(--demo-press-scale)]'
             case 'Disabled':
-                return 'opacity-50 cursor-not-allowed'
+                return 'opacity-[var(--opacity-disabled)] cursor-not-allowed'
             default:
                 return ''
         }
@@ -131,7 +132,7 @@ const UIButton: React.FC<UIButtonProps> = ({
                 <span className="flex items-center gap-2">
                     <motion.span
                         className={cn(
-                            'border-2 border-white border-t-transparent rounded-full',
+                            'border-[length:var(--stroke-focus)] border-white border-t-transparent rounded-[var(--radius-circle)]',
                             size === 'sm' && 'w-3.5 h-3.5',
                             size === 'md' && 'w-4 h-4',
                             size === 'lg' && 'w-5 h-5',
@@ -139,7 +140,7 @@ const UIButton: React.FC<UIButtonProps> = ({
                         )}
                         animate={{ rotate: 360 }}
                         transition={{
-                            duration: 1,
+                            duration: cssNumber('--motion-spinner-duration', 1000) / 1000,
                             repeat: Infinity,
                             ease: 'linear',
                         }}
@@ -168,13 +169,13 @@ export default function UIDemo() {
         rightIconType === 'None' ? null : rightIcons.right
 
     const inputClasses =
-        'w-full appearance-none border border-border bg-surface px-4 py-3 pr-10 text-sm text-foreground transition-colors duration-200 hover:bg-surface-muted focus:outline-none focus:ring-2 focus:ring-accent/30 disabled:cursor-not-allowed disabled:opacity-50'
+        'w-full appearance-none border-[length:var(--stroke-thin)] border-border bg-surface px-4 py-3 pr-10 text-sm text-foreground transition-colors duration-[var(--motion-control-duration)] hover:bg-surface-muted focus:outline-none focus:ring-[length:var(--stroke-focus)] focus:ring-[color:var(--focus-ring-color)] disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)]'
 
     return (
         <section className="w-full">
             <div className="space-y-8 sm:space-y-6">
                 <div className="xl:w-1/2 lg:w-2/3 space-y-4 pb-8">
-                    <h2 className="text-lg font-bold uppercase tracking-[0.18em] text-foreground">
+                    <h2 className="text-lg font-bold uppercase tracking-[var(--tracking-demo-label)] text-foreground">
                         Button Component Logic
                     </h2>
                     <p className="text-sm leading-7 text-muted">
@@ -187,8 +188,8 @@ export default function UIDemo() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-8">
                     {/* Left side - Button preview */}
-                    <div className="md:col-span-3 border border-border bg-surface p-8 sm:p-12 flex items-center justify-center">
-                        <div className="transform md:scale-[2] transition-transform duration-300">
+                    <div className="md:col-span-3 border-[length:var(--stroke-thin)] border-border bg-surface p-8 sm:p-12 flex items-center justify-center">
+                        <div className="transform md:scale-[var(--demo-preview-scale)] transition-transform duration-[var(--motion-slow-duration)]">
                             <UIButton
                                 state={buttonState}
                                 style={buttonStyle}
@@ -204,7 +205,7 @@ export default function UIDemo() {
                     <div className="md:col-span-1 space-y-6">
                         {/* State selector */}
                         <div className="space-y-3 relative">
-                            <label className="block text-[11px] uppercase tracking-[0.24em] text-muted">
+                            <label className="block text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-control)] text-muted">
                                 State
                             </label>
                             <div className="relative">
@@ -230,7 +231,7 @@ export default function UIDemo() {
 
                         {/* Style selector */}
                         <div className="space-y-3 relative">
-                            <label className="block text-[11px] uppercase tracking-[0.24em] text-muted">
+                            <label className="block text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-control)] text-muted">
                                 Style
                             </label>
                             <div className="relative">
@@ -254,7 +255,7 @@ export default function UIDemo() {
 
                         {/* Size selector */}
                         <div className="space-y-3 relative">
-                            <label className="block text-[11px] uppercase tracking-[0.24em] text-muted">
+                            <label className="block text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-control)] text-muted">
                                 Size
                             </label>
                             <div className="relative">
@@ -278,7 +279,7 @@ export default function UIDemo() {
 
                         {/* Icon selectors */}
                         <div className="space-y-3 relative">
-                            <label className="block text-[11px] uppercase tracking-[0.24em] text-muted">
+                            <label className="block text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-control)] text-muted">
                                 Left Icon
                             </label>
                             <div className="relative">
@@ -302,7 +303,7 @@ export default function UIDemo() {
                         </div>
 
                         <div className="space-y-3 relative">
-                            <label className="block text-[11px] uppercase tracking-[0.24em] text-muted">
+                            <label className="block text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-control)] text-muted">
                                 Right Icon
                             </label>
                             <div className="relative">

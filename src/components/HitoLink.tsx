@@ -6,6 +6,7 @@ import { ArrowUpRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from 'next-themes'
 import Image from 'next/image'
+import { cssNumber } from '@/lib/utils'
 
 export default function HitoLink() {
     const { theme } = useTheme()
@@ -34,19 +35,20 @@ export default function HitoLink() {
             const viewportHeight = window.innerHeight
 
             // Default position (to the right of the link)
-            let x = tooltipPosition.x + 20
-            let y = tooltipPosition.y - 20
+            const gap = cssNumber('--popover-cursor-gap', 20)
+            let x = tooltipPosition.x + gap
+            let y = tooltipPosition.y - gap
 
             // Check if popup would go off the right edge
             if (linkRect.right + popupRect.width > viewportWidth) {
                 // Position to the left of the link
-                x = -popupRect.width - 20
+                x = -popupRect.width - gap
             }
 
             // Check if popup would go off the bottom edge
             if (linkRect.top + y + popupRect.height > viewportHeight) {
                 // Adjust y to keep popup within viewport
-                y = viewportHeight - linkRect.top - popupRect.height - 10
+                y = viewportHeight - linkRect.top - popupRect.height - cssNumber('--popover-edge-gap', 10)
             }
 
             // Check if popup would go off the top edge
@@ -74,7 +76,7 @@ export default function HitoLink() {
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onMouseMove={handleMouseMove}
-                className="inline-flex items-center gap-2 border-b border-border text-foreground transition-colors hover:text-accent"
+                className="inline-flex items-center gap-2 border-b-[length:var(--stroke-thin)] border-border text-foreground transition-colors hover:text-accent"
             >
                 [CASE] Hito Design System
                 <ArrowUpRight className="w-4 h-4" />
@@ -83,24 +85,24 @@ export default function HitoLink() {
             <AnimatePresence>
                 {isHovered && (
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
+                        initial={{ opacity: 0, scale: cssNumber('--motion-popover-scale', 0.8) }}
                         animate={{
                             opacity: 1,
                             scale: 1,
                             x: popupPlacement.x,
                             y: popupPlacement.y,
                         }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        transition={{ duration: 0.18, ease: 'easeOut' }}
-                        className="absolute z-[100] pointer-events-none"
+                        exit={{ opacity: 0, scale: cssNumber('--motion-popover-scale', 0.8) }}
+                        transition={{ duration: cssNumber('--motion-popover-duration', 180) / 1000, ease: 'easeOut' }}
+                        className="absolute z-[var(--layer-overlay)] pointer-events-none"
                     >
                         <div
                             ref={popupRef}
-                            className="w-[500px] overflow-hidden border border-border-strong bg-surface"
+                            className="w-[var(--popover-width)] overflow-hidden border-[length:var(--stroke-thin)] border-border-strong bg-surface"
                         >
                             <div className="flex">
                                 <div className="flex-1 p-6">
-                                    <div className="text-[11px] uppercase tracking-[0.28em] text-muted">
+                                    <div className="text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-label)] text-muted">
                                         linked project
                                     </div>
                                     <h3 className="mb-3 mt-3 text-lg font-bold text-foreground">
@@ -112,7 +114,7 @@ export default function HitoLink() {
                                         without rewriting them.
                                     </p>
                                 </div>
-                                <div className="relative w-2/5 border-l border-border bg-surface-muted">
+                                <div className="relative w-2/5 border-l-[length:var(--stroke-thin)] border-border bg-surface-muted">
                                     <div className="relative flex h-full w-full items-center justify-center p-4">
                                         <Image
                                             src={currentImage}

@@ -1,3 +1,4 @@
+import { projectMetadata } from '@/lib/seo'
 /**
  * Litres Project Page Component
  *
@@ -34,6 +35,8 @@ import {
     DossierSectionHeading,
 } from '@/components/ascii/Dossier'
 
+export const metadata = projectMetadata('/projects/litres')
+
 export default function LitresPage() {
     const currentProjectIndex = projects.findIndex(
         (p) => p.link === '/projects/litres',
@@ -64,7 +67,7 @@ export default function LitresPage() {
                 viewBox="0 0 173 28"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="text-blue-900 dark:text-blue-100 opacity-40 hover:opacity-60 transition-opacity duration-300 cursor-pointer"
+                className="text-blue-900 dark:text-blue-100 opacity-[var(--opacity-client-logo)] hover:opacity-[var(--opacity-muted)] transition-opacity duration-[var(--motion-slow-duration)] cursor-pointer"
             >
                 <path
                     d="M0 23.9392H24.4188V18.9222H6.30679V1.33057H0V23.9392Z"
@@ -398,8 +401,10 @@ export default function LitresPage() {
     )
 
     return (
-        <ProjectPageShell>
-            <div className="relative mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+        <ProjectPageShell
+            project={{ projectId: 'litres', title: 'Litres Internal Tools' }}
+        >
+            <div className="relative mx-auto w-full max-w-[var(--case-width-wide)] px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
                     <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                         <ProjectHero

@@ -1,15 +1,6 @@
-'use client'
-
-import { motion } from 'framer-motion'
-import Image from 'next/image'
-import { ProjectPageShell } from '@/components/ProjectPageShell'
-import {
-    DossierBar,
-    DossierFrame,
-    DossierMediaViewport,
-    DossierPage,
-    DossierSectionHeading,
-} from '@/components/ascii/Dossier'
+import { PortfolioArrow } from '@/components/portfolio/PortfolioArrow'
+import { RepeatReveal } from '@/components/portfolio/RepeatReveal'
+import { ContactLinks } from '@/components/portfolio/ContactLinks'
 
 const manifestoSections = [
     {
@@ -57,75 +48,40 @@ const manifestoSections = [
 
 export function ManifestoContent() {
     return (
-        <ProjectPageShell>
-            <DossierPage>
-                <DossierFrame>
-                    <DossierBar label="Route" index="M" state="Manifesto" />
-                    <div className="grid gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-[220px_minmax(0,1fr)]">
-                        <DossierMediaViewport
-                            label="img 00"
-                            title="Avatar"
-                            note="route marker"
-                        >
-                            <div className="flex aspect-square items-center justify-center bg-background">
-                                <Image
-                                    src="/avatar-256.png"
-                                    alt="Avatar"
-                                    width={160}
-                                    height={160}
-                                    className="h-auto w-32 sm:w-40"
-                                    priority
-                                />
-                            </div>
-                        </DossierMediaViewport>
-
-                        <DossierSectionHeading
-                            label="Manifesto"
-                            title="Manifesto"
-                            description="Notes I come back to when I design, write, and work with people."
-                        />
-                    </div>
-                </DossierFrame>
-
-                <div className="space-y-8">
+        <main id="main-content" className="editorial-page manifesto-page portfolio-grid-lane portfolio-grid-page" tabIndex={-1}>
+            <h1 className="sr-only">Manifesto</h1>
+            <RepeatReveal className="editorial-intro">
+                <p>Notes I come back to when I design, write, and work with people.</p>
+            </RepeatReveal>
+            <div className="manifesto-groups">
                     {manifestoSections.map((section, index) => (
-                        <motion.div
+                        <section
                             key={section.label}
-                            initial={{ opacity: 0, y: 12 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: '-80px' }}
-                            transition={{ duration: 0.24, delay: index * 0.04 }}
+                            className={`editorial-row portfolio-grid-tracks${index > 0 ? ' editorial-section' : ''}`}
+                            aria-labelledby={`manifesto-group-${index}`}
                         >
-                            <DossierFrame>
-                                <DossierBar
-                                    label="Section"
-                                    index={String(index + 1).padStart(2, '0')}
-                                    state={section.label}
-                                />
-                                <div className="px-4 py-6 sm:px-6 sm:py-8">
-                                    <DossierSectionHeading
-                                        label={section.label}
-                                        title={section.label}
-                                    />
-                                    <ul className="mt-8 border-t border-dashed border-border pt-6 text-sm leading-7 text-muted">
-                                        {section.items.map((item) => (
-                                            <li
-                                                key={item}
-                                                className="flex gap-4 border-b border-dashed border-border/70 py-3 last:border-b-0"
-                                            >
-                                                <span className="text-[11px] uppercase tracking-[0.28em] text-accent">
-                                                    &gt;
-                                                </span>
-                                                <span>{item}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </DossierFrame>
-                        </motion.div>
+                            <RepeatReveal><h2 id={`manifesto-group-${index}`}>{section.label}</h2></RepeatReveal>
+                            <ul className="manifesto-statements" role="list">
+                                {section.items.map((item) => (
+                                    <li key={item}>
+                                        <RepeatReveal className="manifesto-statement">
+                                            <span className="manifesto-marker" aria-hidden="true"><PortfolioArrow direction="right" /></span>
+                                            <p>{item}</p>
+                                        </RepeatReveal>
+                                    </li>
+                                ))}
+                            </ul>
+                        </section>
                     ))}
-                </div>
-            </DossierPage>
-        </ProjectPageShell>
+            </div>
+            <footer className="editorial-section">
+                <RepeatReveal>
+                    <h2>Contact</h2>
+                    <nav className="editorial-footer-contacts" aria-label="Footer contacts">
+                        <ContactLinks />
+                    </nav>
+                </RepeatReveal>
+            </footer>
+        </main>
     )
 }

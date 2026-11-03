@@ -1,7 +1,6 @@
 'use client'
 
 import { Check } from 'lucide-react'
-import { motion } from 'framer-motion'
 import {
     DossierBar,
     DossierFrame,
@@ -45,11 +44,7 @@ export default function ProjectBento({ items }: ProjectBentoProps) {
     const improvements = items ?? defaultImprovements
 
     return (
-        <motion.section
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.24, ease: 'easeOut' }}
+        <section
             className="py-12 sm:py-16"
         >
             <DossierFrame>
@@ -61,14 +56,14 @@ export default function ProjectBento({ items }: ProjectBentoProps) {
                         description="The main changes in the product and the support workflow."
                     />
 
-                    <div className="grid gap-px border border-border bg-border md:grid-cols-2">
+                    <div className="grid gap-px border-[length:var(--stroke-thin)] border-border bg-border md:grid-cols-2">
                         {improvements.map((item, index) => (
                             <div
                                 key={`${item.title}-${index}`}
                                 className="bg-surface px-4 py-4"
                             >
                                 <div className="flex items-center justify-between gap-4">
-                                    <span className="text-[11px] uppercase tracking-[0.28em] text-muted">
+                                    <span className="text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-label)] text-muted">
                                         [{String(index + 1).padStart(2, '0')}]
                                     </span>
                                     <Check className="h-4 w-4 text-accent" />
@@ -84,6 +79,6 @@ export default function ProjectBento({ items }: ProjectBentoProps) {
                     </div>
                 </div>
             </DossierFrame>
-        </motion.section>
+        </section>
     )
 }

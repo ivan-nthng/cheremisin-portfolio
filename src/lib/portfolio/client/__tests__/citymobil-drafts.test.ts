@@ -1,0 +1,116 @@
+import { describe, expect, it, vi, afterEach } from 'vitest'
+import { citymobilDemoReducer as reduce, composerNextAction, initialDemoState, preparedReply, scheduleDemoReply, type DemoState } from '../citymobil-demo'
+
+function send(state: DemoState) { return reduce({ ...state, draft: preparedReply(state) }, { type: 'send' }) }
+function deliver(state: DemoState) { return reduce(state, { type: 'reply-delivered', run: state.pendingReply!.run, scenario: state.scenario }) }
+function chooseTrip() { return deliver(send(initialDemoState('light', 'lost'))) }
+function edit(state: DemoState, value: string) { return reduce(state, { type: 'draft-edit', value }) }
+afterEach(() => vi.useRealTimers())
+
+describe('local drafts stay separate from prepared support replies', () => {
+  it('opens only the phone state without navigating or clearing the current conversation/composer', () => {
+    let state = reduce(initialDemoState(), { type: 'mode', value: 'forward' })
+    state = { ...state, draft: 'Existing prepared prefix', attachments: [{ kind: 'media' }] }
+    const calling = reduce(state, { type: 'call-start', target: 'driver' })
+    for (const key of ['recipient', 'mode', 'draft', 'context', 'attachments', 'messages', 'lost', 'panel', 'revision'] as const) expect(calling[key]).toBe(state[key])
+    expect(calling.call).toMatchObject({ phase: 'calling', target: 'driver' })
+  })
+  it('accepts and deletes literal drafts at blocked steps without changing story or instruction text', () => {
+    const state = chooseTrip()
+    const draft = edit(state, 'Check the blue bag tomorrow 🙂')
+    expect(draft.draft).toBe('Check the blue bag tomorrow 🙂')
+    expect(draft.localDraft).toBe(true)
+    for (const key of ['messages', 'lost', 'call', 'pendingReply', 'attachments'] as const) expect(draft[key]).toBe(state[key])
+    expect(draft.draft).not.toBe(composerNextAction(state))
+    expect(reduce(draft, { type: 'send' })).toBe(draft)
+    expect(edit(draft, 'Check').draft).toBe('Check')
+    expect(edit(draft, '')).toMatchObject({ draft: '', localDraft: false, suggestion: 'idle' })
+  })
+  it('preserves the original pending reply object and its delivery deadline through input and clear', () => {
+    vi.useFakeTimers()
+    let state = send(initialDemoState('light', 'lost'))
+    const pending = state.pendingReply!
+    const cancel = scheduleDemoReply(pending, action => { state = reduce(state, action) })
+    vi.advanceTimersByTime(1200)
+    state = edit(state, 'a local draft')
+    expect(state.pendingReply).toBe(pending)
+    state = reduce(state, { type: 'clear-draft' })
+    expect(state.pendingReply).toBe(pending)
+    state = edit(state, 'still local')
+    vi.advanceTimersByTime(799)
+    expect(state.messages).toHaveLength(2)
+    vi.advanceTimersByTime(1)
+    expect(state.messages).toHaveLength(3)
+    expect(state.messages.at(-1)?.recipient).toBe('passenger')
+    expect(state.draft).toBe('still local')
+    expect(state.lost.stage).toBe('choose-trip')
+    cancel?.()
+  })
+  it('retains a literal draft across delivery and cannot send it even if it equals a prepared reply', () => {
+    let state = send(initialDemoState('light', 'income'))
+    state = edit(state, preparedReply(state))
+    state = deliver(state)
+    expect(state.localDraft).toBe(true)
+    expect(reduce(state, { type: 'send' })).toBe(state)
+    expect(reduce(state, { type: 'suggest' })).toBe(state)
+    const prepared = reduce(state, { type: 'suggest', explicit: true })
+    expect(prepared).toMatchObject({ draft: '', localDraft: false, suggestion: 'loading' })
+    expect(prepared.call).toBe(state.call)
+    expect(prepared.messages).toBe(state.messages)
+  })
+  it('never restarts a connected call or changes consent while editing or clearing', () => {
+    const confirmed = reduce(chooseTrip(), { type: 'select-trip', value: 'latest' })
+    const asked = deliver(send(reduce(confirmed, { type: 'recipient', value: 'driver' })))
+    let state = reduce(asked, { type: 'call-start', target: 'driver' })
+    state = reduce(state, { type: 'call-connected', run: state.call.run })
+    state = reduce(state, { type: 'call-tick', run: state.call.run })
+    const call = state.call
+    const draft = edit(state, 'Local call notes')
+    expect(draft.call).toBe(call)
+    expect(draft.lost).toBe(state.lost)
+    expect(reduce(draft, { type: 'send' })).toBe(draft)
+    expect(reduce(draft, { type: 'clear-draft' }).call).toBe(call)
+    const ended = reduce(draft, { type: 'call-end' })
+    expect(ended.lost.consent).toBe(true)
+  })
+  it('allows exposed completed drafts while keeping every support mutation guarded', () => {
+    const base = initialDemoState('dark', 'lost')
+    const completed: DemoState = { ...base, lost: { stage: 'completed', selectedTripId: 'latest', consent: true, shared: true } }
+    const draft = edit(completed, 'Local follow-up draft')
+    expect(draft.draft).toBe('Local follow-up draft')
+    expect(draft.lost).toBe(completed.lost)
+    for (const action of [{ type: 'send' }, { type: 'suggest' }, { type: 'call-start', target: 'driver' }, { type: 'complete-ticket' }, { type: 'connect-rider' }] as const) expect(reduce(draft, action)).toBe(draft)
+    expect(reduce(draft, { type: 'clear-draft' }).draft).toBe('')
+    const view = reduce(draft, { type: 'track-time', value: 50 })
+    expect(view.trackPercent).toBe(50)
+    expect(view.lost).toBe(completed.lost)
+    expect(view.messages).toBe(draft.messages)
+  })
+  it('keeps local text through tone actions, rejects stale suggestion callbacks and enforces the input limit', () => {
+    const state = edit(chooseTrip(), 'x'.repeat(2100))
+    expect(state.draft).toHaveLength(2000)
+    expect(reduce(state, { type: 'answer', direction: 1 }).draft).toBe(state.draft)
+    expect(reduce(state, { type: 'suggestion-ready', revision: state.revision - 1 })).toBe(state)
+    expect(reduce(state, { type: 'accept-suggestion' })).toBe(state)
+  })
+  it('preserves existing recipient/mode/reset draft boundaries and semantic Connect mode', () => {
+    const state = edit(chooseTrip(), 'Local only')
+    expect(reduce(state, { type: 'recipient', value: 'driver' })).toMatchObject({ draft: '', localDraft: false })
+    expect(reduce(state, { type: 'mode', value: 'note' })).toMatchObject({ draft: '', localDraft: false })
+    expect(reduce(state, { type: 'scenario', value: 'pickup' })).toMatchObject({ draft: '', localDraft: false })
+    const connect = reduce(initialDemoState(), { type: 'mode', value: 'connect' })
+    expect(edit(connect, 'Not a text composer')).toBe(connect)
+  })
+  it('keeps eligible character reveal, tones and prepared acceptance intact', () => {
+    let state = initialDemoState()
+    expect(edit(state, 'Arbitrary eligible input')).toBe(state)
+    state = reduce(state, { type: 'script-edit', operation: 'insert', start: 0, end: 0 })
+    expect(state.draft).toBe(preparedReply(state).slice(0, 1))
+    state = reduce(state, { type: 'answer', direction: 1 })
+    state = reduce(state, { type: 'suggestion-ready', revision: state.revision })
+    state = reduce(state, { type: 'accept-suggestion' })
+    expect(state.localDraft).toBe(false)
+    expect(state.draft).toBe(preparedReply(state))
+    expect(reduce(state, { type: 'send' }).pendingReply).not.toBeNull()
+  })
+})

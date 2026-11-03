@@ -1,112 +1,159 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { Moon, Sun } from 'lucide-react'
-import { usePathname } from 'next/navigation'
-import { useTheme } from 'next-themes'
-import {
-    HOME_NAV_ITEMS,
-    HOME_ROUTE_ITEMS,
-    scrollToHomeSection,
-    type HomeSectionId,
-} from '@/lib/home-shell'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { ChevronDown } from 'lucide-react'
+import { contacts, homeIdentity } from '@/lib/site-content'
+import { projects } from '@/lib/projects'
+import { PortfolioArrow } from '@/components/portfolio/PortfolioArrow'
+import { ContactLinks } from '@/components/portfolio/ContactLinks'
+import { ContactSheet } from './ContactSheet'
+import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid'
+import { HomeEyeLoader } from './HomeEyeLoader'
 
-function HomeNavButton({
-    id,
-    index,
-    label,
-}: {
-    id: HomeSectionId
-    index: string
-    label: string
-}) {
-    return (
-        <button
-            type="button"
-            className="inline-flex items-center gap-2 px-1 py-1 text-[11px] uppercase tracking-[0.24em] text-muted transition-colors hover:text-foreground"
-            onClick={() => scrollToHomeSection(id)}
-        >
-            <span>[{index}]</span>
-            <span>{label}</span>
-        </button>
-    )
-}
+export function Header({ homeEyeBootstrap }: { homeEyeBootstrap: string }) {
+  const pathname = usePathname()
+  const router = useRouter()
+  const header = useRef<HTMLElement>(null)
+  const previousPath = useRef(pathname)
+  const safeOrigin = useRef(false)
+  const trigger = useRef<HTMLButtonElement>(null)
+  const [sheetOpen, setSheetOpen] = useState(false)
+  const [pointerEntry, setPointerEntry] = useState(false)
+  const home = pathname === '/'
+  const gridPage = home || pathname === '/manifesto'
+  const title = home ? homeIdentity.name
+    : pathname === '/projects' ? 'Projects'
+    : pathname === '/manifesto' ? 'Manifesto'
+    : projects.find(project => project.link === pathname)?.title ?? 'Portfolio'
 
-export function Header() {
-    const pathname = usePathname()
-    const { resolvedTheme, setTheme } = useTheme()
-    const [mounted, setMounted] = useState(false)
-
-    useEffect(() => {
-        setMounted(true)
-    }, [])
-
-    if (pathname !== '/') {
-        return null
+  useEffect(() => {
+    if (previousPath.current !== pathname) {
+      safeOrigin.current = true
+      previousPath.current = pathname
+      setSheetOpen(false)
     }
+  }, [pathname])
 
-    const isDark = mounted && resolvedTheme === 'dark'
+  useLayoutEffect(() => {
+    const node = header.current
+    const hero = document.querySelector<HTMLElement>('.home-photo-hero')
+    const copy = hero?.querySelector<HTMLElement>('.home-hero-copy')
+    const nav = node?.querySelector<HTMLElement>('.context-contacts')
+    if (!home || !node || !hero || !copy || !nav) return
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const clamp = (value: number) => Math.min(1, Math.max(0, value))
+    let frame = 0
+    let distance = 1
+    let focusPlacement: string | null = null
+    const update = () => {
+      if (document.querySelector('#mobile-contact-sheet[open]')) return
+      // If enlarged copy outgrows the first screen, keep it in readable
+      // document flow instead of fading it before the visitor can reach it.
+      const moving = !reduced.matches && hero.offsetHeight <= window.innerHeight + 1
+      const progress = moving ? clamp(window.scrollY / distance) : 0
+      node.dataset.heroMotion = moving ? 'scroll' : 'static'
+      node.style.setProperty('--hero-name-offset', `${moving ? Math.max(0, distance - window.scrollY) : distance}px`)
+      node.style.setProperty('--hero-surface-opacity', String(clamp((progress - .5) * 2)))
+      hero.style.setProperty('--hero-photo-opacity', String(1 - progress))
+      hero.style.setProperty('--hero-details-opacity', String(clamp((1 - progress) / .7)))
+      const opacity = progress < .65 ? 1 - clamp((progress - .35) / .3) : clamp((progress - .9) / .1)
+      const focused = nav.contains(document.activeElement)
+      if (focused) focusPlacement = nav.dataset.heroPlacement ?? 'hero'
+      else if (opacity === 0 || !moving) focusPlacement = null
+      // Keyboard focus holds its existing target in place. Normal relocation
+      // happens inside the zero-opacity band, symmetrically on reverse scroll.
+      nav.dataset.heroPlacement = focusPlacement ?? (progress >= .8 ? 'header' : 'hero')
+      nav.style.setProperty('--hero-contacts-opacity', String(focused ? 1 : opacity))
+    }
+    const measure = () => {
+      if (document.querySelector('#mobile-contact-sheet[open]')) return
+      const safeTop = Number.parseFloat(getComputedStyle(node).paddingTop) || 0
+      distance = Math.max(1, copy.getBoundingClientRect().top + window.scrollY - safeTop - 12)
+      node.style.setProperty('--hero-name-rest', `${distance}px`)
+      update()
+    }
+    const schedule = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(update) }
+    measure()
+    let observer: ResizeObserver | undefined
+    try { observer = new ResizeObserver(measure); observer.observe(hero); observer.observe(copy) } catch { observer?.disconnect() }
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', measure)
+    nav.addEventListener('focusin', update)
+    nav.addEventListener('focusout', schedule)
+    reduced.addEventListener('change', measure)
+    return () => {
+      cancelAnimationFrame(frame)
+      observer?.disconnect()
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', measure)
+      nav.removeEventListener('focusin', update)
+      nav.removeEventListener('focusout', schedule)
+      reduced.removeEventListener('change', measure)
+      delete node.dataset.heroMotion
+      for (const property of ['--hero-name-offset', '--hero-name-rest', '--hero-surface-opacity']) node.style.removeProperty(property)
+      hero.style.removeProperty('--hero-photo-opacity')
+      hero.style.removeProperty('--hero-details-opacity')
+      nav.style.removeProperty('--hero-contacts-opacity')
+      delete nav.dataset.heroPlacement
+    }
+  }, [home])
 
-    return (
-        <motion.header
-            initial={{ opacity: 0, y: -16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.24, ease: 'easeOut' }}
-            className="fixed inset-x-0 top-0 z-50 border-b border-dashed border-border bg-background/98"
-        >
-            <div className="mx-auto flex w-full max-w-[1120px] flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                    <span className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] text-foreground">
-                        <span>[00]</span>
-                        <span>Index</span>
-                    </span>
-                    {HOME_ROUTE_ITEMS.map((item) => (
-                        <Link
-                            key={item.href}
-                            href={item.href}
-                            className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] text-muted transition-colors hover:text-foreground"
-                        >
-                            <span>[{item.index}]</span>
-                            <span>{item.label}</span>
-                        </Link>
-                    ))}
-                </div>
+  useEffect(() => {
+    const mobile = window.matchMedia('(max-width: 599px)')
+    const closeOnDesktop = () => { if (!mobile.matches) setSheetOpen(false) }
+    mobile.addEventListener('change', closeOnDesktop)
+    return () => mobile.removeEventListener('change', closeOnDesktop)
+  }, [])
 
-                <nav className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                    {HOME_NAV_ITEMS.map((item) => (
-                        <HomeNavButton key={item.id} {...item} />
-                    ))}
-                </nav>
+  useEffect(() => {
+    if (!header.current) return
+    const update = () => document.documentElement.style.setProperty('--header-offset', `${header.current!.getBoundingClientRect().height + 24}px`)
+    update()
+    const observer = new ResizeObserver(update)
+    observer.observe(header.current, { box: 'border-box' })
+    return () => observer.disconnect()
+  }, [pathname])
 
-                <div className="flex items-center gap-3">
-                    <div className="hidden text-right sm:block">
-                        <div className="text-[11px] uppercase tracking-[0.28em] text-muted">
-                            Current page
-                        </div>
-                        <div className="text-xs uppercase tracking-[0.22em] text-foreground">
-                            Home
-                        </div>
-                    </div>
-                    <button
-                        type="button"
-                        className="inline-flex h-10 w-10 items-center justify-center border border-dashed border-border text-foreground transition-colors hover:text-accent"
-                        onClick={() => setTheme(isDark ? 'light' : 'dark')}
-                        aria-label="Toggle theme"
-                    >
-                        {mounted ? isDark ? (
-                            <Sun className="h-4 w-4" />
-                        ) : (
-                            <Moon className="h-4 w-4" />
-                        ) : (
-                            <span className="h-4 w-4" aria-hidden="true" />
-                        )}
-                    </button>
-                </div>
-            </div>
-        </motion.header>
-    )
+  // The local product preview deliberately has no portfolio chrome.
+  if (pathname === '/preview/citymobil' || pathname === '/preview/citymobil-background') return null
+
+  return <>
+    {home ? <HomeEyeLoader bootstrap={homeEyeBootstrap} /> : null}
+    <header ref={header} className={`context-header ${home ? 'context-home context-photo-home' : 'context-page'}${gridPage ? ' context-grid' : ''}`} style={{ paddingTop: gridPage ? 'env(safe-area-inset-top, 0px)' : 0 }}>
+      <div className={`context-header-lane${gridPage ? ' portfolio-grid-lane' : ''}`}>
+        {!home ? <a href="/" className="editorial-link context-back" aria-label="Back to previous portfolio page" onClick={event => {
+          if (safeOrigin.current) { event.preventDefault(); router.back() }
+        }}><span className="context-control-label"><PortfolioArrow direction="left" /><span>Back</span></span></a> : null}
+        <div className="context-identity">{home
+          ? <h1 id="portfolio-identity" className="context-title"><span className="context-title-label">{title}</span></h1>
+          : <p className="context-title"><span className="context-title-label">{title}</span></p>}</div>
+        <nav className="context-contacts" aria-label="Contact Ivan" data-hero-placement={home ? 'hero' : undefined}>
+          {contacts.map(contact => <a key={contact.label} className="editorial-link" href={contact.href}
+            {...(contact.label !== 'Email' ? { target: '_blank', rel: 'noreferrer' } : {})}>
+            <span className="context-control-label"><span className="context-inline-contact-label">{contact.label}</span><PortfolioArrow /></span>
+          </a>)}
+        </nav>
+        {!gridPage ? <button ref={trigger} type="button" className="editorial-link context-contact-trigger" aria-haspopup="dialog"
+          aria-expanded={sheetOpen} aria-controls={sheetOpen ? 'mobile-contact-sheet' : undefined} onClick={event => {
+            setPointerEntry(event.detail > 0)
+            setSheetOpen(true)
+          }}>
+          <span className="context-control-label"><span className="context-contact-label">Contact</span><ChevronDown size={16} aria-hidden="true" /></span>
+        </button> : null}
+        <noscript>
+          <style>{'.context-contact-trigger { display: none !important; }'}</style>
+          <nav className="context-contact-fallback" aria-label="Contact Ivan">
+            <ContactLinks />
+          </nav>
+        </noscript>
+      </div>
+    </header>
+    {gridPage ? <PortfolioGrid key={pathname} splitControls={home} contactTrigger={trigger} contactOpen={sheetOpen} onContact={event => {
+      setPointerEntry(event.detail > 0)
+      setSheetOpen(true)
+    }} /> : null}
+    {sheetOpen ? <ContactSheet onClose={() => setSheetOpen(false)} returnFocus={trigger} animateEntry={pointerEntry} /> : null}
+  </>
 }
-
 export default Header

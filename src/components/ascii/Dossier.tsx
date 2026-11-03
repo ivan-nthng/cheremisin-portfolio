@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { RepeatReveal } from '@/components/portfolio/RepeatReveal'
 import { cn } from '@/lib/utils'
 
 interface DossierPageProps {
@@ -49,7 +50,7 @@ export function DossierPage({ children, className }: DossierPageProps) {
     return (
         <div
             className={cn(
-                'mx-auto flex w-full max-w-[1120px] flex-col gap-10 px-4 pb-16 pt-28 sm:gap-14 sm:px-6 sm:pb-24 lg:px-8 lg:pt-32',
+                'mx-auto flex w-full max-w-[var(--case-width-compact)] flex-col gap-10 px-6 pb-16 sm:gap-14 sm:pb-24',
                 className,
             )}
         >
@@ -60,14 +61,14 @@ export function DossierPage({ children, className }: DossierPageProps) {
 
 export function DossierFrame({ children, className }: DossierFrameProps) {
     return (
-        <section
+        <RepeatReveal
             className={cn(
-                'overflow-hidden border-y border-border bg-transparent',
+                'min-w-0 overflow-clip bg-transparent',
                 className,
             )}
         >
             {children}
-        </section>
+        </RepeatReveal>
     )
 }
 
@@ -77,25 +78,8 @@ export function DossierBar({
     state,
     className,
 }: DossierBarProps) {
-    return (
-        <div
-            className={cn(
-                'flex min-h-10 flex-wrap items-center justify-between gap-2 border-b border-dashed border-border px-4 py-2 text-[10px] uppercase tracking-[0.28em] text-muted sm:px-6',
-                className,
-            )}
-        >
-            <div className="flex flex-wrap items-center gap-2">
-                {index ? <span>[{index}]</span> : null}
-                <span>{label}</span>
-            </div>
-            {state ? (
-                <div className="flex flex-wrap items-center gap-2 text-right">
-                    <span className="text-border">::</span>
-                    <span>{state}</span>
-                </div>
-            ) : null}
-        </div>
-    )
+    // Historical numbering/state chrome is retired; authored section headings remain.
+    return null
 }
 
 export function DossierSectionHeading({
@@ -107,7 +91,7 @@ export function DossierSectionHeading({
 }: DossierSectionHeadingProps) {
     return (
         <div className={cn('flex flex-col gap-4', className)}>
-            <div className="text-[11px] uppercase tracking-[0.28em] text-muted">
+            <div className="text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-label)] text-muted">
                 {label}
             </div>
             <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
@@ -116,7 +100,7 @@ export function DossierSectionHeading({
                         {title}
                     </h2>
                     {description ? (
-                        <div className="max-w-2xl text-sm leading-7 text-muted sm:text-[15px]">
+                        <div className="max-w-2xl text-sm leading-7 text-muted sm:text-[length:var(--type-description-size)]">
                             {description}
                         </div>
                     ) : null}
@@ -134,7 +118,7 @@ export function DossierMetaStrip({
     return (
         <div
             className={cn(
-                'grid gap-x-6 gap-y-4 border-t border-dashed border-border pt-4 sm:grid-cols-2 lg:grid-cols-4',
+                'grid gap-x-6 gap-y-4 border-t-[length:var(--stroke-thin)] border-dashed border-border pt-4 sm:grid-cols-2 lg:grid-cols-4',
                 className,
             )}
         >
@@ -143,7 +127,7 @@ export function DossierMetaStrip({
                     key={`${item.label}-${index}`}
                     className="flex min-h-16 flex-col gap-2"
                 >
-                    <span className="terminal-divider">
+                    <span className="case-caption">
                         {item.label}
                     </span>
                     <div className="text-sm leading-6 text-foreground">
@@ -164,22 +148,22 @@ export function DossierMediaViewport({
     viewportClassName,
 }: DossierMediaViewportProps) {
     return (
-        <div className={cn('border-y border-border', className)}>
-            <div className="flex min-h-10 flex-wrap items-center justify-between gap-3 border-b border-dashed border-border px-4 py-2 text-[10px] uppercase tracking-[0.28em] text-muted">
-                <span>[{label}]</span>
+        <div className={cn('border-y-[length:var(--stroke-thin)] border-border', className)}>
+            <div className="flex min-h-10 flex-wrap items-center justify-between gap-3 border-b-[length:var(--stroke-thin)] border-dashed border-border px-4 py-2 text-[length:var(--type-micro-size)] uppercase tracking-[var(--tracking-case-label)] text-muted">
+                <span>{label}</span>
                 <span className="text-foreground">{title}</span>
             </div>
             <div
                 className={cn(
-                    'bg-surface-muted/30 p-2 sm:p-3',
+                    'bg-[color:var(--surface-media-frame)] p-2 sm:p-3',
                     viewportClassName,
                 )}
             >
                 {children}
             </div>
             {note ? (
-                <div className="border-t border-dashed border-border px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-muted">
-                    :: {note}
+                <div className="border-t-[length:var(--stroke-thin)] border-dashed border-border px-4 py-2 text-[length:var(--type-micro-size)] uppercase tracking-[var(--tracking-media-note)] text-muted">
+                    {note}
                 </div>
             ) : null}
         </div>
@@ -196,13 +180,13 @@ export function DossierTagList({
     return (
         <div
             className={cn(
-                'flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] uppercase tracking-[0.2em] text-muted',
+                'flex flex-wrap items-center gap-x-3 gap-y-2 text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-tag)] text-muted',
                 className,
             )}
         >
             {items.map((item, index) => (
                 <span key={item} className="inline-flex items-center gap-3">
-                    <span>[{item}]</span>
+                    <span>{item}</span>
                     {index < items.length - 1 ? (
                         <span className="text-border">/</span>
                     ) : null}

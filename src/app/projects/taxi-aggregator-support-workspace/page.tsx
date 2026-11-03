@@ -1,9 +1,9 @@
+import { projectMetadata } from '@/lib/seo'
 import React from 'react'
 import { ProjectPageShell } from '@/components/ProjectPageShell'
 import ProjectHero from '@/components/ProjectHero'
 import ProjectOverview from '@/components/ProjectOverview'
 import ProblemSection from '@/components/ProblemSection'
-import DemoSection from '@/components/DemoSection'
 import TabSection from '@/components/TabSection'
 import OptimizationSection from '@/components/OptimizationSection'
 import { GallerySection } from '@/components/GallerySection'
@@ -15,11 +15,14 @@ import HitoLink from '@/components/HitoLink'
 import { ContextImageSection } from '@/components/ContextImageSection'
 import { ProjectFooter } from '@/components/ProjectFooter'
 import { FigmaPreview } from '@/components/FigmaPreview'
+import CityMobileInteractivePreview from '@/components/CityMobileInteractivePreview'
 import {
     DossierBar,
     DossierFrame,
     DossierSectionHeading,
 } from '@/components/ascii/Dossier'
+
+export const metadata = projectMetadata('/projects/taxi-aggregator-support-workspace')
 
 export default function TaxiAggregatorSupportWorkspacePage() {
     const currentProjectIndex = projects.findIndex(
@@ -37,7 +40,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                 viewBox="0 0 52 52"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="text-blue-900 dark:text-blue-100 opacity-40 hover:opacity-60 transition-opacity duration-300"
+                className="text-blue-900 dark:text-blue-100 opacity-[var(--opacity-client-logo)] hover:opacity-[var(--opacity-muted)] transition-opacity duration-[var(--motion-slow-duration)]"
             >
                 <path
                     fillRule="evenodd"
@@ -102,10 +105,6 @@ export default function TaxiAggregatorSupportWorkspacePage() {
         'Since the number of drivers in the city was limited, losing them meant losing real revenue - and this often happened due to delayed or missing support responses.\n\n' +
         'The support team was simply overwhelmed. There were only two options: scale the team massively - or rethink the entire system.\n\n' +
         'To meet peak volume, the company would have needed nearly 200 operators - 4x the existing team.'
-
-    const demoTitle = 'City-Wide Support System'
-    const demoDescription =
-        'Operators could see the issue, the trip context, and the next step in one screen. That reduced delays, handoffs, and missed requests.'
 
     // Gallery items configuration - customize content here
     const galleryItems = [
@@ -204,26 +203,26 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                             description="The redesign helped the same team handle more requests with fewer missed messages."
                         />
 
-                        <div className="w-full overflow-hidden border border-border">
+                        <div className="w-full overflow-hidden border-[length:var(--stroke-thin)] border-border">
                             <table className="w-full text-sm">
                                 <thead>
                                     <tr className="bg-surface-muted">
-                                        <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.24em] text-foreground sm:px-6">
+                                        <th className="px-4 py-3 text-left text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-control)] text-foreground sm:px-6">
                                             Metric
                                         </th>
-                                        <th className="px-4 py-3 text-right text-[11px] uppercase tracking-[0.24em] text-foreground sm:px-6">
+                                        <th className="px-4 py-3 text-right text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-control)] text-foreground sm:px-6">
                                             Before
                                         </th>
-                                        <th className="px-4 py-3 text-right text-[11px] uppercase tracking-[0.24em] text-foreground sm:px-6">
+                                        <th className="px-4 py-3 text-right text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-control)] text-foreground sm:px-6">
                                             After
                                         </th>
-                                        <th className="px-4 py-3 text-right text-[11px] uppercase tracking-[0.24em] text-foreground sm:px-6">
+                                        <th className="px-4 py-3 text-right text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-control)] text-foreground sm:px-6">
                                             Improvement
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="border-t border-border transition-colors hover:bg-surface-muted">
+                                    <tr className="border-t-[length:var(--stroke-thin)] border-border transition-colors hover:bg-surface-muted">
                                         <td className="px-4 py-4 text-muted sm:px-6">
                                             Daily Requests Handled
                                         </td>
@@ -237,7 +236,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                                             +150%
                                         </td>
                                     </tr>
-                                    <tr className="border-t border-border transition-colors hover:bg-surface-muted">
+                                    <tr className="border-t-[length:var(--stroke-thin)] border-border transition-colors hover:bg-surface-muted">
                                         <td className="px-4 py-4 text-muted sm:px-6">
                                             Avg. Requests per Operator
                                         </td>
@@ -251,7 +250,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                                             +150%
                                         </td>
                                     </tr>
-                                    <tr className="border-t border-border transition-colors hover:bg-surface-muted">
+                                    <tr className="border-t-[length:var(--stroke-thin)] border-border transition-colors hover:bg-surface-muted">
                                         <td className="px-4 py-4 text-muted sm:px-6">
                                             Failed Requests ({'>'}60s wait)
                                         </td>
@@ -265,7 +264,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                                             -79%
                                         </td>
                                     </tr>
-                                    <tr className="border-t border-border transition-colors hover:bg-surface-muted">
+                                    <tr className="border-t-[length:var(--stroke-thin)] border-border transition-colors hover:bg-surface-muted">
                                         <td className="px-4 py-4 text-muted sm:px-6">
                                             Unanswered Requests
                                         </td>
@@ -279,7 +278,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                                             -94%
                                         </td>
                                     </tr>
-                                    <tr className="border-t border-border transition-colors hover:bg-surface-muted">
+                                    <tr className="border-t-[length:var(--stroke-thin)] border-border transition-colors hover:bg-surface-muted">
                                         <td className="px-4 py-4 text-muted sm:px-6">
                                             Required Operators
                                         </td>
@@ -293,7 +292,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                                             -75%
                                         </td>
                                     </tr>
-                                    <tr className="border-t border-border transition-colors hover:bg-surface-muted">
+                                    <tr className="border-t-[length:var(--stroke-thin)] border-border transition-colors hover:bg-surface-muted">
                                         <td className="px-4 py-4 text-muted sm:px-6">
                                             Resolution Rate
                                         </td>
@@ -307,7 +306,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
                                             +35%
                                         </td>
                                     </tr>
-                                    <tr className="border-t border-border transition-colors hover:bg-surface-muted">
+                                    <tr className="border-t-[length:var(--stroke-thin)] border-border transition-colors hover:bg-surface-muted">
                                         <td className="px-4 py-4 text-muted sm:px-6">
                                             Customer Satisfaction
                                         </td>
@@ -349,13 +348,7 @@ export default function TaxiAggregatorSupportWorkspacePage() {
     // Results tab content - includes Demo, Gallery, and Context sections
     const resultContent = (
         <div className="space-y-8">
-            {/* Demo Section */}
-            <DemoSection
-                title={demoTitle}
-                description={demoDescription}
-                image="vk/demo"
-                caption="Main support workspace"
-            />
+            <CityMobileInteractivePreview />
 
             {/* Gallery Section */}
             <GallerySection items={galleryItems} />
@@ -443,8 +436,13 @@ export default function TaxiAggregatorSupportWorkspacePage() {
     )
 
     return (
-        <ProjectPageShell>
-            <div className="relative mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+        <ProjectPageShell
+            project={{
+                projectId: 'taxi-aggregator-support-workspace',
+                title: 'Taxi Aggregator Support Workspace',
+            }}
+        >
+            <div className="relative mx-auto w-full max-w-[var(--case-width-wide)] px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
                     <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                         <ProjectHero

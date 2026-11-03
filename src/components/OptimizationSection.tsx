@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import {
     DossierBar,
@@ -41,43 +40,11 @@ export default function OptimizationSection({
         },
     ]
     const resolvedItems = items ?? defaultItems
-    const [isVisible, setIsVisible] = React.useState(false)
-    const sectionRef = React.useRef<HTMLDivElement>(null)
-
-    React.useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true)
-                }
-            },
-            {
-                threshold: 0.25,
-                rootMargin: '-50px 0px',
-            },
-        )
-
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current)
-        }
-
-        return () => {
-            if (sectionRef.current) {
-                observer.unobserve(sectionRef.current)
-            }
-        }
-    }, [])
-
     return (
         <section
             className={cn('w-full py-12 sm:py-16', className)}
-            ref={sectionRef}
         >
-            <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={isVisible ? { opacity: 1, y: 0 } : undefined}
-                transition={{ duration: 0.24, ease: 'easeOut' }}
-            >
+            <div>
                 <DossierFrame>
                     <DossierBar
                         label="Section"
@@ -91,13 +58,13 @@ export default function OptimizationSection({
                             description="The main product and workflow changes in this part of the project."
                         />
 
-                        <div className="grid gap-px border border-border bg-border md:grid-cols-3">
+                        <div className="grid gap-px border-[length:var(--stroke-thin)] border-border bg-border md:grid-cols-3">
                             {resolvedItems.map((item) => (
                                 <div
                                     key={item.title}
                                     className="bg-surface px-4 py-4"
                                 >
-                                    <div className="text-[11px] uppercase tracking-[0.28em] text-muted">
+                                    <div className="text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-label)] text-muted">
                                         Change
                                     </div>
                                     <h3 className="mt-3 text-lg font-bold text-foreground">
@@ -111,7 +78,7 @@ export default function OptimizationSection({
                         </div>
                     </div>
                 </DossierFrame>
-            </motion.div>
+            </div>
         </section>
     )
 }

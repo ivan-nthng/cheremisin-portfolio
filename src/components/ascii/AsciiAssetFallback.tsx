@@ -8,12 +8,6 @@ interface AsciiAssetFallbackProps {
     compact?: boolean
 }
 
-const FALLBACK_ART = String.raw`   .----------.
-   |  x    x  |
-   |    __    |
-   |  \____/  |
-   '----------'`
-
 export function AsciiAssetFallback({
     title = 'No preview available',
     label = 'missing asset',
@@ -24,23 +18,17 @@ export function AsciiAssetFallback({
     return (
         <div
             className={cn(
-                'flex h-full min-h-[220px] w-full items-center justify-center bg-background px-4 py-6 text-center',
-                compact ? 'min-h-[180px] py-4' : null,
+                'flex h-full min-h-[var(--media-placeholder-min)] w-full items-center justify-center bg-background px-4 py-6 text-center',
+                compact ? 'min-h-[var(--media-placeholder-compact-min)] py-4' : null,
                 className,
             )}
         >
             <div className="space-y-3">
-                <pre
-                    aria-hidden="true"
-                    className="mx-auto w-fit text-[10px] leading-4 text-muted sm:text-[11px]"
-                >
-                    {FALLBACK_ART}
-                </pre>
-                <div className="text-[11px] uppercase tracking-[0.28em] text-foreground">
+                <div className="text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-label)] text-foreground">
                     {title}
                 </div>
-                <div className="text-[10px] uppercase tracking-[0.22em] text-muted">
-                    :: {kind} / {label}
+                <div className="text-[length:var(--type-micro-size)] uppercase tracking-[var(--tracking-media-note)] text-muted">
+                    {kind} / {label}
                 </div>
             </div>
         </div>

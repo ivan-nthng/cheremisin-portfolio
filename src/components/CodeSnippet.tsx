@@ -74,9 +74,9 @@ export function CodeSnippet({
     if (!mounted) {
         return (
             <div className="py-12 sm:py-16">
-                <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
-                    <div className="aspect-[16/9] border border-border bg-surface-muted" />
-                    <div className="animate-pulse space-y-4 border border-border px-4 py-4">
+                <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_var(--case-code-aside)]">
+                    <div className="aspect-[16/9] border-[length:var(--stroke-thin)] border-border bg-surface-muted" />
+                    <div className="animate-pulse space-y-4 border-[length:var(--stroke-thin)] border-border px-4 py-4">
                         <div className="h-4 w-24 bg-surface-muted" />
                         <div className="h-10 w-full bg-surface-muted" />
                         <div className="h-12 w-full bg-surface-muted" />
@@ -97,19 +97,15 @@ export function CodeSnippet({
         <div className="py-12 sm:py-16">
             <DossierFrame>
                 <DossierBar label="Section" index="10" state="Code states" />
-                <div className="grid gap-8 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-[minmax(0,1fr)_320px]">
+                <div className="grid gap-8 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-[minmax(0,1fr)_var(--case-code-aside)]">
                     <motion.div
-                        initial={{ opacity: 0, y: 12 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: '-80px' }}
-                        transition={{ duration: 0.24 }}
                     >
                         <DossierMediaViewport
                             label="img 01"
                             title={alt}
                             note="light + dark"
                         >
-                            <div className="relative aspect-[16/9] overflow-hidden border border-border bg-background">
+                            <div className="relative aspect-[16/9] overflow-hidden border-[length:var(--stroke-thin)] border-border bg-background">
                                 <Image
                                     src={currentImage}
                                     alt={alt}
@@ -123,11 +119,7 @@ export function CodeSnippet({
                     </motion.div>
 
                     <motion.div
-                        initial={{ opacity: 0, y: 12 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: '-80px' }}
-                        transition={{ duration: 0.24, delay: 0.04 }}
-                        className="space-y-4 border border-border px-4 py-4"
+                        className="space-y-4 border-[length:var(--stroke-thin)] border-border px-4 py-4"
                     >
                         <DossierSectionHeading
                             label="Code / note"
@@ -144,7 +136,7 @@ export function CodeSnippet({
                                     )
                                     if (newSize) setSelectedSize(newSize)
                                 }}
-                                className="w-full appearance-none border border-border bg-surface px-4 py-3 pr-10 text-sm text-foreground transition-colors hover:bg-surface-muted focus:outline-none focus:ring-2 focus:ring-accent/30"
+                                className="w-full appearance-none border-[length:var(--stroke-thin)] border-border bg-surface px-4 py-3 pr-10 text-sm text-foreground transition-colors hover:bg-surface-muted focus:outline-none focus:ring-[length:var(--stroke-focus)] focus:ring-[color:var(--focus-ring-color)]"
                             >
                                 {sizes.map((size) => (
                                     <option key={size.name} value={size.name}>
@@ -157,14 +149,11 @@ export function CodeSnippet({
 
                         <motion.div
                             key={`${selectedSize.name}-${currentTheme}`}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.2 }}
                             className="space-y-4"
                         >
                             <pre
                                 className={cn(
-                                    'overflow-x-auto border p-4 text-xs',
+                                    'overflow-x-auto border-[length:var(--stroke-thin)] p-4 text-xs',
                                     currentTheme === 'dark'
                                         ? 'border-border bg-black text-surface'
                                         : 'border-border-strong bg-foreground text-background',
@@ -174,8 +163,8 @@ export function CodeSnippet({
                             </pre>
 
                             {selectedSize.tokens ? (
-                                <div className="space-y-2 border border-border px-4 py-4 text-xs text-muted">
-                                    <h4 className="text-[11px] uppercase tracking-[0.28em] text-foreground">
+                                <div className="space-y-2 border-[length:var(--stroke-thin)] border-border px-4 py-4 text-xs text-muted">
+                                    <h4 className="text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-label)] text-foreground">
                                         Token values
                                     </h4>
                                     <p>

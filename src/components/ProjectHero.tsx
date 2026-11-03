@@ -3,7 +3,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { AsciiAssetFallback } from '@/components/ascii/AsciiAssetFallback'
 import {
     DossierBar,
@@ -104,22 +103,19 @@ export default function ProjectHero({
     role = 'Lead Product Designer',
 }: ProjectHeroProps) {
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.24, ease: 'easeOut' }}
+        <div
         >
             <DossierFrame>
                 <DossierBar label="Intro" index="01" state="Project" />
                 <div className="grid lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
                     <div className="px-4 py-6 sm:px-6 sm:py-8">
                         <div className="space-y-6">
-                            <div className="terminal-divider">Project</div>
+                            <div className="case-caption">Project</div>
                             <div className="space-y-4">
                                 <h1 className="text-3xl font-bold leading-tight text-foreground sm:text-4xl">
                                     {title}
                                 </h1>
-                                <p className="max-w-2xl text-sm leading-7 text-muted sm:text-[15px]">
+                                <p className="max-w-2xl text-sm leading-7 text-muted sm:text-[length:var(--type-description-size)]">
                                     {description}
                                 </p>
                             </div>
@@ -137,7 +133,7 @@ export default function ProjectHero({
                                                 className="inline-flex items-center gap-3 hover:text-accent"
                                             >
                                                 <span>{clientName}</span>
-                                                <span className="inline-flex max-h-8 items-center opacity-60 grayscale dark:invert">
+                                                <span className="inline-flex max-h-8 items-center opacity-[var(--opacity-muted)] grayscale dark:invert">
                                                     {clientLogo.svg}
                                                 </span>
                                             </Link>
@@ -151,7 +147,7 @@ export default function ProjectHero({
                         </div>
                     </div>
 
-                    <div className="border-t border-dashed border-border pt-4 lg:border-l lg:border-dashed lg:border-t-0 lg:pl-6">
+                    <div className="border-t-[length:var(--stroke-thin)] border-dashed border-border pt-4 lg:border-l-[length:var(--stroke-thin)] lg:border-dashed lg:border-t-0 lg:pl-6">
                         <div className="grid gap-4">
                             <DossierMediaViewport
                                 label="img 01"
@@ -180,6 +176,6 @@ export default function ProjectHero({
                     </div>
                 </div>
             </DossierFrame>
-        </motion.div>
+        </div>
     )
 }

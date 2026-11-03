@@ -1,12 +1,13 @@
-import type { Metadata } from 'next'
 import { HomePage } from '@/components/layout/HomePage'
+import { homeDescription, homeStructuredData, homeTitle, pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-    title: 'Ivan Cheremisin',
-    description:
-        'Portfolio of Ivan Cheremisin, a product designer and engineer working on internal tools, AI features, design systems, and workflow-heavy software.',
-}
+export const metadata = pageMetadata('/', homeTitle, homeDescription)
 
 export default function Home() {
-    return <HomePage />
+    return <>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+            __html: JSON.stringify(homeStructuredData).replace(/</g, '\\u003c'),
+        }} />
+        <HomePage />
+    </>
 }

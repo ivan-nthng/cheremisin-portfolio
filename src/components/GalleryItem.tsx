@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { RepeatReveal } from '@/components/portfolio/RepeatReveal'
 import { Lightbox } from './Lightbox'
 import { useTheme } from 'next-themes'
 import { AsciiAssetFallback } from '@/components/ascii/AsciiAssetFallback'
@@ -55,7 +55,7 @@ export function GalleryItem({
         setMounted(true)
     }, [])
 
-    const effectiveTheme = resolvedTheme || theme
+    const effectiveTheme = mounted ? resolvedTheme || theme : 'light'
     const currentImage = effectiveTheme === 'dark' ? imageDark : imageLight
     const currentVideo = effectiveTheme === 'dark' ? videoDark : videoLight
 
@@ -63,14 +63,11 @@ export function GalleryItem({
         setMediaError(false)
     }, [currentImage, currentVideo])
 
-    if (!mounted) {
-        return null
-    }
 
     return (
         <>
-            <div
-                className={`grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_280px] ${
+            <RepeatReveal
+                className={`grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_var(--case-media-aside)] ${
                     isReversed ? 'lg:[&>*:first-child]:order-last' : ''
                 }`}
             >
@@ -79,15 +76,15 @@ export function GalleryItem({
                     title={title}
                     note={currentVideo ? 'autoplay loop' : 'click to inspect'}
                 >
-                    <motion.div
-                        className="relative w-full"
-                        whileHover={{ y: -2 }}
-                        transition={{ duration: 0.16 }}
+                    <button
+                        type="button"
+                        aria-label={`Open ${title} in lightbox`}
+                        className="relative block w-full text-left"
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
                         onClick={() => onOpenLightbox?.()}
                     >
-                        <div className="relative aspect-[16/9] border border-border bg-background">
+                        <div className="relative aspect-[16/9] border-[length:var(--stroke-thin)] border-border bg-background">
                             {currentVideo && !mediaError ? (
                                 <video
                                     key={currentVideo}
@@ -120,21 +117,17 @@ export function GalleryItem({
                             )}
                         </div>
                         {!currentVideo && isHovered ? (
-                            <div className="absolute bottom-3 left-3 border border-border-strong bg-foreground px-3 py-1 text-[11px] uppercase tracking-[0.22em] text-background">
+                            <div className="absolute bottom-3 left-3 border-[length:var(--stroke-thin)] border-border-strong bg-foreground px-3 py-1 text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-media-note)] text-background">
                                 Open viewport
                             </div>
                         ) : null}
-                    </motion.div>
+                    </button>
                 </DossierMediaViewport>
 
-                <motion.div
-                    className="border border-border px-4 py-4"
-                    initial={{ opacity: 0, y: 12 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 0.24, delay: 0.04 }}
+                <div
+                    className="border-[length:var(--stroke-thin)] border-border px-4 py-4"
                 >
-                    <div className="text-[11px] uppercase tracking-[0.28em] text-muted">
+                    <div className="text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-label)] text-muted">
                         Note
                     </div>
                     <h3 className="mt-3 text-lg font-bold text-foreground">
@@ -143,8 +136,8 @@ export function GalleryItem({
                     <p className="mt-3 text-sm leading-7 text-muted">
                         {description}
                     </p>
-                </motion.div>
-            </div>
+                </div>
+            </RepeatReveal>
 
             <Lightbox
                 isOpen={isLightboxOpen}

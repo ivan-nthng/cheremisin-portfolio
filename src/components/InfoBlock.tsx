@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { XMarkIcon, InformationCircleIcon } from '@heroicons/react/24/outline'
+import { cssNumber } from '@/lib/utils'
 
 // Props interface
 interface InfoBlockProps {
@@ -37,10 +38,10 @@ export function InfoBlock({
         <AnimatePresence>
             {/* Main container with background and border */}
             <motion.div
-                initial={{ opacity: 0, y: -10 }}
+                initial={{ opacity: 0, y: cssNumber('--motion-note-enter-y', -10) }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="relative flex gap-3 border border-border bg-surface px-3 py-3"
+                exit={{ opacity: 0, y: cssNumber('--motion-note-enter-y', -10) }}
+                className="relative flex gap-3 border-[length:var(--stroke-thin)] border-border bg-surface px-3 py-3"
             >
                 {/* Optional info icon */}
                 {showIcon && (
@@ -52,7 +53,7 @@ export function InfoBlock({
                 {/* Content container */}
                 <div className="flex-grow space-y-2">
                     {/* Header text */}
-                    <h4 className="text-[11px] font-semibold uppercase tracking-[0.24em] text-foreground">
+                    <h4 className="text-[length:var(--type-meta-size)] font-semibold uppercase tracking-[var(--tracking-case-control)] text-foreground">
                         {header}
                     </h4>
 

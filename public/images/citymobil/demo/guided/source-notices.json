@@ -1,0 +1,456 @@
+{
+  "fileKey": "a1FIpM2QJ0y79EO170WQDG",
+  "method": "Read-only exportAsync SVG_STRING from exact Figma node slots; native bytes saved without path edits. Context URL placeholders rejected and retained in test-results/port17-guided/rejected-context-assets. Earlier asset files retained as evidence. Dark progress/info/branch reuse the correct light native silhouettes with existing semantic mask; clipped dark instances were not exportable.",
+  "assets": [
+    {
+      "key": "workspace/imgMcSymbol",
+      "nodeId": "6201:7793",
+      "name": "mc_symbol",
+      "width": 15.930899620056152,
+      "height": 9.848209381103516,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgMcSymbol.svg",
+      "sha256": "a00b65d99ce023bb80b85033de37a3019fb9b933b16a1b79b990f8bc866caa34"
+    },
+    {
+      "key": "workspace/imgCarFront",
+      "nodeId": "6201:7353",
+      "name": "car_front",
+      "width": 16,
+      "height": 16,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgCarFront.svg",
+      "sha256": "fcb06cf599b8e6a43941756362bc6d771b2565a570e96228bcc43fab6c2f69c4"
+    },
+    {
+      "key": "workspace/imgStateCompleted",
+      "nodeId": "6210:995",
+      "name": "state=completed",
+      "width": 16,
+      "height": 16,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgStateCompleted.svg",
+      "sha256": "eb69ce596167c194f81f8ffdbbaead8005476013052c846c27878c88c1eaa8b5"
+    },
+    {
+      "key": "workspace/imgVector",
+      "nodeId": "6215:1749",
+      "name": "Vector",
+      "width": 36,
+      "height": 16,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgVector.svg",
+      "sha256": "51accd6ba102d0834bb0865ea46d95412f00297b01c74712185c94737d2eb319"
+    },
+    {
+      "key": "workspace/imgInbox",
+      "nodeId": "I6514:19918;6214:1516",
+      "name": "inbox",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgInbox.svg",
+      "sha256": "3a8fcac446df89b2fdd1b3aeb6ad71d9a9bf503c3e438cbe93c05e5c49007f18"
+    },
+    {
+      "key": "workspace/imgRatingS",
+      "nodeId": "I6514:19919;6214:1423",
+      "name": "Rating_s",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgRatingS.svg",
+      "sha256": "24f11ecfec4f512ea45eb8c6f8d99a1469618d7a7f549da844e47640f595a1c6"
+    },
+    {
+      "key": "workspace/imgComment",
+      "nodeId": "I6514:19920;6214:1425",
+      "name": "comment",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgComment.svg",
+      "sha256": "be5c1a0de38fdfb8dcb7357c3434327d1adeb494fd492674ff3f38ea0420f2fa"
+    },
+    {
+      "key": "workspace/imgKnowledge",
+      "nodeId": "I6514:19921;6214:1423",
+      "name": "knowledge",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgKnowledge.svg",
+      "sha256": "59cadfc7772c136184cbc83c6e77fb25c45bc3f7fca69a85df75855dda93d63e"
+    },
+    {
+      "key": "workspace/imgLocation1",
+      "nodeId": "I6514:19934;4450:68",
+      "name": "location_1",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgLocation1.svg",
+      "sha256": "7976ce458398518486867df81befc70698d522839f4c3001bc35bcaa9d82be11"
+    },
+    {
+      "key": "workspace/imgCall",
+      "nodeId": "I6514:19935;4450:68",
+      "name": "Call",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgCall.svg",
+      "sha256": "165add38e916e7e7cf7fdc72118d1bb557a82dc13a099efc2e7853428e6d9214"
+    },
+    {
+      "key": "workspace/imgPayment",
+      "nodeId": "I6514:20583;4450:68",
+      "name": "payment",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgPayment.svg",
+      "sha256": "f905de36150c4595f540a0690aa022014fc2c4e9074ff90f10d504c535569005"
+    },
+    {
+      "key": "workspace/imgMore",
+      "nodeId": "I6540:12010;4296:440",
+      "name": "more",
+      "width": 16,
+      "height": 16,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgMore.svg",
+      "sha256": "c40088f4f2160cfd00c38245a20ea35392544ece4ad65a5db683829cdf8fe717"
+    },
+    {
+      "key": "workspace/imgTimer",
+      "nodeId": "I6514:19973;4867:3263",
+      "name": "timer",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgTimer.svg",
+      "sha256": "5be70a38b1c928f728f9d83799153ea83d5e329fbda616f3780d7e0b702b869b"
+    },
+    {
+      "key": "workspace/imgCheck",
+      "nodeId": "I6514:19974;2258:191",
+      "name": "check",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgCheck.svg",
+      "sha256": "0aa1924d91c974fead43f8d5ec676fcf7dec635e57841a0ae0e88d0c1c08ea1c"
+    },
+    {
+      "key": "workspace/imgCall1",
+      "nodeId": "I6543:12262;4867:2472",
+      "name": "Call",
+      "width": 16,
+      "height": 16,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgCall1.svg",
+      "sha256": "1510de4b36ba5c2a29b74d4ae3b12c7bed558067dc8cff43af02a41152316d1d"
+    },
+    {
+      "key": "workspace/imgMessage",
+      "nodeId": "I6514:19995;6222:3392;4292:727",
+      "name": "message",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgMessage.svg",
+      "sha256": "32a8147163063be9a04ead2db2cc63a0da0551e615eb51073336f29301d5680f"
+    },
+    {
+      "key": "workspace/imgSortDown",
+      "nodeId": "I6514:19995;6222:3392;4292:729",
+      "name": "sort-down",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgSortDown.svg",
+      "sha256": "e2922a200f97dae14e5a8c99582a0fcde6dd33477d8fe1ca22565fe351d3520c"
+    },
+    {
+      "key": "workspace/imgFlash",
+      "nodeId": "I6514:19995;6222:3399;4867:2472",
+      "name": "flash",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgFlash.svg",
+      "sha256": "9fc1bb32943facc73151b7e884e2e59dd2cdaa26d09d1472ffeae1690c77d494"
+    },
+    {
+      "key": "workspace/imgUnmute",
+      "nodeId": "I6514:19995;6222:4813;4867:2472",
+      "name": "unmute",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgUnmute.svg",
+      "sha256": "0ddaa6f0e486ec3b0df8969519c7abfa8c3388addd325d2d7c6b8ed0a41a2ae3"
+    },
+    {
+      "key": "workspace/imgAttach",
+      "nodeId": "I6514:19995;6222:3400;4867:2472",
+      "name": "attach",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgAttach.svg",
+      "sha256": "e514ce3917495b369c600d16b97c41cccc3ff936ce81748f20c199578f51279a"
+    },
+    {
+      "key": "workspace/imgMore1",
+      "nodeId": "I6514:19995;6222:4889;4296:440",
+      "name": "more",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgMore1.svg",
+      "sha256": "28c2d2567cc560e900322cd9f372fe14846980fb0423960ed49c6417d0f00e9e"
+    },
+    {
+      "key": "workspace/imgTime",
+      "nodeId": "I6514:19995;6222:3402;4296:440",
+      "name": "time",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgTime.svg",
+      "sha256": "47b69b6ecf918d10b9bc796d298d2b22f7386cdb83a67f527d41746933d78c7a"
+    },
+    {
+      "key": "workspace/imgSend",
+      "nodeId": "I6514:19995;6222:3403;4867:3263",
+      "name": "send",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-workspace-imgSend.svg",
+      "sha256": "fa0cbf6852121c50f9dffe3e4c159d56473204eb16729c939b6cade0ad56ccea"
+    },
+    {
+      "key": "guided/reply",
+      "nodeId": "I6302:15360;6284:4546;4292:727",
+      "name": "message",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-guided-reply.svg",
+      "sha256": "0a7cad467ea73199940847c6a6cbc946bf4930fe7933eae56a82a945e499de18"
+    },
+    {
+      "key": "guided/ticket",
+      "nodeId": "I6302:16084;4450:68",
+      "name": "ticket",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-guided-ticket.svg",
+      "sha256": "edc1ec0f72875a1af2c2187561914049295e2cc20a5c89d2d446ff2a7ab1228f"
+    },
+    {
+      "key": "guided/media",
+      "nodeId": "I6302:16085;4450:68",
+      "name": "image",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-guided-media.svg",
+      "sha256": "3d7fd81c6f60da405bf95a22164ecfe7b7b12a348e77fc5b3e614fe8d48af2ab"
+    },
+    {
+      "key": "guided/file",
+      "nodeId": "I6302:16086;4450:68",
+      "name": "doc",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-guided-file.svg",
+      "sha256": "1bd074d8be40ad367ba5edca06b3e80c5b7236a3c105899b50de80a65c8e0c2f"
+    },
+    {
+      "key": "guided/close",
+      "nodeId": "I6302:15365;4296:440",
+      "name": "close",
+      "width": 16,
+      "height": 16,
+      "path": "public/images/citymobil/demo/guided/native-guided-close.svg",
+      "sha256": "36c8ecfde7a288f59a1b2b819c003d3fce73ce524f5059be3809a34590004d57"
+    },
+    {
+      "key": "guided/mute",
+      "nodeId": "I6302:15360;6280:7818;4867:2472",
+      "name": "mute",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-guided-mute.svg",
+      "sha256": "be3bc1fd431a4d00ae0cae7b100a07ca2cab88b505f15412d26a44ed67756d0e"
+    },
+    {
+      "key": "guided/hangup",
+      "nodeId": "I6302:15360;6280:7819;4296:521",
+      "name": "end_call",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-guided-hangup.svg",
+      "sha256": "bc8cec986f0cebe8e5f9338ba95594f30b30e4d07fcdde3377b28c2777e50879"
+    },
+    {
+      "key": "guided/call-more",
+      "nodeId": "I6302:15360;6280:7817;4867:2472",
+      "name": "more",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-guided-call-more.svg",
+      "sha256": "abfe49578219d5c2994a092ffd441f458f2e6f74d9d4a94f49253f294677e46e"
+    },
+    {
+      "key": "guided/loader",
+      "nodeId": "6569:4213",
+      "name": "ui",
+      "width": 16,
+      "height": 16,
+      "path": "public/images/citymobil/demo/guided/native-guided-loader.svg",
+      "sha256": "570e658f33d1f7b444a05aabf5cca1392eef7c1522bf613e9ca3e06eb1647431"
+    },
+    {
+      "key": "guided/visa",
+      "nodeId": "6280:3479",
+      "name": "social/Visa",
+      "width": 16,
+      "height": 16,
+      "path": "public/images/citymobil/demo/guided/native-guided-visa.svg",
+      "sha256": "1a25ca25ed579a54a09aed5ddb01650abe3af48366d73e6f57b1d49725d83f3e"
+    },
+    {
+      "key": "scripts/imgInfo",
+      "nodeId": "6626:5043",
+      "name": "info",
+      "width": 16,
+      "height": 16,
+      "path": "public/images/citymobil/demo/guided/native-scripts-imgInfo.svg",
+      "sha256": "d6eb9222b30d63c0b44cdd43028605394c9da535bca374613333973d3a3e756b"
+    },
+    {
+      "key": "scripts/imgBranch",
+      "nodeId": "I6626:5067;6235:6304",
+      "name": "branch",
+      "width": 16,
+      "height": 16,
+      "path": "public/images/citymobil/demo/guided/native-scripts-imgBranch.svg",
+      "sha256": "e854a0510b1ef05bdf6e275679357c1d2900a71b375ab24ef4db34eade0bd2a2"
+    },
+    {
+      "key": "dark-info/imgLocation1",
+      "nodeId": "I6756:16805;4450:68",
+      "name": "location_1",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-dark-info-imgLocation1.svg",
+      "sha256": "5129893d57355b23bf1e7c172a8afcde5d6a854f9108f4054c772c8435b6eabd"
+    },
+    {
+      "key": "dark-info/imgCall",
+      "nodeId": "I6756:16806;4450:68",
+      "name": "Call",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-dark-info-imgCall.svg",
+      "sha256": "f79f73f5245f4906ab28e7c22b8ab580c99d4b3fc42b8140c05ea1a7a08855b3"
+    },
+    {
+      "key": "dark-info/imgPayment",
+      "nodeId": "I6756:16807;4450:68",
+      "name": "payment",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-dark-info-imgPayment.svg",
+      "sha256": "c8da644d7fbaac6dab5db223018bcb24fb1a1fe666f6c19bc1cd8bd9b4edba39"
+    },
+    {
+      "key": "dark-info/imgStatusIndicator",
+      "nodeId": "I6756:16809;6626:4702;6210:2232",
+      "name": "status-indicator",
+      "width": 16,
+      "height": 16,
+      "path": "public/images/citymobil/demo/guided/native-dark-info-imgStatusIndicator.svg",
+      "sha256": "3b83a0299b7da59a076b1e91d5294fa1f7a5f51cb77a220c9449d8d2fc40da0a"
+    },
+    {
+      "key": "dark-info/imgCarFront",
+      "nodeId": "I6756:16809;6626:4708",
+      "name": "car_front",
+      "width": 16,
+      "height": 16,
+      "path": "public/images/citymobil/demo/guided/native-dark-info-imgCarFront.svg",
+      "sha256": "1ac02ff3afc5332282d6eef0fccfee2276c1c9db268baf99abe55b11b4992d2f"
+    },
+    {
+      "key": "dark-info/imgMore",
+      "nodeId": "I6756:16809;6626:4736;4296:440",
+      "name": "more",
+      "width": 16,
+      "height": 16,
+      "path": "public/images/citymobil/demo/guided/native-dark-info-imgMore.svg",
+      "sha256": "cc18eafe453944e7a8bfb4589681956bb532aacf684bf933f5c8ba998debdde9"
+    },
+    {
+      "key": "dark-info/imgTimer",
+      "nodeId": "I6756:16812;4867:3263",
+      "name": "timer",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-dark-info-imgTimer.svg",
+      "sha256": "f0753500c55b82c17068ff83468948a947e175fbf37dbc02ffecc62ab7e6c141"
+    },
+    {
+      "key": "dark-info/imgCheck",
+      "nodeId": "I6756:16813;2258:191",
+      "name": "check",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-dark-info-imgCheck.svg",
+      "sha256": "54b0a663e32707a529f8c78c307e5c4c0c556de9ae87b9bea86d7fe8ff6fc4b4"
+    },
+    {
+      "key": "menu/imgArrowComplexUp",
+      "nodeId": "I6219:2234;6219:2172",
+      "name": "arrow/complex/up",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-menu-imgArrowComplexUp.svg",
+      "sha256": "5453ec6090aa04a39b95226e480d197b1475d8e80a9470449b65553bbbbcc6ca"
+    },
+    {
+      "key": "menu/imgDown",
+      "nodeId": "I6219:2235;6219:2172",
+      "name": "down",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-menu-imgDown.svg",
+      "sha256": "98c069691b651f23212f12c6ad5a32b5fe6d5a7efe2ea609462faca7da447c3f"
+    },
+    {
+      "key": "menu/imgEnter",
+      "nodeId": "I6219:2238;6219:2172",
+      "name": "enter",
+      "width": 20,
+      "height": 20,
+      "path": "public/images/citymobil/demo/guided/native-menu-imgEnter.svg",
+      "sha256": "fa66fdaf109e16d6ece5f58656463e5d4bc1ca1f809b922e7cd0a815a2111828"
+    },
+    {
+      "key": "scripts/imgProgress",
+      "nodeId": "6626:5033",
+      "name": "progress",
+      "width": 16,
+      "height": 262,
+      "path": "public/images/citymobil/demo/guided/native-scripts-imgProgress.svg",
+      "sha256": "6092fd1fce5a895fd6065eca1c0c4ae878671ba423e8c4ab1f2da28bea5934a7"
+    },
+    {
+      "key": "scripts/imgProgress1",
+      "nodeId": "6626:5063",
+      "name": "progress",
+      "width": 16,
+      "height": 198,
+      "path": "public/images/citymobil/demo/guided/native-scripts-imgProgress1.svg",
+      "sha256": "35ece7991f1cc6896faaada9a6552bb7a91a8105effd6dd05167acdf0804b951"
+    },
+    {
+      "key": "guided/promo-ticket",
+      "nodeId": "6201:7883",
+      "name": "ticket",
+      "width": 16,
+      "height": 16,
+      "path": "public/images/citymobil/demo/guided/native-guided-promo-ticket.svg",
+      "sha256": "46c91ec202b07218f1a5543d5cd2f00631fddc7c28e179434fe0647a165162a3"
+    },
+    {
+      "key": "guided/copy",
+      "nodeId": "4310:540",
+      "name": "copy",
+      "width": 16,
+      "height": 16,
+      "path": "public/images/citymobil/demo/guided/native-guided-copy.svg",
+      "sha256": "676f6947b7c6cf4ba3572d5a2ae2fea625ffb14cd46ad96356de50a65071f775"
+    }
+  ]
+}

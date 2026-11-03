@@ -1,3 +1,4 @@
+import { projectMetadata } from '@/lib/seo'
 import { ProjectPageShell } from '@/components/ProjectPageShell'
 import ProjectHero from '@/components/ProjectHero'
 import ProjectOverview from '@/components/ProjectOverview'
@@ -13,6 +14,8 @@ import {
     DossierSectionHeading,
 } from '@/components/ascii/Dossier'
 import { projects } from '@/lib/projects'
+
+export const metadata = projectMetadata('/projects/wrike')
 
 export default function WrikePage() {
     const currentProjectIndex = projects.findIndex(
@@ -119,8 +122,8 @@ export default function WrikePage() {
     ]
 
     return (
-        <ProjectPageShell>
-            <div className="relative mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+        <ProjectPageShell project={{ projectId: 'wrike', title: 'Wrike' }}>
+            <div className="relative mx-auto w-full max-w-[var(--case-width-wide)] px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
                     <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
                         <ProjectHero

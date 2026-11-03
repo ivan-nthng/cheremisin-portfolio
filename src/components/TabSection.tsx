@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
 interface TabSectionProps {
@@ -55,7 +54,7 @@ const TabSection: React.FC<TabSectionProps> = ({
                 // Smooth scroll to the content
                 window.scrollTo({
                     top: scrollPosition,
-                    behavior: 'smooth',
+                    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
                 })
             }
         }, 50)
@@ -81,41 +80,32 @@ const TabSection: React.FC<TabSectionProps> = ({
             <section className="w-full" ref={contentRef}>
                 <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12 gap-4 sm:gap-6 md:gap-8">
                     <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12">
-                        <motion.div
-                            key={activeTab}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                        >
+                        <div key={activeTab}>
                             {activeTab === 'process'
                                 ? processContent
                                 : activeTab === 'result'
                                 ? resultContent
                                 : devContent}
-                        </motion.div>
+                        </div>
                     </div>
                 </div>
             </section>
 
             {/* Fixed Tab Navigation */}
-            <motion.div
-                initial={{ opacity: 0, y: 100 }}
-                animate={{
-                    opacity: hasScrolled ? 1 : 0,
-                    y: hasScrolled ? 0 : 100,
-                }}
-                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            <div
+                inert={!hasScrolled}
+                aria-hidden={!hasScrolled}
+                style={{ visibility: hasScrolled ? 'visible' : 'hidden' }}
                 className={cn(
-                    'fixed z-50 pointer-events-none w-full',
+                    'fixed z-[var(--layer-chrome)] pointer-events-none w-full',
                     'sm:bottom-6 sm:left-0 sm:right-0',
                     'bottom-4 left-0 right-0',
                 )}
             >
-                <div className="relative mx-auto w-full max-w-[1120px] px-4 sm:px-6 lg:px-8">
+                <div className="relative mx-auto w-full max-w-[var(--case-width-wide)] px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
                         <div className="col-span-2 sm:col-span-4 md:col-span-8 lg:col-span-12 flex justify-center">
-                            <div className="pointer-events-auto flex gap-2 border border-border-strong bg-background/96 p-2 backdrop-blur-sm">
+                            <div className="pointer-events-auto flex gap-2 border-[length:var(--stroke-thin)] border-border-strong bg-[color:var(--surface-tabbar)] p-2 backdrop-blur-sm">
                                 {availableTabs.map((tab) => (
                                     <button
                                         key={tab}
@@ -128,7 +118,7 @@ const TabSection: React.FC<TabSectionProps> = ({
                                             )
                                         }
                                         className={cn(
-                                            'relative border px-3 py-2 text-[11px] uppercase tracking-[0.24em] transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-accent/30',
+                                            'relative border-[length:var(--stroke-thin)] px-3 py-2 text-[length:var(--type-meta-size)] uppercase tracking-[var(--tracking-case-control)] transition-colors duration-[var(--motion-fast-duration)] focus:outline-none focus:ring-[length:var(--stroke-focus)] focus:ring-[color:var(--focus-ring-color)]',
                                             {
                                                 'border-border-strong bg-foreground text-background':
                                                     activeTab === tab,
@@ -141,7 +131,6 @@ const TabSection: React.FC<TabSectionProps> = ({
                                         aria-controls={`${tab}-panel`}
                                         tabIndex={activeTab === tab ? 0 : -1}
                                     >
-                                        [{tabLabels[tab as 'process' | 'result' | 'dev'].charAt(0)}]{' '}
                                         {tabLabels[tab as 'process' | 'result' | 'dev']}
                                     </button>
                                 ))}
@@ -149,7 +138,7 @@ const TabSection: React.FC<TabSectionProps> = ({
                         </div>
                     </div>
                 </div>
-            </motion.div>
+            </div>
         </>
     )
 }

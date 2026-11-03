@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { InfoBlock } from './InfoBlock'
 import {
     DossierBar,
@@ -24,15 +23,16 @@ export function FigmaPreview({
         <div className="py-12 sm:py-16">
             <DossierFrame>
                 <DossierBar label="Section" index="09" state="Figma preview" />
-                <div className="grid gap-8 px-4 py-6 sm:px-6 sm:py-8 md:grid-cols-[minmax(0,1fr)_280px]">
+                <div className="grid gap-8 px-4 py-6 sm:px-6 sm:py-8 md:grid-cols-[minmax(0,1fr)_var(--case-media-aside)]">
                     <DossierMediaViewport
                         label="fig 01"
                         title={title}
                         note="embedded preview"
                     >
-                        <div className="relative aspect-[16/9] w-full border border-border bg-background">
+                        <div className="relative aspect-[16/9] w-full border-[length:var(--stroke-thin)] border-border bg-background">
                             <iframe
                                 src={embedUrl}
+                                title={title}
                                 className="absolute inset-0 h-full w-full"
                                 style={{ border: 'none' }}
                                 allowFullScreen
@@ -40,11 +40,8 @@ export function FigmaPreview({
                         </div>
                     </DossierMediaViewport>
 
-                    <motion.div
-                        className="space-y-4 border border-border px-4 py-4"
-                        initial={{ opacity: 0, x: 12 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.24, delay: 0.04 }}
+                    <div
+                        className="space-y-4 border-[length:var(--stroke-thin)] border-border px-4 py-4"
                     >
                         <DossierSectionHeading
                             label="Figma"
@@ -57,7 +54,7 @@ export function FigmaPreview({
                             showIcon={true}
                             dismissible={false}
                         />
-                    </motion.div>
+                    </div>
                 </div>
             </DossierFrame>
         </div>

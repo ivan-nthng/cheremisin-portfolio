@@ -55,14 +55,14 @@ export function ContextImageSection({
         <section className="py-12 sm:py-16">
             <DossierFrame>
                 <DossierBar label="Section" index="06" state={header} />
-                <div className="grid gap-8 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-[minmax(0,1fr)_280px]">
+                <div className="grid gap-8 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-[minmax(0,1fr)_var(--case-media-aside)]">
                     <DossierMediaViewport
                         label={isVideo ? 'vid 01' : 'img 01'}
                         title={header}
                         note={isVideo ? 'autoplay loop' : 'click to inspect'}
                     >
                         <div
-                            className="relative aspect-[4/3] overflow-hidden border border-border bg-background"
+                            className="relative aspect-[4/3] overflow-hidden border-[length:var(--stroke-thin)] border-border bg-background"
                             onClick={() =>
                                 !isVideo && source && !mediaError
                                     ? setIsLightboxOpen(true)
@@ -102,7 +102,7 @@ export function ContextImageSection({
                         </div>
                     </DossierMediaViewport>
 
-                    <div className="border border-border px-4 py-4">
+                    <div className="border-[length:var(--stroke-thin)] border-border px-4 py-4">
                         <DossierSectionHeading
                             label="Context / note"
                             title={header}
