@@ -1,0 +1,81 @@
+{
+  "revision": "r5",
+  "method": "built-in image_gen edit; one landscape reframe plus one justified portrait adaptation",
+  "classification": "AI editorial concepts; not historical fleet evidence or exact manufacturer blueprints",
+  "portraitJustification": "Landscape car bounds roughly974..1454px (480px width) in1536x1024. Height-cover at844px gives about396px car width, exceeding375/390 before any comfortable side margins. Separate matching portrait preserves complete car below mobile content.",
+  "assets": [
+    {
+      "role": "main",
+      "projectMaster": "citymobil-nivus-r5-main-master.png",
+      "defaultGeneratedPath": "/Users/ivan/.codex/generated_images/01a17d62-78ae-7bf0-923d-f8314494cf57/exec-8de1e2dd-1253-4c34-8364-a800454a04f8.png",
+      "prompt": "Use case: precise-object-edit.\nAsset: landscape editorial photographic background, 1536x1024, no interface or page copy.\nImage 1 is the SELECTED R4 MAIN PHOTO to reframe/extend. Image 2 is the exact supplied Cyrillic wordmark reference; image 3 is the approved straight six-ray symbol reference.\nChange ONLY camera framing / apparent subject scale: pull the camera much farther back and extend the real photographed concrete wall and asphalt scene above and left. Keep exactly this white Volkswagen Nivus, front/left three-quarter view facing right, same livery, same wall/road, same diagonal architectural sunlight and muted natural analog-film color/grain. Keep the complete recognizable car, all visible wheels and bumpers within the image.\nCRUCIAL COMPOSITION: The car must become a SMALL supporting detail occupying only about 25–27% of total image WIDTH and 18–22% of image HEIGHT, entirely in the LOWER RIGHT CORNER. Target car bounds around x=70–96%, y=72–92% of the image. Leave a real clear margin at the right and below the car (not cut off). At least upper 65% of the image and left two-thirds should be continuous, quiet, naturally textured concrete wall/asphalt negative space, useful for separately editable text. Retain realistic camera perspective, wall horizon lower in frame, contact shadows and natural vehicle stance. No empty canvas bands, fake blur zones, gradients, graphic panels or letterbox borders.\nBranding must remain exact Cyrillic “СИТИМОБИЛ”: С И Т И М О Б И Л; first four letters СИТИ purple, last five МОБИЛ orange. Preserve the word's proportions from image2. The six orange triangular straight rays sit left of the word on rear door/quarter, like image1; no circular/fan rim, curved rounded debris or extra emblems. Keep legible appropriate perspective/paint integration.\nPreserve accepted photographic character: restrained soft film-camera tonality, gently lifted shadow detail, natural warm daylight, low-to-moderate local contrast, real grain and surface texture. No new glossy CGI car, oversharpened HDR, dramatic color grade, alternative vehicle/model, people, signs, extra street objects, slogan, text overlay, CTA, watermark. This is one bounded wider reframe of image1, not a new art direction.",
+      "referencePaths": [
+        "/Users/ivan/Developer/cheremisin-portfolio/docs/design/assets/citymobil-nivus-r4-main-master.png",
+        "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/supplied-cyrillic-wordmark.png",
+        "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/star-reference.png"
+      ],
+      "referenceRoles": [
+        "Selected r4 main edit target: bounded wider reframe/scene extension and smaller corner vehicle",
+        "Supplied exact Cyrillic purple/orange reference",
+        "Approved six straight-ray reference"
+      ],
+      "referenceLineage": [
+        {
+          "path": "/Users/ivan/Developer/cheremisin-portfolio/docs/design/assets/citymobil-nivus-r4-main-master.png",
+          "role": "Selected r4 main edit target: bounded wider reframe/scene extension and smaller corner vehicle",
+          "sha256": "4b4acd7d85f9e96860a10075b8a74f0713cb04ddf53cdf1147ea1503b46e767f"
+        },
+        {
+          "path": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/supplied-cyrillic-wordmark.png",
+          "role": "Supplied exact Cyrillic purple/orange reference",
+          "sha256": "06f076f4e701bd7fdfc39c0148dd1045f43fc903e8fc9171b2a1087a4da6cb00"
+        },
+        {
+          "path": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/star-reference.png",
+          "role": "Approved six straight-ray reference",
+          "sha256": "347c8288b702f87a4d18be409554d568994154c5a6fd0fbc21d432002884e282"
+        }
+      ]
+    },
+    {
+      "role": "portrait",
+      "projectMaster": "citymobil-nivus-r5-portrait-master.png",
+      "defaultGeneratedPath": "/Users/ivan/.codex/generated_images/01a17d62-78ae-7bf0-923d-f8314494cf57/exec-7b599e94-89ca-4f9a-bdd9-ea218748084d.png",
+      "prompt": "Use case: precise-object-edit / responsive reframe.\nAsset: ONE matching portrait adaptation of the selected landscape photograph for a full-screen mobile hero, vertical 1024x1536.\nImage1 is the selected new R5 LANDSCAPE MAIN PHOTO. Image2 is the previous accepted closer R4 photograph for car/brand detail only. Image3 is the exact Cyrillic wordmark reference; image4 is the six straight-ray symbol.\nChange only camera composition to portrait. Preserve the SAME white Volkswagen Nivus viewed from front/left and facing right, same purple/orange “СИТИМОБИЛ” door wordmark, same straight orange rays, same concrete wall/asphalt setting, same diagonal architectural sunlight direction, natural restrained analog-film grain/soft shadow detail/warm muted tones. No new setting, car design or lighting concept.\nThe car should sit LOW and to the RIGHT, complete bumper to bumper with both visible wheels, with real scene around it and room for the mobile crop. Target car bounds x=43–95%, y=70–86% of this portrait image. Keep the car only about 50–53% of the portrait IMAGE WIDTH, not enlarged to fill it. Keep the top TWO THIRDS almost empty continuous quiet concrete wall, preferably the shaded side in the top-right so pale editable text will be readable. Extend the real scene above/left; no fake blur, plain canvas panels, UI or text blocks.\nActual final mobile viewport will be narrower than this image: the photograph will be fitted to its height and cropped from the left. Keep the entire car comfortably inside the rightmost two-thirds so a narrow 375/390px phone crop can show its complete body and mark below separately editable page copy.\nBrand exact: “СИТИМОБИЛ”, Cyrillic С И Т И М О Б И Л; СИТИ purple / МОБИЛ orange. Straight six-triangle orange rays left of word on rear door/quarter, no circular or rounded fan rim/debris. Refer to images3/4 for exact identity, not new graphics.\nPreserve car proportions and realistic wheels/reflections/contact shadows, film texture and softened tonality. No overhead camera, no people, no extra street objects/signs, no headline/CTA/interface, watermark, border, letterboxing, glossy CGI or HDR sharpening. Match image1 as one coherent responsive framing variation.",
+      "referencePaths": [
+        "/Users/ivan/Developer/cheremisin-portfolio/docs/design/assets/citymobil-nivus-r5-main-master.png",
+        "/Users/ivan/Developer/cheremisin-portfolio/docs/design/assets/citymobil-nivus-r4-main-master.png",
+        "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/supplied-cyrillic-wordmark.png",
+        "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/star-reference.png"
+      ],
+      "referenceRoles": [
+        "Selected new r5 landscape: same scene/subject/light responsive reframe",
+        "Accepted r4 close shot: vehicle/livery detail only",
+        "Supplied exact Cyrillic wordmark",
+        "Approved straight-ray reference"
+      ],
+      "referenceLineage": [
+        {
+          "path": "/Users/ivan/Developer/cheremisin-portfolio/docs/design/assets/citymobil-nivus-r5-main-master.png",
+          "role": "Selected new r5 landscape: same scene/subject/light responsive reframe",
+          "sha256": "12be51137e2ca6f68977f7c018c51da2392df471394c2c65305fc6d24e8d6979"
+        },
+        {
+          "path": "/Users/ivan/Developer/cheremisin-portfolio/docs/design/assets/citymobil-nivus-r4-main-master.png",
+          "role": "Accepted r4 close shot: vehicle/livery detail only",
+          "sha256": "4b4acd7d85f9e96860a10075b8a74f0713cb04ddf53cdf1147ea1503b46e767f"
+        },
+        {
+          "path": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/supplied-cyrillic-wordmark.png",
+          "role": "Supplied exact Cyrillic wordmark",
+          "sha256": "06f076f4e701bd7fdfc39c0148dd1045f43fc903e8fc9171b2a1087a4da6cb00"
+        },
+        {
+          "path": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/star-reference.png",
+          "role": "Approved straight-ray reference",
+          "sha256": "347c8288b702f87a4d18be409554d568994154c5a6fd0fbc21d432002884e282"
+        }
+      ]
+    }
+  ]
+}

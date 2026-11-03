@@ -1,0 +1,121 @@
+{
+  "method": "built-in image_gen, one selected generation per r4 photograph; new Cyrillic reference and composition correction",
+  "assets": [
+    {
+      "role": "main",
+      "master": {
+        "file": "citymobil-nivus-r4-main-master.png",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 2609348,
+        "sha256": "4b4acd7d85f9e96860a10075b8a74f0713cb04ddf53cdf1147ea1503b46e767f",
+        "space": "srgb"
+      },
+      "outputs": [
+        {
+          "file": "citymobil-nivus-r4-main-1536.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 116224,
+          "sha256": "5f733af75942815681f346dca09e3dd1fbd19ad6bc8e530f6cd4b60b00d789e5",
+          "codec": "AVIF",
+          "quality": 60,
+          "effort": 6,
+          "chromaSubsampling": "4:4:4",
+          "space": "srgb"
+        },
+        {
+          "file": "citymobil-nivus-r4-main-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 37188,
+          "sha256": "d1e8e76d7de514e04d06981d59e802f1507982aa66a4b8110c2189e145dcbd28",
+          "codec": "AVIF",
+          "quality": 60,
+          "effort": 6,
+          "chromaSubsampling": "4:4:4",
+          "space": "srgb"
+        },
+        {
+          "file": "citymobil-nivus-r4-main-1536.webp",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 160546,
+          "sha256": "fd02556fd929a189d72352886057957b7d8576a122f41651d6c0c378b0f7ff89",
+          "codec": "WebP",
+          "quality": 82,
+          "effort": 6,
+          "space": "srgb"
+        }
+      ],
+      "resizeKernel": "lanczos3",
+      "noUpscale": true,
+      "optimization": "deterministic encoding/resize/sRGB/metadata strip only; uncropped master preserved"
+    },
+    {
+      "role": "aerial",
+      "master": {
+        "file": "citymobil-nivus-r4-aerial-master.png",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 3308963,
+        "sha256": "ef50bb2c4055948dab5db42ed0e0d83abb6e361d8343e4648d55abd59a4a549d",
+        "space": "srgb"
+      },
+      "outputs": [
+        {
+          "file": "citymobil-nivus-r4-aerial-1536.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 240779,
+          "sha256": "6f276394b87c552cfb86f01baf368cc622a3c6b14edbbea1f5fe40ed86cf0471",
+          "codec": "AVIF",
+          "quality": 60,
+          "effort": 6,
+          "chromaSubsampling": "4:4:4",
+          "space": "srgb"
+        },
+        {
+          "file": "citymobil-nivus-r4-aerial-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 60959,
+          "sha256": "e37c295d8e48c98b40f381c5ea60c732d038c49d0420ae993fda50a4177fda72",
+          "codec": "AVIF",
+          "quality": 60,
+          "effort": 6,
+          "chromaSubsampling": "4:4:4",
+          "space": "srgb"
+        },
+        {
+          "file": "citymobil-nivus-r4-aerial-1536.webp",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 298740,
+          "sha256": "e14913390687cd6868abf9bd75dd9c86ed16e609b6ca2bcb684f17f8139df023",
+          "codec": "WebP",
+          "quality": 82,
+          "effort": 6,
+          "space": "srgb"
+        }
+      ],
+      "resizeKernel": "lanczos3",
+      "noUpscale": true,
+      "optimization": "deterministic encoding/resize/sRGB/metadata strip only; uncropped master preserved"
+    }
+  ],
+  "vectors": [
+    {
+      "file": "citymobil-wordmark-cyrillic-r4.svg",
+      "bytes": 4917,
+      "sha256": "d4fb9460e85e05646323e9db935ce57bb716ec365bec11cbac38d8589036ca24",
+      "containsEmbeddedRaster": false
+    },
+    {
+      "file": "citymobil-star-straight-r4.svg",
+      "bytes": 454,
+      "sha256": "1be7546b513a08cf43b9d84d5db3d102b33851381422a5532953e85befeb80da",
+      "containsEmbeddedRaster": false
+    }
+  ]
+}

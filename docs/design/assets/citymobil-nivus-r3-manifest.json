@@ -1,0 +1,106 @@
+{
+  "method": "built-in image_gen; separate generation per selected asset; no documentary/official-palette claim",
+  "created": "2026-10-29",
+  "assets": [
+    {
+      "role": "side",
+      "master": {
+        "file": "citymobil-nivus-r3-side-master.png",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 2625938,
+        "sha256": "c265be16d663818cc2e8de667258711d25c1202128158f2b3414e0ff43566cf8",
+        "format": "png",
+        "space": "srgb"
+      },
+      "outputs": [
+        {
+          "file": "citymobil-nivus-r3-side-1536.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 129527,
+          "sha256": "cff91e672087699d5a1ec8a2684570bf64a24efed08539d07996a25f018141bd",
+          "codec": "AVIF",
+          "quality": 60,
+          "effort": 6,
+          "chromaSubsampling": "4:4:4",
+          "space": "srgb"
+        },
+        {
+          "file": "citymobil-nivus-r3-side-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 41292,
+          "sha256": "94e0e6663f25e2df8c2cb74dc96a78770860ca470a36b293322e3d1a2d013416",
+          "codec": "AVIF",
+          "quality": 60,
+          "effort": 6,
+          "chromaSubsampling": "4:4:4",
+          "space": "srgb"
+        },
+        {
+          "file": "citymobil-nivus-r3-side-1536.webp",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 178340,
+          "sha256": "4bf39eb23b2917aa3fc492c65f174ef8715c64c9b586eae9b0ed71880e79bd21",
+          "codec": "WebP",
+          "quality": 82,
+          "effort": 6,
+          "space": "srgb"
+        }
+      ],
+      "optimization": "deterministic resize/encoding/sRGB/metadata stripping only; uncropped master preserved; no upscale"
+    },
+    {
+      "role": "front",
+      "master": {
+        "file": "citymobil-nivus-r3-front-master.png",
+        "width": 1536,
+        "height": 1024,
+        "bytes": 2715831,
+        "sha256": "14ba89e33f3a3316c9d9b2056fa8ccd9c42c90097f9cd76de07b807c479fdeb5",
+        "format": "png",
+        "space": "srgb"
+      },
+      "outputs": [
+        {
+          "file": "citymobil-nivus-r3-front-1536.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 143052,
+          "sha256": "107f1062db6e36159646d63ad1f7ca9fc6d1c77e713943c3170da90c34f35e6f",
+          "codec": "AVIF",
+          "quality": 60,
+          "effort": 6,
+          "chromaSubsampling": "4:4:4",
+          "space": "srgb"
+        },
+        {
+          "file": "citymobil-nivus-r3-front-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 51179,
+          "sha256": "aeeb2f42f9635bd024c12f80d1228c92d6e93ce0c8eacd63632f15a7c81ec7cb",
+          "codec": "AVIF",
+          "quality": 60,
+          "effort": 6,
+          "chromaSubsampling": "4:4:4",
+          "space": "srgb"
+        },
+        {
+          "file": "citymobil-nivus-r3-front-1536.webp",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 204592,
+          "sha256": "cdb5d5c251e43fe5d156b54257bd72dd3ec5f0e2ea4e01079b2e5bcd82564220",
+          "codec": "WebP",
+          "quality": 82,
+          "effort": 6,
+          "space": "srgb"
+        }
+      ],
+      "optimization": "deterministic resize/encoding/sRGB/metadata stripping only; uncropped master preserved; no upscale"
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "revision": "r4",
+  "classification": "AI-generated editorial concept, not a historical fleet photograph or automaker blueprint",
+  "method": "built-in image_gen; one selected generation per photo",
+  "vectorMethod": "Native SVG contour reconstruction from the supplied Cyrillic raster reference; separate six straight triangular rays. No font substitution or embedded raster. Photo lettering is synthesized from reference images, not a byte-exact perspective insertion of the SVG.",
+  "colors": {
+    "purple": "#6E00BE",
+    "orange": "#FA6400",
+    "provenance": "sampled flat pixels of the user-supplied screenshot, not certified corporate token values"
+  },
+  "assets": [
+    {
+      "role": "main",
+      "projectMaster": "citymobil-nivus-r4-main-master.png",
+      "defaultGeneratedPath": "/Users/ivan/.codex/generated_images/01a17d62-78ae-7bf0-923d-f8314494cf57/exec-1d684876-4c87-4e61-be73-bf35e4b2c65c.png",
+      "prompt": "Use case: ads-marketing\nAsset type: revised high-resolution landscape3:2 editorial portfolio photograph, naturally photographed on35mm color negative film. Generate a new coherent photograph from the references.\nInput roles: image1 is the PRIMARY light/material/film/composition reference (white Porsche beside concrete wall): replace the Porsche with a white Volkswagen Nivus and extend the environment LEFT for text. Image2 is the EXACT current supplied Cyrillic wordmark, purple СИТИ and orange МОБИЛ; use its spelling, glyph form and two colors, NOT an English word. Image3 is the clean orange six-straight-ray emblem with no curved outer rims. Image4 is ONLY the white Volkswagen Nivus vehicle-geometry reference from the previous draft: discard its old Latin lettering, large-centered placement and crispy contrast.\nComposition: the white Nivus is a modest visual accent on the RIGHT, about35–40 percent of total picture width, fully contained with breathing room; front-left three-quarter angle similar to the Porsche reference, nose toward the right. Put the car approximately between x58% and94%, in the lower-middle area. Keep the LEFT50–55 percent as believable quiet wall/asphalt and soft shadow with no objects or markings, so separate editable text can sit there. Do NOT enlarge/center the car, do not put any interface or portfolio copy into the image.\nScene/light: use the same calm concrete-wall/road atmosphere, diagonal architectural sunlight/shadow and natural camera feel as image1. Soft tonal transitions inside the shadows, lifted detailed dark tones, restrained highlights on warm white paint, believable muted orange/purple vinyl, fine35mm film grain, slight lens softness and natural color response. The image must feel like an actual unforced film photograph, NOT a hyper-sharp/high-contrast CGI automotive advertisement. Preserve the diagonal light character without crushed pitch-black areas, harsh clarity, halo sharpening or over-saturated paint. Real asphalt texture and reflections with understated contrast.\nCar: plausible white Volkswagen Nivus compact coupe SUV, four doors, factory wheels/black trim, same model family as reference4; no Porsche details or exotic body. No people/passengers.\nLivery: exact unbroken Cyrillic text \"СИТИМОБИЛ\" on the visible side doors, with \"СИТИ\" PURPLE and \"МОБИЛ\" ORANGE in the bold glyph shapes of image2. Spell Cyrillic С И Т И М О Б И Л, no Latin CityMobil, no invented characters or slogan. Use one orange six-ray mark from image3 on the rear-door/rear-quarter area, physical vinyl on the body. All rays have clean straight sides/tips; NO circular rim, curved fan blades, surrounding round shapes, swirls or orange debris. Correctly print livery across natural seams with perspective. Keep the logo small and plausible for the car, not a giant standalone overlay.\nConstraints: no text outside the livery, watermark, artificial vignette, roof ad, wet neon street, cinematic haze, excessive local contrast, duplicate wheels or vehicle deformation. The negative space must be real photographic environment, not a flat design panel. This is an AI editorial concept, not a historical fleet claim.",
+      "referencePaths": [
+        "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/porsche-light-composition.jpg",
+        "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/supplied-cyrillic-wordmark.png",
+        "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/star-reference.png",
+        "/Users/ivan/Developer/cheremisin-portfolio/docs/design/assets/citymobil-nivus-r3-side-master.png"
+      ],
+      "referenceRoles": [
+        "Porsche reference: composition/light/film feel; replace car",
+        "Supplied Cyrillic logo: exact text/purple-orange split",
+        "Straight-ray shape reference",
+        "Prior r3: white Volkswagen Nivus subject continuity only; supersede livery/contrast/composition"
+      ],
+      "referenceLineage": [
+        {
+          "path": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/porsche-light-composition.jpg",
+          "sha256": "bc23a1b9792b522bfd00efc68a432905e616d431bebe381d38ab69b05acbc332",
+          "role": "Porsche reference: composition/light/film feel; replace car"
+        },
+        {
+          "path": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/supplied-cyrillic-wordmark.png",
+          "sha256": "06f076f4e701bd7fdfc39c0148dd1045f43fc903e8fc9171b2a1087a4da6cb00",
+          "role": "Supplied Cyrillic logo: exact text/purple-orange split"
+        },
+        {
+          "path": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/star-reference.png",
+          "sha256": "347c8288b702f87a4d18be409554d568994154c5a6fd0fbc21d432002884e282",
+          "role": "Straight-ray shape reference"
+        },
+        {
+          "path": "/Users/ivan/Developer/cheremisin-portfolio/docs/design/assets/citymobil-nivus-r3-side-master.png",
+          "sha256": "c265be16d663818cc2e8de667258711d25c1202128158f2b3414e0ff43566cf8",
+          "role": "Prior r3: white Volkswagen Nivus subject continuity only; supersede livery/contrast/composition"
+        }
+      ]
+    },
+    {
+      "role": "aerial",
+      "projectMaster": "citymobil-nivus-r4-aerial-master.png",
+      "defaultGeneratedPath": "/Users/ivan/.codex/generated_images/01a17d62-78ae-7bf0-923d-f8314494cf57/exec-7ba640a9-e364-46fe-bba3-551704e595ad.png",
+      "prompt": "Use case: ads-marketing\nAsset type: second high-resolution landscape3:2 editorial photograph in the same natural film treatment as the revised main.\nInput roles: image1 is ONLY an overhead street/crosswalk CAMERA-COMPOSITION reference, not an edit target. Create a new photographic scene, do not reproduce the stock overlay/watermarks or any writing from it. Image2 is the selected revised main and is the continuity reference for the exact WHITE Volkswagen NIVUS, purple/orange Cyrillic livery, clean straight-ray emblem and restrained film response. Image3 is the authoritative Cyrillic wordmark. Image4 is the clean orange six-straight-ray shape. Image5 is natural film light/tonal response only, not its Porsche.\nPrimary request: a believable high, elevated oblique view of an urban asphalt intersection with large weathered zebra-crossing stripes in the foreground and a partial crossing at upper-left, similar spatial rhythm to reference1. Replace the reference van with ONE small white Volkswagen Nivus compact coupe SUV, located slightly right of center in the open road between the crossings, facing diagonally toward the upper-right. The car is an incidental real-scale street subject, roughly14–18 percent of frame width, not a huge automotive-ad object.\nLight/style: one narrow diagonal streak of late-afternoon sun crosses the otherwise softly shadowed grey-blue asphalt and curb. Natural fine35mm film grain, modest lens softness, lifted nuanced shadows, restrained whites and muted color; no crushed black, harsh HDR, over-sharpened textures or CG render. Same understated photographic character as reference2. Authentic slightly worn asphalt/road paint and quiet architecture edges.\nCar/livery: preserve the white Nivus roofline, factory dark wheels/trim and physical proportions from reference2, seen naturally from above. The side doors carry the exact Cyrillic \"СИТИМОБИЛ\": purple \"СИТИ\", orange \"МОБИЛ\" per reference3; orange SIX STRAIGHT triangular rays on rear-door/quarter per reference4. Clean straight rays with no curved rim or round extra pieces. No English CityMobil, no yellow/purple body, no Porsche/van, no additional vehicle. At this honest camera distance the livery can be naturally small/foreshortened; do not move a giant wordmark onto the road/roof or enlarge the car to force text readability.\nComposition/constraints: retain the aerial view, photographic perspective, generous road space and graphic crossing pattern. No passengers, invented slogans, captions, portfolio UI or decorative graphics. Use reference1 for scene layout only; output a new original AI editorial concept without watermark or copied stock overlay, not a watermark-removal edit.",
+      "referencePaths": [
+        "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/aerial-composition-reference.png",
+        "/Users/ivan/Developer/cheremisin-portfolio/docs/design/assets/citymobil-nivus-r4-main-master.png",
+        "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/supplied-cyrillic-wordmark.png",
+        "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/star-reference.png",
+        "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/porsche-light-composition.jpg"
+      ],
+      "referenceRoles": [
+        "Elevated crossing composition reference only; new scene, not watermark removal",
+        "Current r4 main: same car/livery and coherent color/light character",
+        "Supplied Cyrillic wordmark",
+        "Straight-ray shape reference",
+        "Film/light reference"
+      ],
+      "referenceLineage": [
+        {
+          "path": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/aerial-composition-reference.png",
+          "sha256": "ef15e961225f868957eb56177dd734b4df5f66aaa8471f70b632db9f41f61e21",
+          "role": "Elevated crossing composition reference only; new scene, not watermark removal"
+        },
+        {
+          "path": "/Users/ivan/Developer/cheremisin-portfolio/docs/design/assets/citymobil-nivus-r4-main-master.png",
+          "sha256": "4b4acd7d85f9e96860a10075b8a74f0713cb04ddf53cdf1147ea1503b46e767f",
+          "role": "Current r4 main: same car/livery and coherent color/light character"
+        },
+        {
+          "path": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/supplied-cyrillic-wordmark.png",
+          "sha256": "06f076f4e701bd7fdfc39c0148dd1045f43fc903e8fc9171b2a1087a4da6cb00",
+          "role": "Supplied Cyrillic wordmark"
+        },
+        {
+          "path": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/star-reference.png",
+          "sha256": "347c8288b702f87a4d18be409554d568994154c5a6fd0fbc21d432002884e282",
+          "role": "Straight-ray shape reference"
+        },
+        {
+          "path": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/porsche-light-composition.jpg",
+          "sha256": "bc23a1b9792b522bfd00efc68a432905e616d431bebe381d38ab69b05acbc332",
+          "role": "Film/light reference"
+        }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "original": "/Users/ivan/Downloads/IMG_0369.jpg",
+      "durable": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/porsche-light-composition.jpg",
+      "sha256": "bc23a1b9792b522bfd00efc68a432905e616d431bebe381d38ab69b05acbc332",
+      "bytes": 228494
+    },
+    {
+      "original": "/var/folders/3l/mld45g9s2j36f4t6t_1l5tlh0000gn/T/TemporaryItems/NSIRD_screencaptureui_GSDRuU/Screenshot 2026-10-29 at 11.16.54.png",
+      "durable": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/supplied-cyrillic-wordmark.png",
+      "sha256": "06f076f4e701bd7fdfc39c0148dd1045f43fc903e8fc9171b2a1087a4da6cb00",
+      "bytes": 21287
+    },
+    {
+      "original": "/var/folders/3l/mld45g9s2j36f4t6t_1l5tlh0000gn/T/TemporaryItems/NSIRD_screencaptureui_nhG9HW/Screenshot 2026-10-29 at 11.17.48.png",
+      "durable": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/aerial-composition-reference.png",
+      "sha256": "ef15e961225f868957eb56177dd734b4df5f66aaa8471f70b632db9f41f61e21",
+      "bytes": 1046310
+    }
+  ],
+  "unchangedSourceChecks": [
+    {
+      "path": "/Users/ivan/Downloads/IMG_0369.jpg",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/porsche-light-composition.jpg",
+      "unchanged": true
+    },
+    {
+      "path": "/var/folders/3l/mld45g9s2j36f4t6t_1l5tlh0000gn/T/TemporaryItems/NSIRD_screencaptureui_GSDRuU/Screenshot 2026-10-29 at 11.16.54.png",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/supplied-cyrillic-wordmark.png",
+      "unchanged": true
+    },
+    {
+      "path": "/var/folders/3l/mld45g9s2j36f4t6t_1l5tlh0000gn/T/TemporaryItems/NSIRD_screencaptureui_nhG9HW/Screenshot 2026-10-29 at 11.17.48.png",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/ivan/Documents/Codex/2026-10-29/portfolio-designer/work/port17-nivus-r4/aerial-composition-reference.png",
+      "unchanged": true
+    }
+  ]
+}

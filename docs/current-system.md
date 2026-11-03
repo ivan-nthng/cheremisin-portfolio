@@ -1,154 +1,101 @@
 # Current System
 
+Owner: ARCHITECT for boundaries; named specialists own implementation. Updated 2026-11-02, PORT-32. This is a source map, not evidence of a new deployment. [Current Product](current-product.md) owns visitor behavior; Notion owns task state.
+
+## Published Production Boundary
+
+Last documented public acceptance: PORT-23 icon-only release on www.cheremisin.co.uk, READY `dpl_BrdHJ9NXrUjeauGfnjFN4LZZAqtc`, build `WY3YLPDPqkCT4uYmd1q8D`; 211-file isolated packet, 208 preserved files. [Publication receipt](design/portfolio-figma-foundations.md#backend-transparent-icon-publication--2026-10-29) owns exact assets/readback/rollback. This identity is documentary evidence, not a fresh live check. The dirty checkout and later local cleanup are not that release. PORT-30 remains **HOLD**.
+
+Local recovery recorded 2026-10-30: Citymobil3140 runs DEVELOPMENT from the canonical checkout; background3141 runs DEVELOPMENT from421 copied source files at `/Users/ivan/Developer/.local-previews/cheremisin-portfolio/background-current`, separate cache. Launchd jobs `com.cheremisin.portfolio.preview3140` / `preview3141` own startup. Routes and ten resources each returned200; receipt `/Users/ivan/Library/Logs/cheremisin-portfolio-preview/runtime-readback.json`. Earlier frozen snapshots became unavailable. This recovery proves availability only, not repeated functional QA; current availability is not reverified here.
+
 ## Runtime Shape
 
-- The system is a single Next.js 15 App Router application.
-- All user-facing behavior is rendered from the `src/app` tree.
-- There is no backend service layer, API route layer, database, CMS, or authenticated admin surface in the repo.
-- The application is effectively a static content portfolio with interactive client-side UI behavior layered into route pages and shared components.
+Single Next.js15 App Router / React19 / TypeScript application. Server-rendered route composition with client interaction islands; no separate application service, authenticated admin, database/CMS or durable chat-history product. Static media lives in `public/`; source aliases use `@/*`.
+
+PORT-31 removed portfolio AI UI/state/SSE, API generation/retrieval/validation/projection, obsolete contracts/tests and exclusive OpenAI dependency. `/api/portfolio-chat` is retired in local source. [PRODUCT accepted/Done](https://app.notion.com/p/40bfe5f58cf581d9bdbbe7fbc95a4c47) on2026-11-01 after independent integrated local QA of home/project, API404 and initial Lost/Pickup simulated sends; build/types and99 tests passed. Full stories/device matrix and public retirement are not claimed. Markdown facts/provenance and Citymobil client simulation remain.
 
 ## Route Ownership
 
-- `src/app/layout.tsx` owns the global HTML shell, default site metadata, global CSS, theme provider wiring, and the site-wide header used on the home route.
-- `src/app/page.tsx` owns the home route entry and its route-specific metadata.
-- `src/components/layout/HomePage.tsx` owns the active home-route composition path.
-- `src/app/manifesto/page.tsx` owns the manifesto route.
-- `src/app/projects/*/page.tsx` owns individual project case-study routes:
-  - `ds-hito`
-  - `litres`
-  - `peruse`
-  - `taxi-aggregator-support-workspace`
-  - `wrike`
-- Route-specific metadata exists for the home route, `manifesto`, and `projects/ds-hito`.
-- Other project routes inherit the root metadata from `src/app/layout.tsx`.
-
-## Rendering Model
-
-- The root layout is a server component.
-- The home route entry and `src/components/layout/HomePage.tsx` are server components.
-- The manifesto route entry is a server component that delegates its interactive content to a client component.
-- Project detail route entries are server components that delegate grid-toggle behavior to a shared client shell.
-- Most shared UI components are also client components because they use:
-  - `framer-motion`
-  - `next-themes`
-  - scroll listeners
-  - intersection observers
-  - local interactive state
-- Client-only behavior is now pushed down into smaller islands such as:
-  - `src/components/layout/Header.tsx`
-  - `src/components/layout/HeroSection.tsx`
-  - `src/components/layout/HomeHeroActions.tsx`
-  - `src/components/ManifestoContent.tsx`
-  - `src/components/ProjectPageShell.tsx`
-  - project storytelling components that own their own animation, theme, or tab state
+FRONTEND owns route/UI implementation:
+- `src/app/layout.tsx`: HTML shell, theme provider, CSS, shared Header, default metadata.
+- `src/app/page.tsx` → `components/layout/HomePage.tsx`: photographic home, career, pending projects, footer.
+- `src/app/manifesto/page.tsx` → `ManifestoContent.tsx`: authored manifesto.
+- `src/app/projects/page.tsx`: index; five authored `projects/*/page.tsx` routes retain narratives/media and `ProjectPageShell`.
+- `src/app/preview/citymobil/page.tsx`, `preview/citymobil-background/page.tsx`: separate local studies, not publication acceptance.
+- `src/lib/seo.ts`, robots/sitemap/OG/Apple routes: metadata; home-only indexing/sitemap. BACKEND owns isolated publication boundary, not route redesign.
 
 ## Shared UI Ownership
 
-### Active shell components
-
-- `src/components/layout/Header.tsx` is the header currently mounted by the root layout.
-- `src/components/layout/HomePage.tsx` is the canonical active home-shell composition path used by `src/app/page.tsx`.
-- `src/components/layout/HomeHeroActions.tsx` owns the home hero CTA scrolling behavior as a small client island.
-- `src/components/layout/HomeSignal.tsx` owns the restrained animated ASCII focal graphic used in the home intro.
-- `src/components/ascii/Dossier.tsx` now owns the shared ASCII dossier primitives used across the home route, manifesto, and project case-study pages.
-- `src/components/ascii/AsciiAssetFallback.tsx` owns the shared ASCII missing-preview state used when active media fails to load or is absent.
-- `src/components/ui/*` contains reusable primitive controls such as `Button`, `Input`, `Textarea`, `Select`, `Checkbox`, and `Toggle`.
-
-### Project-route shared components
-
-- `src/components/ProjectHeader.tsx` is the shared top navigation for project pages and manifesto.
-- `src/components/ProjectPageShell.tsx` owns the shared client-side grid-toggle shell used by manifesto and project routes.
-- `src/components/ProjectHero.tsx`, `ProjectOverview.tsx`, `ProblemSection.tsx`, `DemoSection.tsx`, `GallerySection.tsx`, `ProjectNavigation.tsx`, and `ProjectFooter.tsx` are the main reusable case-study building blocks.
-- `GridOverlay.tsx` is an optional debug-style overlay toggled from project-oriented headers.
-
-### Additional component inventory currently present in the repo
-
-- `src/components/legacy-home/*` contains the older home-shell component family retained outside the active runtime path.
-- `src/components/FigmaPreview 2.tsx` is a duplicate-named component file alongside `src/components/FigmaPreview.tsx`.
-
-## Home Route Behavior
-
-- The home page now renders as an ASCII dossier index with:
-  - a framed intro record
-  - a framed canonical projects index
-  - a framed about section
-  - a framed contact section
-- The home header now owns both:
-  - internal route links such as `readme`
-  - section commands for `projects`, `about`, and `contact`
-- The active home shell shares one section-id contract for `projects`, `about`, and `contact`, used by both the layout header and home-route CTA buttons.
-- The home route no longer depends on the older mixed card families for project listing; the active runtime uses one shared framed project-entry grammar.
+FRONTEND reuses these seams; DESIGN SYSTEM owns shared definitions:
+- `layout/Header.tsx`: one contextual header, home scroll transition, native Back/home fallback.
+- `layout/ContactSheet.tsx`: native modal, focus/scroll containment and return; `portfolio/ContactLinks.tsx`: shared contact rendering.
+- `layout/HomePhotoHero.tsx`, `HomeEyeLoader.tsx`, `home-eye-bootstrap.ts`: photo/readiness/input/decorative lifecycle. Preserve finite busy ownership, fail-open/no-JS/reduced-motion/Back behavior; decoration must not rearm input blocking.
+- `portfolio/PortfolioGrid.tsx` and shared CSS lane/tracks: home/Manifesto grid/controls, not case-route geometry.
+- `portfolio/RepeatReveal.tsx`: progressive viewport motion with focus/no-JS readability.
+- `EditorialProjects.tsx` / `ProjectStatusTooltip.tsx`: shared records, pending-home status versus real index links.
+- Shared gallery/lightbox/storytelling components retain themed media, fallback, keyboard and focus behavior. `ProjectPageShell` supplies the main landmark and evidence notices without a second header/chat.
 
 ## Project Content Ownership
 
-- The canonical shared project contract now lives in `src/lib/projects.ts`.
-- That module owns both:
-  - the `Project` type
-  - the `projects` content array
-- `src/components/Projects.tsx` now owns only the rendered projects listing UI and consumes the shared data module.
-- Project detail routes import the `projects` array from `src/lib/projects.ts` to:
-  - resolve the current project
-  - derive next/previous navigation
-  - reuse technologies and shared project metadata
-- Individual project routes also define substantial page-local content inline:
-  - descriptions
-  - metrics
-  - gallery configuration
-  - demo media references
-  - embedded SVG logos
+`src/lib/site-content.ts` owns identity/career/contact copy; `src/lib/projects.ts` owns project records/active subset. Route-local authored narratives remain in case pages. COPY owns wording; DATA QUALITY owns claims/provenance; neither may invent facts. Markdown under `content/portfolio/` remains readable evidence, without a live AI compiler or automatic publishing path. Active `PortfolioProjectId` contract remains for ProjectPageShell.
+
+## Citymobil Ownership
+
+FRONTEND owns local demo UI/state:
+- `components/CityMobileInteractivePreview.tsx`: workspace orchestration.
+- `components/citymobil-demo/`: shell, native assets, cards, composer caret, Track and geographic adapter.
+- `lib/portfolio/client/citymobil-demo.ts`: reducer/scenarios/simulated reply/call timing.
+- `lib/portfolio/client/citymobil-track.ts` and JSON fixtures: prepared journey/clock/participants.
+- `citymobil-map-style.ts` / `useGeographicTrack.ts`: MapLibre/OpenFreeMap presentation and failure/Retry; prepared streets/times are not live traffic/GPS/routing.
+- `components/citymobil-background/`: isolated background study.
+DATA QUALITY owns fixture/media provenance. Demo type/radius/color rules remain isolated from portfolio DS. Native document-hidden verification remains deferred.
 
 ## Styling And Theme Behavior
 
-- Global styles live in `src/app/globals.css`.
-- Tailwind CSS is imported globally.
-- The active runtime now uses one ASCII-first visual system defined by shared CSS variables and dossier primitives:
-  - mono-first typography via `Geist Mono`
-  - restrained paper/ink theme tokens
-  - square framed panels
-  - shared media viewport, meta strip, and pager patterns
-- The current visual pass also includes:
-  - a lighter home-shell route strip and project index treatment
-  - calmer media hover and lightbox treatment
-  - keyboard-aware project traversal via the shared pager
-  - a scramble-based home signal prompt that rotates route and asset guidance
-- `next-themes` is used to switch between light and dark modes.
-- The root layout mounts `ThemeProvider` with:
-  - `attribute="class"`
-  - `defaultTheme="system"`
-  - `enableSystem`
-  - `disableTransitionOnChange`
-- Many components branch on `theme` or `resolvedTheme` to choose light and dark media assets.
-- The home, manifesto, and project routes now share the same active framing language rather than separate visual families.
+`src/app/globals.css` owns semantic portfolio colors/type/grid/media tokens; local Citymobil CSS modules own native demo styles. ThemeProvider preserves themed media without changing the portfolio palette. Browser system-sans is used for portfolio text; do not redistribute SF Pro or introduce a parallel styling layer.
+
+[Accepted foundations](design/portfolio-figma-foundations.md#current-scope-token-reconciliation-then-homepage) owns responsive XL/LG, ordinary14/20, Technical12/16, weight and radius contracts. Semantic heading level is independent of visual role. Approved adoption preserves the existing homepage visually; Citymobil is isolated. Existing24px home geometry is not replaced by draft spacing. Read exact owner evidence before modifying these seams.
+
+## Historical Evidence
+
+[Pre-compaction system snapshot](current-system-history-2026-11-02.md) retains prior source/build receipts and superseded inventories. Removed compiler/chat/terminal owners mentioned there are historical, not active instructions.
+
+## Rendering Model
+
+[Historical section](current-system-history-2026-11-02.md#rendering-model).
+
+### Active shell components
+
+[Historical section](current-system-history-2026-11-02.md#active-shell-components).
+
+### Project-route shared components
+
+[Historical section](current-system-history-2026-11-02.md#project-route-shared-components).
+
+### Additional component inventory currently present in the repo
+
+[Historical section](current-system-history-2026-11-02.md#additional-component-inventory-currently-present-in-the-repo).
+
+## Home Route Behavior
+
+[Historical section](current-system-history-2026-11-02.md#home-route-behavior).
+
+### Chat-first grounding corpus
+
+[Historical section](current-system-history-2026-11-02.md#chat-first-grounding-corpus).
+
+### Accepted first functional architecture — Backend Slice 1 implemented
+
+[Historical section](current-system-history-2026-11-02.md#accepted-first-functional-architecture--backend-slice-1-implemented).
 
 ## Assets And Media
 
-- Static assets are served from `public/`.
-- Project routes rely heavily on route-local images and videos under folders such as:
-  - `public/hito`
-  - `public/litres`
-  - `public/vk`
-  - `public/wrike`
-- Theme-aware media is typically handled by naming conventions such as `*-light.*` and `*-dark.*`.
-- Several components expect route-local preview images or videos to exist at hard-coded `public` paths.
-- Active media surfaces now fall back to a shared ASCII missing-preview state when an image or video is absent or fails to load at runtime.
+[Historical section](current-system-history-2026-11-02.md#assets-and-media).
 
 ## Environment Assumptions
 
-- The source is written in TypeScript and uses the `@/*` path alias from `tsconfig.json`.
-- The intended runtime toolchain is:
-  - Next.js
-  - React 19
-  - TypeScript
-  - Tailwind CSS
-  - Framer Motion
-  - next-themes
-- Source files also import icon and utility packages from component code, including:
-  - `lucide-react`
-  - `@heroicons/react/24/outline`
-  - `tailwind-merge`
+[Historical section](current-system-history-2026-11-02.md#environment-assumptions).
 
 ## System Boundaries
 
-- The repo is currently a modular monolith with no service boundaries.
-- Shared concerns are handled in-process through components, route files, and utility modules.
-- Content, route composition, and presentational logic are co-located in the frontend codebase rather than separated into a dedicated content module or external data source.
+[Historical section](current-system-history-2026-11-02.md#system-boundaries).
