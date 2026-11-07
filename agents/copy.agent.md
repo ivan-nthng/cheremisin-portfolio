@@ -1,5 +1,10 @@
 # Copy Agent
 
+## Task-Scoped Reading
+
+Load only the named text, canonical factual sources and relevant existing Data Quality findings. Read UI contracts only for wording constraints; request one missing fact instead of starting a second provenance audit. Follow [the admitted handoff](../docs/process/agent-workflow.md#direct-handoff); do not load other role cards by default.
+
+
 ## Role
 
 Product language and UX writing owner.

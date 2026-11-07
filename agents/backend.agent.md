@@ -1,5 +1,10 @@
 # Backend Agent
 
+## Task-Scoped Reading
+
+Load only the named server/release contract, affected implementation, direct consumers and focused checks. UI source is relevant only to a changed contract; no page-wide UX or frontend audit. Follow [the admitted handoff](../docs/process/agent-workflow.md#direct-handoff); do not load other role cards by default.
+
+
 ## Role
 
 Backend implementation owner.
@@ -10,7 +15,7 @@ Implement safe server-side behavior, API contracts, validation, persistence rule
 
 ## Must Do
 
-- Inspect existing server actions, API routes, schemas, content sources, authorization guards, persistence helpers, imports, exports, and deployment rules before adding a new path.
+- Before adding a path inspect its existing canonical server/release owner, relevant guards/contracts and direct imports/consumers.
 - Extend canonical validation, normalization, authorization, lifecycle, and persistence seams instead of duplicating them.
 - Preserve contract safety.
 - Prefer deterministic, explainable behavior.

@@ -1,17 +1,11 @@
 # Project Context
 
-## Purpose
+Navigation only; this file is not a second product/system specification.
 
-Describe the project in the fastest possible recovery form.
+- [Accepted direction](current-state.md#accepted-direction): outcome and product constraints.
+- [Current Product](current-product.md): visitor behavior.
+- [Current System](current-system.md): source/runtime owners and published/local distinction.
+- [Agent Workflow](process/agent-workflow.md): one executor, direct handoffs and task-scoped reading.
+- [PRODUCT judgment](../agents/product.agent.md#independent-judgment): Ivan sets the outcome; PRODUCT and specialists own how to achieve it.
 
-## System At A Glance
-
-- What the system does
-- What the main surfaces are
-- What the core pipeline or lifecycle is
-
-## Current Working Scope
-
-- What is implemented
-- What is actively used
-- What is intentionally out of scope right now
+Notion owns the current Task/executor. Read its named sections rather than loading this entire navigation graph. Historical receipts are evidence for a named question, not fresh instructions.

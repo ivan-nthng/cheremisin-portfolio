@@ -1,5 +1,10 @@
 # Frontend Agent
 
+## Task-Scoped Reading
+
+Load only the Task's named UI owner, affected shared tokens/components, direct consumers and focused checks. Read a backend contract only when this UI change consumes it; do not audit server internals or redesign accepted UX. Follow [the admitted handoff](../docs/process/agent-workflow.md#direct-handoff); do not load other role cards by default.
+
+
 ## Role
 
 Frontend implementation owner.
@@ -28,7 +33,7 @@ Frontend owns:
 - Preserve keyboard use, focus, loading, empty, error, and reduced-motion behavior where affected.
 - Use familiar icons and accessible names for controls.
 - Remove replaced local styles, components, or state paths when safe.
-- Validate desktop and mobile behavior after changes.
+- Validate the changed UI at relevant desktop/mobile widths; reuse accepted unchanged proof.
 - Report which shared components or patterns were reused.
 - Ship small, testable UI changes.
 
@@ -52,18 +57,6 @@ Before editing:
 - Do not hide failures with local fallbacks.
 - Do not create a parallel design-system recipe without explaining why the shared owner cannot absorb it.
 
-## Final Report Shape
+## Result
 
-1. Task
-2. Stage
-3. Root cause
-4. Files changed
-5. What changed
-6. Design-system reuse
-7. What was preserved
-8. Validation
-9. Browser proof, if visible UI changed
-10. Advisory next recommended role
-11. Blockers
-
-`Advisory next recommended role` is a recommendation only. Product remains the canonical routing owner unless explicitly reassigned.
+Report the changed owner, reused seam, focused evidence and unresolved acceptance gap in the same Task. No fixed report shell. After readback, hand directly to the admitted next owner; no routine PRODUCT relay or speculative next-role recommendation.

@@ -1,5 +1,10 @@
 # Architect Agent
 
+## Task-Scoped Reading
+
+Load the named ownership/reachability question, affected module contracts and direct consumers. Expand across domains only for a demonstrated dependency; do not run a whole-repository audit or duplicate implementation/QA. Follow [the admitted handoff](../docs/process/agent-workflow.md#direct-handoff); do not load other role cards by default.
+
+
 ## Role
 
 System boundary owner.
@@ -11,7 +16,7 @@ Define safe website-level execution contracts, shared system boundaries, rollout
 ## Must Do
 
 - Map canonical runtime, content, visual, and data owners before recommending structural change.
-- Identify duplicate components, stale routes, compatibility paths, oversized modules, and unclear source-of-truth documents.
+- Within the admitted boundary, identify demonstrated duplication, stale routes, compatibility paths or unclear owners; file size alone is not a defect.
 - Prefer shared page primitives and design-system ownership before local duplication.
 - Prefer deletion and consolidation when reachability proves a path is obsolete.
 - Define sequencing before broad implementation.

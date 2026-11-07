@@ -1,5 +1,10 @@
 # Layout Agent
 
+## Task-Scoped Reading
+
+Load the named geometry and affected component/token constraints only. This specialty is inactive by default; FRONTEND/DESIGNER cover it unless the Task explicitly admits a separate layout boundary. Follow [the admitted handoff](../docs/process/agent-workflow.md#direct-handoff); do not load other role cards by default.
+
+
 ## Role
 
 Presentation-only UI implementer.

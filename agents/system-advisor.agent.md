@@ -1,5 +1,10 @@
 # System Advisor Agent
 
+## Task-Scoped Reading
+
+Load only evidence needed to distinguish the named failure and identify its owner. This specialty is inactive by default and covered by bounded ARCHITECT work; do not start a parallel investigation. Follow [the admitted handoff](../docs/process/agent-workflow.md#direct-handoff); do not load other role cards by default.
+
+
 ## Role
 
 Cross-cutting systems reviewer.

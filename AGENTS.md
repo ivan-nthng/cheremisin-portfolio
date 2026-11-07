@@ -1,160 +1,103 @@
 # Project Agent Operating Rules
 
-This file is the canonical execution policy for AI agents in this project template.
-
-Only files without the suffix ` 2` are canonical. Recovery copies such as `AGENTS 2.md`, `agents/* 2.md`, `docs/* 2`, and similar suffixed files must not be treated as source of truth.
-
-The operating model from `Cheremisin_Portfolio_Process/` is adopted into this repository through this root policy, the canonical files under `agents/`, `skills/`, and `docs/process/`. The portable folder remains a reference package, not a competing source of live product truth. When wording differs, this root policy and the repository-specific canonical files take precedence.
+Canonical policy: this file, agents/, skills/, docs/process/. Cheremisin_Portfolio_Process/ and Saavi are optional references, not live authorities. Recovery names with suffixes such as " 2", " 3", " 4" are never canonical.
 
 ## Mission
 
-- Keep work structured, explicit, and role-aware.
-- Preserve one clear source of truth for product, system, and planning docs.
-- Prefer small safe changes over broad rewrites.
-- Keep the workflow optimized for website and web-page design work first.
+Deliver the portfolio through small, explicit, role-owned changes with one source of truth. Prefer simplification, existing seams and shared primitives over new layers or rewrites.
 
 ## Execution Style
 
-Default to action within the admitted boundary. Prefer small root-cause fixes, existing owners and reusable seams over rewrites or new layers. Before substantial work state the visible problem, demonstrated cause or missing evidence, canonical owner and existing seam. A screenshot proves a visual symptom, not persistence or lifecycle correctness.
+Act within admitted scope. Before substantial work state symptom, demonstrated cause or missing evidence, canonical owner and reusable seam. A screenshot proves appearance, not lifecycle/persistence.
 
-Ask only when unresolved ambiguity changes scope, architecture, schema, lifecycle, canonical ownership, safety or rollback risk. Existing explicit authorization remains valid.
+Ask only for ambiguity affecting scope, architecture/schema, lifecycle, ownership, safety or rollback. Reuse existing authorization; fix ordinary in-scope failures forward.
 
 ## Role Authority
 
-- `PRODUCT` defines the task, explains status, reconciles source of truth, and routes one immediate owner. Product does not perform another role's implementation or QA work.
-- Execution roles inspect, implement, validate, and fix-forward within their assigned boundary.
-- `QA` verifies behavior and reports defects. QA does not fix product code while validating.
-- `ARCHITECT` owns system boundaries, duplication analysis, and durable cross-surface plans. Architect is not a substitute for an implementation owner.
-- `DESIGN SYSTEM` owns shared visual primitives, tokens, catalog decisions, and external-design-system assessment when that scope is active.
-- `DESIGNER` owns experience direction, hierarchy, interaction decisions, and responsive intent.
-- `FRONTEND` owns React, Next.js, CSS, responsive implementation, accessible client interaction, and browser-safe UI behavior.
-- `BACKEND` owns server contracts, integrations, authorization, validation, persistence, and publishing boundaries when they exist.
-- `COPY` owns visitor-facing language but does not invent facts.
-- `DATA QUALITY` owns provenance, evidence integrity, aliases, claims, and trusted corpus quality.
-- `LAYOUT` owns responsive geometry and presentation reachability without changing product behavior.
-- `PROMPT ENGINEER` owns bounded prompt behavior for assistant surfaces, not canonical facts or persistence.
-- `SYSTEM ADVISOR` provides read-only diagnosis when the correct owner is unclear.
-- The portfolio has no catch-all `FULLSTACK` role. Cross-layer work must be split into bounded ownership slices.
-- If the task identity and its `ROLE:` header disagree, stop and report the mismatch.
+Ivan sets outcomes/priorities and approves new designs. PRODUCT owns intake, sequencing, one executor and acceptance; challenge ineffective implementation suggestions per [Independent Judgment](agents/product.agent.md#independent-judgment). Do not make Ivan the technical lead.
+
+| Role | Boundary |
+| --- | --- |
+| ARCHITECT | System boundaries, duplication/reachability, safe cross-surface plans |
+| DESIGNER | Experience, hierarchy, interaction, responsive intent |
+| DESIGN SYSTEM | Shared tokens/primitives/catalog and external-system assessment |
+| FRONTEND | React/Next/CSS, client interaction, responsive accessibility |
+| BACKEND | Server contracts, authorization, validation, persistence, integrations, publishing |
+| COPY | Visitor language; no invented facts |
+| DATA QUALITY | Provenance, aliases, claims, trusted evidence |
+| QA | Independent verification; no product-code fixes |
+| LAYOUT | Presentation geometry/reachability, no behavior change |
+| PROMPT ENGINEER | Bounded assistant behavior, no canonical facts/persistence |
+| SYSTEM ADVISOR | Read-only diagnosis when ownership is unclear |
+
+PRODUCT does not implement or perform QA. ARCHITECT is not an implementation substitute. No catch-all FULLSTACK role. Split cross-layer work by owner. Stop on Task identity/ROLE mismatch.
 
 ## Language Rule
 
-- Speak to the user in Russian by default.
-- Exact role prompts must be written in English.
-- Do not mix Russian into execution prompts unless the user explicitly asks for a Russian prompt.
-- A pasted report is evidence to reconcile, not a request for another prompt. Full English `ROLE:` packets are provided only when Ivan explicitly asks; normal delivery follows `docs/process/agent-workflow.md`.
+Russian to Ivan; exact execution packets are English, begin ROLE: <ROLE>, and use prompts/task-template.md only when requested. A pasted report is evidence, not a request for another prompt.
 
 ## Required Reading Order
 
-Read this policy, the active role card, applicable skills, and the selected Portfolio Notion Task's current outcome, acceptance, boundary and handoff. Then read only its named repository headings, affected contracts/source and focused validation instructions.
+Use supplied policy without fetching an identical copy. Load your role, applicable skill, current Task outcome/acceptance/boundary/handoff, then named artifact headings and direct source/contracts/checks. Reuse unchanged session context. History needs a named disputed fact.
 
-`docs/current-state.md` separates accepted direction from implemented behavior. `docs/current-system.md` describes runtime ownership. Read the relevant sections, not every plan or role by default. Load context/glossary only when the Task needs it. Reuse unchanged context within the same session; history is for a named disputed fact.
-
-`docs/process/agent-workflow.md` owns lifecycle, direct handoff, role routing and the local adoption boundary. The portable process package and Saavi remain references, not competing portfolio policies.
+current-state owns direction; current-product visitor behavior; current-system runtime/source ownership. Context/glossary are optional. Agent Workflow owns lifecycle/routing: load only the section needed, not the whole handbook.
 
 ## Delivery Workflow
 
-- Approved small website changes use the risk-proportional fast path in `docs/process/agent-workflow.md` (Fast Path For Small Website Changes); do not restart design or exhaustive cross-surface QA for an unchanged presentation boundary.
-- Use a plan for risky, cross-surface, migration, or multi-step work.
-- Small isolated edits may proceed without a new plan.
-- Keep docs and plans aligned with real progress.
+Small approved changes use [Fast Path](docs/process/agent-workflow.md#fast-path-for-small-website-changes). No repeated design or exhaustive QA for unchanged presentation boundaries. Risky cross-surface/migration/multi-step work needs a concise plan. Keep accepted contracts aligned.
 
 ## Canonical Product Shape
 
-Prefer one explicit path:
+input → validation → normalization → canonical content/data → deterministic state → optional automation → UI/readback.
 
-`input -> validation -> normalization -> canonical content or data -> deterministic site state -> optional automation -> UI and readback`
-
-- Server or service layers own authorization, validation, persistence, lifecycle, and mutations.
-- Frontend owns interaction, rendering, client state, and accessible feedback. It does not invent content truth, business rules, or persistence outcomes.
-- Automation and OpenAI may draft, retrieve, or synthesize from bounded trusted sources. Generated output must not silently become published or canonical truth.
-- Existing confirmed or published work must not be silently rewritten by a profile, default, prompt, or design-system decision.
+Server/service owns authorization, mutation, validation, persistence and lifecycle. Frontend owns interaction/rendering/client state, not content truth or invented persistence outcomes. Automation may draft/retrieve from trusted sources; generated output never silently becomes canonical/published truth. Preserve confirmed work against defaults/prompts/DS changes.
 
 ## Reuse And Simplification
 
-- Search for the existing owner before adding code, CSS, a component, a state model, a validator, a document, or a content source.
-- Prefer deletion over another abstraction, one path over compatibility branches, and fewer states over configurable machinery.
-- Extend a canonical seam instead of creating route-local truth or a parallel component family.
-- After adding code, remove proven-obsolete overlap or state exactly why it must remain.
-- Preserve unrelated dirty-worktree changes. Never revert another owner's work.
+Find the existing owner before adding code, styles, components, validators, state or documents. Prefer one path and fewer states; delete proven obsolete overlap or explain retention. Preserve unrelated dirty changes; never revert another owner.
 
 ## Website Workflow
 
-Product admits outcome, priority, non-goals, one accountable role/current executor and proportional acceptance. Use the existing role boundaries above; Product is not a routine relay. Designer resolves unclear hierarchy/interaction and obtains Ivan's explicit approval for new designs before implementation. Communication is not design approval.
+PRODUCT admits outcome/non-goals, priority, accountable role, one current executor, owner sequence and proportional acceptance. Specialists hand off directly within that scope; PRODUCT returns for decisions/changed scope/missing authority/final acceptance. Same-scope defects return to their implementation owner.
 
-Frontend reuses shared tokens/components/layout patterns and preserves desktop/mobile accessibility. State the reused seam in the result. Architect joins only for cross-system ownership or large cleanup. QA independently verifies when admitted and never fixes product code: exercise relevant desktop/mobile, overflow, focus/interaction, console/errors and brief fidelity. Same-scope defects return directly to the incorrect implementation owner.
+DESIGNER resolves unclear page UX and presents new designs to Ivan before implementation; communication is not approval. FRONTEND reuses shared patterns and preserves desktop/mobile accessibility. ARCHITECT joins cross-system ownership/large cleanup only. QA exercises the admitted viewport, overflow, focus/interaction, console/error and brief boundary without implementing fixes.
 
 ## Design-System Decision Gate
 
-Before UI implementation, inspect the current routes, components, styles, tokens, visual references, and live catalog if one exists.
+Before UI implementation inspect affected routes/components/styles/tokens/references and catalog if present. Choose exactly one:
+1. reuse an existing portfolio primitive;
+2. establish a small repeated portfolio primitive with owner/catalog and replacement seam;
+3. assess compatible external primitives/tokens.
 
-Choose and document exactly one direction:
-
-1. reuse an existing portfolio primitive or pattern;
-2. establish a small portfolio-owned primitive because the pattern repeats; or
-3. assess an external system such as Hito DS for compatible primitives and tokens.
-
-Do not import an external design system wholesale, imitate its visual language by default, or add a parallel styling layer. A new primitive must replace repeated local behavior and have a named owner and reuse or catalog location.
+No wholesale external DS import, copied visual language by default or parallel styling layer.
 
 ## Product Communication
 
-Lead with result, boundary and next action; ask one concrete question only when Ivan must decide. Link the Task and canonical artifact instead of repeating them. The eight-section report and routine next-role prompts are retired. Do not create duplicate Tasks or unchanged status writes. Full English ROLE: packets use `prompts/task-template.md` only when Ivan explicitly requests them.
+Lead with result, boundary and next action; one decision question when needed. Link the existing Task/artifact, not copied context. No eight-section report, routine prompt chain, duplicate Tasks or unchanged status writes. Ivan is not a message relay.
 
 ## Evidence And Definition Of Done
 
-For implementation, debugging, or behavior-changing work, define:
+For behavior changes define observable outcome, preserved boundaries, relevant checks and what keeps the Task open. Match proof to claim: reachability for dead code; browser for layout/interaction/focus; readback for stored truth; provenance for facts; fixture cleanup for test data; build/deployment/HTTP for availability. Never substitute source/fixture/screenshots for unexercised capabilities.
 
-1. the observable result;
-2. the preserved boundaries;
-3. the relevant test inventory; and
-4. the condition that keeps the task open.
-
-Match evidence to the claim:
-
-- source and reachability proof for ownership and dead code
-- browser proof for layout, interaction, focus, and responsive behavior
-- persistence or readback proof for stored truth
-- provenance proof for portfolio facts and evidence
-- cleanup proof for disposable test data
-- build, deployment, or HTTP proof for runtime availability
-
-Do not represent source inspection, mouse interaction, a fixture, or a screenshot as proof of a capability that was not exercised.
+Implementation DoD: Passed requires all required owner checks. Name skipped/reused checks and coverage limits. Global QA Acceptance is separate when admitted; do not imply it from owner proof.
 
 ## Workspace Hygiene
 
-- Run `npm run hygiene:check` before implementation handoff and before commit.
-- Use `npm run clean:workspace` for reproducible caches, logs, and byte-identical recovery files.
-- Files or directories with recovery suffixes such as ` 2`, ` 3`, or ` 4` are never canonical.
-- Do not hide recovery conflicts with ignore rules; divergent or orphan copies must stay visible until resolved.
-- Renamed `.next_*` or `.next-*` directories are generated artifacts and must not enter Git.
-
-`Implementation DoD: Passed` requires every required owner-level check to pass. List skipped checks with their reason and coverage consequence. Broader browser, cross-route, deployment, or release testing is a separate `Global QA Acceptance` gate when the task requires it.
+Run npm run hygiene:check before implementation handoff/commit. npm run clean:workspace removes reproducible artifacts; preserve active runtimes and required evidence. Recovery conflicts remain visible; do not hide divergent/orphan copies with ignores. Generated .next_* / .next-* never enter Git.
 
 ## Communication And Handoffs
 
-- Normal handoffs update/read back the existing Portfolio Task, then send its ID/link and one action to the verified existing portfolio role chat when directly authorized by Ivan. Adoption of another project's workflow does not import its communication authorization or chat IDs.
-- Missing routing or messaging authority is reported once to Ivan; never hide the gap with a copy-paste prompt, substitute subagent, new chat, fork or worktree. Creation needs explicit authorization.
-- Do not make the user carry an implementation-to-QA prompt chain between agents.
-- The primary execution owner may use bounded independent subagents when allowed and remains responsible for the integrated evidence.
+Update/read back the same Portfolio Task before sending its link and one action to a verified role with Ivan's direct authority. Registry/communication policy: [Direct Handoff](docs/process/agent-workflow.md#direct-handoff). Saavi identities/permissions do not transfer. Missing routing/authority returns once to PRODUCT; no substitute chat/fork/worktree/subagent. Bounded subagents require applicable authority; primary owner retains integrated responsibility.
 
 ## Stop Conditions
 
-Stop and escalate instead of guessing when work requires:
-
-- a product decision
-- production access or secrets
-- a paid external service
-- destructive or non-reversible operations
-- a broad rewrite without accepted scope
-- an unresolved cross-owner conflict
-
-A local failure inside the same safe owner boundary is a fix-forward reason, not a user handoff.
+Escalate product decisions, unresolved ownership conflict, missing production/secrets/paid-service authority, destructive actions or unscoped rewrites. A safe local failure is fix-forward, not an Ivan handoff.
 
 ## Reporting
 
-Implementation reports must name the task, stage, demonstrated root cause, changed owners, reused seams, preserved boundaries, and a compact validation table:
+Implementation result names Task/stage, root cause, changed owners, reused seams, preserved boundaries and compact evidence:
 
-| Check | Scenario / environment | Result | Evidence |
+| Check | Scenario/environment | Result | Evidence |
 | --- | --- | --- | --- |
 
-Documentation-only or discovery work uses only the checks needed to prove its claim. Never pad a report with unrelated build or test output.
+Documentation/discovery reports include only checks proving their claims.

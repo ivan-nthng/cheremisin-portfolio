@@ -6,7 +6,8 @@ Owner: PRODUCT. Adopted from Saavi's current operating approach on 2026-10-27 at
 
 | Concern | Canonical owner |
 | --- | --- |
-| Product intent, priority, decisions, exceptions, final acceptance | Ivan / PRODUCT |
+| Desired outcome, priority, constraints, final product/design acceptance | Ivan |
+| Delivery strategy, scope discipline, sequencing, specialist routing | PRODUCT, with technical owners |
 | Task status, phase, executor, current handoff, latest/next action | Portfolio Notion Tasks |
 | Durable specifications, project facts, rules and evidence boundaries | Repository Markdown |
 | Search/navigation over documents and source material | Portfolio Notion Library |
@@ -17,12 +18,14 @@ One outcome has one Task, one stable accountable role and one current executor. 
 
 ## Minimal Context And Work Budget
 
-Working-doc maintenance: current-state owns accepted direction, current-product owns visitor behavior, current-system owns source/runtime ownership. Keep each as a short current map; put task status only in Notion. Do not prepend build/test/handoff diaries to these maps. Durable contract changes replace their owner section; dated evidence belongs in a linked historical artifact, loaded by exact heading. PORT-32 snapshots named `*-history-2026-11-02.md` are historical receipts, never routine prerequisites or live execution instructions.
+Working-doc maintenance: current-state owns direction, current-product visitor behavior, current-system runtime ownership. Replace the owning contract when it changes; remove superseded alternatives and result-only prose. Notion owns status and routine receipts; Git preserves superseded text. Link required release/audit evidence at its existing owner; do not create another archive or mandatory pre-read for each update. Existing PORT-32 snapshots remain recoverable historical evidence, never current instructions.
 
 Owner: PRODUCT for routing; each executor for its own context. Added at Ivan's request on 2026-10-31 to reduce token consumption.
 
 - At task entry, load root policy once, your role card, the applicable skill and the existing Task's outcome/acceptance/current handoff. Use supplied instructions instead of fetching an identical copy. Reuse unchanged context in the same chat; reread only changed policy or disputed facts.
 - Discover headings/paths with `rg` before reading. Open only named artifact sections, the affected owner and its direct consumers/tests. Do not concatenate whole current-state/current-system files, all role cards, all plans or the portable process package. Expand only to resolve a named uncertainty.
+- Each Task points to one primary artifact and exact headings; load a second domain only for a named unresolved question. Inspect counts/names/diff summaries first. Narrow or paginate oversized output instead of ingesting whole histories or tool catalogues.
+- For status/existence questions return only status, counts or matched names. Keep command output to the relevant excerpt; after truncation, narrow the query instead of rereading with a larger limit. Batch independent reads once; keep dependent writes/readbacks sequential. Do not poll idle roles, repeat passed checks without a changed input, or start a new process audit for an unchanged complaint already covered by accepted rules.
 - `current-state.md#accepted-direction` owns direction; dated receipts are history, not a queue. `current-system.md` is a section-addressed ownership map. Read exact proof from the Task's artifact heading; do not replay prior evidence chains. Notion owns the current executor/status.
 - One executor acts; other roles stay idle until a bounded question or admitted handoff. Do not broadcast continuation/status requests, poll idle roles or ask for ceremonial acknowledgements. Specialists do not repeat another owner's audit. Product joins only for decisions, changed scope, missing authority or final acceptance.
 - Messages contain one Task link, the delta and one action/blocker, normally 1–3 sentences. Keep detailed evidence in one canonical artifact; do not copy logs, full reports or execution packets into each chat and document. Record material transitions only.
@@ -34,6 +37,8 @@ Owner: PRODUCT for routing; each executor for its own context. Added at Ivan's r
 Before execution, the Task names outcome, acceptance, non-goals, accountable role, executor, affected files/contracts/environment, validation, omissions, rollback and stop conditions. Use zero or one Epic based on outcome; explain an intentionally standalone Task.
 
 Product admits intent and owner sequence. Designer resolves hierarchy/interaction/visual direction; Ivan approves new designs before implementation. Design System owns repeated tokens/primitives when affected. Frontend/Backend implement their boundaries. QA verifies independently when admitted and does not fix code. Product returns for changed scope, a decision, missing authority or final acceptance, not every transition.
+
+PRODUCT evaluates Ivan's proposed implementation against his desired outcome before admitting work, following [Independent Judgment](../../agents/product.agent.md#independent-judgment). Technical disagreement requires a concrete reason and one recommended alternative; routine engineering decisions stay with PRODUCT and specialists. Do not convert each suggestion into execution or ask Ivan to arbitrate routine frontend/backend choices.
 
 Do not introduce mandatory architecture, research or QA cycles beyond accepted risk and scope. Reproduced in-scope defects are fixed forward by the incorrect implementation owner and returned to the admitted verifier.
 
@@ -50,8 +55,6 @@ Ivan explicitly requests a faster small-change workflow (2026-10-29). Do not tre
 - Keep one concise current Task checkpoint and canonical delta/evidence; no new dossier per retry, repeated unchanged status writes or long cross-role packets. A useful result is the change plus its evidence, not documentation volume.
 - Never convert a known failure to a pass to go faster. Label skipped/reused checks and their coverage consequence. Expand testing only for a reproduced defect, changed risky owner or actual source/deployment departure. Report a concrete blocker immediately; do not promise a universal one-minute completion or wait for ceremonial acknowledgments.
 
-Current PORT-22 keeps independent loading/input/readiness acceptance, but should finish the already-running scoped hosted check and same-build/live chain using accepted unchanged proof, without another visual review or new regression permutations.
-
 Reuse the existing Portfolio tracker; discover its schema before writes. Current properties own present state; Lifecycle log owns attributable transitions.
 
 1. Fetch the Task and verify identity, executor, outcome, acceptance and boundary.
@@ -66,9 +69,11 @@ If Notion is unavailable, report the failed checkpoint to Product. Do not preten
 
 ## Direct Handoff
 
+No-loop rule: use only the next owner already admitted in the Task, never an automatic tour of every role. A question to a specialist does not transfer execution. A passing slice advances; a failing slice returns to its implementation owner with the specific failed acceptance and focused retest. Preserve unchanged passed evidence. If the same failure returns without a new fix or new causal evidence, stop that handoff loop and ask PRODUCT to resolve the concrete dependency/ownership gap. Do not restart design, architecture or full QA. An idle role with no admitted action does nothing.
+
 Ivan directly authorized portfolio agents to exchange task handoffs, questions, results and replies on 2026-10-27 in the PRODUCT chat, answering the explicit request for Saavi-style inter-agent communication: "Всё верно, да. Я разрешаю." This authorization is portfolio-only and does not grant access to Saavi work, new chats/forks/subagents, or expanded implementation/release authority. Reuse verified portfolio destinations without per-message approval.
 
-In a subsequent direct instruction on 2026-10-27 Ivan explicitly authorized creation of the needed permanent portfolio role chats, context bootstrap, canonical ID registration, and immediate dispatch of PORT-12 to DESIGNER. Provision DESIGNER, DESIGN SYSTEM, ARCHITECT, FRONTEND, BACKEND, DATA QUALITY, COPY and QA; reuse the existing PRODUCT chat. This bounded bootstrap does not authorize ongoing duplicate chats, forks, worktrees, new business functionality or implementation before design approval. Other roles initialize and wait for an admitted task; DESIGNER presents proposals to Ivan before implementation.
+The one-time role-chat bootstrap authorized on2026-10-27 is complete; use the verified registry below. Its historical PORT-12 dispatch is not a current execution instruction and grants no ongoing chat/fork/worktree creation or implementation authority.
 
 The outgoing owner may hand the same Task to exactly one next role when scope, admitted owner sequence, risk and acceptance remain unchanged; files/runtime are released; the next boundary and rollback are clear; required evidence and Notion read-back are complete; and no approval/external authority is missing.
 
@@ -90,19 +95,19 @@ Ivan explicitly requires Figma work through the connected Figma MCP server only 
 - Isolation: Portfolio Tasks, Epics and Library are separate data sources under the Portfolio parent, not linked views of Saavi. Do not write portfolio work into Saavi or create duplicate portfolio databases. The Tasks-to-Epics relation targets the Portfolio Epics source above.
 - Codex project: c2c10209-7e58-4558-8b10-edd340b1014c; host: local. The following permanent chats are the canonical destinations, verified by creation and project-membership read-back on 2026-10-27. Do not substitute same-titled historical chats or subagents.
 
-| Role | Canonical chat ID | Role card | Admission |
-| --- | --- | --- | --- |
-| PRODUCT | 019f8f64-c4f9-7f83-9e12-bf473cd0e0ac | agents/product.agent.md | Existing intake/decisions owner |
-| DESIGNER | 01a17d62-78ae-7bf0-923d-f8314494cf57 | agents/designer.agent.md | PORT-12 proposals only; Ivan approval before implementation |
-| DESIGN SYSTEM | 01a17d63-2759-7ab1-8338-3d4b24b62120 | agents/design-system.agent.md | Bootstrap; bounded contribution on request |
-| ARCHITECT | 01a17d63-2f0c-7d51-b45a-5c5e82eaf864 | agents/architect.agent.md | Bootstrap; no broad audit or migration admitted |
-| FRONTEND | 01a17d63-3309-73b3-8bfe-ce4666be2d8e | agents/frontend.agent.md | Bootstrap; no implementation before design approval |
-| BACKEND | 01a17d63-2a06-7851-ad32-6d0da575fd29 | agents/backend.agent.md | Bootstrap; no chat rebuild or API deletion admitted |
-| DATA QUALITY | 01a17d63-362b-7db0-adc2-1daa43e21ea6 | agents/data-quality.agent.md | Bootstrap; facts/provenance only on admitted work |
-| COPY | 01a17d63-34a0-7da0-bba8-09355aa8afee | agents/copy.agent.md | Bootstrap; no speculative public claims |
-| QA | 01a19460-1116-7f71-9fc6-5e969e2886ba | agents/qa.agent.md | Independent verification, no code fixes; clean replacement authorized2026-10-31 |
+| Role | Canonical chat ID | Role card |
+| --- | --- | --- |
+| PRODUCT | 019f8f64-c4f9-7f83-9e12-bf473cd0e0ac | agents/product.agent.md |
+| DESIGNER | 01a17d62-78ae-7bf0-923d-f8314494cf57 | agents/designer.agent.md |
+| DESIGN SYSTEM | 01a17d63-2759-7ab1-8338-3d4b24b62120 | agents/design-system.agent.md |
+| ARCHITECT | 01a17d63-2f0c-7d51-b45a-5c5e82eaf864 | agents/architect.agent.md |
+| FRONTEND | 01a17d63-3309-73b3-8bfe-ce4666be2d8e | agents/frontend.agent.md |
+| BACKEND | 01a17d63-2a06-7851-ad32-6d0da575fd29 | agents/backend.agent.md |
+| DATA QUALITY | 01a17d63-362b-7db0-adc2-1daa43e21ea6 | agents/data-quality.agent.md |
+| COPY | 01a17d63-34a0-7da0-bba8-09355aa8afee | agents/copy.agent.md |
+| QA | 01a19460-1116-7f71-9fc6-5e969e2886ba | agents/qa.agent.md |
 
-The table's Admission column describes bootstrap boundaries, not live task state. Notion owns current execution. LAYOUT is covered by FRONTEND/DESIGNER for this scope; SYSTEM ADVISOR by a bounded ARCHITECT contribution. PROMPT ENGINEER and FULLSTACK have no active role chat in the non-chat relaunch. A new specialty or substitute needs an explicit admission, not automatic chat creation.
+This registry owns destinations only; role cards own responsibility and Notion owns current admission/execution. QA is the clean replacement authorized2026-10-31. LAYOUT is covered by FRONTEND/DESIGNER; SYSTEM ADVISOR by bounded ARCHITECT work. PROMPT ENGINEER and FULLSTACK have no active role chat. New destinations require explicit authority.
 
 The app's saved Portfolio project still advertises the former iCloud path. Specialist chats were created in local projectless bootstrap directories and then attached to this Portfolio project without accessing iCloud. Those initial chat/output folders are not repository truth: every specialist must explicitly use /Users/ivan/Developer/cheremisin-portfolio for source/file commands. Do not operate in iCloud or silently rewrite app metadata based on the stale project path.
 
@@ -110,7 +115,7 @@ The app's saved Portfolio project still advertises the former iCloud path. Speci
 
 Portfolio Notion isolation, schema, direct-messaging authorization and permanent role destinations are verified. Bootstrap readiness and task-start evidence are verified through the existing chat tools and recorded in PORT-13; they do not prove a completed design/implementation/QA chain. Remaining backlog reconciliation and specialist outcomes are not implicitly complete.
 
-Keep rules in existing owners; do not copy the Saavi starter package or add a parallel framework. Historical local task records remain pointers, not a second current lifecycle writer. Do not mass-import or reopen them, delete chat code, cancel completed records or change tracker schema during this bounded adoption.
+Keep rules in existing owners; do not copy the Saavi starter package or add a parallel framework. Historical task records remain pointers, not a second lifecycle writer. Current accepted Tasks govern cleanup; bootstrap restrictions do not override accepted PORT-31 retirement. No mass-import/reopening or tracker-schema change follows from process maintenance.
 
 Focused documentation checks prove policy changes. Existing hygiene, owner proof, independent QA when admitted and separately authorized release boundaries remain. Reports to Ivan are concise Russian updates, not mandatory eight-section prompt packets.
 
