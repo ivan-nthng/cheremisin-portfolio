@@ -27,6 +27,7 @@
 
 # production
 /build
+/src/components/hito-case/native.generated.css
 
 # misc
 .DS_Store

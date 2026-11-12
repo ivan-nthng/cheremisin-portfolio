@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "npm run generate:hito-css",
     "dev": "next dev",
-    "prebuild": "npm run hygiene:check",
+    "prebuild": "npm run hygiene:check && npm run generate:hito-css",
     "build": "next build",
+    "generate:hito-css": "node scripts/scope-hito-styles.mjs",
     "start": "next start",
     "lint": "next lint",
     "pretest:portfolio": "npm run hygiene:check",
@@ -15,6 +17,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@hito-ds/react": "0.2.0",
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.15.0",
@@ -22,8 +25,8 @@
     "maplibre-gl": "6.16.0",
     "next": "^15.5.18",
     "next-themes": "^0.4.6",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "tailwind-merge": "^3.6.0",
     "use-scramble": "^2.2.15"
   },
@@ -35,6 +38,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "^15.5.18",
+    "postcss": "8.5.22",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.10"
