@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties }
 import { CaseDemoMedia } from '@/components/portfolio/case-story/CaseDemoMedia'
 import { CaseFeatureCard, CaseFeatureGrid } from '@/components/portfolio/case-story/CaseDetails'
 import { useCaseDemoDesktop } from '@/components/portfolio/case-story/case-demo-viewport'
-import { isKitchenCaseOrigin, isSaaviChartClip, saaviClipCompactQuery, saaviClipCompactWidth, saaviClipFrames, type SaaviClip } from '@/lib/portfolio/client/saavi-kitchen-host'
+import { isSaaviChartClip, saaviClipCompactQuery, saaviClipCompactWidth, saaviClipFrames, type SaaviClip } from '@/lib/portfolio/client/saavi-kitchen-host'
 import { KitchenGuidedFrame } from './KitchenGuidedFrame'
 import styles from './workflow-clips.module.css'
 
@@ -76,10 +76,10 @@ function WorkflowMedia({ clip, origin, expanded, suspended, onExpand, onClose }:
   </CaseDemoMedia>
 }
 
-export function SaaviWorkflowClips({ available }: { available: boolean }) {
+export function SaaviWorkflowClips() {
   const [origin, setOrigin] = useState<string | null>(null)
   const [expanded, setExpanded] = useState<SaaviClip | null>(null)
-  useEffect(() => { if (available && isKitchenCaseOrigin(location.origin)) setOrigin(location.origin) }, [available])
+  useEffect(() => { setOrigin(location.origin) }, [])
 
   return <CaseFeatureGrid variant="tracks" className={styles.grid}>
     {clips.map(clip => <CaseFeatureCard key={clip.id} listItem span={clip.span} title={clip.title} description={clip.description}>

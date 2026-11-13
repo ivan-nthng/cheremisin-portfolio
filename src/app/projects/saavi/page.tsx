@@ -42,7 +42,7 @@ export default function SaaviCasePage() {
     statistics={<CaseDetails editorial={false} className={layout.detailSection} id="context" aria-labelledby="saavi-statistics-title">
       <TimeCalculator headingId="saavi-statistics-title" />
     </CaseDetails>}
-    showcase={<KitchenDemoEntry available={process.env.NODE_ENV === 'development'}
+    showcase={<KitchenDemoEntry
       backdrop={<picture className={layout.photoBackdrop}>
         <source media="(max-width: 640px)" srcSet={`${media}/tabletop-mobile.webp`} width={852} height={1846} />
         <img src={`${media}/tabletop-desktop.webp`} width={1672} height={941} alt="" loading="lazy" draggable={false} />
@@ -55,7 +55,7 @@ export default function SaaviCasePage() {
           <p className={layout.storyIntro}>The kitchen sets up the dish and plans how many portions the restaurant can prepare each day. Saavi’s operations team can then open an order to check what was purchased and where it is in delivery.</p>
           <p className={layout.storyIntro}>The charts use fictional data.</p>
         </RepeatReveal>
-        <SaaviWorkflowClips available={process.env.NODE_ENV === 'development'} />
+        <SaaviWorkflowClips />
       </CaseDetails>
       <CaseDetails editorial={false} className={layout.detailSection} id="process" aria-labelledby="saavi-process-title">
         <RepeatReveal className={layout.contextIntro}>

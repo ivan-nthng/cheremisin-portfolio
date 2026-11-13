@@ -1,5 +1,5 @@
-/** Local review bridge only; the native Kitchen stays in its separate Vite host. */
-export const kitchenDemoOrigin = 'http://127.0.0.1:3310'
+/** The published Vite snapshot shares the portfolio origin with its parent frame. */
+export const kitchenDemoPath = '/saavi-kitchen-demo/index.html'
 export const kitchenCasePath = '/projects/saavi#kitchen'
 export const kitchenBridge = { ready: 'saavi-kitchen:ready', close: 'saavi-kitchen:close', unavailable: 'saavi-kitchen:unavailable' } as const
 export type SaaviDemoRole = 'kitchen' | 'admin'
@@ -26,6 +26,6 @@ export function isSaaviChartClip(clip: SaaviClip) {
   return clip === 'buyers' || clip === 'analytics' || clip === 'dish-comparison'
 }
 
-export function isKitchenCaseOrigin(origin: string) {
-  return origin === 'http://127.0.0.1:3305' || origin === 'http://localhost:3305'
+export function isKitchenCaseOrigin(origin: string, frameOrigin: string) {
+  return origin === frameOrigin || origin === 'http://127.0.0.1:3305' || origin === 'http://localhost:3305'
 }

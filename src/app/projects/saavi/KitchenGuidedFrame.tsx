@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { kitchenBridge, kitchenDemoOrigin, saaviClipCompactWidth, saaviClipFrames, type SaaviClip } from '@/lib/portfolio/client/saavi-kitchen-host'
+import { kitchenBridge, kitchenDemoPath, saaviClipCompactWidth, saaviClipFrames, type SaaviClip } from '@/lib/portfolio/client/saavi-kitchen-host'
 
 /** Authored iframe shared by the showcase and workflow cards. */
 export function KitchenGuidedFrame({ origin, clip, compact = false }: { origin: string; clip?: SaaviClip; compact?: boolean }) {
@@ -21,16 +21,16 @@ export function KitchenGuidedFrame({ origin, clip, compact = false }: { origin: 
   useEffect(() => {
     const timeout = window.setTimeout(() => setStatus(value => value === 'ready' ? value : 'unavailable'), 15000)
     const receive = (event: MessageEvent) => {
-      if (event.origin !== kitchenDemoOrigin || event.source !== frame.current?.contentWindow) return
+      if (event.origin !== origin || event.source !== frame.current?.contentWindow) return
       if (event.data?.type === kitchenBridge.ready) { clearTimeout(timeout); setStatus('ready') }
       if (event.data?.type === kitchenBridge.unavailable) { clearTimeout(timeout); setStatus('unavailable') }
     }
     window.addEventListener('message', receive)
     return () => { clearTimeout(timeout); window.removeEventListener('message', receive) }
-  }, [])
+  }, [origin])
   return <div ref={root} data-kitchen-guided={status} aria-hidden style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
     {status !== 'unavailable' && <iframe ref={frame} title={`${clip ?? 'Kitchen order'} walkthrough`} tabIndex={-1} inert
-      src={`${kitchenDemoOrigin}/?mode=guided${clip ? `&clip=${clip}` : ''}&portfolioOrigin=${encodeURIComponent(origin)}`}
+      src={`${kitchenDemoPath}?mode=guided${clip ? `&clip=${clip}` : ''}&portfolioOrigin=${encodeURIComponent(origin)}`}
       style={{ width, height, border: 0, transform: `scale(${scale})`, transformOrigin: 'top left', opacity: status === 'ready' ? 1 : 0, transition: 'opacity 240ms ease-out' }} />}
   </div>
 }

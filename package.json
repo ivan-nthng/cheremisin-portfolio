@@ -8,6 +8,7 @@
     "prebuild": "npm run hygiene:check && npm run generate:hito-css",
     "build": "next build",
     "generate:hito-css": "node scripts/scope-hito-styles.mjs",
+    "build:saavi-demo": "node scripts/build-saavi-demo.mjs",
     "start": "next start",
     "lint": "next lint",
     "pretest:portfolio": "npm run hygiene:check",
@@ -39,6 +40,7 @@
     "eslint": "^9",
     "eslint-config-next": "^15.5.18",
     "postcss": "8.5.22",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.10"

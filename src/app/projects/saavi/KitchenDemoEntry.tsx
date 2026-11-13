@@ -6,7 +6,7 @@ import { CaseDemoArrow } from '@/components/portfolio/case-story/CaseTemplate'
 import { CaseGuidedShowcase } from '@/components/portfolio/case-story/CaseGuidedShowcase'
 import { useCaseDemoDesktop } from '@/components/portfolio/case-story/case-demo-viewport'
 import DemoShell from '@/components/portfolio/demo/DemoShell'
-import { isKitchenCaseOrigin, kitchenBridge, kitchenDemoOrigin } from '@/lib/portfolio/client/saavi-kitchen-host'
+import { kitchenBridge, kitchenDemoPath } from '@/lib/portfolio/client/saavi-kitchen-host'
 import layout from '@/components/portfolio/case-story/case-draft.module.css'
 import { KitchenGuidedFrame } from './KitchenGuidedFrame'
 
@@ -19,7 +19,7 @@ function KitchenFrame({ close, origin }: { close: () => void; origin: string }) 
   useEffect(() => {
     const timeout = window.setTimeout(() => setStatus(value => value === 'ready' ? value : 'unavailable'), 15000)
     const receive = (event: MessageEvent) => {
-      if (event.origin !== kitchenDemoOrigin || event.source !== frame.current?.contentWindow) return
+      if (event.origin !== origin || event.source !== frame.current?.contentWindow) return
       if (event.data?.type === kitchenBridge.close) close()
       if (event.data?.type === kitchenBridge.ready) {
         clearTimeout(timeout)
@@ -28,32 +28,32 @@ function KitchenFrame({ close, origin }: { close: () => void; origin: string }) 
     }
     window.addEventListener('message', receive)
     return () => { clearTimeout(timeout); window.removeEventListener('message', receive) }
-  }, [close, visit])
+  }, [close, origin, visit])
   useEffect(() => { if (status === 'ready') frame.current?.focus({ preventScroll: true }) }, [status])
 
   function retry() { setStatus('loading'); setVisit(value => value + 1) }
   return <>
     {status !== 'ready' && <DemoShell label="Saavi demo" theme={theme} onTheme={setTheme} onRestart={retry} onReturn={close}>
       <div className={layout.draftSlot} role="status">
-        <p>{status === 'loading' ? 'Loading Saavi…' : 'The local Saavi demo is unavailable.'}</p>
+        <p>{status === 'loading' ? 'Loading Saavi…' : 'The Saavi demo is unavailable.'}</p>
         {status === 'unavailable' && <button type="button" className="editorial-link" onClick={retry}>Try again<CaseDemoArrow /></button>}
       </div>
     </DemoShell>}
     <iframe key={visit} ref={frame} title="Saavi — interactive demo"
-      src={`${kitchenDemoOrigin}/?portfolioOrigin=${encodeURIComponent(origin)}`}
+      src={`${kitchenDemoPath}?portfolioOrigin=${encodeURIComponent(origin)}`}
       style={{ display: status === 'ready' ? 'block' : 'none', width: '100%', height: '100dvh', border: 0 }}
       onError={() => setStatus('unavailable')} />
   </>
 }
 
-export default function KitchenDemoEntry({ backdrop, available }: { backdrop: ReactNode; available: boolean }) {
+export default function KitchenDemoEntry({ backdrop }: { backdrop: ReactNode }) {
   const entry = useRef<HTMLButtonElement>(null)
   const source = useRef<HTMLElement>(null)
   const desktop = useCaseDemoDesktop()
   const [origin, setOrigin] = useState<string | null>(null)
   const [open, setOpen] = useState(false)
   const active = desktop && open
-  useEffect(() => { if (available && isKitchenCaseOrigin(location.origin)) setOrigin(location.origin) }, [available])
+  useEffect(() => { setOrigin(location.origin) }, [])
   useEffect(() => { if (!desktop) setOpen(false) }, [desktop])
 
   const trigger = origin && <button type="button" className="editorial-link" aria-haspopup="dialog" onClick={event => {
