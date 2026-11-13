@@ -64,19 +64,17 @@ export default function DemoShell<Id extends string>(props: Props<Id> & { presen
   const covered = story?.covered ?? false
   const shell = useRef<HTMLDivElement>(null)
   const toolbar = useRef<HTMLDivElement>(null)
-  const scenarioBar = useRef<HTMLDivElement>(null)
   const tabs = useRef<(HTMLButtonElement | null)[]>([])
   const restart = useRef<HTMLButtonElement>(null)
   const result = useRef<HTMLButtonElement>(null)
   const id = useId()
   useLayoutEffect(() => {
     const update = () => {
-      const height = (toolbar.current?.offsetHeight ?? 0) + (scenarioBar.current?.offsetHeight ?? 0)
+      const height = toolbar.current?.offsetHeight ?? 0
       shell.current?.style.setProperty('--demo-toolbar-height', `${height}px`)
     }
     update(); const observer = new ResizeObserver(update)
     if (toolbar.current) observer.observe(toolbar.current)
-    if (scenarioBar.current) observer.observe(scenarioBar.current)
     return () => observer.disconnect()
   }, [props.presentation, Boolean(story)])
   useLayoutEffect(() => { if (covered) restart.current?.focus({ preventScroll: true }) }, [covered])
@@ -93,6 +91,7 @@ export default function DemoShell<Id extends string>(props: Props<Id> & { presen
     onKeyDownCapture={onKeyDownCapture}>
     <div inert={covered || undefined}>
       {!props.presentation && <div ref={toolbar} className={styles.toolbar}>
+        {story && <div className={styles.scenarioControls} data-demo-scenario-bar="top">{scenarioControls}</div>}
         <button type="button" role="switch" aria-label="Dark theme" aria-checked={theme === 'dark'} className={styles.themeSwitch}
           onClick={() => onTheme(theme === 'light' ? 'dark' : 'light')}>
           <span className={styles.switchTrack} aria-hidden="true"><span className={styles.switchThumb}/></span>
@@ -101,7 +100,6 @@ export default function DemoShell<Id extends string>(props: Props<Id> & { presen
         {onReturn && <button type="button" className={styles.hostAction} aria-label="Close" title="Close" onClick={onReturn}><X size={16} aria-hidden="true"/></button>}
       </div>}
       {children}
-      {!props.presentation && story && <div ref={scenarioBar} className={`${styles.toolbar} ${styles.scenarioBar}`} data-demo-scenario-bar="bottom">{scenarioControls}</div>}
     </div>
     <AnimatePresence initial={false}>{story && completion && covered && <CompletionCover key="completion" titleId={id + '-completed-title'} onDismiss={dismiss}>
       <div className={styles.completionCard}><p>{completion.label} · local demo</p><h2 id={id + '-completed-title'}>Scenario completed</h2><p>{completion.description}</p>
