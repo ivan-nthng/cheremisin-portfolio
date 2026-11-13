@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 import { projects } from '@/lib/projects'
-import { contacts } from '@/lib/site-content'
+import { contacts, homeIdentity } from '@/lib/site-content'
 
 export const siteUrl = 'https://www.cheremisin.co.uk'
 export const siteName = 'Ivan Cheremisin'
-export const homeTitle = `${siteName} — Product Designer`
+export const homeTitle = `${siteName} — Product Designer & Product Builder`
 export const homeDescription =
-  'Portfolio of Ivan Cheremisin, a product designer working on internal tools, AI features, design systems, and workflow-heavy software.'
+  'Ivan Cheremisin is a product designer and product builder working on internal tools, AI features, design systems, and workflow-heavy software.'
 
 export const socialImage = {
   url: `${siteUrl}/opengraph-image`,
@@ -16,14 +16,27 @@ export const socialImage = {
   alt: 'Ivan Cheremisin — Product designer and Product builder',
 }
 
-/** Only the temporary homepage is admitted for indexing. Keep every route crawlable. */
-export function pageMetadata(path: string, title: string, description: string): Metadata {
+export const indexablePaths = [
+  '/',
+  '/projects/taxi-aggregator-support-workspace',
+  '/projects/litres',
+  '/projects/ds-hito',
+  '/projects/litres-library',
+  '/projects/metabox',
+] as const
+
+export function isIndexablePath(path: string) {
+  return (indexablePaths as readonly string[]).includes(path)
+}
+
+/** Keep other routes crawlable and noindex. */
+export function pageMetadata(path: string, title: string, description: string, image = socialImage): Metadata {
   const url = new URL(path, siteUrl).href
   return {
     title,
     description,
     alternates: { canonical: url },
-    robots: { index: path === '/', follow: true },
+    robots: { index: isIndexablePath(path), follow: true },
     openGraph: {
       type: 'website',
       siteName,
@@ -31,21 +44,21 @@ export function pageMetadata(path: string, title: string, description: string): 
       url,
       title,
       description,
-      images: [socialImage],
+      images: [image],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [{ url: socialImage.url, alt: socialImage.alt }],
+      images: [{ url: image.url, alt: image.alt }],
     },
   }
 }
 
-export function projectMetadata(path: string): Metadata {
+export function projectMetadata(path: string, share?: { title: string; image: typeof socialImage }): Metadata {
   const project = projects.find(project => project.link === path)
   if (!project) throw new Error(`Missing project metadata for ${path}`)
-  return pageMetadata(path, `${project.title} — ${siteName}`, project.description)
+  return pageMetadata(path, `${share?.title ?? project.title} — ${siteName}`, project.description, share?.image)
 }
 
 export const homeStructuredData = {
@@ -56,10 +69,24 @@ export const homeStructuredData = {
       '@id': `${siteUrl}/#person`,
       name: siteName,
       url: `${siteUrl}/`,
-      jobTitle: 'Product Designer',
+      jobTitle: ['Product Designer', 'Product Builder', 'Film Director'],
+      description: homeIdentity.introduction.join(' '),
+      knowsAbout: [
+        'Support operations workflows',
+        'Author and publisher dashboards',
+        'Semantic design tokens',
+        'Figma component systems',
+        'Research workflows',
+      ],
       sameAs: contacts
         .filter(contact => contact.label === 'LinkedIn' || contact.label === 'GitHub')
         .map(contact => contact.href),
+    },
+    {
+      '@type': 'ProfilePage',
+      '@id': `${siteUrl}/#profile`,
+      url: `${siteUrl}/`,
+      mainEntity: { '@id': `${siteUrl}/#person` },
     },
     {
       '@type': 'WebSite',
@@ -71,4 +98,17 @@ export const homeStructuredData = {
       author: { '@id': `${siteUrl}/#person` },
     },
   ],
+}
+
+export function caseStructuredData(path: string, name: string, description: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': new URL(path, siteUrl).href,
+    url: new URL(path, siteUrl).href,
+    name,
+    description,
+    author: { '@id': `${siteUrl}/#person` },
+    isPartOf: { '@id': `${siteUrl}/#website` },
+  }
 }

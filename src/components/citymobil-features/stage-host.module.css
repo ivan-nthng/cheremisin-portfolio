@@ -1,0 +1,2 @@
+/* Hand the host's universal radius reset back to the kit; native classes win. */
+:where(.host :global(.ss-stage), .host :global(.ss-stage *)):not(html){border-radius:revert-layer}

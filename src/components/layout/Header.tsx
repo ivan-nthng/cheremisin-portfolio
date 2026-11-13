@@ -1,35 +1,42 @@
 'use client'
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { ChevronDown } from 'lucide-react'
 import { contacts, homeIdentity } from '@/lib/site-content'
 import { projects } from '@/lib/projects'
 import { PortfolioArrow } from '@/components/portfolio/PortfolioArrow'
+import { PortfolioBackLink } from '@/components/portfolio/PortfolioBackLink'
 import { ContactLinks } from '@/components/portfolio/ContactLinks'
 import { ContactSheet } from './ContactSheet'
 import { PortfolioGrid } from '@/components/portfolio/PortfolioGrid'
 import { HomeEyeLoader } from './HomeEyeLoader'
+import { CaseNavigation } from '@/components/citymobil-case/CaseNavigation'
+import caseStyles from '@/components/citymobil-case/case.module.css'
 
 export function Header({ homeEyeBootstrap }: { homeEyeBootstrap: string }) {
   const pathname = usePathname()
-  const router = useRouter()
   const header = useRef<HTMLElement>(null)
   const previousPath = useRef(pathname)
-  const safeOrigin = useRef(false)
   const trigger = useRef<HTMLButtonElement>(null)
   const [sheetOpen, setSheetOpen] = useState(false)
   const [pointerEntry, setPointerEntry] = useState(false)
   const home = pathname === '/'
+  const citymobilCase = pathname === '/preview/citymobil-case' || pathname === '/projects/taxi-aggregator-support-workspace'
   const gridPage = home || pathname === '/manifesto'
+  const caseGrid = pathname === '/projects/litres' || pathname === '/projects/litres-library'
+    || pathname === '/projects/metabox' || pathname === '/projects/taxi-aggregator-support-workspace'
   const title = home ? homeIdentity.name
+    : citymobilCase ? 'Citymobil'
+    : pathname === '/projects/litres' ? 'LitRes Publishing Workspace'
+    : (pathname === '/preview/litres-library-case' || pathname === '/projects/litres-library') ? 'LitRes Library'
+    : (pathname === '/preview/metabox-case' || pathname === '/projects/metabox') ? '3D Source Metabox'
     : pathname === '/projects' ? 'Projects'
     : pathname === '/manifesto' ? 'Manifesto'
     : projects.find(project => project.link === pathname)?.title ?? 'Portfolio'
 
   useEffect(() => {
     if (previousPath.current !== pathname) {
-      safeOrigin.current = true
       previousPath.current = pathname
       setSheetOpen(false)
     }
@@ -116,18 +123,17 @@ export function Header({ homeEyeBootstrap }: { homeEyeBootstrap: string }) {
   }, [pathname])
 
   // The local product preview deliberately has no portfolio chrome.
-  if (pathname === '/preview/citymobil' || pathname === '/preview/citymobil-background') return null
+  if (pathname?.startsWith('/projects/litres/demo') || pathname === '/preview/metabox' || pathname?.startsWith('/preview/metabox/') || pathname === '/preview/litres-readers' || pathname === '/preview/litres-library-components' || (pathname === '/preview/litres-author' || pathname?.startsWith('/preview/litres-author/')) || pathname === '/preview/citymobil' || pathname === '/preview/citymobil-background' || pathname === '/preview/citymobil-motion' || pathname === '/preview/citymobil-features' || pathname?.startsWith('/preview/citymobil-features/')) return null
 
   return <>
     {home ? <HomeEyeLoader bootstrap={homeEyeBootstrap} /> : null}
-    <header ref={header} className={`context-header ${home ? 'context-home context-photo-home' : 'context-page'}${gridPage ? ' context-grid' : ''}`} style={{ paddingTop: gridPage ? 'env(safe-area-inset-top, 0px)' : 0 }}>
+    <header ref={header} className={`context-header ${home ? 'context-home context-photo-home' : 'context-page'}${gridPage ? ' context-grid' : ''}${citymobilCase ? ` ${caseStyles.header}` : ''}`} style={{ paddingTop: gridPage ? 'env(safe-area-inset-top, 0px)' : 0 }}>
       <div className={`context-header-lane${gridPage ? ' portfolio-grid-lane' : ''}`}>
-        {!home ? <a href="/" className="editorial-link context-back" aria-label="Back to previous portfolio page" onClick={event => {
-          if (safeOrigin.current) { event.preventDefault(); router.back() }
-        }}><span className="context-control-label"><PortfolioArrow direction="left" /><span>Back</span></span></a> : null}
+        {!home ? <PortfolioBackLink from={pathname ?? ''} /> : null}
         <div className="context-identity">{home
           ? <h1 id="portfolio-identity" className="context-title"><span className="context-title-label">{title}</span></h1>
           : <p className="context-title"><span className="context-title-label">{title}</span></p>}</div>
+        {citymobilCase && <CaseNavigation/>}
         <nav className="context-contacts" aria-label="Contact Ivan" data-hero-placement={home ? 'hero' : undefined}>
           {contacts.map(contact => <a key={contact.label} className="editorial-link" href={contact.href}
             {...(contact.label !== 'Email' ? { target: '_blank', rel: 'noreferrer' } : {})}>
@@ -149,7 +155,9 @@ export function Header({ homeEyeBootstrap }: { homeEyeBootstrap: string }) {
         </noscript>
       </div>
     </header>
-    {gridPage ? <PortfolioGrid key={pathname} splitControls={home} contactTrigger={trigger} contactOpen={sheetOpen} onContact={event => {
+    {gridPage || caseGrid ? <PortfolioGrid key={pathname}
+      trackSelector={caseGrid ? '[data-case-feature-grid]' : undefined} showContact={gridPage}
+      contactTrigger={trigger} contactOpen={sheetOpen} onContact={event => {
       setPointerEntry(event.detail > 0)
       setSheetOpen(true)
     }} /> : null}

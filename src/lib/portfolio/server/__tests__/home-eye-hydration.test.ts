@@ -1,10 +1,11 @@
 import { runInNewContext } from 'node:vm'
 import { describe, expect, it } from 'vitest'
 import { homeEyeBootstrap } from '@/components/layout/home-eye-bootstrap'
+import { attachHomeEyeDecoration } from '@/components/layout/home-eye-decoration'
 
 // Exercise the parser script before React exists. DOM writes on the SSR
 // decoration are recorded separately from the document controller's state.
-function firstScreen({ failed = false } = {}) {
+function firstScreen({ failed = false, entry = '/' } = {}) {
   const writes: string[] = []
   const style = (name: string) => new Proxy({
     setProperty(key: string, value: string) { writes.push(`${name}.${key}=${value}`) },
@@ -48,7 +49,7 @@ function firstScreen({ failed = false } = {}) {
     window: { MutationObserver: Observer, addEventListener() {}, removeEventListener() {} },
     document, location: { pathname: '/' }, URL,
     performance: { now: () => 10, getEntriesByType: (kind: string) => kind === 'navigation'
-      ? [{ name: 'http://localhost/', type: 'navigate' }]
+      ? [{ name: `http://localhost${entry}`, type: 'navigate' }]
       : [] },
     HTMLImageElement: { prototype: { decode() {} } },
     MutationObserver: Observer, ResizeObserver: Observer,
@@ -59,7 +60,8 @@ function firstScreen({ failed = false } = {}) {
     cancelAnimationFrame() {}, setTimeout: () => 1, clearTimeout() {},
   }
   runInNewContext(homeEyeBootstrap, context)
-  return { root, loader, writes, disconnect: () => { loader.isConnected = false; disconnected?.() } }
+  const mount = () => runInNewContext(`(${attachHomeEyeDecoration.toString()})(loader)`, { ...context, loader }) as (() => void) | undefined
+  return { root, loader, writes, mount, disconnect: () => { loader.isConnected = false; disconnected?.() } }
 }
 
 describe('parser bootstrap hydration ownership', () => {
@@ -82,5 +84,16 @@ describe('parser bootstrap hydration ownership', () => {
     expect(screen.root.dataset.homeEye).toBe('fallback')
     expect(screen.root.dataset.homeSignature).toBeUndefined()
     expect(screen.writes).toEqual([])
+  })
+
+  it('attaches a settled decoration on a client entry without arming the cover', () => {
+    const screen = firstScreen({ entry: '/projects/metabox' })
+    expect(screen.root.dataset.homeSignature).toBeUndefined()
+    const dispose = screen.mount()
+    expect(screen.root.dataset.homeSignature).toBe('slot')
+    expect(screen.root.dataset.homeEye).toBeUndefined()
+    expect(screen.mount()).toBeUndefined()
+    dispose?.()
+    expect(screen.root.dataset.homeSignature).toBeUndefined()
   })
 })

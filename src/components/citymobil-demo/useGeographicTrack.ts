@@ -2,13 +2,21 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useIsPresent } from 'framer-motion'
-import type { Map as GeographicMap, Marker, Popup } from 'maplibre-gl'
+import type { Map as GeographicMap, Marker, Popup, StyleSpecification } from 'maplibre-gl'
 import { driverHeading, participantsAt, routeMoment, trackEvents, tripClock, vehicleAt, journeySegments, routeLabel, phaseLabel, phaseAt } from '@/lib/portfolio/client/citymobil-track'
 import { citymobilMapStyle, readMapPalette } from './citymobil-map-style'
 import type { Coordinate, TrackKind, PreparedTrack, JourneyPhase } from '@/lib/portfolio/client/citymobil-track'
 import styles from './preview.module.css'
 
 export const phaseColors = { history: 'var(--cm-grey)', approach: 'var(--cm-map-blue)', onboard: 'var(--cm-orange)', onward: 'var(--cm-label)', alternative: 'var(--cm-label)', traffic: 'var(--cm-map-red)' }
+export type TrackParticipant = 'driver' | 'rider'
+type ParticipantInteraction = {
+  participants: Record<TrackParticipant, { name: string; role: string; status: string; color: string }>
+  selected: TrackParticipant | null; hovered: TrackParticipant | null; focused: TrackParticipant | null
+  onSelect: (person: TrackParticipant) => void
+  onHover: (person: TrackParticipant | null) => void
+  onFocus: (person: TrackParticipant | null) => void
+}
 const directWheelQuery = '(min-width:761px) and (hover:hover) and (pointer:fine)'
 
 function syncGestures(map: GeographicMap, element: HTMLElement, present: boolean) {
@@ -29,7 +37,7 @@ function tooltip(trip: PreparedTrack, kind: TrackKind, seconds: number, phase: J
   return node
 }
 
-export function useGeographicTrack(trip: PreparedTrack | null, dark: boolean, seconds: number, kind: TrackKind, select: (kind: TrackKind, seconds: number, eventId?: string, phase?: JourneyPhase) => void, inspecting: boolean, selectedEvent: string | null, selectedPhase: JourneyPhase | null) {
+export function useGeographicTrack(trip: PreparedTrack | null, dark: boolean, seconds: number, kind: TrackKind, select: (kind: TrackKind, seconds: number, eventId?: string, phase?: JourneyPhase) => void, inspecting: boolean, selectedEvent: string | null, selectedPhase: JourneyPhase | null, interaction: ParticipantInteraction, prepareOffscreen = false, localBasemap = false) {
   const container = useRef<HTMLDivElement>(null)
   const mapRef = useRef<GeographicMap | null>(null)
   const markers = useRef<Marker[]>([])
@@ -38,13 +46,23 @@ export function useGeographicTrack(trip: PreparedTrack | null, dark: boolean, se
   const camera = useRef<{ center: Coordinate; zoom: number } | null>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
   const [retry, setRetry] = useState(0)
-  const [zoom, setZoom] = useState(15)
+  const [{ zoom, minZoom }, setZoom] = useState({ zoom: 15, minZoom: 10 })
   const present = useIsPresent()
-  const latest = useRef({ select, present }); latest.current = { select, present }
+  const latest = useRef({ select, present, interaction }); latest.current = { select, present, interaction }
   useEffect(() => {
     if (!trip || !container.current) return
     let disposed = false
     let map: GeographicMap | null = null
+    let preparationPaint = 0, preparing = prepareOffscreen
+    const paintPreparation = () => {
+      if (!preparing || disposed || preparationPaint) return
+      // WebKit defers an offscreen iframe's RAF. Data-driven synchronous paints
+      // finish genuine map initialization without a polling/render loop.
+      preparationPaint = window.setTimeout(() => {
+        preparationPaint = 0
+        if (preparing && !disposed) map?.redraw()
+      }, 0)
+    }
     let resize: ResizeObserver | null = null
     const pointer = matchMedia(directWheelQuery)
     const updateGestures = () => { if (map && container.current) syncGestures(map, container.current, latest.current.present) }
@@ -53,25 +71,60 @@ export function useGeographicTrack(trip: PreparedTrack | null, dark: boolean, se
     const abort = new AbortController()
     setStatus('loading')
     const timeout = window.setTimeout(() => { if (!disposed) setStatus(value => value === 'loading' ? 'error' : value) }, 15000)
-    void Promise.all([import('maplibre-gl'), fetch('https://tiles.openfreemap.org/styles/positron', { signal: abort.signal }).then(response => { if (!response.ok) throw new Error('Map style unavailable'); return response.json() })]).then(([lib, provider]) => {
+    const styleUrl = 'https://tiles.openfreemap.org/styles/positron'
+    const localStyleUrl = '/images/citymobil/demo/geographic/inline-map-' + (dark ? 'dark' : 'light') + '.json'
+    void Promise.all([import('maplibre-gl'), prepareOffscreen || localBasemap ? Promise.resolve(null) : fetch(styleUrl, { signal: abort.signal }).then(response => { if (!response.ok) throw new Error('Map style unavailable'); return response.json() as Promise<StyleSpecification> })]).then(([lib, provider]) => {
       if (disposed || !container.current) return
       try {
         lib.setWorkerUrl('/images/citymobil/demo/geographic/maplibre-gl-worker.mjs')
         const colors = readMapPalette(getComputedStyle(container.current))
-        const style = citymobilMapStyle(provider, colors)
+        const prepareStyle = (provider: StyleSpecification) => {
+          const style = citymobilMapStyle(provider, colors)
+          if (prepareOffscreen) {
+            // The recipe removes raster layers. Their unused inline sources
+            // otherwise wait for another throttled iframe frame before load.
+            const used = new Set(style.layers.flatMap(layer => 'source' in layer ? [layer.source] : []))
+            if (style.terrain) used.add(style.terrain.source)
+            for (const id of Object.keys(style.sources)) if (!used.has(id)) delete style.sources[id]
+          }
+          if (container.current) container.current.dataset.basemapLayers = String(style.layers.length)
+          return style
+        }
+        const style = localBasemap ? localStyleUrl : provider ? prepareStyle(provider) : styleUrl
         container.current.dataset.basemapPalette = JSON.stringify(colors)
-        container.current.dataset.basemapLayers = String(style.layers.length)
         container.current.dataset.styleTheme = dark ? 'dark' : 'light'
-        map = new lib.Map({ container: container.current, style, center: camera.current?.center ?? [-9.1453, 38.7157], zoom: camera.current?.zoom ?? 15.5, attributionControl: false, dragRotate: false, pitchWithRotate: false, touchPitch: false, renderWorldCopies: false, cooperativeGestures: true })
+        // URL loading + the public style transform avoid loadJSON's iframe RAF
+        // gate. Ordinary interactive maps keep their existing object-style path.
+        map = new lib.Map({ container: container.current, style, ...(!localBasemap && prepareOffscreen ? { transformStyle: (_previous, provider) => prepareStyle(provider) } : {}), center: camera.current?.center ?? [-9.1453, 38.7157], zoom: camera.current?.zoom ?? 15.5, attributionControl: false, dragRotate: false, pitchWithRotate: false, touchPitch: false, renderWorldCopies: false, cooperativeGestures: true, ...(localBasemap ? { maxZoom: 19, maxPitch: 0 } : {}) })
         mapRef.current = map
-        resize = new ResizeObserver(() => { map?.resize(); updateGestures() })
+        container.current.dataset.basemapMode = localBasemap ? 'local' : 'live'
+        if (localBasemap) {
+          map.keyboard.disableRotation()
+          map.touchZoomRotate.disableRotation()
+        }
+        const readZoom = () => {
+          if (map) setZoom({ zoom: map.getZoom(), minZoom: localBasemap ? map.getMinZoom(true) : 10 })
+        }
+        if (prepareOffscreen) { map.on('data', paintPreparation); paintPreparation() }
+        resize = new ResizeObserver(() => { map?.resize(); updateGestures(); if (localBasemap) readZoom() })
         resize.observe(container.current)
         updateGestures()
         map.on('error', () => { if (!disposed) setStatus('error') })
         map.on('load', () => {
-          if (disposed || !map) return
+          if (disposed || !map || !container.current) return
+          preparing = false; window.clearTimeout(preparationPaint); preparationPaint = 0
+          map.off('data', paintPreparation)
           window.clearTimeout(timeout)
           container.current!.dataset.basemapMaterials = JSON.stringify(map.getStyle().layers.filter(layer => ['background', 'water', 'building', 'highway_minor', 'highway-name-minor'].includes(layer.id)).map(layer => ({ id: layer.id, type: layer.type, paint: layer.paint })))
+          if (localBasemap) {
+            const source = map.getStyle().sources['inline-basemap']
+            if (source?.type !== 'image') { setStatus('error'); return }
+            // Constrain the whole viewport to the georeferenced image. Inset
+            // the edges slightly so texture sampling stays inside the capture.
+            const [northWest, , southEast] = source.coordinates
+            const inset = 0.00002
+            map.setMaxBounds([[northWest[0] + inset, southEast[1] + inset], [southEast[0] - inset, northWest[1] - inset]])
+          }
           const segments = journeySegments(trip)
           const features = segments.filter(s => s.phase !== 'history').map(s => ({ type: 'Feature' as const, properties: { kind: s.kind, phase: s.phase, traffic: s.traffic }, geometry: { type: 'LineString' as const, coordinates: s.coordinates } }))
           map.addSource('prepared-trip', { type: 'geojson', data: { type: 'FeatureCollection', features } })
@@ -87,9 +140,17 @@ export function useGeographicTrack(trip: PreparedTrack | null, dark: boolean, se
             map.addLayer({ id: 'trip-' + type, type: 'line', source: 'prepared-trip', filter: ['==', ['get', 'kind'], type], layout: { 'line-join': 'round', 'line-cap': 'round' }, paint: { 'line-color': ['case', ['get', 'traffic'], colors.red, ['==', ['get', 'phase'], 'approach'], colors.blue, ['==', ['get', 'phase'], 'onward'], colors.label, type === 'alternative' ? colors.label : colors.orange], 'line-width': type === 'actual' ? 6 : 4, ...(type === 'planned' ? { 'line-dasharray': [2, 1] } : {}) } })
           }
           container.current!.dataset.routeStyles = JSON.stringify({ colors, sections: segments.map(({ coordinates, ...properties }) => ({ ...properties, points: coordinates.length })), actualWidth: 6, plannedWidth: 4, plannedDash: [2, 1] })
-          for (const role of ['driver', 'rider']) {
-            const element = document.createElement('span'); element.className = styles.mapParticipant; element.dataset.participant = role; element.setAttribute('role', 'img'); element.setAttribute('aria-label', role === 'driver' ? 'Driver position' : 'Rider position')
-            if (role === 'driver') { const arrow = document.createElement('i'); arrow.className = styles.vehicleArrow; element.append(arrow) }
+          for (const role of ['driver', 'rider'] as const) {
+            const element = document.createElement('button'); element.type = 'button'; element.className = styles.mapParticipant; element.dataset.participant = role
+            const mark = document.createElement('i'); mark.className = role === 'driver' ? styles.vehicleArrow : styles.riderPosition; mark.setAttribute('aria-hidden', 'true'); element.append(mark)
+            const options = { signal: abort.signal }
+            element.addEventListener('mouseenter', () => { if (latest.current.present) latest.current.interaction.onHover(role) }, options)
+            element.addEventListener('mouseleave', () => latest.current.interaction.onHover(null), options)
+            element.addEventListener('focus', () => { if (latest.current.present) latest.current.interaction.onFocus(role) }, options)
+            element.addEventListener('blur', () => latest.current.interaction.onFocus(null), options)
+            element.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') event.stopPropagation() }, options)
+            element.addEventListener('keyup', event => { if (event.key === 'Enter' || event.key === ' ') event.stopPropagation() }, options)
+            element.addEventListener('click', event => { event.stopPropagation(); if (latest.current.present) latest.current.interaction.onSelect(role) }, options)
             markers.current.push(new lib.Marker({ element, draggable: false }).setLngLat(trip.pickup as Coordinate).addTo(map))
           }
           popup.current = new lib.Popup({ closeButton: false, closeOnClick: false, offset: 18, padding: { top: 12, bottom: 12, left: 12, right: 12 }, className: styles.mapPopup })
@@ -124,7 +185,7 @@ export function useGeographicTrack(trip: PreparedTrack | null, dark: boolean, se
             container.current!.dataset.fitPadding = JSON.stringify(padding)
             map.fitBounds(bounds, { padding, duration: 0 })
           }
-          setZoom(map.getZoom()); setStatus('ready')
+          readZoom(); setStatus('ready')
           const inspect = (event: { point: { x: number; y: number }; lngLat: { lng: number; lat: number }; originalEvent?: MouseEvent }) => {
             if (!map || !latest.current.present) return
             if (event.originalEvent?.target instanceof Element && event.originalEvent.target.closest('button')) return
@@ -139,11 +200,13 @@ export function useGeographicTrack(trip: PreparedTrack | null, dark: boolean, se
           map.on('mousemove', inspect); map.on('click', inspect)
           map.getCanvas().addEventListener('mouseleave', clearPopup)
         })
-        map.on('moveend', () => { if (map && !disposed) { camera.current = { center: map.getCenter().toArray() as Coordinate, zoom: map.getZoom() }; if (container.current) container.current.dataset.camera = JSON.stringify(camera.current); setZoom(map.getZoom()) } })
+        map.on('moveend', () => { if (map && !disposed) { camera.current = { center: map.getCenter().toArray() as Coordinate, zoom: map.getZoom() }; if (container.current) container.current.dataset.camera = JSON.stringify(camera.current); readZoom() } })
       } catch { if (!disposed) setStatus('error') }
     }).catch(() => { if (!disposed) setStatus('error') })
     return () => {
       disposed = true; abort.abort(); window.clearTimeout(timeout)
+      window.clearTimeout(preparationPaint)
+      latest.current.interaction.onHover(null); latest.current.interaction.onFocus(null)
       resize?.disconnect(); pointer.removeEventListener('change', updateGestures)
       if (map) camera.current = { center: map.getCenter().toArray() as Coordinate, zoom: map.getZoom() }
       markers.current.forEach(marker => marker.remove()); markers.current = []
@@ -151,13 +214,26 @@ export function useGeographicTrack(trip: PreparedTrack | null, dark: boolean, se
       popup.current?.remove(); popup.current = null
       map?.remove(); mapRef.current = null
     }
-  }, [trip, dark, retry])
+  }, [trip, dark, retry, prepareOffscreen, localBasemap])
+  useEffect(() => {
+    markers.current.forEach(marker => {
+      const element = marker.getElement(), role = element.dataset.participant as TrackParticipant
+      const person = interaction.participants[role]
+      element.setAttribute('aria-label', `${person.name}, ${person.role} position: ${person.status}`)
+      element.setAttribute('aria-pressed', String(interaction.selected === role))
+      element.dataset.highlighted = String(interaction.selected === role || interaction.hovered === role || interaction.focused === role)
+      element.style.setProperty('--participant-color', person.color)
+      element.tabIndex = present ? 0 : -1
+    })
+  }, [interaction, status, present])
   useEffect(() => {
     const map = mapRef.current
     if (!map || status !== 'ready' || !trip) return
     const people = participantsAt(seconds, trip!)
     const points = [people.driver, people.rider]
-    markers.current.forEach((marker, i) => { marker.setLngLat(points[i]); marker.getElement().dataset.coordinate = points[i].map(v => v.toFixed(7)).join(','); marker.getElement().dataset.time = tripClock(seconds, trip!) })
+    const together = points[0][0] === points[1][0] && points[0][1] === points[1][1]
+    // Keep both controls reachable at the shared onboard coordinate; never change the GPS fixture or camera.
+    markers.current.forEach((marker, i) => { marker.setLngLat(points[i]).setOffset(together ? [i ? 14 : -14, 0] : [0, 0]); marker.getElement().dataset.coordinate = points[i].map(v => v.toFixed(7)).join(','); marker.getElement().dataset.time = tripClock(seconds, trip!) })
     const heading = driverHeading(seconds, trip)
     const arrow = markers.current[0]?.getElement().querySelector('i')
     if (arrow) { arrow.style.transform = 'rotate(' + (heading + 90) + 'deg)'; arrow.dataset.heading = heading.toFixed(2) }
@@ -174,5 +250,5 @@ export function useGeographicTrack(trip: PreparedTrack | null, dark: boolean, se
     for (const handler of [map.dragPan, map.boxZoom, map.doubleClickZoom, map.touchZoomRotate, map.keyboard]) { if (present) handler.enable(); else handler.disable() }
     if (container.current) syncGestures(map, container.current, present)
   }, [present, status])
-  return { container, status, zoom, retry: () => setRetry(value => value + 1), changeZoom: (delta: number, reduced: boolean) => mapRef.current?.zoomTo(Math.max(10, Math.min(19, zoom + delta)), { duration: reduced ? 0 : 180 }) }
+  return { container, status, zoom, minZoom, retry: () => setRetry(value => value + 1), changeZoom: (delta: number, reduced: boolean) => mapRef.current?.zoomTo(Math.max(minZoom, Math.min(19, zoom + delta)), { duration: reduced ? 0 : 180 }) }
 }

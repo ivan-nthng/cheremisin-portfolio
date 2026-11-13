@@ -3,14 +3,7 @@
 import React from 'react'
 import clsx from 'clsx'
 
-export type InputProps = {
-    placeholder?: string
-    value?: string
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-    className?: string
-    type?: string
-    [x: string]: any
-}
+export type InputProps = React.ComponentPropsWithoutRef<'input'>
 
 export function Input({
     placeholder,

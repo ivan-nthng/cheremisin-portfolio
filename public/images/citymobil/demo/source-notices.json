@@ -1,7 +1,7 @@
 {
   "fileKey": "a1FIpM2QJ0y79EO170WQDG",
   "sessionId": "38fb0383-b4b2-4eb7-8c30-8d42756ef201",
-  "scope": "Local design demonstration only; source artwork not evidence of real participants, trips, payments or production support capability. No map pixels are redistributed.",
+  "scope": "Local design demonstration only; source artwork not evidence of real participants, trips, payments or production support capability. The Map fragment uses the attributed basemap captures recorded below in both inline and expanded views. The full interactive demo uses the live provider.",
   "generatedFictionalAssets": [
     {
       "person": "Pickup driver (fictional demo identity; displayed name Ivan Cheremisin)",
@@ -29,7 +29,7 @@
       "person": "Alex Vieira",
       "scope": "Wholly fictional local demo portrait; not a source-Figma asset or a real participant.",
       "tool": "built-in image_gen",
-      "prompt": "Use case: photorealistic-natural. Create one square head-and-shoulders profile photograph of a wholly fictional adult man for local demo character Alex Vieira. A charismatic approachable man around forty, short dark hair, neatly kept stubble, relaxed slight smile and direct eye contact; plain dark teal overshirt. Soft natural side light, unobtrusive warm gray background, realistic skin texture, contemporary candid editorial feel rather than a glossy stock headshot. Center the clear face large enough to read at28–44px, include the full head and shoulders with a little breathing room. One person only; no car/windshield, hat, sunglasses, text, logo, watermark, border, collage or interface. Invent a new identity, not a likeness of a real person.",
+      "prompt": "Use case: photorealistic-natural. Create one square head-and-shoulders profile photograph of a wholly fictional adult man for local demo character Alex Vieira. A charismatic approachable man around forty, short dark hair, neatly kept stubble, relaxed slight smile and direct eye contact; plain dark teal overshirt. Soft natural side light, unobtrusive warm gray background, realistic skin texture, contemporary candid editorial feel rather than a glossy stock headshot. Center the clear face large enough to read at28\u201344px, include the full head and shoulders with a little breathing room. One person only; no car/windshield, hat, sunglasses, text, logo, watermark, border, collage or interface. Invent a new identity, not a likeness of a real person.",
       "master": {
         "file": "docs/design/assets/citymobil-alex-vieira-v1-master.png",
         "sha256": "4661159cd1ab30f44c986a4b5d401e5f3a37bc3870bb8cf17606dd9de660e2bd",
@@ -51,7 +51,7 @@
       "person": "Tiago Moreira",
       "scope": "Wholly fictional local demo portrait; not a source-Figma asset or a real participant.",
       "tool": "built-in image_gen",
-      "prompt": "Use case: photorealistic-natural. Create one square head-and-shoulders profile photograph of a wholly fictional adult man for the local Citymobil demo character Tiago Moreira. Ordinary natural portrait, about forty years old, bald head, clean-shaven face, round dark glasses, warm medium-brown skin, plain olive knit polo. Gentle neutral expression, looking toward the camera. Soft daylight against an unobtrusive warm gray background, realistic skin and fabric texture, sharp recognizable face centered and large enough to read as a tiny 28–44px avatar. Full head with a little breathing room, shoulders at lower edge. One person only. No cap, no beard, no vehicle, no text, logos, badge, border, illustration, collage or interface. Distinct from the existing bearded man in a backward cap, gray-bearded driver in a car and young man with wavy brown hair. This is a newly invented person, not a real identity.",
+      "prompt": "Use case: photorealistic-natural. Create one square head-and-shoulders profile photograph of a wholly fictional adult man for the local Citymobil demo character Tiago Moreira. Ordinary natural portrait, about forty years old, bald head, clean-shaven face, round dark glasses, warm medium-brown skin, plain olive knit polo. Gentle neutral expression, looking toward the camera. Soft daylight against an unobtrusive warm gray background, realistic skin and fabric texture, sharp recognizable face centered and large enough to read as a tiny 28\u201344px avatar. Full head with a little breathing room, shoulders at lower edge. One person only. No cap, no beard, no vehicle, no text, logos, badge, border, illustration, collage or interface. Distinct from the existing bearded man in a backward cap, gray-bearded driver in a car and young man with wavy brown hair. This is a newly invented person, not a real identity.",
       "master": {
         "file": "/Users/ivan/.codex/generated_images/01a17d63-3309-73b3-8bfe-ce4666be2d8e/exec-b68b8aef-e77e-43cb-bcd0-9254b25d6e3b.png",
         "sha256": "55b83a8308cc6956f1c59b5ca442923a8926247ab895eccb9bd2cbc6860b5759",
@@ -606,5 +606,141 @@
       }
     ],
     "note": "Driver glyph12px is reused within native24px circle; traffic SVG25x27 preserves outside contour of24px frame. Event dots use source8px/12px frames with outside2px/3px CM surface contour; GetOrder raw#a28787 is not a library alias."
+  },
+  "inlineBasemapCaptures": {
+    "providerStyle": "https://tiles.openfreemap.org/styles/positron",
+    "providerStyleSha256": "40565c7a5a0961cb1b33afefb55c1e48f06575d2e45868b309582334eeab82f1",
+    "recipe": "src/components/citymobil-demo/citymobil-map-style.ts",
+    "recipeSha256": "1638c39716f68a1ba88bbd5c4a838703a52a38ebe161f970251f9fc4c92dca6c",
+    "capturedAt": "2026-11-07T16:04:16.167Z",
+    "records": [
+      {
+        "theme": "light",
+        "camera": {
+          "center": [
+            -9.148142733800512,
+            38.71231659682584
+          ],
+          "zoom": 13.703673897652521,
+          "bearing": 0,
+          "pitch": 0
+        },
+        "coordinates": [
+          [
+            -9.163952916934534,
+            38.73205246741415
+          ],
+          [
+            -9.13233255066632,
+            38.73205246741415
+          ],
+          [
+            -9.13233255066632,
+            38.692575275999076
+          ],
+          [
+            -9.163952916934534,
+            38.692575275999076
+          ]
+        ],
+        "cssSize": {
+          "width": 600,
+          "height": 960
+        },
+        "dpr": 3,
+        "palette": {
+          "main": "#fff",
+          "secondary": "#f8fafc",
+          "border": "#e2e8f0",
+          "soft": "#475569",
+          "label": "#64748b",
+          "blue": "#2563eb",
+          "green": "#16a34a",
+          "orange": "#f5a80f",
+          "red": "#ef4444",
+          "history": "#94a3b8"
+        },
+        "baseLayers": 55,
+        "sources": [
+          "openmaptiles"
+        ],
+        "routeLayers": 0,
+        "markers": 0,
+        "file": "public/images/citymobil/demo/geographic/inline-map-light.png",
+        "sha256": "c4ae51c9dd29d3407db965af2f544caf89f26f9216b3efcb0cc8372998123cc8",
+        "bytes": 1329759
+      },
+      {
+        "theme": "dark",
+        "camera": {
+          "center": [
+            -9.148142733800512,
+            38.71231659682584
+          ],
+          "zoom": 13.703673897652521,
+          "bearing": 0,
+          "pitch": 0
+        },
+        "coordinates": [
+          [
+            -9.163952916934534,
+            38.73205246741415
+          ],
+          [
+            -9.13233255066632,
+            38.73205246741415
+          ],
+          [
+            -9.13233255066632,
+            38.692575275999076
+          ],
+          [
+            -9.163952916934534,
+            38.692575275999076
+          ]
+        ],
+        "cssSize": {
+          "width": 600,
+          "height": 960
+        },
+        "dpr": 3,
+        "palette": {
+          "main": "#0f172a",
+          "secondary": "#000",
+          "border": "#1e293b",
+          "soft": "#cbd5e1",
+          "label": "#94a3b8",
+          "blue": "#60a5fa",
+          "green": "#22c55e",
+          "orange": "#ffb92d",
+          "red": "#f87171",
+          "history": "#94a3b8"
+        },
+        "baseLayers": 55,
+        "sources": [
+          "openmaptiles"
+        ],
+        "routeLayers": 0,
+        "markers": 0,
+        "file": "public/images/citymobil/demo/geographic/inline-map-dark.png",
+        "sha256": "b0b1874262a4c401ef845b3da65e4b5f8c6982fa952677ce5fd70d242b090e88",
+        "bytes": 1586954
+      }
+    ],
+    "scope": "Clean basemap only, captured from the existing MapLibre/OpenFreeMap presentation; route, markers, controls and pointer are not baked into the image. Geographic image coordinates preserve the existing route projection. Expanded/standalone maps remain live.",
+    "attribution": [
+      {
+        "name": "OpenFreeMap",
+        "url": "https://openfreemap.org/"
+      },
+      {
+        "name": "OpenMapTiles",
+        "url": "https://openmaptiles.org/"
+      },
+      {
+        "name": "OpenStreetMap contributors",
+        "url": "https://www.openstreetmap.org/copyright"
+      }
+    ]
   }
 }

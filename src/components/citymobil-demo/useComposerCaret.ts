@@ -4,18 +4,21 @@ import { useLayoutEffect, useRef } from 'react'
 import type { RefObject } from 'react'
 
 // Local textarea geometry only; canonical reply text and keyboard behavior stay in the composer.
-export function useComposerCaret(inputRef: RefObject<HTMLTextAreaElement | null>, revision: number, value: string, active: boolean) {
+export function useComposerCaret(inputRef: RefObject<HTMLTextAreaElement | null>, revision: number, value: string, active: boolean, suggesting: boolean) {
   const toolsRef = useRef<HTMLDivElement>(null)
   const mirrorRef = useRef<HTMLDivElement>(null)
   const ghostRef = useRef<HTMLDivElement>(null)
+  const caretRef = useRef<HTMLSpanElement>(null)
 
   useLayoutEffect(() => {
     const input = inputRef.current
     const tools = toolsRef.current
     const mirror = mirrorRef.current
-    if (!input || !tools || !mirror || !active) return
+    // Only the inert feature illustration mounts this caret; native focus stays untouched.
+    if (caretRef.current) caretRef.current.style.visibility = active ? 'visible' : 'hidden'
+    if (!input || !mirror || !active) return
     function update(event?: Event) {
-      if (!input || !tools || !mirror) return
+      if (!input || !mirror) return
       const caret = input.selectionDirection === 'backward' ? input.selectionStart : input.selectionEnd
       const marker = document.createElement('span')
       marker.textContent = '\u200b'
@@ -34,8 +37,15 @@ export function useComposerCaret(inputRef: RefObject<HTMLTextAreaElement | null>
       const field = input.parentElement!.getBoundingClientRect()
       const viewportLeft = Math.max(0, -field.left + 8)
       const viewportRight = Math.min(input.clientWidth - 28, document.documentElement.clientWidth - field.left - 8)
-      const left = Math.max(viewportLeft, Math.min(x, viewportRight - tools.offsetWidth))
       const caretTop = input.offsetTop + y - input.scrollTop
+      if (caretRef.current) {
+        caretRef.current.style.transform = `translate(${Math.max(0, Math.min(x, input.clientWidth - 1))}px,${caretTop}px)`
+        caretRef.current.style.height = line.height + 'px'
+        caretRef.current.dataset.caret = String(caret)
+      }
+      // Accepted text moves the caret, but the departing hint keeps its last anchor.
+      if (!tools || !suggesting) return
+      const left = Math.max(viewportLeft, Math.min(x, viewportRight - tools.offsetWidth))
       const ranges = [mirror, ghostRef.current].filter(Boolean).flatMap(element => {
         const range = document.createRange()
         range.selectNodeContents(element!)
@@ -55,7 +65,7 @@ export function useComposerCaret(inputRef: RefObject<HTMLTextAreaElement | null>
     events.forEach(event => input.addEventListener(event, update))
     const observer = new ResizeObserver(() => update())
     observer.observe(input)
-    observer.observe(tools)
+    if (tools && suggesting) observer.observe(tools)
     let disposed = false
     void document.fonts.ready.then(() => { if (!disposed) update() })
     document.fonts.addEventListener('loadingdone', update)
@@ -65,6 +75,6 @@ export function useComposerCaret(inputRef: RefObject<HTMLTextAreaElement | null>
       observer.disconnect()
       document.fonts.removeEventListener('loadingdone', update)
     }
-  }, [inputRef, revision, value, active])
-  return { toolsRef, mirrorRef, ghostRef }
+  }, [inputRef, revision, value, active, suggesting])
+  return { toolsRef, mirrorRef, ghostRef, caretRef }
 }

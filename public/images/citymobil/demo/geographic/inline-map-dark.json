@@ -1,0 +1,45 @@
+{
+  "version": 8,
+  "name": "Citymobil inline Lisbon basemap (dark)",
+  "sources": {
+    "inline-basemap": {
+      "type": "image",
+      "url": "/images/citymobil/demo/geographic/inline-map-dark.png",
+      "coordinates": [
+        [
+          -9.163952916934534,
+          38.73205246741415
+        ],
+        [
+          -9.13233255066632,
+          38.73205246741415
+        ],
+        [
+          -9.13233255066632,
+          38.692575275999076
+        ],
+        [
+          -9.163952916934534,
+          38.692575275999076
+        ]
+      ]
+    }
+  },
+  "layers": [
+    {
+      "id": "inline-basemap-background",
+      "type": "background",
+      "paint": {
+        "background-color": "#000"
+      }
+    },
+    {
+      "id": "inline-basemap",
+      "type": "raster",
+      "source": "inline-basemap",
+      "paint": {
+        "raster-fade-duration": 0
+      }
+    }
+  ]
+}

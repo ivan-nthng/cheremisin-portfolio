@@ -1,7 +1,7 @@
 'use client'
 
 import type { RefObject } from 'react'
-import { lostTrips } from '@/lib/portfolio/client/citymobil-demo'
+import { demoLostTrips } from '@/lib/portfolio/client/citymobil-demo'
 import { citymobilAssets as assets } from './assets'
 import NativeAsset, { type AssetName } from './NativeAsset'
 import { CitymobilDriverMetrics } from './CitymobilDriverInfo'
@@ -10,11 +10,12 @@ import DemoMotion from './DemoMotion'
 import styles from './preview.module.css'
 import RouteSummary from './RouteSummary'
 
-type ListProps = { active: string | null; selected: string | null; canSelect: boolean; dark: boolean; onPreview: (id: string, trigger: HTMLButtonElement) => void; onSelect: (id: string) => void }
-export function CitymobilLostTrips({ active, selected, canSelect, dark, onPreview, onSelect }: ListProps) {
+type ListProps = { active: string | null; selected: string | null; sessionStartedAt?: number | null; canSelect: boolean; dark: boolean; guided?: boolean; onPreview: (id: string, trigger: HTMLButtonElement) => void; onSelect: (id: string) => void }
+export function CitymobilLostTrips({ active, selected, sessionStartedAt, canSelect, dark, guided, onPreview, onSelect }: ListProps) {
+  const lostTrips = demoLostTrips(sessionStartedAt)
   return <div className={styles.lostTrips} data-source-node="8331:19271" aria-label="Three fictional Lisbon trips">
     <p className={styles.tripListHint}>{selected ? 'Selected trip is pinned. Previewing another trip does not change it.' : 'Latest trip is context only. Confirm it with the rider, then select it.'}</p>
-    {lostTrips.map((trip, i) => <button key={trip.id} type="button" className={styles.lostTripRow} aria-pressed={active === trip.id} aria-label={'Open order: ' + trip.day + ', ' + trip.departure + ', ' + trip.driver} onClick={event => { onPreview(trip.id, event.currentTarget); if (canSelect && trip.id === 'latest') onSelect(trip.id) }} onKeyDown={event => { if (event.key === 'ArrowRight') { event.preventDefault(); onPreview(trip.id, event.currentTarget) } }}>
+    {lostTrips.map((trip, i) => <button key={trip.id} type="button" className={styles.lostTripRow} data-target={guided ? 'city-trip-' + trip.id : undefined} aria-pressed={active === trip.id} aria-label={'Open order: ' + trip.day + ', ' + trip.departure + ', ' + trip.driver} onClick={event => { onPreview(trip.id, event.currentTarget); if (canSelect && trip.id === 'latest') onSelect(trip.id) }} onKeyDown={event => { if (event.key === 'ArrowRight') { event.preventDefault(); onPreview(trip.id, event.currentTarget) } }}>
       <div className={styles.dateRow}><span>{trip.date}</span><span className={styles.completed}><NativeAsset name="workspace/imgStateCompleted" plain/>Completed</span></div>
       <div className={styles.carFare}><div><h4>{trip.car}</h4><p><NativeAsset name="workspace/imgCarFront" dark={dark}/>{trip.category}</p></div><div className={styles.fare}><NativeAsset name="workspace/imgMcSymbol" plain/><span>€</span><strong>{trip.fare.split('.')[0]}</strong><span>.{trip.fare.split('.')[1]}</span></div></div>
       <RouteSummary trip={trip} compact />

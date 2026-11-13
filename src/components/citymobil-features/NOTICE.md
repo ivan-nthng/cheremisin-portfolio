@@ -1,0 +1,9 @@
+# Native desktop-crop rehearsal
+
+FRONTEND owns this local adapter. Direction1 reuses the actual Citymobil desktop components, controls, typography, fixture data and guards. All widths use one desktop script and arrow/pointer; no touch/mobile UX branches. Existing shared native geometry remains; the native Motion adapter and dialog explicitly use Motion's JS driver to avoid the measured WAAPI completion-style reset, without changing dependency versions or animation presets.
+
+stageshow/ contains the14-file transitive Stage/Act runtime from installed Benji Taylor Stageshow, with its included MIT license (2026). Runtime source is unchanged apart from one extra trailing newline in copied files. No small-parts kit/dependency/global-token layer.
+
+Five public WebP posters are lossless encodings of actual native captures at DPR2, with no resize/retouch/generated UI. Current Chat/Actions/Map captures use a375px viewport for integer pixel edges; Chat provenance is in ignored test-results/port36-motion/chat-tab/, the taller Actions capture in actions-height/, and Map's real passenger-marker selection in track-participants/. The other two use the prior390px viewport and remain in pointer/. Historical packets remain intact. Three Map provider links are adjacent outside the frame in live/static modes; original simulator attribution remains. All client records are fictional. Case integration/publication is not admitted.
+
+Evidence tools are an owner copy of the provided StageShow filmer: caret:'initial' avoids screenshot DOM mutation; a read-only rAF sampler records actual iframe styles/geometry for diagnosis. A temporary real-control opening/hold/close recipe used for the A/B was removed from product source. No product test tags, warning filters, raw CDP diagnostic calls, SSR disabling, installed-skill edits or new packages. Sampling/iframe/display-proof limits remain explicit.

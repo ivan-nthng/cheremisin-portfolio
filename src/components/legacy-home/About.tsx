@@ -173,7 +173,7 @@ export default function About() {
                                     href="/manifesto"
                                     className="group inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 transition-colors"
                                 >
-                                    here's my manifesto
+                                    here&apos;s my manifesto
                                     <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                                 </Link>
                                 .
@@ -217,9 +217,9 @@ export default function About() {
                         animate={isVisible ? 'show' : 'hidden'}
                         className="md:col-span-10 lg:col-span-8 space-y-8"
                     >
-                        {experience.map((item, index) => (
+                        {experience.map(experienceItem => (
                             <motion.div
-                                key={item.company}
+                                key={experienceItem.company}
                                 variants={item}
                                 className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 sm:gap-8"
                             >
@@ -227,26 +227,26 @@ export default function About() {
                                     <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
                                         {/* Company Name and Link */}
                                         <h3 className="text-xl font-bold text-blue-950 dark:text-blue-50">
-                                            {item.company}
+                                            {experienceItem.company}
                                         </h3>
                                         <Link
-                                            href={`https://${item.url}`}
+                                            href={`https://${experienceItem.url}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="group inline-flex items-center gap-1 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 transition-colors"
                                         >
-                                            {item.url}
+                                            {experienceItem.url}
                                             <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                                         </Link>
                                     </div>
                                     {/* Role */}
                                     <p className="text-blue-950 dark:text-blue-100">
-                                        {item.role}
+                                        {experienceItem.role}
                                     </p>
                                 </div>
                                 {/* Period */}
                                 <p className="text-blue-900/80 dark:text-blue-100/80 text-left sm:text-right whitespace-nowrap">
-                                    {item.period}
+                                    {experienceItem.period}
                                 </p>
                             </motion.div>
                         ))}

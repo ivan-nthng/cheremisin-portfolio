@@ -1,0 +1,20 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="flags" clip-path="url(#clip0_0_131)">
+<mask id="mask0_0_131" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
+<g id="b">
+<path id="Vector" d="M18.0952 0H1.90476C0.852791 0 0 1.19391 0 2.66667V17.3333C0 18.8061 0.852791 20 1.90476 20H18.0952C19.1472 20 20 18.8061 20 17.3333V2.66667C20 1.19391 19.1472 0 18.0952 0Z" fill="white"/>
+</g>
+</mask>
+<g mask="url(#mask0_0_131)">
+<g id="Vector_2">
+</g>
+<path id="Vector_3" d="M0 12H20V20H0V12ZM0 0H20V8H0V0Z" fill-rule="evenodd" clip-rule="evenodd" fill="#A02F37"/>
+<path id="Vector_4" d="M1.90476 0.666667H18.0952C18.8842 0.666667 19.5238 1.5621 19.5238 2.66667V17.3333C19.5238 18.4379 18.8842 19.3333 18.0952 19.3333H1.90476C1.11578 19.3333 0.47619 18.4379 0.47619 17.3333V2.66667C0.47619 1.5621 1.11578 0.666667 1.90476 0.666667Z" stroke="black" stroke-opacity="0.1"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_0_131">
+<rect width="20" height="20" fill="white"/>
+</clipPath>
+</defs>
+</svg>

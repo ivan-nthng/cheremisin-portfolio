@@ -4,6 +4,14 @@ import { useEffect, useRef, useState } from 'react'
 import cm from '@/components/citymobil-demo/preview.module.css'
 import styles from './background.module.css'
 
+/** Shared artwork only; each preview owns visibility and playback. */
+export function CitymobilBackdrop() {
+  return <div className={styles.decoration} aria-hidden="true">
+    <div className={styles.blur}>{Array.from({ length: 6 }, (_, index) => <i key={index} className={styles.shape}/>)}</div>
+    <div className={styles.grain}/>
+  </div>
+}
+
 export default function CitymobilBackgroundPreview() {
   const stage = useRef<HTMLElement>(null)
   const [paused, setPaused] = useState(false)
@@ -42,12 +50,7 @@ export default function CitymobilBackgroundPreview() {
         </button>
       </div>
       <figure ref={stage} className={styles.stage} data-running={running} data-visible={visible} data-in-view={inView} data-interface={withInterface}>
-        <div className={styles.decoration} aria-hidden="true">
-          <div className={styles.blur}>
-            {Array.from({ length: 6 }, (_, index) => <i key={index} className={styles.shape} />)}
-          </div>
-          <div className={styles.grain} />
-        </div>
+        <CitymobilBackdrop />
         {withInterface && <div className={styles.media}>
           {/* Exact Figma UI subtree 8356:20662; presentation media, not a live demo. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}

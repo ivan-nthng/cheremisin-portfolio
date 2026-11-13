@@ -90,7 +90,7 @@ export default function NoResultsCard() {
                 </h3>
                 <div className="mt-2 sm:mt-3 space-y-3 sm:space-y-4">
                     <p className="text-base sm:text-lg text-primary-600 dark:text-primary-300">
-                        Every big idea starts somewhere. Let's make it happen
+                        Every big idea starts somewhere. Let&apos;s make it happen
                         together — reach out or schedule a quick call to get
                         started!
                     </p>

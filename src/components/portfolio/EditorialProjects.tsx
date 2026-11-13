@@ -5,14 +5,26 @@ import { PortfolioArrow } from './PortfolioArrow'
 import { ProjectStatusTooltip } from './ProjectStatusTooltip'
 
 export function EditorialProjects({ pending = false }: { pending?: boolean }) {
-  return <div className="editorial-projects">{projects.filter(p => !p.isComingSoon).map(project => (
-    <RepeatReveal key={project.link}>
-      <article className="editorial-project">
-        <h3>{pending ? <ProjectStatusTooltip title={project.title} /> : <Link className="editorial-link" href={project.link}>{project.title}<PortfolioArrow direction="right" /></Link>}</h3>
+  const rows = projects.filter(project => !project.isComingSoon).map(project => {
+    const website = project.projectWebsite
+    const href = website?.href ?? project.companyUrl
+    const content = <article className="editorial-project">
+        <h3>{pending && !project.isActive
+          ? <ProjectStatusTooltip title={project.title} />
+          : <Link className="editorial-link" href={project.link}
+            prefetch={pending && project.link === '/projects/ds-hito' ? false : undefined}>
+            {project.title}<PortfolioArrow direction="right" />
+          </Link>}
+        </h3>
         <p>{project.description}</p>
-        <p>Project role · {project.role}</p>
-        <div className="company-attribution">{project.companyUrl ? <><span>Company / client ·</span><a className="editorial-link" href={project.companyUrl} target="_blank" rel="noreferrer">{project.companyName}<PortfolioArrow /></a>{project.companyContext ? <span>{project.companyContext}</span> : null}</> : <span>Personal project</span>}</div>
+        {project.role && <p className="portfolio-type-technical">Role {project.role}</p>}
+        <div className="company-attribution">{href ? <>
+          <span>{website ? 'Personal project /' : 'Company / client ·'}</span>
+          <a className="editorial-link" href={href} target="_blank" rel="noreferrer">{website?.label ?? project.companyName}<PortfolioArrow /></a>
+          {!website && project.companyContext && <span>{project.companyContext}</span>}
+        </> : <span>{project.companyName ? `Company / client · ${project.companyName}` : 'Personal project'}</span>}</div>
       </article>
-    </RepeatReveal>
-  ))}</div>
+    return <RepeatReveal clearDock={pending} key={project.title}>{content}</RepeatReveal>
+  })
+  return <div className="editorial-projects">{rows}</div>
 }

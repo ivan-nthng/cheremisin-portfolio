@@ -27,7 +27,7 @@ describe('scripted composer and native conversation modes', () => {
     expect(composerShortcut('a', { ...plain, alt: true, meta: true }, false)).toBeNull()
   })
   it.each(['pickup', 'lost', 'income'] as ScenarioId[])('cycles coherent alternatives for every supported mode/recipient in %s', scenario => {
-    for (const recipient of ['passenger', 'driver'] as const) for (const mode of ['reply', 'forward', 'note'] as const) {
+    for (const recipient of scenario === 'income' ? ['driver'] as const : ['passenger', 'driver'] as const) for (const mode of ['reply', 'forward', 'note'] as const) {
       let state = reduce(reduce(initialDemoState('light', scenario), { type: 'recipient', value: recipient }), { type: 'mode', value: mode })
       const neutral = preparedReply(state)
       const oldRevision = state.revision
@@ -94,7 +94,7 @@ describe('scripted composer and native conversation modes', () => {
     expect(reduce(state, { type: 'scenario', value: 'income' })).toMatchObject({ links: [], internal: [], trackPercent: 0 })
   })
   it('bounds replay time and updates timestamps from the same case interval', () => {
-    let state = reduce(initialDemoState(), { type: 'track-time', value: 50 })
+    const state = reduce(initialDemoState(), { type: 'track-time', value: 50 })
     expect(reduce(state, { type: 'track-time', value: 300 / 1860 * 100 }).trackPercent).toBeCloseTo(300 / 1860 * 100, 8)
     expect(replayTimestamp('12:00', '12:30', state.trackPercent)).toBe('12:15')
     expect(replayTimestamp('23:50', '00:10', 50)).toBe('00:00')
@@ -172,11 +172,12 @@ describe('bounded Citymobil scenarios', () => {
     expect(reduce(changed, { type: 'suggestion-ready', revision: state.revision })).toBe(changed)
     expect(reduce(changed, { type: 'call-connected', run: state.call.run })).toBe(changed)
   })
-  it('removes attachments, sends real fixture references and permits attachment-only messages', () => {
+  it('removes attachments and sends fixture references only with the matching Income explanation', () => {
     const added = reduce(reduce(initialDemoState('light', 'income'), { type: 'attach', value: { kind: 'file' } }), { type: 'attach', value: { kind: 'media' } })
     const removed = reduce(added, { type: 'remove-attachment', index: 0 })
     expect(removed.attachments).toEqual([{ kind: 'media' }])
-    const sent = reduce(removed, { type: 'send' })
+    expect(reduce(removed, { type: 'send' })).toBe(removed)
+    const sent = reduce(reduce(ready(removed), { type: 'accept-suggestion' }), { type: 'send' })
     expect(sent.messages.at(-1)?.attachments).toEqual([{ kind: 'media' }])
     expect(sent.attachments).toEqual([])
     expect(added.attachments).toHaveLength(2)

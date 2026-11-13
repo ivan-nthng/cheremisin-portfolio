@@ -87,7 +87,7 @@ export default function Contact() {
                         variants={item}
                         className="text-lg text-blue-900/80 dark:text-blue-100/80 leading-relaxed"
                     >
-                        I'm always interested in hearing about new projects and
+                        I&apos;m always interested in hearing about new projects and
                         opportunities. Whether you have a question or just want
                         to say hi, feel free to reach out!
                     </motion.p>

@@ -15,9 +15,16 @@ export const homeIdentity = {
   ],
 } as const
 export const personal = {
-  text: 'I’m a single dad. There isn’t much spare time, but I like to surf, take photographs, and make documentaries about things that interest me.',
+  paragraphs: [
+    'I’m Ivan, a product designer and product builder based in Brazil. Outside work, I surf, hike, dance samba and forró, take photos, and make documentaries.',
+    'I’m also a single dad. Between playing with my toddler and reading books with her, I don’t always find time for everything, but I’m doing my best.',
+    'I have a few documentaries in the works. I only make films about things I love. Here’s one of them.',
+  ],
+  instagram: 'https://www.instagram.com/cheremisin.co.uk/',
   photography: 'https://unsplash.com/@vanya_nichego',
-  youtube: 'https://youtu.be/FXyGj8CYFHQ?si=grzzN2d77VR6pwJ3',
+  youtube: 'https://www.youtube.com/watch?v=FXyGj8CYFHQ',
+  filmId: 'FXyGj8CYFHQ',
+  filmTitle: 'Café a Propósito',
 }
 export const career = [
   ['Saavi', 'Founder / Product Designer / Product Builder', 'Jun 2026 – Present', 'Design and build personalized meal-planning flows and reusable product components.', ''],

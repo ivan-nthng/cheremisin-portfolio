@@ -1,7 +1,12 @@
 import React from 'react'
 import clsx from 'clsx'
 
-export type ButtonProps = {
+type NativeButtonProps = Omit<
+    React.ComponentPropsWithoutRef<'button'> & React.ComponentPropsWithoutRef<'a'>,
+    'onClick'
+>
+
+export type ButtonProps = NativeButtonProps & {
     variant?: 'primary' | 'secondary' | 'ghost'
     size?: 'sm' | 'md' | 'lg'
     iconLeft?: React.ReactNode
@@ -10,7 +15,6 @@ export type ButtonProps = {
     className?: string
     href?: string
     onClick?: React.MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>
-    [x: string]: any
 }
 
 const base =

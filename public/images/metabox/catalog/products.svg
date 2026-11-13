@@ -1,0 +1,37 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="file" filter="url(#filter0_dii_0_475)">
+<path d="M0 6C0 2.68629 2.68629 0 6 0H14C17.3137 0 20 2.68629 20 6V14C20 17.3137 17.3137 20 14 20H6C2.68629 20 0 17.3137 0 14V6Z" fill="#F5A80F" shape-rendering="crispEdges"/>
+<g id="Vector">
+<use xlink:href="#stroke0_0_475" fill="white"/>
+<use xlink:href="#stroke0_0_475" fill="url(#paint0_linear_0_475)" fill-opacity="0.2"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_dii_0_475" x="-1" y="-1" width="22" height="22" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_475"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_475" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="-1" dy="-1"/>
+<feGaussianBlur stdDeviation="0.5"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"/>
+<feBlend mode="normal" in2="shape" result="effect2_innerShadow_0_475"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="1" dy="1"/>
+<feGaussianBlur stdDeviation="0.5"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.16 0"/>
+<feBlend mode="normal" in2="effect2_innerShadow_0_475" result="effect3_innerShadow_0_475"/>
+</filter>
+<linearGradient id="paint0_linear_0_475" x1="10" y1="3.03187" x2="10" y2="16.9681" gradientUnits="userSpaceOnUse">
+<stop stop-opacity="0"/>
+<stop offset="1" stop-opacity="0.4"/>
+</linearGradient>
+<path id="stroke0_0_475" d="M5.44638 12.5674L9.16377 14.7239V10.4775L5.44638 8.32103V12.5674ZM10.8362 14.7239L14.5536 12.5674V8.32103L10.8362 10.4775V14.7239ZM6.33262 6.91232L10 9.0355L13.6674 6.91232L10 4.79855L6.33262 6.91232ZM3.6797 13.6051V7.41595C3.6797 7.09614 3.75844 6.80169 3.91593 6.5326C4.07342 6.26351 4.28912 6.04902 4.56303 5.88912L9.11665 3.27173C9.39057 3.11182 9.68502 3.03187 10 3.03187C10.315 3.03187 10.6094 3.11182 10.8833 3.27173L15.437 5.88912C15.7109 6.04902 15.9266 6.26351 16.0841 6.5326C16.2416 6.80169 16.3203 7.09614 16.3203 7.41595V12.5841C16.3203 12.9039 16.2416 13.1983 16.0841 13.4674C15.9266 13.7365 15.7109 13.951 15.437 14.1109L10.8833 16.7283C10.6094 16.8882 10.315 16.9681 10 16.9681C9.68502 16.9681 9.39057 16.8882 9.11665 16.7283L3.6797 13.6051Z"/>
+</defs>
+</svg>

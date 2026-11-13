@@ -1,12 +1,13 @@
 import fixture from './citymobil-track-fixture.json'
 import lostFixtures from './citymobil-lost-tracks.json'
 import context from './citymobil-journey-context.json'
+import { formatDemoDate, formatDemoTime } from './citymobil-demo'
 
 export type Coordinate = [number, number]
 export type TrackKind = 'actual' | 'planned' | 'alternative'
 export type JourneyPhase = 'history' | 'approach' | 'onboard' | 'onward'
 type JourneyContext = { history: number[][]; approach: number[][]; onward: number[][]; acceptedSeconds: number; historySeconds: number; onwardSeconds: number; alternative?: number[][]; alternativeSeconds?: number; traffic: { kind: string; phase: string; from: number; to: number }[] }
-export type PreparedTrack = Pick<typeof fixture, 'actual' | 'planned' | 'approach' | 'riderWalk' | 'pickup' | 'pickupSeconds' | 'actualSeconds' | 'plannedSeconds'> & { historical?: boolean; departureSeconds?: number; distanceMetres?: number; tripId?: string; context?: JourneyContext }
+export type PreparedTrack = Pick<typeof fixture, 'actual' | 'planned' | 'approach' | 'riderWalk' | 'pickup' | 'pickupSeconds' | 'actualSeconds' | 'plannedSeconds'> & { historical?: boolean; startedAt?: number; departureSeconds?: number; distanceMetres?: number; tripId?: string; context?: JourneyContext }
 export const geographicTrip: PreparedTrack = { ...fixture, context: context.trips.pickup }
 export const lostGeographicTrips = Object.fromEntries(Object.entries(lostFixtures.trips).map(([id, trip]) => [id, { ...trip, planned: trip.actual, riderWalk: trip.actual, context: context.trips[id as keyof typeof lostFixtures.trips] }])) as Record<keyof typeof lostFixtures.trips, PreparedTrack>
 const distance = (a: number[], b: number[]) => Math.hypot((a[0] - b[0]) * Math.cos(38.716 * Math.PI / 180), a[1] - b[1])
@@ -144,6 +145,11 @@ export function routeMoment(kind: TrackKind, coordinate: Coordinate, trip: Prepa
   return { seconds: clampTripTime(best.seconds, trip), distance: best.distance, phase: best.phase, traffic: section?.traffic ?? false }
 }
 export function tripClock(seconds: number, trip: PreparedTrack = geographicTrip) {
+  if (trip.startedAt != null) {
+    const instant = trip.startedAt + clampTripTime(seconds, trip) * 1000
+    const day = formatDemoDate(instant)
+    return (day === formatDemoDate(trip.startedAt) ? '' : day + ', ') + formatDemoTime(instant, true)
+  }
   const total = (trip.departureSeconds ?? 12 * 3600) + clampTripTime(seconds, trip)
   return [Math.floor(total / 3600), Math.floor(total / 60) % 60, total % 60].map(n => String(n).padStart(2, '0')).join(':')
 }

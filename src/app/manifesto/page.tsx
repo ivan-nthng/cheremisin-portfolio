@@ -1,4 +1,6 @@
+import { PageReady } from '@/components/portfolio/navigation/PageMotion'
 import { ManifestoContent } from '@/components/ManifestoContent'
+import { PortfolioFooter } from '@/components/portfolio/PortfolioFooter'
 import { pageMetadata } from '@/lib/seo'
 
 export const metadata = pageMetadata(
@@ -8,5 +10,5 @@ export const metadata = pageMetadata(
 )
 
 export default function ManifestoPage() {
-    return <ManifestoContent />
+    return <><PageReady /><ManifestoContent /><PortfolioFooter /></>
 }

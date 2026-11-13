@@ -11,6 +11,7 @@ export interface Project {
     companyContext?: string
     companyName?: string
     companyUrl?: string
+    projectWebsite?: { label: string; href: string }
     isComingSoon?: boolean
     isActive?: boolean
 }
@@ -42,8 +43,7 @@ export const projects: Project[] = [
         title: 'DS Hito Design System',
         description:
             'A design system organized around semantic tokens and reusable component behavior.',
-        image: '/ds-hito/project-1-light.png',
-        darkImage: '/ds-hito/project-1-dark.png',
+        image: '/images/hito/case/home-cover.webp',
         technologies: [
             'UI Design',
             'Figma',
@@ -57,14 +57,13 @@ export const projects: Project[] = [
         link: '/projects/ds-hito',
         isWide: true,
         companyName: 'Personal project',
+        projectWebsite: { label: 'Hito DS', href: 'https://www.hitocajon.com/' },
         isActive: true,
     },
     {
-        title: 'Litres Internal Tools',
-        description:
-            'Internal tools for authors, publishers, and library teams working with ebooks and audiobooks.',
-        image: '/litres/project-1-light.png',
-        darkImage: '/litres/project-1-dark.png',
+        title: 'LitRes Publishing Workspace',
+        description: 'A workspace for authors, self-publishers, and e-book publishers to track sales and reader engagement.',
+        image: '/images/litres/case/home-cover.webp',
         technologies: [
             'UI Design',
             'Figma',
@@ -84,39 +83,31 @@ export const projects: Project[] = [
         isActive: true,
     },
     {
-        title: 'Peruse',
-        description:
-            'An AI document-workspace concept for organizing, finding, and connecting files by meaning.',
-        technologies: [
-            'AI',
-            'File Management',
-            'User Experience',
-            'Product Design',
-            'Machine Learning',
-        ],
-        role: 'Lead Product Designer',
-        link: '/projects/peruse',
-        isSingleColumn: true,
-        companyName: 'Peruse',
-        companyUrl: 'https://www.peruse.ml/',
+        title: 'LitRes Libraries Interface',
+        description: 'A workspace for library staff to manage reader accounts and decide when reader requests can add copies to the collection.',
+        technologies: ['Product Design', 'Design Systems', 'Interactive Prototypes'],
+        link: '/projects/litres-library',
+        companyName: 'LitRes',
+        companyUrl: 'https://www.litres.ru/',
         isActive: true,
     },
     {
-        title: 'Wrike',
-        description:
-            'Board-based project planning and workload management for teams.',
-        technologies: [
-            'SaaS',
-            'Productivity',
-            'Enterprise',
-            'Project Management',
-            'Dashboard',
-        ],
-        role: 'Senior Product Designer',
-        link: '/projects/wrike',
-        isSingleColumn: true,
-        companyName: 'Wrike',
-        companyUrl: 'https://www.wrike.com/',
+        title: '3D Source Metabox',
+        description: 'A workspace for configuring 3D products, setting camera views, and creating renders.',
+        technologies: ['Product Design', 'Design Systems', 'Interactive Prototypes'],
+        link: '/projects/metabox',
+        companyName: '3D Source',
+        companyUrl: 'https://www.3dsource.com/',
+        isActive: true,
+    },
+    {
+        title: 'Saavi',
+        description: 'A platform for planning everyday routines, starting with a week of chef-prepared meals.',
+        technologies: ['Product Strategy', 'Product Design', 'Design Systems'],
+        role: 'Founder / Product Designer / Product Builder',
+        link: '/projects/saavi',
+        companyName: 'Saavi',
+        companyUrl: 'https://saavi.cc/',
         isActive: true,
     },
     {

@@ -36,11 +36,11 @@ export const citymobilScenarios = {
     origin: 'R. Gonçalves Ramos, Amadora', destination: 'Av. Gen. Humberto Delgado, Amadora', car: 'White Tesla Model S', category: 'Comfort +',
     fare: '17.00', base: '17.00', tolls: '0.00', discount: '0.00', invoice: 'DEMO-INCOME-03',
     complaint: 'I completed my trips but didn’t receive the guaranteed income. Could you explain the conditions?',
-    driverMessage: 'My Rio de Mouro + Mem Martins card shows 19 of 20 rides and “Time ran out”. Why is that?',
+    driverMessage: 'My Rio de Mouro + Mem Martins card shows 19 of 20 rides and “Time ran out”. Why wasn’t my most recent trip counted?',
     reply: 'Your card shows 19 of the required 20 rides in Rio de Mouro + Mem Martins, with a 06:00–12:00 window. The listed 12:05–12:34 trip falls outside that window. Please confirm the trip date and area so we can review the displayed conditions together.',
     driverReply: 'Your card shows 19 of the required 20 rides in Rio de Mouro + Mem Martins, with a 06:00–12:00 window. The listed 12:05–12:34 trip falls outside that window. Please confirm the trip date and area so we can review the displayed conditions together.',
-    response: 'I see the 19 of 20 progress and the time window now. I’ll check the date and area of that last trip.',
-    driverResponse: 'I see the 19 of 20 progress and the time window now. I’ll check the date and area of that last trip.',
+    response: 'Yes, the date and area are correct. I understand now: my last trip was outside the displayed window. Thanks for explaining the 19 of 20 count.',
+    driverResponse: 'Yes, the date and area are correct. I understand now: my last trip was outside the displayed window. Thanks for explaining the 19 of 20 count.',
     review: 'Open the Guaranteed Income list and review the displayed program conditions.',
     reasons: ['Required rides within the timeframe', 'Trips in the designated area', 'No trip-tracking errors', 'Earnings threshold checked', 'Trips outside the timeframe checked'],
     driverCheck: 'Clarify the driver’s trip history and payment expectations. Explain the displayed conditions; a payout decision needs a separate review.',
@@ -83,6 +83,65 @@ export const citymobilScenarios = {
   },
 } as const
 export type ScenarioId = keyof typeof citymobilScenarios
+const demoTimeZone = 'Europe/Lisbon'
+const demoDateFormat = new Intl.DateTimeFormat('en-GB', { timeZone: demoTimeZone, day: 'numeric', month: 'short', year: 'numeric' })
+const demoTimeFormat = new Intl.DateTimeFormat('en-GB', { timeZone: demoTimeZone, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
+const demoSecondFormat = new Intl.DateTimeFormat('en-GB', { timeZone: demoTimeZone, hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' })
+const demoCalendarFormat = new Intl.DateTimeFormat('en-CA', { timeZone: demoTimeZone, year: 'numeric', month: '2-digit', day: '2-digit' })
+export const formatDemoDate = (instant: number) => demoDateFormat.format(instant)
+export const formatDemoTime = (instant: number, seconds = false) => (seconds ? demoSecondFormat : demoTimeFormat).format(instant)
+export const formatDemoDateTime = (instant: number) => formatDemoDate(instant) + ', ' + formatDemoTime(instant)
+function demoCalendarDay(instant: number) {
+  const parts = demoCalendarFormat.formatToParts(instant)
+  const value = (type: string) => Number(parts.find(part => part.type === type)!.value)
+  return Date.UTC(value('year'), value('month') - 1, value('day'))
+}
+export function demoDayLabel(instant: number, reference: number) {
+  const days = (demoCalendarDay(reference) - demoCalendarDay(instant)) / 86400000
+  return days === 0 ? 'Today' : days === 1 ? 'Yesterday' : formatDemoDate(instant)
+}
+/** The immutable fixtures are January Lisbon records (UTC). Shift elapsed time, never wall-clock hours. */
+function fixtureInstant(day: string, time: string) {
+  const [date, month, year] = day.split(' '), [hour, minute] = time.split(':').map(Number)
+  return Date.UTC(Number(year), ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].indexOf(month), Number(date), hour, minute)
+}
+// Leave two minutes to review Lost/Income requests; Pickup's prepared replay already lies in the past.
+const fixtureLoadTime: Record<ScenarioId, string> = { lost: '11:07', pickup: '12:38', income: '12:38' }
+const fixtureRequestTime: Record<ScenarioId, string> = { lost: lostDemoClock.time, pickup: '12:02', income: '12:36' }
+export function demoInstant(scenario: ScenarioId, sessionStartedAt: number, day: string, time: string) {
+  return sessionStartedAt + fixtureInstant(day, time) - fixtureInstant(citymobilScenarios[scenario].day, fixtureLoadTime[scenario])
+}
+export function demoRequestInstant(scenario: ScenarioId, sessionStartedAt: number) {
+  return demoInstant(scenario, sessionStartedAt, citymobilScenarios[scenario].day, fixtureRequestTime[scenario])
+}
+type DatedTrip = { day: string; date: string; departure: string; arrival: string }
+export function projectDemoTrip<T extends DatedTrip>(trip: T, scenario: ScenarioId, sessionStartedAt?: number | null) {
+  if (sessionStartedAt == null) return { ...trip, startedAt: undefined, endedAt: undefined }
+  const startedAt = demoInstant(scenario, sessionStartedAt, trip.day, trip.departure)
+  const duration = (fixtureInstant(trip.day, trip.arrival) - fixtureInstant(trip.day, trip.departure) + 86400000) % 86400000
+  const endedAt = startedAt + duration
+  return { ...trip, startedAt, endedAt, day: formatDemoDate(startedAt), date: formatDemoDateTime(startedAt), departure: formatDemoTime(startedAt), arrival: formatDemoTime(endedAt) }
+}
+export const demoLostTrips = (sessionStartedAt?: number | null) => lostTrips.map(trip => projectDemoTrip(trip, 'lost', sessionStartedAt))
+type TimedContext = { scenario: ScenarioId; sessionStartedAt?: number | null }
+/** Only authored script text passes here; free text is never searched/replaced. */
+function timedDemoText(text: string, state: TimedContext, eventAt?: number) {
+  if (state.sessionStartedAt == null) return text
+  const anchor = state.sessionStartedAt
+  if (state.scenario === 'lost') {
+    const latest = projectDemoTrip(lostTrips[0], 'lost', anchor)
+    const day = demoDayLabel(latest.startedAt!, eventAt ?? anchor)
+    text = text.replace('today at 10:20', (day === 'Today' || day === 'Yesterday' ? day.toLowerCase() : day) + ' at 10:20')
+  }
+  return text.replace(/\b\d{2}:\d{2}\b/g, time => formatDemoTime(demoInstant(state.scenario, anchor, citymobilScenarios[state.scenario].day, time)))
+}
+export function demoIncomeProgram(id: keyof typeof incomePrograms, sessionStartedAt?: number | null) {
+  const program = incomePrograms[id]
+  if (sessionStartedAt == null) return program
+  const from = demoInstant('income', sessionStartedAt, citymobilScenarios.income.day, program.from)
+  const to = demoInstant('income', sessionStartedAt, citymobilScenarios.income.day, program.to)
+  return { ...program, from: formatDemoTime(from), to: formatDemoTime(to), day: formatDemoDate(from) + (demoCalendarDay(from) !== demoCalendarDay(to) ? ' – ' + formatDemoDate(to) : '') }
+}
 export type Recipient = 'passenger' | 'driver'
 export type ConversationMode = 'reply' | 'forward' | 'connect' | 'note'
 export const conversationModes = { reply: 'Reply', forward: 'Forward', connect: 'Connect', note: 'Add a note' } as const
@@ -99,6 +158,23 @@ export const incomePrograms = {
 } as const
 export type LostStage = 'ask-latest' | 'choose-trip' | 'query-driver' | 'call-driver' | 'connect-rider' | 'follow-up' | 'ready-complete' | 'completed'
 export type PickupStage = 'guide-rider' | 'query-driver' | 'promo-rider' | 'ready-complete' | 'completed'
+export type IncomeStage = 'explain' | 'ready-complete' | 'completed'
+export function incomeNextStep(state: Pick<DemoState, 'income' | 'incomeProgram'>) {
+  if (state.income.stage === 'completed') return 'This support ticket is completed.'
+  if (state.incomeProgram === 'completed') return 'Baixa is a separate comparison. Return to Rio de Mouro + Mem Martins to resolve this request.'
+  return state.income.stage === 'ready-complete' ? 'The driver acknowledged the explanation. Complete the support ticket.'
+    : 'Review the expired program and listed trip, then explain the displayed time-window mismatch to the driver.'
+}
+export function incomeReplyAllowed(state: DemoState) {
+  return state.scenario === 'income' && state.mode === 'reply' && state.recipient === 'driver' && !state.pendingReply
+    && state.income.stage !== 'completed' && (state.incomeProgram === 'completed' || state.income.stage === 'explain')
+}
+export function incomeSendAllowed(state: DemoState) {
+  return incomeReplyAllowed(state) && !state.localDraft && state.draft === preparedReply(state)
+}
+export function incomeCompleteAllowed(state: DemoState) {
+  return state.scenario === 'income' && state.incomeProgram === 'expired' && state.income.stage === 'ready-complete' && !state.pendingReply
+}
 export function pickupNextStep(state: Pick<DemoState, 'pickup'>) {
   return {
     'guide-rider': 'Inspect Trip Track, then ask Jason to stay at the main entrance.',
@@ -123,9 +199,10 @@ export function pickupWalkthrough(state: DemoState) {
   const rank = (['guide-rider', 'query-driver', 'promo-rider', 'ready-complete', 'completed'] as PickupStage[]).indexOf(state.pickup.stage)
   return ['Inspect the prepared track and guide Jason', 'Ask Ivan to meet Jason at the main entrance', 'Send Jason the €5 next-trip promo', 'Receive the meeting confirmation and complete'].map((title, i) => ({ title, state: rank > i ? 'completed' as const : rank === i ? 'current' as const : 'upcoming' as const }))
 }
-export function activeDemoTrip(state: Pick<DemoState, 'scenario' | 'lost'>) {
+export function activeDemoTrip(state: Pick<DemoState, 'scenario' | 'lost'> & Partial<Pick<DemoState, 'sessionStartedAt'>>) {
   const base = citymobilScenarios[state.scenario]
-  return state.scenario === 'lost' ? { ...base, ...(lostTrips.find(trip => trip.id === state.lost.selectedTripId) ?? lostTrips[0]), title: base.title, passenger: base.passenger, status: base.status, paymentStatus: base.paymentStatus } : base
+  const trip = state.scenario === 'lost' ? { ...base, ...(lostTrips.find(trip => trip.id === state.lost.selectedTripId) ?? lostTrips[0]), title: base.title, passenger: base.passenger, status: base.status, paymentStatus: base.paymentStatus } : base
+  return { ...projectDemoTrip(trip, state.scenario, state.sessionStartedAt), driverReasons: trip.driverReasons.map(text => timedDemoText(text, state)) }
 }
 export function lostNextStep(state: Pick<DemoState, 'lost'>) {
   return {
@@ -147,35 +224,37 @@ export function lostReplyAllowed(state: DemoState) {
     || state.lost.stage === 'follow-up' && state.lost.shared && state.recipient === 'passenger'
 }
 export type DemoAttachment = { kind: 'media' | 'file' | 'promo'; amount?: number }
-export type DemoMessage = { id: number; role: Recipient | 'agent'; recipient: Recipient; text: string; attachments: DemoAttachment[]; kind?: 'call-summary'; contact?: { tripId: string; driver: string; avatar: string; masked: string } }
+export type DemoMessage = { id: number; at?: number; role: Recipient | 'agent'; recipient: Recipient; text: string; attachments: DemoAttachment[]; kind?: 'call-summary'; contact?: { tripId: string; driver: string; avatar: string; masked: string } }
 export type ForwardContext = { messageId: number; from: string; text: string; issue: string; date: string; origin: string; destination: string }
 export type InternalEntry = { id: number; mode: 'forward' | 'note'; context: ForwardContext; team: typeof citymobilTeam[number] | null; comment: string; attachments: DemoAttachment[] }
 export type RelatedContext = { id: string; title: string; reference: string; status: string; context: ForwardContext }
-export function relatedCases(state: Pick<DemoState, 'scenario' | 'recipient' | 'messages'>): RelatedContext[] {
+export function relatedCases(state: Pick<DemoState, 'scenario' | 'recipient' | 'messages'> & Partial<Pick<DemoState, 'sessionStartedAt'>>): RelatedContext[] {
   const titles = state.scenario === 'pickup' ? ['Pickup clarification', 'Driver contact'] : state.scenario === 'lost' ? ['Item description', 'Return meeting'] : ['Program review', 'Trip timing']
   return titles.map((title, i) => ({ id: state.scenario + '-related-' + i, title, reference: 'CM-' + (18407 + i), status: 'Open', context: forwardedContext(state) }))
 }
-export type PendingReply = { run: number; scenario: ScenarioId; recipient: Recipient; name: string; tripId: string; text: string; expectedStage?: LostStage; nextStage?: LostStage; expectedPickupStage?: PickupStage; nextPickupStage?: PickupStage }
+export type PendingReply = { run: number; scenario: ScenarioId; recipient: Recipient; name: string; tripId: string; text: string; expectedStage?: LostStage; nextStage?: LostStage; expectedPickupStage?: PickupStage; nextPickupStage?: PickupStage; incomeProgram?: keyof typeof incomePrograms; expectedIncomeStage?: IncomeStage }
 export type DemoState = {
+  sessionStartedAt: number | null;
   theme: 'light' | 'dark'; scenario: ScenarioId; recipient: Recipient; panel: 'info' | 'scripts'; draft: string; localDraft: boolean;
   mode: ConversationMode; answer: number; teamId: string; context: ForwardContext | null; internal: InternalEntry[];
   incomeProgram: keyof typeof incomePrograms; trackPercent: number;
   lost: { stage: LostStage; selectedTripId: string | null; consent: boolean; shared: boolean };
   pickup: { stage: PickupStage };
+  income: { stage: IncomeStage };
   links: RelatedContext[]; linkCandidate: string | null;
   messages: DemoMessage[]; attachments: DemoAttachment[]; reviewed: boolean; reason: string; driverReason: string;
   suggestion: 'idle' | 'loading' | 'ready'; revision: number;
   replyRun: number; pendingReply: PendingReply | null;
   call: { phase: 'idle' | 'calling' | 'connected'; target: Recipient; run: number; elapsed: number; muted: boolean };
 }
-export type DemoAction =
+export type DemoAction = (
   | { type: 'theme'; value: DemoState['theme'] } | { type: 'panel'; value: DemoState['panel'] }
   | { type: 'scenario'; value: ScenarioId } | { type: 'recipient'; value: Recipient }
   | { type: 'mode'; value: ConversationMode } | { type: 'answer'; direction: -1 | 1 } | { type: 'team'; value: string }
   | { type: 'income-program'; value: DemoState['incomeProgram'] } | { type: 'track-time'; value: number }
   | { type: 'select-link'; value: string | null } | { type: 'unlink'; value: string }
   | { type: 'script-edit'; operation: 'insert' | 'backspace' | 'delete'; start: number; end: number; count?: number }
-  | { type: 'draft-edit'; value: string }
+  | { type: 'draft-edit'; value: string; literal?: boolean }
   | { type: 'reviewed'; value: boolean } | { type: 'reason' | 'driverReason'; value: string }
   | { type: 'clear-draft' | 'accept-suggestion' | 'cancel-suggestion' | 'send' }
   | { type: 'suggest'; explicit?: boolean }
@@ -186,13 +265,14 @@ export type DemoAction =
   | { type: 'call-start'; target: Recipient } | { type: 'call-connected' | 'call-tick'; run: number }
   | { type: 'call-end' | 'call-mute' }
   | { type: 'select-trip'; value: string } | { type: 'connect-rider' | 'complete-ticket' }
+  ) & { at?: number }
 
-export function forwardedContext(state: Pick<DemoState, 'scenario' | 'recipient' | 'messages'> & Partial<Pick<DemoState, 'lost'>>): ForwardContext {
-  const trip = state.lost ? activeDemoTrip({ scenario: state.scenario, lost: state.lost }) : citymobilScenarios[state.scenario]
+export function forwardedContext(state: Pick<DemoState, 'scenario' | 'recipient' | 'messages'> & Partial<Pick<DemoState, 'lost' | 'sessionStartedAt'>>): ForwardContext {
+  const trip = state.lost ? activeDemoTrip({ ...state, lost: state.lost }) : projectDemoTrip(citymobilScenarios[state.scenario], state.scenario, state.sessionStartedAt)
   const source = state.messages.find(m => m.role === state.recipient && m.recipient === state.recipient) ?? state.messages[0]
   return { messageId: source.id, from: source.role === 'driver' ? trip.driver : trip.passenger, text: source.text, issue: trip.title, date: trip.day, origin: trip.origin, destination: trip.destination }
 }
-type ReplyContext = Pick<DemoState, 'scenario' | 'recipient'> & Partial<Pick<DemoState, 'mode' | 'answer' | 'incomeProgram' | 'lost' | 'pickup'>>
+type ReplyContext = Pick<DemoState, 'scenario' | 'recipient'> & Partial<Pick<DemoState, 'mode' | 'answer' | 'incomeProgram' | 'lost' | 'pickup' | 'sessionStartedAt'>>
 type ToneTexts = readonly [string, string, string]
 /** One typed fixture source: warm, natural, strict; all three keep the same facts. */
 function preparedTones(state: ReplyContext): ToneTexts {
@@ -226,11 +306,16 @@ function preparedTones(state: ReplyContext): ToneTexts {
   return ['Thanks so much for waiting, Jason. Ivan is at the north entrance. Please stay at the main entrance on Praça da Alegria; I’ll ask him to come and meet you there.', trip.reply, 'Jason, Ivan is at the north entrance. Stay at the main entrance on Praça da Alegria; I will ask him to meet you there.']
 }
 export function preparedReply(state: ReplyContext) {
-  return preparedTones(state)[state.answer ?? 1] ?? preparedTones(state)[1]
+  return timedDemoText(preparedTones(state)[state.answer ?? 1] ?? preparedTones(state)[1], state)
 }
 export function composerNextAction(state: DemoState): string | null {
   if (state.mode !== 'reply') return null
   if (state.pendingReply) return 'Wait for ' + state.pendingReply.name + '’s reply.'
+  if (state.scenario === 'income') {
+    if (state.income.stage === 'completed') return 'Restart the scenario to begin again.'
+    if (state.recipient !== 'driver') return 'Reply to the driver to explain the displayed program conditions.'
+    return incomeReplyAllowed(state) ? null : incomeNextStep(state)
+  }
   if (state.scenario === 'pickup') {
     if (pickupReplyAllowed(state)) return null
     if (state.pickup.stage === 'completed') return 'Restart the scenario to begin again.'
@@ -265,28 +350,33 @@ export function composerShortcut(key: string, modifiers: { ctrl: boolean; meta: 
   if (key === 'Tab' && !modifiers.ctrl && !modifiers.meta && eligible) return 'accept'
   return null
 }
-export function initialDemoState(theme: DemoState['theme'] = 'light', scenario: ScenarioId = 'pickup'): DemoState {
+export function initialDemoState(theme: DemoState['theme'] = 'light', scenario: ScenarioId = 'pickup', sessionStartedAt: number | null = null): DemoState {
   const trip = citymobilScenarios[scenario]
-  return { theme, scenario, recipient: scenario === 'income' ? 'driver' : 'passenger', panel: 'info', draft: '', localDraft: false, attachments: [], reviewed: false, reason: '', driverReason: '',
+  const at = sessionStartedAt == null ? undefined : demoRequestInstant(scenario, sessionStartedAt)
+  return { theme, scenario, sessionStartedAt, recipient: scenario === 'income' ? 'driver' : 'passenger', panel: 'info', draft: '', localDraft: false, attachments: [], reviewed: false, reason: '', driverReason: '',
     mode: 'reply', answer: 1, teamId: 'emma', context: null, internal: [], incomeProgram: 'expired', trackPercent: 0, links: [], linkCandidate: null,
     lost: { stage: 'ask-latest', selectedTripId: null, consent: false, shared: false },
     pickup: { stage: 'guide-rider' },
+    income: { stage: 'explain' },
     replyRun: 0, pendingReply: null, suggestion: 'idle', revision: 0, call: { phase: 'idle', target: 'passenger', run: 0, elapsed: 0, muted: false },
     messages: [
-      { id: 1, role: 'passenger', recipient: 'passenger', text: trip.complaint, attachments: [] },
-      ...(scenario === 'income' ? [{ id: 2, role: 'driver' as const, recipient: 'driver' as const, text: trip.driverMessage, attachments: [] }] : []),
+      { id: 1, ...(at == null ? {} : { at }), role: 'passenger', recipient: 'passenger', text: trip.complaint, attachments: [] },
+      ...(scenario === 'income' ? [{ id: 2, ...(at == null ? {} : { at: at + 60000 }), role: 'driver' as const, recipient: 'driver' as const, text: trip.driverMessage, attachments: [] }] : []),
     ] }
 }
 function changedComposer(state: DemoState) {
   return { draft: '', localDraft: false, attachments: [], suggestion: 'idle' as const, revision: state.revision + 1, linkCandidate: null, call: { ...state.call, phase: 'idle' as const, run: state.call.run + 1, elapsed: 0, muted: false } }
 }
+function messageEventTime(state: DemoState, at?: number) {
+  return state.sessionStartedAt == null ? {} : { at: at ?? state.sessionStartedAt }
+}
 export function citymobilDemoReducer(state: DemoState, action: DemoAction): DemoState {
-  if ((state.scenario === 'lost' && state.lost.stage === 'completed' || state.scenario === 'pickup' && state.pickup.stage === 'completed') && !['scenario', 'theme', 'panel', 'draft-edit', 'clear-draft', 'cancel-suggestion', 'track-time'].includes(action.type)) return state
+  if ((state.scenario === 'lost' && state.lost.stage === 'completed' || state.scenario === 'pickup' && state.pickup.stage === 'completed' || state.scenario === 'income' && state.income.stage === 'completed') && !['scenario', 'theme', 'panel', 'draft-edit', 'clear-draft', 'cancel-suggestion', 'track-time'].includes(action.type)) return state
   switch (action.type) {
     case 'theme': return { ...state, theme: action.value }
     case 'panel': return { ...state, panel: action.value }
     case 'scenario': {
-      const fresh = initialDemoState(state.theme, action.value)
+      const fresh = initialDemoState(state.theme, action.value, state.sessionStartedAt)
       return { ...fresh, replyRun: state.replyRun + 1, revision: state.revision + 1, call: { ...fresh.call, run: state.call.run + 1 } }
     }
     case 'recipient': return action.value === state.recipient ? state : { ...state, ...changedComposer(state), recipient: action.value, mode: 'reply', answer: 1, context: null }
@@ -299,7 +389,8 @@ export function citymobilDemoReducer(state: DemoState, action: DemoAction): Demo
       const draft = state.localDraft ? state.draft : !eligible ? '' : state.draft === preparedReply(state) ? text : text.slice(0, state.draft.length)
       return { ...state, answer, draft, suggestion: eligible ? 'loading' : 'idle', revision: state.revision + 1 }
     }
-    case 'income-program': return { ...state, ...changedComposer(state), incomeProgram: action.value }
+    case 'income-program': return action.value === state.incomeProgram ? state : { ...state, ...changedComposer(state), incomeProgram: action.value,
+      ...(state.scenario === 'income' ? { pendingReply: null, replyRun: state.replyRun + 1 } : {}) }
     case 'track-time': return Number.isFinite(action.value) ? { ...state, trackPercent: Math.max(0, Math.min(100, action.value)) } : state
     case 'select-trip': {
       if (state.pendingReply || state.scenario !== 'lost' || !['choose-trip', 'query-driver'].includes(state.lost.stage) || !lostTrips.some(trip => trip.id === action.value)) return state
@@ -309,16 +400,17 @@ export function citymobilDemoReducer(state: DemoState, action: DemoAction): Demo
     case 'connect-rider': {
       if (state.scenario !== 'lost' || state.lost.stage !== 'connect-rider' || !state.lost.consent || state.lost.shared || state.lost.selectedTripId !== 'latest') return state
       const trip = lostTrips[0]
-      return { ...state, ...changedComposer(state), recipient: 'passenger', mode: 'reply', context: null, lost: { ...state.lost, stage: 'follow-up', shared: true }, messages: [...state.messages, { id: state.messages.length + 1, role: 'agent', recipient: 'passenger', text: 'With the driver’s permission, here is their demo contact for arranging the return.', attachments: [], contact: { tripId: trip.id, driver: trip.driver, avatar: trip.avatar, masked: trip.contact } }] }
+      return { ...state, ...changedComposer(state), recipient: 'passenger', mode: 'reply', context: null, lost: { ...state.lost, stage: 'follow-up', shared: true }, messages: [...state.messages, { id: state.messages.length + 1, ...messageEventTime(state, action.at), role: 'agent', recipient: 'passenger', text: 'With the driver’s permission, here is their demo contact for arranging the return.', attachments: [], contact: { tripId: trip.id, driver: trip.driver, avatar: trip.avatar, masked: trip.contact } }] }
     }
     case 'complete-ticket':
+      if (state.scenario === 'income') return incomeCompleteAllowed(state) ? { ...state, ...changedComposer(state), income: { stage: 'completed' } } : state
       if (state.scenario === 'pickup') return state.pickup.stage === 'ready-complete' && !state.pendingReply ? { ...state, ...changedComposer(state), pickup: { stage: 'completed' } } : state
       return state.scenario === 'lost' && state.lost.stage === 'ready-complete' && state.lost.consent && state.lost.shared ? { ...state, ...changedComposer(state), lost: { ...state.lost, stage: 'completed' } } : state
     case 'select-link': if (state.scenario === 'lost') return state; return action.value === null || relatedCases(state).some(c => c.id === action.value) && !state.links.some(c => c.id === action.value) ? { ...state, linkCandidate: action.value } : state
     case 'unlink': return { ...state, links: state.links.filter(link => link.id !== action.value) }
     case 'clear-draft': return { ...state, draft: '', localDraft: false, suggestion: 'idle', revision: state.revision + 1 }
     case 'draft-edit': {
-      if (state.mode === 'connect' || !composerNextAction(state) && !state.localDraft) return state
+      if (state.mode === 'connect' || !action.literal && !composerNextAction(state) && !state.localDraft) return state
       const draft = action.value.slice(0, 2000)
       return { ...state, draft, localDraft: Boolean(draft), suggestion: 'idle', revision: state.revision + 1 }
     }
@@ -362,7 +454,7 @@ export function citymobilDemoReducer(state: DemoState, action: DemoAction): Demo
           : stage === 'query-driver' ? citymobilScenarios.pickup.driverResponse
           : 'Thanks, I’ve received the code. I can see Ivan now!'
         const next: PickupStage = stage === 'guide-rider' ? 'query-driver' : stage === 'query-driver' ? 'promo-rider' : 'ready-complete'
-        return queueParticipantReply(state, text, response, undefined, next)
+        return queueParticipantReply(state, text, response, action.at, undefined, next)
       }
       if (state.scenario === 'lost') {
         if (!lostReplyAllowed(state) || text !== preparedReply(state)) return state
@@ -371,25 +463,28 @@ export function citymobilDemoReducer(state: DemoState, action: DemoAction): Demo
           : stage === 'query-driver' ? 'Yes, I found the blue backpack. I’m driving at the moment—could you give me a call to arrange the return?'
           : 'Yes, we spoke and arranged to meet by the main arch at Praça do Comércio at 11:15. Thank you for helping me get it back!'
         const next: LostStage = stage === 'ask-latest' ? 'choose-trip' : stage === 'query-driver' ? 'call-driver' : 'ready-complete'
-        return queueParticipantReply(state, text, response, next)
+        return queueParticipantReply(state, text, response, action.at, next)
       }
+      if (!incomeSendAllowed(state)) return state
       const trip = citymobilScenarios[state.scenario]
       const response = state.scenario === 'income' && state.incomeProgram === 'completed' ? 'I understand. The completed Baixa example is separate from the expired program. Thank you for explaining the card.' : state.recipient === 'driver' ? trip.driverResponse : trip.response
-      return queueParticipantReply(state, text, response)
+      return queueParticipantReply(state, text, response, action.at)
     }
     case 'reply-delivered': {
       const pending = state.pendingReply
       if (!pending || pending.run !== action.run || pending.scenario !== action.scenario || state.scenario !== pending.scenario) return state
+      if (state.scenario === 'income' && (pending.incomeProgram !== state.incomeProgram || pending.expectedIncomeStage !== state.income.stage || pending.recipient !== 'driver' || pending.tripId !== activeDemoTrip(state).id)) return state
       const advance = pending.nextStage && state.lost.stage === pending.expectedStage && activeDemoTrip(state).id === pending.tripId
       const pickupAdvance = state.scenario === 'pickup' && pending.nextPickupStage && state.pickup.stage === pending.expectedPickupStage && activeDemoTrip(state).id === pending.tripId
-      return { ...state, pendingReply: null, lost: advance ? { ...state.lost, stage: pending.nextStage! } : state.lost, pickup: pickupAdvance ? { stage: pending.nextPickupStage! } : state.pickup, messages: [...state.messages, { id: state.messages.length + 1, role: pending.recipient, recipient: pending.recipient, text: pending.text, attachments: [] }] }
+      const incomeAdvance = state.scenario === 'income' && pending.incomeProgram === 'expired' && state.income.stage === 'explain'
+      return { ...state, pendingReply: null, lost: advance ? { ...state.lost, stage: pending.nextStage! } : state.lost, pickup: pickupAdvance ? { stage: pending.nextPickupStage! } : state.pickup, income: incomeAdvance ? { stage: 'ready-complete' } : state.income, messages: [...state.messages, { id: state.messages.length + 1, ...messageEventTime(state, action.at), role: pending.recipient, recipient: pending.recipient, text: timedDemoText(pending.text, state, action.at), attachments: [] }] }
     }
     case 'call-start': if (state.scenario === 'lost' && (state.lost.stage !== 'call-driver' || action.target !== 'driver' || state.lost.selectedTripId !== 'latest')) return state; return state.call.phase !== 'idle' ? state : { ...state, call: { phase: 'calling', target: action.target, run: state.call.run + 1, elapsed: 0, muted: false } }
     case 'call-connected': return state.call.phase === 'calling' && action.run === state.call.run ? { ...state, call: { ...state.call, phase: 'connected' } } : state
     case 'call-tick': return state.call.phase === 'connected' && action.run === state.call.run ? { ...state, call: { ...state.call, elapsed: state.call.elapsed + 1 } } : state
     case 'call-end': {
       const consent = state.scenario === 'lost' && state.lost.stage === 'call-driver' && state.lost.selectedTripId === 'latest' && state.call.phase === 'connected' && state.call.target === 'driver'
-      return { ...state, call: { ...state.call, phase: 'idle', run: state.call.run + 1, elapsed: 0, muted: false }, ...(consent ? { lost: { ...state.lost, stage: 'connect-rider' as const, consent: true }, messages: [...state.messages, { id: state.messages.length + 1, role: 'agent' as const, recipient: 'driver' as const, kind: 'call-summary' as const, text: 'Simulated call summary: ' + lostTrips[0].driver + ' will return the backpack at the main arch on Praça do Comércio at 11:15 and explicitly agreed to share this demo contact with Johnston.', attachments: [] }] } : {}) }
+      return { ...state, call: { ...state.call, phase: 'idle', run: state.call.run + 1, elapsed: 0, muted: false }, ...(consent ? { lost: { ...state.lost, stage: 'connect-rider' as const, consent: true }, messages: [...state.messages, { id: state.messages.length + 1, ...messageEventTime(state, action.at), role: 'agent' as const, recipient: 'driver' as const, kind: 'call-summary' as const, text: timedDemoText('Simulated call summary: ' + lostTrips[0].driver + ' will return the backpack at the main arch on Praça do Comércio at 11:15 and explicitly agreed to share this demo contact with Johnston.', state), attachments: [] }] } : {}) }
     }
     case 'call-mute': return state.call.phase === 'idle' ? state : { ...state, call: { ...state.call, muted: !state.call.muted } }
   }
@@ -411,12 +506,12 @@ export function scheduleDemoCall(call: Pick<DemoState['call'], 'phase' | 'run'>,
   }
 }
 
-function queueParticipantReply(state: DemoState, text: string, response: string, nextStage?: LostStage, nextPickupStage?: PickupStage): DemoState {
+function queueParticipantReply(state: DemoState, text: string, response: string, at?: number, nextStage?: LostStage, nextPickupStage?: PickupStage): DemoState {
   const trip = activeDemoTrip(state)
   const run = state.replyRun + 1
   return { ...state, draft: '', attachments: [], suggestion: 'idle', revision: state.revision + 1, replyRun: run,
-    pendingReply: { run, scenario: state.scenario, recipient: state.recipient, name: trip[state.recipient], tripId: trip.id, text: response, ...(nextStage ? { expectedStage: state.lost.stage, nextStage } : {}), ...(nextPickupStage ? { expectedPickupStage: state.pickup.stage, nextPickupStage } : {}) },
-    messages: [...state.messages, { id: state.messages.length + 1, role: 'agent', recipient: state.recipient, text, attachments: state.attachments }] }
+    pendingReply: { run, scenario: state.scenario, recipient: state.recipient, name: trip[state.recipient], tripId: trip.id, text: response, ...(nextStage ? { expectedStage: state.lost.stage, nextStage } : {}), ...(nextPickupStage ? { expectedPickupStage: state.pickup.stage, nextPickupStage } : {}), ...(state.scenario === 'income' ? { incomeProgram: state.incomeProgram, expectedIncomeStage: state.income.stage } : {}) },
+    messages: [...state.messages, { id: state.messages.length + 1, ...messageEventTime(state, at), role: 'agent', recipient: state.recipient, text, attachments: state.attachments }] }
 }
 
 /** Independent of composer edits/focus; cleanup owns scenario reset and unmount. */

@@ -1,0 +1,37 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="file" filter="url(#filter0_dii_0_448)">
+<path d="M0 6C0 2.68629 2.68629 0 6 0H14C17.3137 0 20 2.68629 20 6V14C20 17.3137 17.3137 20 14 20H6C2.68629 20 0 17.3137 0 14V6Z" fill="#F24122" shape-rendering="crispEdges"/>
+<g id="Vector">
+<use xlink:href="#stroke0_0_448" fill="white"/>
+<use xlink:href="#stroke0_0_448" fill="url(#paint0_linear_0_448)" fill-opacity="0.2"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_dii_0_448" x="-1" y="-1" width="22" height="22" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_448"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_448" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="-1" dy="-1"/>
+<feGaussianBlur stdDeviation="0.5"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0"/>
+<feBlend mode="normal" in2="shape" result="effect2_innerShadow_0_448"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="1" dy="1"/>
+<feGaussianBlur stdDeviation="0.5"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.16 0"/>
+<feBlend mode="normal" in2="effect2_innerShadow_0_448" result="effect3_innerShadow_0_448"/>
+</filter>
+<linearGradient id="paint0_linear_0_448" x1="10" y1="6.23333" x2="10" y2="13.7667" gradientUnits="userSpaceOnUse">
+<stop stop-opacity="0"/>
+<stop offset="1" stop-opacity="0.4"/>
+</linearGradient>
+<path id="stroke0_0_448" d="M4.06667 13.7667C3.77778 13.7667 3.56667 13.6389 3.43333 13.3833C3.3 13.1278 3.32222 12.8833 3.5 12.65L6.1 9.18333C6.24444 8.99444 6.43333 8.9 6.66667 8.9C6.9 8.9 7.08889 8.99444 7.23333 9.18333L9.2 11.8C9.32222 11.9556 9.47778 12.05 9.66667 12.0833C9.85556 12.1167 10.0278 12.0722 10.1833 11.95C10.3389 11.8389 10.4306 11.6944 10.4583 11.5167C10.4861 11.3389 10.4556 11.1722 10.3667 11.0167L8.88333 9.05L10.7667 6.51667C10.9111 6.32778 11.1 6.23333 11.3333 6.23333C11.5667 6.23333 11.7556 6.32778 11.9 6.51667L16.5 12.65C16.6778 12.8833 16.7 13.1278 16.5667 13.3833C16.4333 13.6389 16.2222 13.7667 15.9333 13.7667H4.06667Z"/>
+</defs>
+</svg>
