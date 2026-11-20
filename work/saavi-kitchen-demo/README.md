@@ -1,5 +1,16 @@
 # Saavi Kitchen and Admin portfolio demos
 
+## Sidebar and account snapshot · 2026-11-20
+
+The static demo now references the reviewed PORT-84 bundle. It uses Saavi's
+native `AppShell` for a 320 ms sidebar resize with `ease-in-out`, including
+compact hover reveal, selection and focus states. The previous 200 ms bundle
+remains in `assets/` for open sessions and rollback. The exact bundle hashes,
+native source pins and rollback references are in
+`PORT-84-release-manifest.json`. The build was made from an isolated native
+checkout; do not rebuild it from the active sibling checkout without reviewing
+that source and replaying the sidebar checks.
+
 ## Published snapshot · 2026-11-13
 
 The case at `/projects/saavi` embeds a same-origin static Vite build from

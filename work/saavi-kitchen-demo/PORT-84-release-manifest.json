@@ -1,0 +1,14 @@
+{
+  "task": "PORT-84",
+  "scope": "Saavi Kitchen and Admin portfolio demo sidebar and account presentation",
+  "nativeApplicationBase": "748e6ed49e1c11dbceb5a8768243efaddf16c70e",
+  "acceptedSidebarSource": "e4e58cba167b21f4dceb109f6ada9dd5796025e1",
+  "tablePresentationPin": "036625303ebca51e03e73e1c67037330273d8ce8",
+  "files": {
+    "public/saavi-kitchen-demo/index.html": "df90fae00b07082f0ceb7b79dee2989168e2bb9cf5ffd3d442b41b0800c4029b",
+    "public/saavi-kitchen-demo/assets/index-vUsTDuDt.js": "8cdb2c31faf6345e50fec6346afab6b7da5e3593960a6ad462750494e7cc5a02",
+    "public/saavi-kitchen-demo/assets/index-CpJsLQxi.css": "dd80f819d6bc44c26ec4aa3e1b5b81fedb4877a0accc105c31625cb53a269322",
+    "public/images/saavi/demo/anna-ivanova.webp": "cfec2d3bb65fc89a89b55ef7cf4cfa2b5e45e96bafd6452bd20aa604fde66ff1"
+  },
+  "rollback": "Restore the previous index.html references to index-CVpGndHC.js and index-B5hyBXmU.css; retain both generations of hashed assets for open sessions."
+}
