@@ -1,0 +1,28 @@
+{
+  "task": "PORT-85",
+  "stage": "FRONTEND isolated local candidate; QA pending; no publication",
+  "scope": "Saavi demo upper sidebar hover edge and delayed service reveal only",
+  "liveBaseline": {
+    "portfolioCommit": "f2d212aceadc04219ce491048f1afdfd9b3c9114",
+    "deployment": "dpl_7XcWNVXviPnATxj5oUtMAbCr6agq",
+    "entryCss": "index-CpJsLQxi.css",
+    "entryJsSha256": "8cdb2c31faf6345e50fec6346afab6b7da5e3593960a6ad462750494e7cc5a02"
+  },
+  "acceptedNativeDelta": {
+    "productionCommit": "97dac89b6fd07007057749f4e35bda07e88d4b6b",
+    "patchSha256": "3f3edad75d59cf5c7f59f4f30c4b84aae38c77c9f92951953e7ed7a6f3f160b1",
+    "runtimeOwners": [
+      "packages/design-system/src/components/AppShell/AppShell.module.css",
+      "packages/design-system/src/components/ServiceSwitcher/ServiceSwitcher.module.css"
+    ]
+  },
+  "candidate": {
+    "entry": "public/saavi-kitchen-demo/index.html",
+    "entrySha256": "6c6f7ba1bcd6d9a0487152dfb4f44dffa61737bccf57ae86ca392b8602048d9f",
+    "css": "public/saavi-kitchen-demo/assets/index-savi519-ceb64c017bf9.css",
+    "cssSha256": "ceb64c017bf94acb206edc35ab87162c92bb8f4a850dcb618ae2cb3c7cd4eb2a",
+    "jsUnchanged": "public/saavi-kitchen-demo/assets/index-vUsTDuDt.js"
+  },
+  "rollback": "Restore the baseline index.html CSS reference to index-CpJsLQxi.css; keep both CSS assets for open sessions.",
+  "excluded": "PORT-85 Restaurants and Calendar packet, Calendar/Capacity notification, other projects and native Saavi writes"
+}
