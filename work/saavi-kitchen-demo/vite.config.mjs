@@ -40,7 +40,7 @@ export default {
     // Native focus still runs, but authored iframe navigation must not scroll its parent page.
     const focusOwners = ['/apps/web/src/components/kitchen/kitchen-overview.tsx', '/packages/design-system/src/components/Menu/Menu.tsx', '/packages/design-system/src/components/modal/focus-scope.ts'];
     if (!id.startsWith(saavi) || !focusOwners.some(owner => id.endsWith(owner))) return code;
-    return code.replace(/\.focus\(\)/g, ".focus({ preventScroll: new URLSearchParams(location.search).get('mode') === 'guided' })");
+    return code.replace(/\.focus\(\)/g, ".focus({ preventScroll: !!document.querySelector('.standalone[data-guided]') })");
   } }, { name: 'local-demo-media' , configureServer(server) { server.middlewares.use((req, res, next) => {
     const url = new URL(req.url, 'http://localhost');
     if (['/demo-role-kitchen.png','/demo-role-admin.png'].includes(url.pathname)) {

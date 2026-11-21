@@ -1,14 +1,12 @@
 'use client'
 
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode, type RefObject } from 'react'
 import { useCaseDemo } from './CaseDemoOverlay'
 import styles from '@/components/citymobil-case/case.module.css'
 
 import { caseDemoDesktopQuery } from './case-demo-viewport'
 
-export function GuidedPreview({ still, children, suspended = false }: { still: ReactNode; children: ReactNode; suspended?: boolean }) {
-  const { active } = useCaseDemo()
-  const frame = useRef<HTMLDivElement>(null)
+export function useGuidedPlayback(frame: RefObject<HTMLDivElement | null>) {
   const [playing, setPlaying] = useState(false)
 
   useEffect(() => {
@@ -35,7 +33,15 @@ export function GuidedPreview({ still, children, suspended = false }: { still: R
       desktop.removeEventListener('change', sync)
       document.removeEventListener('visibilitychange', sync)
     }
-  }, [])
+  }, [frame])
+
+  return playing
+}
+
+export function GuidedPreview({ still, children, suspended = false }: { still: ReactNode; children: ReactNode; suspended?: boolean }) {
+  const { active } = useCaseDemo()
+  const frame = useRef<HTMLDivElement>(null)
+  const playing = useGuidedPlayback(frame)
 
   return <div ref={frame} className={styles.guidedPreview} inert>
     {still}

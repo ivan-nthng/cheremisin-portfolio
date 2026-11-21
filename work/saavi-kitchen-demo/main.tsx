@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState, useSyncExternalStore} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore} from 'react';
 import {createRoot} from 'react-dom/client';
 import {KitchenOverview} from '@native/components/kitchen/kitchen-overview';
 import {KitchenMenu} from '@native/components/kitchen/kitchen-menu';
@@ -28,6 +28,7 @@ installLocalTransport({request:(url,init)=>url.pathname.startsWith('/api/admin/'
 const requestedOrigin = new URLSearchParams(location.search).get('portfolioOrigin');
 const portfolioOrigin = requestedOrigin && isKitchenCaseOrigin(requestedOrigin, location.origin) && window.parent !== window ? requestedOrigin : null;
 const mode = new URLSearchParams(location.search).get('mode');
+const hosted = mode === 'showcase' && portfolioOrigin === location.origin;
 const presentation = mode === 'guided' || mode === 'poster';
 const requestedRole=new URLSearchParams(location.search).get('role');
 const requestedClip = new URLSearchParams(location.search).get('clip');
@@ -38,26 +39,87 @@ function returnToCase() {
   else location.assign(location.origin + kitchenCasePath);
 }
 function Demo() {
-  useEffect(() => {
-    if (!portfolioOrigin || presentation) return;
-    window.parent.postMessage({type:kitchenBridge.ready}, portfolioOrigin);
-    // Native popovers/dialogs consume Escape first; only a bare Escape exits the demo.
-    const escape = (event:KeyboardEvent) => {
-      if (event.key !== 'Escape' || event.defaultPrevented) return;
-      const overlayOpen = [...document.querySelectorAll('dialog[open],[role="dialog"],[role="menu"],[role="listbox"]')].some(node => node.getClientRects().length > 0);
-      if (!overlayOpen) returnToCase();
-    };
-    window.addEventListener('keydown',escape);
-    return () => window.removeEventListener('keydown',escape);
-  }, []);
   useSyncExternalStore(store.subscribe, store.getRevision);
   const [restart, setRestart] = useState(0);
   const [role,setRole]=useState(initialRole);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [period, setPeriod] = useState<PeriodChoice>(() => defaultOverviewView(store.today));
   const reset = useCallback(() => { store.reset(); adminStore.reset(); setPeriod(defaultOverviewView(store.today)); setRestart(value=>value+1); }, []);
-  return <DemoRoleContext.Provider value={role}><div className="standalone" data-saavi-color-scheme={theme} data-presentation={presentation || undefined} data-guided={mode === 'guided' || undefined} style={{colorScheme:theme}}>
-    <DemoShell presentation={presentation} label="Saavi demo" theme={theme} onTheme={setTheme} onRestart={reset} onReturn={returnToCase}
+  const [hostMode, setHostMode] = useState<'waiting' | 'guided' | 'manual'>('waiting');
+  const [shareHref, setShareHref] = useState<string>();
+  const lastMode = useRef(hostMode);
+  const manual = hosted ? hostMode === 'manual' : !presentation;
+  const guided = hosted ? hostMode === 'guided' : mode === 'guided';
+
+  useLayoutEffect(() => {
+    if (!hosted || manual) return;
+    // Native focus calls run inside the iframe's own document. Modal dialogs
+    // escape inherited inertness, so mark each one before showModal focuses it.
+    const root = document.documentElement;
+    root.inert = true;
+    function keepDialogPassive(event: Event) {
+      const dialog = event.target;
+      if (!(dialog instanceof HTMLDialogElement) || dialog.open || dialog.inert) return;
+      dialog.inert = true;
+      dialog.dataset.showcasePassive = '';
+    }
+    document.addEventListener('beforetoggle', keepDialogPassive, true);
+    return () => {
+      document.removeEventListener('beforetoggle', keepDialogPassive, true);
+      root.inert = false;
+      for (const dialog of document.querySelectorAll<HTMLDialogElement>('dialog[data-showcase-passive]')) {
+        dialog.inert = false;
+        delete dialog.dataset.showcasePassive;
+      }
+    };
+  }, [manual]);
+
+  useEffect(() => {
+    if (!hosted || !portfolioOrigin) return;
+    function receive(event: MessageEvent) {
+      if (event.origin !== portfolioOrigin || event.source !== parent || event.data?.type !== kitchenBridge.mode) return;
+      const next = event.data.mode;
+      if (next !== 'guided' && next !== 'manual' || next === lastMode.current) return;
+      if (next === 'guided' && lastMode.current === 'manual') {
+        setRole('kitchen');
+        setTheme('light');
+        reset();
+      }
+      lastMode.current = next;
+      setShareHref(event.data.shareHref);
+      setHostMode(next);
+    }
+    window.addEventListener('message', receive);
+    parent.postMessage({type:kitchenBridge.connected}, portfolioOrigin);
+    return () => window.removeEventListener('message', receive);
+  }, [reset]);
+
+  // React has disposed the authored Stage and aborted its Act before this effect.
+  useEffect(() => {
+    if (!portfolioOrigin || !manual) return;
+    parent.postMessage({type:hosted ? kitchenBridge.manual : kitchenBridge.ready}, portfolioOrigin);
+    // A native dialog or menu may disappear while Escape bubbles. Remember who
+    // owned the event, then let the sidebar and other controls handle it first.
+    let nestedEscape: KeyboardEvent | undefined;
+    function rememberOverlay(event: KeyboardEvent) {
+      if (event.key !== 'Escape') return;
+      const overlays = document.querySelectorAll('dialog[open],[role="dialog"],[role="menu"],[role="listbox"]');
+      nestedEscape = Array.from(overlays).some(node => node.getClientRects().length) ? event : undefined;
+    }
+    function escape(event: KeyboardEvent) {
+      if (event.key !== 'Escape' || event.defaultPrevented || event === nestedEscape) return;
+      event.preventDefault();
+      returnToCase();
+    }
+    window.addEventListener('keydown', rememberOverlay, true);
+    window.addEventListener('keydown', escape);
+    return () => {
+      window.removeEventListener('keydown', rememberOverlay, true);
+      window.removeEventListener('keydown', escape);
+    };
+  }, [manual]);
+  return <DemoRoleContext.Provider value={role}><div className="standalone" data-saavi-color-scheme={theme} data-presentation={!manual || undefined} data-guided={guided || undefined} style={{colorScheme:theme}}>
+    <DemoShell presentation={!manual} shareHref={hosted && manual ? shareHref : undefined} label="Saavi demo" theme={theme} onTheme={setTheme} onRestart={reset} onReturn={returnToCase}
       scenarios={saaviDemoScenarios} scenario={role} onScenario={setRole}>
       {role==='admin'?<AdminOverview key={`admin-${restart}`} initialLocale="en" directory={store.directory} hubUrl={location.origin+'/'} todayDay={store.today} environment="local" expectedHubOrigin={null}/>:
       <KitchenOverview key={`kitchen-${restart}`} acceptedOverview initialLocale="en" directory={store.directory} hubUrl={location.origin + '/'}
@@ -65,7 +127,7 @@ function Demo() {
         overviewPeriod={{value:period, todayDay:store.today,pending:false,onChange:setPeriod}}
         onProfileConfirmed={store.refresh} onDishSaved={store.refresh} reminderScope="portfolio-local-demo"/>}
     </DemoShell>
-    {mode === 'guided' && <GuidedKitchen key={role} role={role} onReset={reset} portfolioOrigin={portfolioOrigin} />}
+    {guided && <GuidedKitchen key={role} role={role} onReset={reset} portfolioOrigin={portfolioOrigin} />}
   </div></DemoRoleContext.Provider>;
 }
 

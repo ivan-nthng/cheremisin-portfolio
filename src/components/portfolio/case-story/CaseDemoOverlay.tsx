@@ -148,7 +148,7 @@ export function CaseDemoOverlay({ entry, source, fallback, revealFallback = fals
   </dialog>, document.body)
 }
 
-function sourceTransform(bounds: DOMRect | undefined, surface: HTMLElement) {
+export function sourceTransform(bounds: DOMRect | undefined, surface: HTMLElement) {
   return bounds && bounds.width > 0 && bounds.height > 0
     ? `translate(${bounds.x}px,${bounds.y}px) scale(${bounds.width / surface.offsetWidth},${bounds.height / surface.offsetHeight})`
     : 'scale(.96)'

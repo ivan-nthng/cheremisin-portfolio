@@ -64,9 +64,8 @@ export default function ChoiceMenu<T extends string | number>({ label, trigger, 
       {options.map(option => <button type="button" role="menuitemradio" tabIndex={-1} aria-checked={option.value === value} key={option.value}
         data-target={preview && `${preview.target}-${option.value}`}
         onClick={() => { onChange(option.value); close() }}>
-        {preview && <span className={styles.menuCheck} aria-hidden="true" />}
         <span>{option.label}{option.detail && <small>{option.detail}</small>}</span>
-        {!preview && option.value === value && <span aria-hidden="true">{selectedMark}</span>}
+        {option.value === value && <span aria-hidden="true">{selectedMark}</span>}
       </button>)}
     </div>}
   </div>

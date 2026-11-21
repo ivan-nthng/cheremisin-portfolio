@@ -1,7 +1,7 @@
 /** The published Vite snapshot shares the portfolio origin with its parent frame. */
 export const kitchenDemoPath = '/saavi-kitchen-demo/index.html'
 export const kitchenCasePath = '/projects/saavi#kitchen'
-export const kitchenBridge = { ready: 'saavi-kitchen:ready', close: 'saavi-kitchen:close', unavailable: 'saavi-kitchen:unavailable' } as const
+export const kitchenBridge = { connected: 'saavi-kitchen:connected', mode: 'saavi-kitchen:mode', manual: 'saavi-kitchen:manual', ready: 'saavi-kitchen:ready', close: 'saavi-kitchen:close', unavailable: 'saavi-kitchen:unavailable' } as const
 export type SaaviDemoRole = 'kitchen' | 'admin'
 export const saaviDemoScenarios = [{ id: 'kitchen', label: 'Kitchen' }, { id: 'admin', label: 'Admin' }] as const
 export const isSaaviDemoRole = (value: unknown): value is SaaviDemoRole => value === 'kitchen' || value === 'admin'

@@ -31,13 +31,14 @@ type Props = {
   revealPin?: boolean
   wide?: boolean
   still: ReactNode
-  scene: ReactNode
+  desktopPreview?: ReactNode
+  scene?: ReactNode
   mobilePoster: CaseImage
   entry: ReactNode
 }
 
 export function CaseGuidedShowcase({
-  still, scene, mobilePoster, entry, hidden = false, suspended = false,
+  still, scene, desktopPreview, mobilePoster, entry, hidden = false, suspended = false,
   className = '', pinClassName = '', onBackdropRunning, sectionRef, frameRef,
   revealPin = false, wide = false, ...content
 }: Props) {
@@ -107,7 +108,7 @@ export function CaseGuidedShowcase({
     sectionRef={section} pinRef={pin} headingRef={heading} frameRef={frame} entryRef={invitation}
     className={`${styles.showcase} ${wide ? styles.wideShowcase : ''} ${className}`} pinClassName={`${styles.showcasePin} ${pinClassName}`} hidden={hidden}
     data-motion={animated} data-pose="hold"
-    preview={desktop ? <GuidedPreview still={still} suspended={paused}>{scene}</GuidedPreview> : still}
+    preview={desktop ? desktopPreview ?? <GuidedPreview still={still} suspended={paused}>{scene}</GuidedPreview> : still}
     mobile={<div className={chromeStyles.mobileShowcase}>
       <div className={chromeStyles.compactDemoFrame} data-case-mobile-preview>
         <div className={chromeStyles.chrome} aria-hidden="true">{content.chrome}</div>

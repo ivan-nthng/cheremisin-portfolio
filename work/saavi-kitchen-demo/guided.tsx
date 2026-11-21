@@ -33,6 +33,10 @@ export function GuidedKitchen({onReset, portfolioOrigin, role='kitchen', clip}: 
   }, []);
   useEffect(() => {promote();return () => overlay.current?.hidePopover();}, [promote]);
   const script=useCallback(async(a:SceneAct) => {
+    // Returning from fullscreen resizes the iframe. Read each run's geometry
+    // here so a later workspace render cannot restart an in-progress order.
+    const width = innerWidth, height = innerHeight;
+    const rest = { x: width - 50, y: height - 45 };
     const notify=(type:string) => { if(portfolioOrigin) parent.postMessage({type},portfolioOrigin); };
     async function waitForHostTarget(node:HTMLElement) {
       if (!portfolioOrigin || window.parent === window) return;
@@ -170,7 +174,7 @@ export function GuidedKitchen({onReset, portfolioOrigin, role='kitchen', clip}: 
       notify(kitchenBridge.unavailable);
       throw error;
     }
-  }, [clip,height,width,onReset,portfolioOrigin,promote,role,still]);
+  }, [clip,onReset,portfolioOrigin,promote,role,still]);
   return <div ref={overlay} popover="manual" className="kitchen-guided-overlay" data-guided-chart={chartClip || undefined} aria-hidden>
     <Stage width={width} height={height} initial={initial} script={script}
       // The hosted Overview iframe stays transparent until this script reports
