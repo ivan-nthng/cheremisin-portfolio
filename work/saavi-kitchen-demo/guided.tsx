@@ -34,6 +34,28 @@ export function GuidedKitchen({onReset, portfolioOrigin, role='kitchen', clip}: 
   useEffect(() => {promote();return () => overlay.current?.hidePopover();}, [promote]);
   const script=useCallback(async(a:SceneAct) => {
     const notify=(type:string) => { if(portfolioOrigin) parent.postMessage({type},portfolioOrigin); };
+    async function waitForHostTarget(node:HTMLElement) {
+      if (!portfolioOrigin || window.parent === window) return;
+      // The case may retain a partly visible iframe while its upper controls
+      // have left the page viewport. Native anchored menus dismiss their
+      // trigger then, so authored input waits until the control is on screen.
+      for (;;) {
+        let inView = true;
+        try {
+          const hostFrame = window.frameElement;
+          if (hostFrame) {
+            const frame = hostFrame.getBoundingClientRect();
+            const target = node.getBoundingClientRect();
+            const x = frame.width / window.innerWidth, y = frame.height / window.innerHeight;
+            const left = frame.left + target.left * x, right = frame.left + target.right * x;
+            const top = frame.top + target.top * y, bottom = frame.top + target.bottom * y;
+            inView = left >= 8 && right <= window.parent.innerWidth - 8 && top >= 8 && bottom <= window.parent.innerHeight - 8;
+          }
+        } catch { /* A cross-origin host cannot expose its viewport. */ }
+        if (inView) return;
+        await a.wait(100);
+      }
+    }
     async function press(node:HTMLElement, enter=false) {
       // Scroll the native panel, never the surrounding portfolio document.
       for(let panel=node.parentElement;panel;panel=panel.parentElement) {
@@ -43,11 +65,14 @@ export function GuidedKitchen({onReset, portfolioOrigin, role='kitchen', clip}: 
         break;
       }
       await a.wait(650);
+      await waitForHostTarget(node);
       promote();
       const r=node.getBoundingClientRect();
       const point={x:r.left+r.width*.65,y:r.top+r.height*.55};
       if(enter) await a.enter(point,{duration:700}); else await a.move(point,{duration:650});
-      await a.wait(160); await a.click();
+      await a.wait(160);
+      await waitForHostTarget(node);
+      await a.click();
       // Match pointer activation's focus before opening native dialogs.
       if (clip === 'order-detail' && node.matches('[data-order-opener]')) node.focus({preventScroll:true});
       node.click();
@@ -118,7 +143,7 @@ export function GuidedKitchen({onReset, portfolioOrigin, role='kitchen', clip}: 
         onReset();await a.wait(600);promote();a.place({x:width-50,y:height-45});a.mark('reset-ready');
         return;
       }
-      const open=await find(a,'button','Open production');
+      const open=await find(a,'button[aria-label="Open production"]');
       await a.wait(350);
       await a.set({covered:false}); await a.wait(350);
       notify(kitchenBridge.ready);
@@ -148,7 +173,10 @@ export function GuidedKitchen({onReset, portfolioOrigin, role='kitchen', clip}: 
   }, [clip,height,width,onReset,portfolioOrigin,promote,role,still]);
   return <div ref={overlay} popover="manual" className="kitchen-guided-overlay" data-guided-chart={chartClip || undefined} aria-hidden>
     <Stage width={width} height={height} initial={initial} script={script}
-      prepareOffscreen={!!portfolioOrigin && (clip === 'dish' || chartClip)}
+      // The hosted Overview iframe stays transparent until this script reports
+      // ready. Its Stage can therefore be classified offscreen after a resize;
+      // allow preparation while the visible showcase owns the iframe.
+      prepareOffscreen={!!portfolioOrigin && (!clip || clip === 'dish' || chartClip)}
       play={still ? 'once' : 'loop'} cursor={{at:rest,style:'real'}} fidelity="realistic">
       {state=><div className="kitchen-guided-mask" data-covered={state.covered} />}
     </Stage>

@@ -12,6 +12,7 @@ html,body,#root{margin:0;min-height:100%;font-family:var(--type-font-family)}
 .demo-workspace-identity{display:flex;align-items:center;gap:8px;min-height:36px;padding-inline:8px}
 /* Keep the actual AppShell geometry; only subtract the shared demo toolbar. */
 .standalone [data-app-shell]{height:calc(100dvh - var(--demo-toolbar-height,32px));min-height:0}
+.standalone[data-presentation] [data-app-shell]{height:100dvh}
 /* Authored mouse playback is inert; native keyboard focus stays intact in manual mode. */
 .standalone[data-guided] :focus-visible{outline:none}
 .kitchen-guided-overlay{position:fixed;inset:0;width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;overflow:hidden;background:transparent;pointer-events:none}

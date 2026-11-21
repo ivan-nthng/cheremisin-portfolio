@@ -70,13 +70,14 @@ export default function KitchenDemoEntry({ backdrop }: { backdrop: ReactNode }) 
   }, [])
   useSharedDemoEntry(desktop && Boolean(origin), openDemo)
   const trigger = origin && <button type="button" className="editorial-link" aria-haspopup="dialog" data-shared-demo-entry onClick={event => openDemo('saavi', event.currentTarget)}>Try Live Demo<CaseDemoArrow /></button>
-  const poster = <img className={layout.poster} src="/images/saavi/case/kitchen-overview-desktop-babc384fd20b.jpg" width={1280} height={720}
-    alt="Kitchen overview with the production queue, active orders and sales." loading="lazy" draggable={false} />
+  const poster = <picture><source media="(min-width: 1360px)" srcSet="/images/saavi/case/kitchen-overview-wide-f60e418c078c.webp" />
+    <img className={layout.poster} src="/images/saavi/case/kitchen-overview-desktop-1be0489481bc.webp" width={1280} height={688}
+      alt="Kitchen overview with the production queue, active orders and sales." loading="lazy" draggable={false} /></picture>
   return <>
     <CaseGuidedShowcase id={demoLinks.saavi.anchor} headingId="saavi-kitchen-title" kicker="Saavi / Kitchen"
       lines={['An order arrives.', 'The kitchen gets to work.']} chrome="Saavi — Kitchen" wide className={layout.photographicShowcase}
       backdrop={backdrop} suspended={active} still={poster} scene={origin ? <KitchenGuidedFrame origin={origin} /> : poster} entry={trigger}
-      mobilePoster={{ src: '/images/saavi/case/kitchen-overview-mobile-88c1ff5ac900.jpg', alt: 'Kitchen on a mobile screen.', width: 390, height: 844 }} />
+      mobilePoster={{ src: '/images/saavi/case/kitchen-overview-mobile-1e814f6ceed1.webp', alt: 'Kitchen on a mobile screen.', width: 390, height: 812 }} />
     {active && origin && <CaseDemoOverlay entry={entry} source={source} label="Saavi demo" onClose={() => setOpen(false)}>
       {close => <KitchenFrame close={close} origin={origin} />}
     </CaseDemoOverlay>}

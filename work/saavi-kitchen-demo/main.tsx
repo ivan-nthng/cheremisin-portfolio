@@ -8,6 +8,7 @@ import {AdminOrderDialog} from '@native/components/admin/admin-order-dialog';
 import {AdminSalesDemo} from '@native/components/admin/admin-sales-demo';
 import {RestaurantDeliverySettings} from '@native/components/workspace/restaurant-delivery-settings';
 import {presetRange, type PeriodChoice} from '@native/components/kitchen/overview-model';
+import {defaultOverviewView} from '@native/components/kitchen/overview-view-preference';
 import {Button} from '@saavi/design-system/components';
 import DemoShell from '@portfolio/components/portfolio/demo/DemoShell';
 import '@saavi/design-system/tokens.css';
@@ -53,14 +54,14 @@ function Demo() {
   const [restart, setRestart] = useState(0);
   const [role,setRole]=useState(initialRole);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  const [period, setPeriod] = useState<PeriodChoice>({preset:'current-week', range:presetRange('current-week', store.today)});
-  const reset = useCallback(() => { store.reset(); adminStore.reset(); setPeriod({preset:'current-week', range:presetRange('current-week', store.today)}); setRestart(value=>value+1); }, []);
+  const [period, setPeriod] = useState<PeriodChoice>(() => defaultOverviewView(store.today));
+  const reset = useCallback(() => { store.reset(); adminStore.reset(); setPeriod(defaultOverviewView(store.today)); setRestart(value=>value+1); }, []);
   return <DemoRoleContext.Provider value={role}><div className="standalone" data-saavi-color-scheme={theme} data-presentation={presentation || undefined} data-guided={mode === 'guided' || undefined} style={{colorScheme:theme}}>
     <DemoShell presentation={presentation} label="Saavi demo" theme={theme} onTheme={setTheme} onRestart={reset} onReturn={returnToCase}
       scenarios={saaviDemoScenarios} scenario={role} onScenario={setRole}>
       {role==='admin'?<AdminOverview key={`admin-${restart}`} initialLocale="en" directory={store.directory} hubUrl={location.origin+'/'} todayDay={store.today} environment="local" expectedHubOrigin={null}/>:
-      <KitchenOverview key={`kitchen-${restart}`} initialLocale="en" directory={store.directory} hubUrl={location.origin + '/'}
-        model={store.overview(period.range)} productionReady salesReady salesDailyReady ordersReadVersion="2"
+      <KitchenOverview key={`kitchen-${restart}`} acceptedOverview initialLocale="en" directory={store.directory} hubUrl={location.origin + '/'}
+        model={store.overview(period.range)} salesChart={store.chart(period.range)} productionReady salesReady salesDailyReady ordersReadVersion="2"
         overviewPeriod={{value:period, todayDay:store.today,pending:false,onChange:setPeriod}}
         onProfileConfirmed={store.refresh} onDishSaved={store.refresh} reminderScope="portfolio-local-demo"/>}
     </DemoShell>

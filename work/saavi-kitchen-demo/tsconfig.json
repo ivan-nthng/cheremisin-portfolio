@@ -19,31 +19,31 @@
     ],
     "paths": {
       "@native/*": [
-        "../../../saavi/apps/web/src/*"
+        "../../../native/apps/web/src/*"
       ],
       "@portfolio/*": [
         "../../src/*"
       ],
       "@saavi/design-system/components": [
-        "../../../saavi/packages/design-system/src/components/index.ts"
+        "../../../native/packages/design-system/src/components/index.ts"
       ],
       "@saavi/design-system/patterns": [
-        "../../../saavi/packages/design-system/src/patterns/index.ts"
+        "../../../native/packages/design-system/src/patterns/index.ts"
       ],
       "@saavi/i18n": [
-        "../../../saavi/packages/i18n/src/index.ts"
+        "../../../native/packages/i18n/src/index.ts"
       ],
       "@saavi/i18n/hub": [
-        "../../../saavi/packages/i18n/src/hub.ts"
+        "../../../native/packages/i18n/src/hub.ts"
       ],
       "@saavi/contracts": [
-        "../../../saavi/packages/contracts/src/index.ts"
+        "../../../native/packages/contracts/src/index.ts"
       ],
       "react": [
-        "../../../saavi/node_modules/@types/react"
+        "../../../native/node_modules/@types/react"
       ],
       "react/*": [
-        "../../../saavi/node_modules/@types/react/*"
+        "../../../native/node_modules/@types/react/*"
       ]
     }
   },

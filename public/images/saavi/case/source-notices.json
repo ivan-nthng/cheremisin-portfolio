@@ -186,5 +186,77 @@
     ],
     "sha256": "88c1ff5ac900dfa56fb1504f397296d7ea2d9ad482de662cc65915ba60062265",
     "bytes": 34914
+  },
+  "kitchen-overview-desktop-1be0489481bc.webp": {
+    "source": "http://127.0.0.1:3296/saavi-kitchen-demo/index.html?mode=poster",
+    "kind": "Toolbar-free native Kitchen Overview capture from isolated PORT-85 fictional local candidate; not a production capture",
+    "viewport": "1280 × 688",
+    "captured": "2026-11-21",
+    "capturedAt": "2026-11-21T04:42:00.055Z",
+    "timezone": "America/Sao_Paulo",
+    "state": "Kitchen / Overview / current week / current-day fictional fixture / accepted Anna photo",
+    "sourceClosure": "/tmp/port85-overview-candidate/source-closure.json",
+    "sourceCapture": "/tmp/port85-overview-candidate/poster-1280x688.png",
+    "sourceCaptureSha256": "d2694f15a5be76f0502558faa474418b2adee2886998f25e563c88a7190c8a64",
+    "sourceBundle": {
+      "js": "index-Bezd-5Jv.js",
+      "jsSha256": "037ad4ff4e6766840908a193342fbbb7e8d650d13801aa73c9d8acee0bbdeb28",
+      "css": "index-DgLRy0xq.css",
+      "cssSha256": "9d6f253095a1ef891a648cfcf5fd52264eac9497e57cb35e2c21429234392821"
+    },
+    "avatar": {
+      "path": "public/images/saavi/demo/anna-ivanova.webp",
+      "sha256": "cfec2d3bb65fc89a89b55ef7cf4cfa2b5e45e96bafd6452bd20aa604fde66ff1"
+    },
+    "sha256": "1be0489481bc5c68518897f6f7f563d302ad7050cc7451d51374da5110f94a49",
+    "bytes": 45186
+  },
+  "kitchen-overview-wide-f60e418c078c.webp": {
+    "source": "http://127.0.0.1:3296/saavi-kitchen-demo/index.html?mode=poster",
+    "kind": "Toolbar-free native Kitchen Overview capture from isolated PORT-85 fictional local candidate; not a production capture",
+    "viewport": "1440 × 868",
+    "captured": "2026-11-21",
+    "capturedAt": "2026-11-21T04:42:00.058Z",
+    "timezone": "America/Sao_Paulo",
+    "state": "Kitchen / Overview / current week / current-day fictional fixture / accepted Anna photo",
+    "sourceClosure": "/tmp/port85-overview-candidate/source-closure.json",
+    "sourceCapture": "/tmp/port85-overview-candidate/poster-1440x868.png",
+    "sourceCaptureSha256": "8932e795514770c3ccc583d7354b371d29f2ac5d9fb5e1a1c6c38a62bbe879ce",
+    "sourceBundle": {
+      "js": "index-Bezd-5Jv.js",
+      "jsSha256": "037ad4ff4e6766840908a193342fbbb7e8d650d13801aa73c9d8acee0bbdeb28",
+      "css": "index-DgLRy0xq.css",
+      "cssSha256": "9d6f253095a1ef891a648cfcf5fd52264eac9497e57cb35e2c21429234392821"
+    },
+    "avatar": {
+      "path": "public/images/saavi/demo/anna-ivanova.webp",
+      "sha256": "cfec2d3bb65fc89a89b55ef7cf4cfa2b5e45e96bafd6452bd20aa604fde66ff1"
+    },
+    "sha256": "f60e418c078c8aa99c6c5804b8970e595433120b238a9f38179bf80e6365f7c4",
+    "bytes": 51852
+  },
+  "kitchen-overview-mobile-1e814f6ceed1.webp": {
+    "source": "http://127.0.0.1:3296/saavi-kitchen-demo/index.html?mode=poster",
+    "kind": "Toolbar-free native Kitchen Overview capture from isolated PORT-85 fictional local candidate; not a production capture",
+    "viewport": "390 × 812",
+    "captured": "2026-11-21",
+    "capturedAt": "2026-11-21T04:42:00.060Z",
+    "timezone": "America/Sao_Paulo",
+    "state": "Kitchen / Overview / current week / current-day fictional fixture / accepted Anna photo",
+    "sourceClosure": "/tmp/port85-overview-candidate/source-closure.json",
+    "sourceCapture": "/tmp/port85-overview-candidate/poster-390x812.png",
+    "sourceCaptureSha256": "5478cab2e3fa93748fc85e75f4915447ca7333d2a0c635d7c9a2b1882a98f363",
+    "sourceBundle": {
+      "js": "index-Bezd-5Jv.js",
+      "jsSha256": "037ad4ff4e6766840908a193342fbbb7e8d650d13801aa73c9d8acee0bbdeb28",
+      "css": "index-DgLRy0xq.css",
+      "cssSha256": "9d6f253095a1ef891a648cfcf5fd52264eac9497e57cb35e2c21429234392821"
+    },
+    "avatar": {
+      "path": "public/images/saavi/demo/anna-ivanova.webp",
+      "sha256": "cfec2d3bb65fc89a89b55ef7cf4cfa2b5e45e96bafd6452bd20aa604fde66ff1"
+    },
+    "sha256": "1e814f6ceed15c1984e626e5b39361eff9a3c8d8b7335e2e1f169ef7c1fae8f3",
+    "bytes": 22100
   }
 }

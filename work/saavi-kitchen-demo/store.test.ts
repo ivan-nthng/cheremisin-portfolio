@@ -5,11 +5,27 @@ import {parseKitchenSalesDetail} from '@native/lib/kitchen/overview-sales-contra
 import {isRestaurantProfile} from '@native/components/kitchen/restaurant-profile-client';
 import {isSourceDish} from '@native/components/kitchen/source-dish-client';
 import {presetRange} from '@native/components/kitchen/overview-model';
+import {parseKitchenOverviewSummary} from '@native/lib/kitchen/overview-summary-contract';
+import {parseKitchenOverviewWorkResponse} from '@native/lib/kitchen/overview-work-contract';
 const restaurantId='41500000-0000-4000-8000-000000000040';
 const store=()=>createKitchenStore(new Date('2026-11-12T15:00:00Z'));
 const post=(s:ReturnType<typeof store>,path:string,body:unknown)=>s.request(new URL(path,'http://localhost'),{method:'POST',body:JSON.stringify(body)}) as Promise<any>;
 const get=(s:ReturnType<typeof store>,path:string)=>s.request(new URL(path,'http://localhost')) as Promise<any>;
 describe('native Kitchen contract integration',()=>{
+ it('projects the accepted Overview from the same completed orders and current work',async()=>{
+   const s=store(),range=presetRange('current-week',s.today),model=s.overview(range),summary=model.workSummary!;
+   expect(s.directory.profile?.avatarUrl).toBe('/images/saavi/demo/anna-ivanova.webp');
+   expect(parseKitchenOverviewSummary({result:'Found',summary},{operation:'overview',restaurantId,...range,projection:'operations-with-demand'}).result).toBe('Found');
+   const sales=await get(s,'/api/kitchen/sales?'+new URLSearchParams({restaurantId,...range}));
+   expect(model.salesSummary).toMatchObject(sales.salesSummary);
+   expect(model.salesSummary!.estimates!.estimatedFoodProfitMinor).toBe(model.salesSummary!.deliveredFoodValue!.amountMinor-model.salesSummary!.estimates!.estimatedFoodCostMinor);
+   const chart=s.chart(range);
+   expect(chart.days!.reduce((total,point)=>total+(point.salesMinor??0),0)).toBe(model.salesSummary!.deliveredFoodValue!.amountMinor);
+   expect(chart.days!.reduce((total,point)=>total+(point.estimatedFoodCostMinor??0),0)).toBe(model.salesSummary!.estimates!.estimatedFoodCostMinor);
+   const work=await get(s,'/api/kitchen/overview/work?'+new URLSearchParams({restaurantId,kind:'not-started',observation:summary.workObservation!}));
+   expect(parseKitchenOverviewWorkResponse(work,{restaurantId,kind:'not-started'}).result).toBe('Found');
+   expect(work.work.reduce((total:number,row:any)=>total+row.work.assignedQuantity,0)).toBe(summary.operations!.today.notStartedPortions);
+ });
  it('serves the native queue and changes only the selected work through start and ready, with replay',async()=>{
    const s=store();const queue=await post(s,'/api/kitchen/production',{operation:'list',restaurantId,view:{}});
    expect(parseOperationalResponse(queue,true).result).toBe('Found');

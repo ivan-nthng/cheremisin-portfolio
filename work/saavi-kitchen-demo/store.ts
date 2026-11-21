@@ -9,6 +9,8 @@ import {parseKitchenProductionCommandRequest, kitchenProductionCardKey} from '@n
 import {emptyDishDetails} from '@native/components/kitchen/dish-details';
 import type {KitchenOrder} from '@native/lib/kitchen/orders-contract';
 import {presetRange} from '@native/components/kitchen/overview-model';
+import type {OverviewSalesChart} from '@native/components/kitchen/overview-sales-chart';
+import {parseKitchenOverviewWorkRequest} from '@native/lib/kitchen/overview-work-contract';
 import type {DirectoryResponse} from '@native/lib/auth/contracts';
 import type {SourceDish, RestaurantProfile} from '@native/lib/kitchen/contracts';
 import type {KitchenProductionWork} from '@native/lib/operations/contracts';
@@ -29,6 +31,7 @@ const descriptions = [
   'Creamy rice with roasted mushrooms, parmesan and fresh herbs.',
   'Pasta tossed in slow-cooked tomato sauce with fresh basil and parmesan.'
 ];
+const demoAvatar='/images/saavi/demo/anna-ivanova.webp';
 // Apply the native entry-patch wire format to this disposable in-memory copy.
 export const demoPaymentMethod=(orderId:string)=>(['Visa','Mastercard','Apple Pay','Cash'] as const)[parseInt(orderId.slice(0,8),16)%4];
 function mergeDetails(before:any, patch:any):any {
@@ -56,7 +59,7 @@ export function createKitchenStore(clock = new Date()) {
   let accepting = true;
   let tags:Array<{tagId:string;label:string}> = [];
   let personal = {subjectRef:'a'.repeat(64),version:1,givenName:'Anna',familyName:'Ivanova',personalPhone:'+5548999991234',displayName:'Anna Ivanova',savedLocale:'en',email:'anna@casaverde.example',avatar:null};
-  let directory:DirectoryResponse = {...structuredClone(fixtureDirectory),profile:{displayName:personal.displayName,savedLocale:'en',avatarUrl:null},destinations: [{serviceId:'kitchen',entry:'open',publicPath:'/'}, {serviceId:'admin',entry:'in-development',publicPath:null},{serviceId:'client',entry:'in-development',publicPath:null}]};
+  let directory:DirectoryResponse = {...structuredClone(fixtureDirectory),profile:{displayName:personal.displayName,savedLocale:'en',avatarUrl:demoAvatar},destinations: [{serviceId:'kitchen',entry:'open',publicPath:'/'}, {serviceId:'admin',entry:'in-development',publicPath:null},{serviceId:'client',entry:'in-development',publicPath:null}]};
   function updateCompletion() {
     const paths={phone:['phone'],address:['address.street','address.city','address.uf','address.number','pickupInstructions'],operatingDays:['operatingDays']};
     const present={phone:!!profile.phone,address:!!(profile.address.street&&profile.address.city&&profile.address.uf&&profile.address.number&&profile.pickupInstructions),operatingDays:!!profile.operatingDays?.length};
@@ -80,7 +83,7 @@ export function createKitchenStore(clock = new Date()) {
   function reset() {
     outcomes.clear(); accepting=true; tags=[];
     personal={subjectRef:'a'.repeat(64),version:1,givenName:'Anna',familyName:'Ivanova',personalPhone:'+5548999991234',displayName:'Anna Ivanova',savedLocale:'en',email:'anna@casaverde.example',avatar:null};
-    directory={...directory,profile:{displayName:personal.displayName,savedLocale:'en',avatarUrl:null}};
+    directory={...directory,profile:{displayName:personal.displayName,savedLocale:'en',avatarUrl:demoAvatar}};
     profile = {...deliveryProfileFixture('saavi'),dailyPortionLimit:120,restaurantId,displayName:'Casa Verde',phone:'+5548999991234',email:'kitchen@casaverde.example',
       address:{cep:'88048403',street:'Rua das Flores',number:'120',complement:'Kitchen entrance',neighbourhood:'Rio Tavares',city:'Florianópolis',uf:'SC'},pickupInstructions:'Use the side entrance. Please ask for Anna at the kitchen counter.'};
     updateCompletion();
@@ -131,8 +134,13 @@ export function createKitchenStore(clock = new Date()) {
     refresh();
   }
   reset();
+  const estimatedCost=(values:KitchenOrder[])=>values.reduce((total,order)=>total+order.ownWork.reduce((workTotal,work)=>workTotal+work.items.reduce((itemTotal,item)=>{
+    const dishIndex=Number(item.offerId.slice(-12))-700;
+    return itemTotal+item.quantity*(1400+dishIndex*100);
+  },0),0),0);
+  const completedIn=(range:{startDay:string;endDay:string})=>history.filter(order=>order.completedAt!.slice(0,10)>=range.startDay&&order.completedAt!.slice(0,10)<=range.endDay);
   function sales(range:{startDay:string;endDay:string;grain?:'day'}):Extract<import('@native/lib/kitchen/overview-sales-contract').KitchenSalesDetailResponse,{result:'Found'}> {
-    const orders=history.filter(order=>order.completedAt!.slice(0,10)>=range.startDay&&order.completedAt!.slice(0,10)<=range.endDay);
+    const orders=completedIn(range);
     const figures=(values:KitchenOrder[])=>({deliveredPortions:values.reduce((sum,o)=>sum+o.ownWork.reduce((subtotal,w)=>subtotal+w.items.reduce((n,item)=>n+item.quantity,0),0),0),deliveredFoodValue:money(values.reduce((sum,o)=>sum+o.amount!.amountMinor,0)),coverage});
     const total=figures(orders), weeks=[];
     for(let start=range.startDay;start<=range.endDay;) {
@@ -147,7 +155,28 @@ export function createKitchenStore(clock = new Date()) {
     const days=[];
     const lastObservedDay=new Intl.DateTimeFormat('en-CA',{timeZone,year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(clock.getTime()-1));
     if(range.grain==='day')for(let day=range.startDay;day<=range.endDay;day=dayPlus(day,1))days.push({day,...(day<=lastObservedDay?figures(orders.filter(o=>o.completedAt!.slice(0,10)===day)):{deliveredPortions:null,deliveredFoodValue:null,coverage:{attribution:false,quantity:false,price:false,dishIdentity:false}})});
-    return {result:'Found',coverage,salesSummary:{restaurantId,startDay:range.startDay,endDay:range.endDay,timeZone,asOf:now,deliveredPortions:total.deliveredPortions,deliveredFoodValue:total.deliveredFoodValue},weeks,dishes:breakdown.sort((a,b)=>a.dishId.localeCompare(b.dishId)),...(range.grain==='day'?{days}:{})};
+    return {result:'Found',coverage,salesSummary:{restaurantId,startDay:range.startDay,endDay:range.endDay,timeZone,asOf:now,deliveredPortions:total.deliveredPortions,deliveredFoodValue:total.deliveredFoodValue},
+      weeks,dishes:breakdown.sort((a,b)=>a.dishId.localeCompare(b.dishId)),...(range.grain==='day'?{days}:{})};
+  }
+
+  function overviewSales(range:{startDay:string;endDay:string}) {
+    const summary=sales(range).salesSummary, cost=estimatedCost(completedIn(range)), revenue=summary.deliveredFoodValue!.amountMinor;
+    return {...summary,estimates:{coverage:'complete' as const,matchedSalesMinor:revenue,estimatedFoodCostMinor:cost,estimatedFoodProfitMinor:revenue-cost}};
+  }
+
+  function chart(range:{startDay:string;endDay:string}):OverviewSalesChart {
+    const values=(startDay:string,endDay:string)=>{
+      const result=overviewSales({startDay,endDay});
+      return {salesMinor:result.deliveredFoodValue!.amountMinor,
+        estimatedFoodCostMinor:result.estimates.estimatedFoodCostMinor,
+        estimatedFoodProfitMinor:result.estimates.estimatedFoodProfitMinor};
+    };
+    const weekRows=sales(range).weeks.map(week=>({startDay:week.startDay,endDay:week.endDay,...values(week.startDay,week.endDay)}));
+    if((Date.parse(range.endDay)-Date.parse(range.startDay))/86400000>=31)return {weeks:weekRows};
+    const days=[];
+    for(let day=range.startDay;day<=range.endDay;day=dayPlus(day,1))
+      days.push({day,...(day<=today?values(day,day):{salesMinor:null,estimatedFoodCostMinor:null,estimatedFoodProfitMinor:null})});
+    return {weeks:weekRows,days};
   }
 
   function overview(range:{startDay:string;endDay:string}):Extract<import('@native/lib/kitchen/contracts').KitchenOverviewResponse,{state:'overview'}> {
@@ -155,11 +184,27 @@ export function createKitchenStore(clock = new Date()) {
     const selected = rows.filter(r=>r.plannedDate>=range.startDay&&r.plannedDate<=range.endDay);
     const quantity = (state:string) => selected.filter(r=>r.work.productionState===state).reduce((sum,r)=>sum+r.work.assignedQuantity!,0);
     const next=selected.find(r=>r.work.productionState==='new');
+    const todayRows=rows.filter(row=>row.plannedDate===today);
+    const todayQuantity=(state:string)=>todayRows.filter(row=>row.work.productionState===state).reduce((sum,row)=>sum+row.work.assignedQuantity!,0);
+    const confirmed=[...history,...rows.map(row=>({orderId:row.orderId,confirmedAt:row.orderConfirmedAt!}))]
+      .filter(order=>order.confirmedAt<=now).sort((a,b)=>a.confirmedAt.localeCompare(b.confirmedAt));
+    const periodOrders=confirmed.filter(order=>order.confirmedAt.slice(0,10)>=range.startDay&&order.confirmedAt.slice(0,10)<=range.endDay);
+    const firstByBuyer=new Map<number,string>();
+    for(const order of confirmed){const buyer=parseInt(order.orderId.slice(0,8),16)%4000;if(!firstByBuyer.has(buyer))firstByBuyer.set(buyer,order.confirmedAt.slice(0,10));}
+    const firstDays=[...firstByBuyer.values()].filter(day=>day>=range.startDay&&day<=range.endDay);
+    const dailyFirstConfirmations=[...new Set(firstDays)].sort().map(day=>({day,count:firstDays.filter(value=>value===day).length}));
+    const additions=firstDays.length;
+    const todayTotal=todayRows.reduce((sum,row)=>sum+row.work.assignedQuantity!,0);
     return {...model,restaurant:{id:restaurantId,displayName:profile.displayName,sourceVersionId:profile.sourceVersionId,sourceVersion:profile.sourceVersion},observedAt:now,
       deliveryReadiness:profile.deliveryReadiness,completion:{profile:profile.completion!,dish:dishes[0].completion!},
       assignedWork:{items:rows,nextCursor:null},activeOrders:{restaurantId,count:new Set(selected.map(r=>r.orderId)).size,asOf:now},
       workSummary:{restaurantId,...range,timeZone,asOf:now,production:{new:quantity('new'),inProduction:quantity('in-production'),readyForPickup:quantity('ready-for-pickup')},outForDelivery:0,
-        nextDelivery:next?{plannedDate:next.plannedDate,startsAt:next.startsAt,endsAt:next.endsAt,timeZone,assignedQuantity:next.work.assignedQuantity!}:null},salesSummary:sales(range).salesSummary};
+        nextDelivery:next?{plannedDate:next.plannedDate,startsAt:next.startsAt,endsAt:next.endsAt,timeZone,assignedQuantity:next.work.assignedQuantity!,readyQuantity:next.work.productionState==='ready-for-pickup'?next.work.assignedQuantity!:0}:null,
+        operations:{today:{day:today,totalPortions:todayTotal,notStartedPortions:todayQuantity('new'),inProductionPortions:todayQuantity('in-production'),readyForPickupPortions:todayQuantity('ready-for-pickup')},
+          overduePortions:rows.filter(row=>row.plannedDate<today).reduce((sum,row)=>sum+row.work.assignedQuantity!,0)},
+        workObservation:'b3ZlcnZpZXc=',demand:{newOrders:periodOrders.length,observedNewOrders:periodOrders.length,
+          buyers:{total:firstByBuyer.size,additions,dailyFirstConfirmations,observedRetained:firstByBuyer.size-additions}}},
+      salesSummary:overviewSales(range)};
   }
   function production(input:any) {
     if(input.operation==='list') {
@@ -197,6 +242,15 @@ export function createKitchenStore(clock = new Date()) {
     const input=init?.method==='POST'?body:query;
     if((query.restaurantId&&query.restaurantId!==restaurantId)||(body.restaurantId&&body.restaurantId!==restaurantId))return{result:'NotAllowed'};
     if(path==='/api/kitchen/production')return production(input);
+    if(path==='/api/kitchen/overview/work'){
+      const read=parseKitchenOverviewWorkRequest(url.searchParams);
+      if(!read)return{result:'ValidationFailed',field:'request',code:'invalid'};
+      if(read.observation!=='b3ZlcnZpZXc=')return{result:'Stale'};
+      const work=rows.filter(row=>read.kind==='overdue'?row.plannedDate<today:
+        read.kind==='next-handoff'?row.plannedDate>=today:
+        row.plannedDate===today&&row.work.productionState===({'not-started':'new','in-production':'in-production','ready-for-pickup':'ready-for-pickup'} as const)[read.kind]);
+      return{result:'Found',restaurantId,kind:read.kind,asOf:now,work:work.slice(0,20),nextCursor:null};
+    }
     if(path==='/api/kitchen/profile'){
       if(init?.method!=='POST')return{result:'Found',profile,capabilities:{saveDraft:true,cepLookup:true,logoUpload:false}};
       if(outcomes.has(input.intentId))return outcomes.get(input.intentId);
@@ -293,7 +347,7 @@ export function createKitchenStore(clock = new Date()) {
     if(path==='/auth/signout')return{redirectTo:url.origin+'/'};
     throw new Error(`Unimplemented local demo request: ${init?.method??'GET'} ${path}`);
   }
-  return {today,get directory(){return directory;},overview,request,reset,refresh,subscribe:(fn:()=>void)=>{listeners.add(fn);return()=>{listeners.delete(fn);};},getRevision:()=>revision};
+  return {today,get directory(){return directory;},overview,chart,request,reset,refresh,subscribe:(fn:()=>void)=>{listeners.add(fn);return()=>{listeners.delete(fn);};},getRevision:()=>revision};
 }
 export function installLocalTransport(store:{request:(url:URL,init?:RequestInit)=>Promise<unknown>}) {
   const original=globalThis.fetch.bind(globalThis);

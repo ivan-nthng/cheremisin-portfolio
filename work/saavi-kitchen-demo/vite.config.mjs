@@ -1,10 +1,10 @@
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import {createReadStream} from 'node:fs';
+import {createReadStream, realpathSync} from 'node:fs';
 import {adminPresentation} from './admin-adapter.mjs';
 const root = path.dirname(fileURLToPath(import.meta.url));
 const portfolio = path.resolve(root, '../..');
-const saavi = process.env.SAAVI_SOURCE_ROOT || path.resolve(portfolio, '../saavi');
+const saavi = realpathSync(process.env.SAAVI_SOURCE_ROOT || path.resolve(portfolio, '../saavi'));
 const staticBuild = process.env.SAAVI_DEMO_STATIC_BUILD === '1';
 export default {
   root, base: staticBuild ? '/saavi-kitchen-demo/' : '/',

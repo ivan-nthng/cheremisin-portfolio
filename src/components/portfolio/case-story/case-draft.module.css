@@ -189,6 +189,11 @@
   --case-showcase-ink: var(--background);
   --case-showcase-muted: var(--background);
 }
+.showcase.photographicShowcase [data-case-preview] > div:first-child {
+  height: 26px;
+  display: grid;
+  place-items: center;
+}
 
 .showcase {
   color: var(--case-showcase-ink, var(--draft-ink));
