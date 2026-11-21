@@ -1,0 +1,13 @@
+.media {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-media);
+}
+
+/* Keep reveal inside the viewer: the fixed overlay and its trigger retain their geometry. */
+.media:focus-within :global(.repeat-reveal-track[data-reveal]) > .artwork {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}

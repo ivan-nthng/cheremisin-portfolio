@@ -1,0 +1,65 @@
+[
+  {
+    "family": "montserrat",
+    "commit": "8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5",
+    "source": "https://raw.githubusercontent.com/google/fonts/8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5/ofl/montserrat/METADATA.pb",
+    "file": "test-results/port17-demo/source/montserrat-METADATA.pb",
+    "bytes": 6727,
+    "sha256": "c48dbcaee013b8f6a33e7e6a79191adbf098a36839367d9750598594ff664e5f"
+  },
+  {
+    "family": "montserrat",
+    "commit": "8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5",
+    "source": "https://raw.githubusercontent.com/google/fonts/8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5/ofl/montserrat/OFL.txt",
+    "file": "public/fonts/citymobil/montserrat-OFL.txt",
+    "bytes": 4400,
+    "sha256": "8b7141c03fa4f8d44e6345d5d4931709290f0f67875e452e95ac1fd3a027802e"
+  },
+  {
+    "family": "montserrat",
+    "commit": "8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5",
+    "source": "https://raw.githubusercontent.com/google/fonts/8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5/ofl/montserrat/Montserrat%5Bwght%5D.ttf",
+    "file": "public/fonts/citymobil/montserrat-variable.ttf",
+    "bytes": 744936,
+    "sha256": "0f7b311b2f3279e4eef9b2f968bcdbab6e28f4daeb1f049f4f278a902bcd82f7",
+    "versions": [
+      "Version 9.000"
+    ],
+    "familyNames": [
+      "Montserrat",
+      "Montserrat Thin"
+    ],
+    "sourceFigmaBinaryVersion": "Unavailable from Figma font-family/style bindings; no exact binary-version claim."
+  },
+  {
+    "family": "roboto",
+    "commit": "1c627bfa375fc51cf86fabeca4f6e08a95f0aa5c",
+    "source": "https://raw.githubusercontent.com/google/fonts/1c627bfa375fc51cf86fabeca4f6e08a95f0aa5c/ofl/roboto/METADATA.pb",
+    "file": "test-results/port17-demo/source/roboto-METADATA.pb",
+    "bytes": 1463,
+    "sha256": "6fef19da54fb62d152f0c7b21710e6849950db7ecf852ea29511c593dad462f0"
+  },
+  {
+    "family": "roboto",
+    "commit": "1c627bfa375fc51cf86fabeca4f6e08a95f0aa5c",
+    "source": "https://raw.githubusercontent.com/google/fonts/1c627bfa375fc51cf86fabeca4f6e08a95f0aa5c/ofl/roboto/OFL.txt",
+    "file": "public/fonts/citymobil/roboto-OFL.txt",
+    "bytes": 4394,
+    "sha256": "061402327a96aadb0bfb694a960ed289ecd38d383e396243831ab81feb109c41"
+  },
+  {
+    "family": "roboto",
+    "commit": "1c627bfa375fc51cf86fabeca4f6e08a95f0aa5c",
+    "source": "https://raw.githubusercontent.com/google/fonts/1c627bfa375fc51cf86fabeca4f6e08a95f0aa5c/ofl/roboto/Roboto%5Bwdth%2Cwght%5D.ttf",
+    "file": "public/fonts/citymobil/roboto-variable.ttf",
+    "bytes": 488584,
+    "sha256": "d7598e12c5dbef095ff8272cfc55da0250bd07fbdecbac8a530b9b277872a134",
+    "versions": [
+      "Version 3.015; 2026"
+    ],
+    "familyNames": [
+      "Roboto"
+    ],
+    "sourceFigmaBinaryVersion": "Unavailable from Figma font-family/style bindings; no exact binary-version claim."
+  }
+]

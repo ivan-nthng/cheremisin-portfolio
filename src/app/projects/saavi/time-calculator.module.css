@@ -1,0 +1,145 @@
+.calculator {
+  /* Saavi design system: brand-500 and brand-400 for the primary accent. */
+  --saavi-brand: #f4a34b;
+  --saavi-brand-hover: #fbb367;
+  display: grid;
+  gap: var(--space-section);
+  margin-block-start: calc(-1 * var(--space-lg));
+}
+
+.notes {
+  max-width: var(--measure-prose);
+}
+
+.prompt {
+  display: block;
+}
+
+.unbroken {
+  white-space: nowrap;
+}
+
+.heading .action {
+  min-width: var(--control-size);
+  min-height: var(--control-size);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: var(--radius-media);
+  cursor: pointer;
+}
+
+.heading .add {
+  color: var(--saavi-brand);
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: none;
+}
+
+.marker {
+  position: relative;
+  isolation: isolate;
+}
+
+.marker::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset-inline: calc(-1 * var(--space-xs));
+  bottom: .08em;
+  height: .21em;
+  background: color-mix(in srgb, var(--saavi-brand) 42%, transparent);
+  clip-path: polygon(0 32%, 10% 12%, 91% 0, 100% 26%, 97% 74%, 70% 89%, 2% 100%);
+  transform: rotate(-3deg);
+}
+
+.heading .reset {
+  vertical-align: middle;
+}
+
+.resetIcon {
+  display: block;
+  width: var(--primitive-size-20);
+  height: var(--primitive-size-20);
+  background: currentColor;
+  mask: url('/images/citymobil/demo/shell/replay.svg') center / contain no-repeat;
+}
+
+.heading .action[aria-disabled='true'] {
+  opacity: .5;
+  cursor: default;
+}
+
+.action:focus-visible {
+  outline: var(--stroke-thin) solid var(--foreground);
+  outline-offset: var(--focus-offset);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .heading .add:not([aria-disabled='true']):hover {
+    color: var(--saavi-brand-hover);
+  }
+
+  .heading .reset:not([aria-disabled='true']):hover {
+    color: var(--color-white);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .action > span {
+    transition: transform 150ms var(--motion-ease-out);
+  }
+
+  .action:not([aria-disabled='true']):hover > span {
+    transform: translateY(calc(-1 * var(--primitive-size-2)));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heading .action {
+    transition: none;
+  }
+}
+
+.metrics {
+  text-align: start;
+}
+
+.metric {
+  display: grid;
+  align-content: start;
+  gap: var(--space-xs);
+}
+
+.metric dd {
+  grid-row: 1;
+  margin: 0;
+}
+
+.metric dt, .notes {
+  color: var(--muted);
+}
+
+.notes {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.location {
+  padding-block-start: var(--space-lg);
+  border-block-start: var(--stroke-thin) solid var(--border);
+}
+
+@media (max-width: 1200px) {
+  .number {
+    font-size: var(--type-lg-size);
+    line-height: var(--type-lg-line);
+  }
+}
+
+@media (max-width: 599px) {
+  .number {
+    font-size: var(--primitive-size-40);
+    line-height: var(--primitive-size-44);
+  }
+}

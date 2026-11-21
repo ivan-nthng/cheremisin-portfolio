@@ -1,0 +1,22 @@
+.frame {
+  position: relative;
+  aspect-ratio: var(--clip-wide);
+}
+
+.still {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@container case-features (min-width: 1024px) {
+  .grid > [data-case-span="third"] { grid-template-rows: subgrid; grid-row: span 2; }
+}
+
+@container case-features (min-width: 720px) {
+  .grid > [data-case-span="half"] { grid-template-rows: subgrid; grid-row: span 2; }
+}
+
+@media (width < 640px) {
+  .frame { aspect-ratio: var(--clip-compact); }
+}

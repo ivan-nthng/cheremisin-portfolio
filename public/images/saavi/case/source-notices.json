@@ -1,0 +1,190 @@
+{
+  "tabletop-desktop.webp": {
+    "source": "work/saavi-tabletop/saavi-tabletop-v2-desktop.png",
+    "kind": "WebP encoding of approved AI-generated editorial illustration",
+    "figma": "qnmQs8GxVjZQFKbGU4tR08/3485:138"
+  },
+  "tabletop-mobile.webp": {
+    "source": "work/saavi-tabletop/saavi-tabletop-v3-mobile-fullscreen.png",
+    "kind": "WebP encoding of approved AI-generated editorial illustration",
+    "figma": "qnmQs8GxVjZQFKbGU4tR08/3485:209"
+  },
+  "saavi-mark.svg": {
+    "source": "/Users/ivan/Developer/saavi/packages/design-system/assets/saavi-mark.svg",
+    "kind": "Exact Saavi design-system vector paths, colored with brand #F4A34B"
+  },
+  "kitchen-desktop.jpg": {
+    "source": "http://127.0.0.1:3310/?mode=poster",
+    "kind": "Toolbar-free browser capture of the native Kitchen demo with disposable fictional data",
+    "viewport": "1280 × 720",
+    "captured": "2026-11-12"
+  },
+  "kitchen-mobile.jpg": {
+    "source": "http://127.0.0.1:3310/?mode=poster",
+    "kind": "Toolbar-free browser capture of the native Kitchen demo with disposable fictional data",
+    "viewport": "390 × 844",
+    "captured": "2026-11-12"
+  },
+  "admin-desktop.jpg": {
+    "source": "http://127.0.0.1:3310/?role=admin&mode=poster",
+    "kind": "Toolbar-free browser capture of native Admin Restaurants with disposable fictional data",
+    "viewport": "1280 × 720",
+    "captured": "2026-11-12"
+  },
+  "admin-mobile.jpg": {
+    "source": "http://127.0.0.1:3310/?role=admin&mode=poster",
+    "kind": "Toolbar-free browser capture of native Admin Restaurants with disposable fictional data",
+    "viewport": "390 × 844",
+    "captured": "2026-11-12"
+  },
+  "workflows/calendar.jpg": {
+    "source": "http://127.0.0.1:3310/?mode=poster&clip=calendar",
+    "kind": "Isolated native Saavi component capture at the authored result beat with fictional local data",
+    "viewport": "640 × 550",
+    "captured": "2026-11-12"
+  },
+  "workflows/calendar-mobile.jpg": {
+    "source": "http://127.0.0.1:3310/?mode=poster&clip=calendar",
+    "kind": "Isolated native Saavi component capture at the authored result beat with fictional local data",
+    "viewport": "342 × 340",
+    "captured": "2026-11-12"
+  },
+  "workflows/production.jpg": {
+    "source": "http://127.0.0.1:3310/?mode=poster&clip=production",
+    "kind": "Isolated native Saavi component capture at the authored result beat with fictional local data",
+    "viewport": "1280 × 555",
+    "captured": "2026-11-12"
+  },
+  "workflows/production-mobile.jpg": {
+    "source": "http://127.0.0.1:3310/?mode=poster&clip=production",
+    "kind": "Isolated native Saavi component capture at the authored result beat with fictional local data",
+    "viewport": "342 × 420",
+    "captured": "2026-11-12"
+  },
+  "workflows/analytics.jpg": {
+    "source": "http://127.0.0.1:3310/?mode=poster&clip=analytics",
+    "kind": "Native Saavi chart capture at the authored result beat with fictional local data",
+    "viewport": "640 × 550",
+    "captured": "2026-11-13"
+  },
+  "workflows/analytics-mobile.jpg": {
+    "source": "http://127.0.0.1:3310/?mode=poster&clip=analytics",
+    "kind": "Native Saavi chart capture at the authored result beat with fictional local data",
+    "viewport": "342 × 600",
+    "captured": "2026-11-13"
+  },
+  "workflows/order-detail.jpg": {
+    "source": "http://127.0.0.1:3310/?mode=poster&clip=order-detail",
+    "kind": "Isolated native Saavi component capture at the authored result beat with fictional local data",
+    "viewport": "640 × 550",
+    "captured": "2026-11-12"
+  },
+  "workflows/order-detail-mobile.jpg": {
+    "source": "http://127.0.0.1:3310/?mode=poster&clip=order-detail",
+    "kind": "Isolated native Saavi component capture at the authored result beat with fictional local data",
+    "viewport": "342 × 540",
+    "captured": "2026-11-12"
+  },
+  "workflows/dish.jpg": {
+    "source": "http://127.0.0.1:3310/?mode=poster&clip=dish",
+    "kind": "Native Kitchen editor capture with the sourced Soy chicken bowl photo and fictional local data",
+    "viewport": "640 × 550",
+    "captured": "2026-11-12"
+  },
+  "workflows/dish-mobile.jpg": {
+    "source": "http://127.0.0.1:3310/?mode=poster&clip=dish",
+    "kind": "Native Kitchen editor capture with the sourced Soy chicken bowl photo and fictional local data",
+    "viewport": "342 × 620",
+    "captured": "2026-11-12"
+  },
+  "workflows/buyers.jpg": {
+    "source": "http://127.0.0.1:3310/?mode=poster&clip=buyers",
+    "kind": "Native Saavi chart capture at the authored result beat with fictional local data",
+    "viewport": "640 × 550",
+    "captured": "2026-11-13"
+  },
+  "workflows/buyers-mobile.jpg": {
+    "source": "http://127.0.0.1:3310/?mode=poster&clip=buyers",
+    "kind": "Native Saavi chart capture at the authored result beat with fictional local data",
+    "viewport": "342 × 448",
+    "captured": "2026-11-13"
+  },
+  "workflows/dish-comparison.jpg": {
+    "source": "http://127.0.0.1:3310/?mode=poster&clip=dish-comparison",
+    "kind": "Native Saavi chart capture at the authored result beat with fictional local data",
+    "viewport": "640 × 550",
+    "captured": "2026-11-13"
+  },
+  "workflows/dish-comparison-mobile.jpg": {
+    "source": "http://127.0.0.1:3310/?mode=poster&clip=dish-comparison",
+    "kind": "Native Saavi chart capture at the authored result beat with fictional local data",
+    "viewport": "342 × 600",
+    "captured": "2026-11-13"
+  },
+  "hero-v6-desktop.webp": {
+    "source": "work/saavi-cover-concept/saavi-header-draft-v6-desktop.webp",
+    "kind": "AI-edited photograph based on user-provided Unsplash image; courier replaced and Saavi backpack added",
+    "figma": "qnmQs8GxVjZQFKbGU4tR08/3485:88"
+  },
+  "hero-v6-mobile.webp": {
+    "source": "work/saavi-cover-concept/saavi-header-draft-v6-mobile.webp",
+    "kind": "AI-edited photograph based on user-provided Unsplash image; courier replaced and Saavi backpack added",
+    "figma": "qnmQs8GxVjZQFKbGU4tR08/3485:170"
+  },
+  "kitchen-overview-desktop-babc384fd20b.jpg": {
+    "source": "https://www.cheremisin.co.uk/saavi-kitchen-demo/index.html?mode=poster",
+    "kind": "Toolbar-free viewport capture of the current public native Kitchen Overview; fictional dated sample, not live records",
+    "viewport": "1280 × 720",
+    "captured": "2026-11-20",
+    "capturedAt": "2026-11-20T23:10:59.702000-03:00",
+    "timezone": "America/Sao_Paulo",
+    "theme": "light",
+    "state": "Kitchen / Overview / Casa Verde / current week NOV 16–22, 2026",
+    "sourceDeployment": "dpl_6Dfj5CRsz7jHR9ot5fFi624e2Wzk",
+    "sourceBuild": "ZwFzIobeuEsMHd-LgJAnN",
+    "nativeAssets": [
+      {
+        "path": "assets/index-vUsTDuDt.js",
+        "status": 200,
+        "sha256": "8cdb2c31faf6345e50fec6346afab6b7da5e3593960a6ad462750494e7cc5a02",
+        "bytes": 1449056
+      },
+      {
+        "path": "assets/index-savi519-ceb64c017bf9.css",
+        "status": 200,
+        "sha256": "ceb64c017bf94acb206edc35ab87162c92bb8f4a850dcb618ae2cb3c7cd4eb2a",
+        "bytes": 1022097
+      }
+    ],
+    "sha256": "babc384fd20b134b30339939b27f8be82c2be0e7a8b37a01f331f133aca372e0",
+    "bytes": 62909
+  },
+  "kitchen-overview-mobile-88c1ff5ac900.jpg": {
+    "source": "https://www.cheremisin.co.uk/saavi-kitchen-demo/index.html?mode=poster",
+    "kind": "Toolbar-free viewport capture of the current public native Kitchen Overview; fictional dated sample, not live records",
+    "viewport": "390 × 844",
+    "captured": "2026-11-20",
+    "capturedAt": "2026-11-20T23:11:02.486000-03:00",
+    "timezone": "America/Sao_Paulo",
+    "theme": "light",
+    "state": "Kitchen / Overview / Casa Verde / current week NOV 16–22, 2026",
+    "sourceDeployment": "dpl_6Dfj5CRsz7jHR9ot5fFi624e2Wzk",
+    "sourceBuild": "ZwFzIobeuEsMHd-LgJAnN",
+    "nativeAssets": [
+      {
+        "path": "assets/index-vUsTDuDt.js",
+        "status": 200,
+        "sha256": "8cdb2c31faf6345e50fec6346afab6b7da5e3593960a6ad462750494e7cc5a02",
+        "bytes": 1449056
+      },
+      {
+        "path": "assets/index-savi519-ceb64c017bf9.css",
+        "status": 200,
+        "sha256": "ceb64c017bf94acb206edc35ab87162c92bb8f4a850dcb618ae2cb3c7cd4eb2a",
+        "bytes": 1022097
+      }
+    ],
+    "sha256": "88c1ff5ac900dfa56fb1504f397296d7ea2d9ad482de662cc65915ba60062265",
+    "bytes": 34914
+  }
+}

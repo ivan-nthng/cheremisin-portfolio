@@ -1,0 +1,241 @@
+.panel {
+  --panel-input: var(--mb-subtle, #f5f6f7);
+  --panel-card-title: color-mix(in srgb, var(--panel-input), var(--mb-muted, #475569) 4%);
+  --panel-ink: var(--mb-ink, #0f172a);
+  --panel-muted: var(--mb-muted, #475569);
+  --panel-accent: var(--mb-accent, #007bff);
+  --panel-border: var(--mb-border, #e8ebef);
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  background: var(--mb-surface, #fff);
+  color: var(--panel-ink);
+  border-inline-start: 1px solid var(--panel-border);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 16px 8px;
+}
+
+.heading {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0 0 8px;
+}
+
+.headingIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  background: var(--panel-input);
+  color: var(--panel-muted);
+}
+
+.heading h2 {
+  flex: 1;
+  margin: 0;
+  font: inherit;
+  font-weight: 500;
+}
+
+.panel .reset { gap: 6px; color: var(--panel-muted); }
+
+.settings {
+  display: grid;
+  gap: 4px;
+  margin-inline: 8px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr);
+  align-items: center;
+  gap: 4px;
+  color: var(--panel-muted);
+}
+
+.position,
+.rotation,
+.fov {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.position {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.rotation {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fov {
+  grid-template-columns: minmax(0, 1fr) 36px;
+  align-items: center;
+}
+
+.numberField {
+  composes: field compactField from './metabox-controls.module.css';
+  display: flex;
+  align-items: center;
+}
+
+.panel .numberField { padding: 0; }
+.numberField[data-drag-axis='horizontal'] { cursor: ew-resize; }
+.numberField[data-drag-axis='vertical'] { cursor: ns-resize; }
+.numberField[data-drag-axis] { touch-action: none; }
+.numberField[data-drag-axis] input { cursor: inherit; }
+.numberField[data-drag-axis] input:focus { cursor: text; }
+.numberField[data-scrubbing] { outline: 2px solid var(--panel-accent); outline-offset: 2px; }
+
+.numberPrefix {
+  display: grid;
+  flex: none;
+  place-items: center;
+  padding-inline-start: 8px;
+  color: var(--panel-muted);
+}
+
+.axis {
+  color: var(--panel-accent);
+}
+
+.numberField input {
+  min-width: 0;
+  width: 100%;
+  height: 28px;
+  padding: 0 8px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--panel-ink);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  text-overflow: ellipsis;
+}
+
+.numberPrefix + input {
+  flex: 1 1 0;
+  padding-inline: 4px 3px;
+}
+
+.panel .numberField input:focus-visible { outline: none; }
+.numberField:focus-within { outline: 2px solid var(--panel-accent); outline-offset: 2px; }
+
+.range {
+  appearance: none;
+  width: 100%;
+  height: 28px;
+  margin: 0;
+  border: 1px solid var(--panel-border);
+  border-radius: 4px;
+  background: linear-gradient(to right, var(--panel-accent) var(--range-fill), var(--panel-input) var(--range-fill));
+  cursor: pointer;
+}
+
+.range::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 28px;
+  border: 1px solid var(--panel-border);
+  border-radius: 4px;
+  background: #fff;
+  cursor: ew-resize;
+}
+
+.range::-moz-range-thumb {
+  width: 14px;
+  height: 26px;
+  border: 1px solid var(--panel-border);
+  border-radius: 4px;
+  background: #fff;
+  cursor: ew-resize;
+}
+
+.restrictions {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.card {
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--panel-input);
+}
+
+.card:focus-within {
+  outline: 1px solid var(--panel-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--panel-accent), transparent 85%);
+}
+
+.card h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  margin: 0;
+  padding: 8px 12px;
+  background: var(--panel-card-title);
+  color: var(--panel-muted);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.limits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 9px 12px 11px;
+}
+
+.limit {
+  min-width: 0;
+}
+
+.limitLabel {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--panel-muted);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.limitControls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px;
+}
+
+.limitControls .numberField {
+  background: var(--panel-card-title);
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  padding: 11px 12px 12px;
+  border-top: 1px solid var(--panel-border);
+}
+
+@media (max-width: 760px) {
+  .panel {
+    border-inline-start: 0;
+    border-top: 1px solid var(--panel-border);
+  }
+}

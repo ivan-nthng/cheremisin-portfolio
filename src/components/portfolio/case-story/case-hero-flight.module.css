@@ -1,0 +1,41 @@
+@property --case-flight-arrival {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+.card {
+  display: grid;
+  min-width: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    /* At low progress, the card lifts off the plane before it travels diagonally. */
+    --flight: var(--case-flight-arrival, 0);
+    --diagonal: calc(var(--flight) * var(--flight));
+    transform: translate3d(
+      calc(var(--diagonal) * var(--flight-x, 24px)),
+      calc(var(--diagonal) * var(--flight-y, -32px)),
+      calc(var(--flight) * var(--flight-z, 0px))
+    ) rotateX(calc(var(--flight-pitch, 0deg) * var(--diagonal))) rotateY(calc(var(--flight-yaw, 0deg) * var(--diagonal)));
+    opacity: clamp(0, (1 - var(--flight)) / .45, 1);
+    animation: card-land 840ms cubic-bezier(.22, .78, .23, 1) var(--case-flight-delay, 0ms) backwards;
+  }
+}
+
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .card {
+    --flight: max(var(--case-flight-arrival, 0), var(--case-flight-scroll, 0));
+    --flight-x: var(--case-flight-x, 400px);
+    --flight-y: var(--case-flight-y, -480px);
+    --flight-z: var(--case-flight-z, 168px);
+    --flight-pitch: 10deg;
+    --flight-yaw: -6deg;
+  }
+}
+
+@keyframes card-land {
+  from { --case-flight-arrival: 1; }
+  to { --case-flight-arrival: 0; }
+}

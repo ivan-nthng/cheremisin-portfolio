@@ -1,0 +1,47 @@
+{
+  "method": "built-in image_gen, one selected output per separately prompted camera angle",
+  "mainPrompt": "Use case: ads-marketing\nAsset type: one high-resolution landscape editorial photograph for a portfolio case hero, 3:2 composition. AI editorial concept, not documentary evidence. Generate a completely new photograph, not an edit of a reference photo.\nInput images: 1 is ONLY the six-vane radial-emblem geometry, recolor it orange; 2 and 3 are ONLY real taxi livery placement references, do NOT copy their yellow cars, purple palette or people; 4 is ONLY bold sans-serif wordmark character/weight inspiration, replace its Cyrillic copy with the exact Latin word specified below; 5 is ONLY the severe directional lighting, diagonal shadow and restrained film-photograph mood, do NOT retain the Porsche or its design.\nPrimary request: a believable WHITE Volkswagen Nivus compact coupe SUV in a strict left-side profile, nose pointing right, parked on asphalt in front of a restrained brutalist board-formed concrete building. A four-door modern Volkswagen Nivus with a gently descending coupe roofline, plausible doors/windows/wheelbase, straight wheels, one pair of intact wheels visible, ordinary factory proportions. No Porsche, no sports-car conversion.\nLivery: clean white body. A large ORANGE six-vane radial star on the rear door/rear-quarter area following the placement logic of references 2/3; a single bold Latin CityMobil wordmark across the side doors, EXACT spelling C i t y M o b i l. City is orange, Mobil is black; visually one word, with capital C and M. All lettering is physically printed on the car surface with plausible seams and perspective. Preserve the distinctive fan-like six broad tapered radial vanes and white gaps of reference 1, not a generic pointed star. Orange is a visual concept color from the direct brief, not a claim of an official HEX. No blue or purple invented onto the car.\nScene/composition: wide architectural editorial image; car occupies about the central 60 percent of frame width, its complete silhouette and wheels fit with generous breathing room. Camera perpendicular to the left side at waist/headlight height, restrained long-lens perspective. Keep the car in the middle/lower-middle band and the entire livery grouping concentrated near the center so a portrait crop can still show the wordmark. Useful quiet dark asphalt along the bottom, especially the lower-left, for separately editable portfolio text; NO typography or UI outside the livery.\nLight/style: match reference 5's unusually crisp severe sun and large diagonal architectural shadow, deep charcoal shadow across part of the concrete wall and foreground, warm-neutral sunlit concrete and a luminous but not blown-out white car. Strong photographic light/shade separation, single physically consistent direction, grounded contact shadow, modest fine film grain and rich low-key magazine contrast. Preserve real car material, black trim, glass reflections, rubber and concrete texture. No haze, wet neon city, motion blur, fog, exaggerated vignette or glossy CGI.\nText (verbatim, only on vehicle): \"CityMobil\"\nAvoid: people/passengers, extra slogans, numbers, watermark, fake UI, purple/yellow body, Cyrillic wordmark, duplicated or misspelled letters, deformed wheel/door geometry, flattened poster graphic, oversized roof advertisement.",
+  "alternatePrompt": "Use case: ads-marketing\nAsset type: second coherent high-resolution landscape editorial car photograph, 3:2. AI editorial concept.\nInput images: 1 is the newly selected main side-profile scene and the PRIMARY continuity reference: preserve this white Volkswagen Nivus, its exact orange six-vane star, orange City + black Mobil livery, factory wheels/black trims and concrete/asphalt environment. 2 is radial-emblem geometry only. 3 is taxi-livery placement only, not yellow/purple coloring, people or different vehicle. 4 is only sans-serif wordmark form inspiration, NOT Cyrillic copy. 5 is only the severe sunlight/diagonal shadow magazine mood, NOT its Porsche body.\nPrimary request: a NEW camera angle of the SAME parked white Volkswagen Nivus in reference1, photographed from the FRONT LEFT THREE-QUARTER. Show the front fascia and the left side carrying the same livery, with the car's nose in the right foreground and its rear receding toward the left. Plausible Nivus compact coupe-SUV proportions, unchanged four doors/roofline/window and wheel design. Entire car/wheels fit with breathing room.\nScene: same restrained brutalist concrete wall and asphalt road, same light/time/materials as reference1. Move the camera toward the car front rather than turning this into a different styled car or location. The severe large crisp diagonal architectural shadow crosses wall/foreground in one consistent light direction; sun makes the white car and orange livery legible. Deep charcoal shadow, warm-neutral concrete, fine restrained film grain, rich low-key editorial photograph, not glossy CGI.\nLivery/text: preserve the single exact Latin word \"CityMobil\" on the doors, C i t y M o b i l, capital C and M. \"City\" is orange and \"Mobil\" is black. Preserve the six broad radial tapered vanes and white gaps of the orange rear-door/quarter emblem. Text follows real car surfaces and perspective, with natural seams. No blue/purple invented, no new emblem, no extra slogan or body lettering, no fabricated plate message.\nComposition: believable restrained magazine lens at headlight/waist height, not extreme fisheye. Car roughly central, architectural negative space above and useful quiet dark road along lower-left for separately editable portfolio copy. Lighting/shadows and color grading must read as the same two-image photographic series as reference1.\nAvoid: Porsche/sports-car silhouette, yellow/purple body, people/passengers, oversized roof ad, misspelled/Cyrillic text, extra marks, duplicate wheels, deformed doors, fake UI, watermark, wet/neon city, motion blur, haze. Do not reproduce any portfolio interface outside the vehicle.",
+  "mainInputs": [
+    {
+      "path": "/Users/ivan/Desktop/Screenshot 2026-10-29 at 10.34.38.png",
+      "bytes": 23951,
+      "sha256": "f93b1ef10ed7c92afcf2f6539bd4761bb658edfd7304f4f4f9155e04c0b1998f"
+    },
+    {
+      "path": "/Users/ivan/Desktop/Screenshot 2026-10-29 at 10.34.46.png",
+      "bytes": 1465785,
+      "sha256": "a492ef8e89b32d191802b74db19057be52a98846fb49fcce8bb8eda8b4a38d22"
+    },
+    {
+      "path": "/Users/ivan/Desktop/Screenshot 2026-10-29 at 10.34.04.png",
+      "bytes": 1079425,
+      "sha256": "99284705e037459221bf3179babd460f34856d2018f02155a6186aca2f18b4f7"
+    },
+    {
+      "path": "/Users/ivan/Desktop/Screenshot 2026-10-29 at 10.34.24.png",
+      "bytes": 111105,
+      "sha256": "93d731f8b5b93a43112176dfa1e658bddbfb680d77aaa4f88187140d8e044fd0"
+    },
+    {
+      "path": "/Users/ivan/Downloads/IMG_0369.jpg",
+      "bytes": 228494,
+      "sha256": "bc23a1b9792b522bfd00efc68a432905e616d431bebe381d38ab69b05acbc332"
+    }
+  ],
+  "alternateInputs": [
+    "/Users/ivan/Developer/cheremisin-portfolio/docs/design/assets/citymobil-nivus-r3-side-master.png",
+    "/Users/ivan/Desktop/Screenshot 2026-10-29 at 10.34.38.png",
+    "/Users/ivan/Desktop/Screenshot 2026-10-29 at 10.34.04.png",
+    "/Users/ivan/Desktop/Screenshot 2026-10-29 at 10.34.24.png",
+    "/Users/ivan/Downloads/IMG_0369.jpg"
+  ],
+  "generatedDefaults": {
+    "side": "/Users/ivan/.codex/generated_images/01a17d62-78ae-7bf0-923d-f8314494cf57/exec-b16944e9-2504-490d-b237-c228ee711d87.png",
+    "front": "/Users/ivan/.codex/generated_images/01a17d62-78ae-7bf0-923d-f8314494cf57/exec-61d61030-5e6c-4641-9c58-99241dedef20.png"
+  },
+  "classification": "AI editorial concept; no project interface evidence, exact automaker blueprint or verified new brand color claim",
+  "paletteSourceLimit": "4267:430 CM purple/yellow/white; cover6201:113 orange FF7200 and purple CM; no matching blue/orange radial-star Latin wordmark in bounded lookup",
+  "oldR2File": "citymobil-taxi-editorial-r2.png",
+  "oldR2Sha256": "016605664ef0eddaedd4cf271c491084db8336eff14fae7b129be99174f32cbb"
+}

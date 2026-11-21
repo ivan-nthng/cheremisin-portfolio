@@ -1,0 +1,36 @@
+.band { background: #fff; color: #171411; padding: 20px max(24px, calc((100vw - 1280px) / 2)); }
+.lane { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; }
+.card { position: relative; display: flex; min-width: 0; border-radius: var(--radius-media); padding: var(--space-md) var(--space-lg); color: inherit; text-decoration: none; }
+.card[data-direction='Previous'] { margin-inline-start: calc(-1 * var(--space-lg)); padding-inline-start: calc(2 * var(--space-lg)); }
+.card[data-direction='Next'] {
+  grid-column: 2;
+  justify-content: end;
+  text-align: right;
+  margin-inline-end: calc(-1 * var(--space-lg));
+  padding-inline-end: calc(2 * var(--space-lg));
+}
+.card:hover, .card:focus-visible { background: rgb(23 20 17 / .05); }
+.card:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.copy { display: grid; gap: 4px; max-width: 440px; }
+.copy h3 { font-weight: var(--type-weight-medium); }
+.copy p, .direction { color: rgb(23 20 17 / .68); font: 400 var(--type-technical-size)/var(--type-technical-line) var(--type-font-family); }
+.arrow {
+  position: absolute;
+  inset-block: 0;
+  display: flex;
+  width: 16px;
+  height: 16px;
+  margin-block: auto;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(var(--project-arrow-shift, 6px));
+  transition: opacity var(--motion-press-duration) var(--motion-ease-out), transform var(--motion-press-duration) var(--motion-ease-out);
+}
+.arrow img { filter: brightness(0); }
+.card[data-direction='Previous'] .arrow { inset-inline-start: var(--space-sm); --project-arrow-shift: -6px; }
+.card[data-direction='Next'] .arrow { inset-inline-end: var(--space-sm); }
+.card:focus-visible .arrow { opacity: 1; transform: none; }
+@media (hover: hover) and (pointer: fine) { .card:hover .arrow { opacity: 1; transform: none; } }
+@media (hover: none), (pointer: coarse) { .arrow { opacity: 1; transform: none; } }
+@media (max-width: 599px) { .lane { grid-template-columns: minmax(0, 1fr); gap: 0; } .card[data-direction='Next'] { grid-column: 1; } }
+@media (prefers-reduced-motion: reduce) { .arrow { transform: none; transition: none; } }

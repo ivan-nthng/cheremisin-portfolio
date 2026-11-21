@@ -1,0 +1,97 @@
+.page {
+  --case-inset: max(24px, calc((100vw - 1280px) / 2));
+  color: var(--foreground);
+  font: 400 var(--type-body-size)/var(--type-body-line) var(--type-font-family);
+}
+.page :where(h1, h2, h3, p) { margin: 0; }
+.hero {
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+  min-height: max(560px, calc(100svh - 44px));
+  display: grid;
+  align-items: end;
+  padding-block: 88px clamp(40px, 8vh, 88px);
+  color: var(--case-hero-foreground);
+  background: #d7d4cc url('/images/litres/case/hero-delivery.webp') center / cover;
+}
+.rail { margin-inline: var(--case-inset); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, min(55vw, 600px)); gap: 24px; align-items: end; }
+.hero .heroPages { min-height: 0; background: transparent; width: 100%; }
+.heroMosaic { margin: 12px; transform: rotate(-1.5deg); }
+.heroMosaic article { box-shadow: 0 12px 40px rgb(24 33 43 / .12); }
+.heroMosaic article:not([data-hero-income]) { background: #fff; }
+.heroMosaic [data-hero-income] > [role='group'] { margin-top: 0; min-height: 64px; --plot-height: 80px; }
+@media (min-width: 901px) {
+  .heroPages {
+    perspective: 1400px;
+    perspective-origin: 18% 20%;
+    --case-flight-x: 320px;
+    --case-flight-y: -400px;
+    --case-flight-z: 136px;
+  }
+  .heroMosaic, .heroMosaic > div { transform-style: preserve-3d; }
+}
+.heroCopy { position: relative; isolation: isolate; display: grid; justify-items: start; gap: 16px; max-width: 550px; }
+.heroCopy > img { width: 124px; height: auto; }
+.heroLinks img { width: 16px; height: 16px; filter: brightness(0) invert(1); }
+.heroLinks a { color: var(--case-hero-foreground); }
+.heroCopy > p { max-width: 450px; color: var(--case-hero-muted); }
+.heroLinks { display: flex; gap: 16px; flex-wrap: wrap; }
+.statsLayout {
+  padding: clamp(48px, 9vw, 120px) var(--case-inset);
+  display: grid;
+  gap: 32px;
+}
+.statsIntro { display: grid; gap: 8px; }
+.stats p { color: var(--muted); }
+.context { display: grid; gap: 24px; margin: 20px 0 0; }
+.context { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.workspace {
+  --case-showcase-ink: #18212b;
+  --case-showcase-muted: #18212b;
+  --case-showcase-width: min(78vw, 1120px, calc((100svh - 144px) * 1.73));
+}
+.inkBackdrop { background: #c7bfb5 url('/images/litres/case/interlude-delivery.webp') center / cover no-repeat; }
+.workspace[data-motion='false'] .inkBackdrop { padding: 68px var(--case-inset) 44px; }
+.workspace[data-motion='false'] [data-case-showcase-heading] { gap: 24px; margin-block-end: 36px; }
+@media (max-width: 640px), (hover: none) and (pointer: coarse) and (max-height: 640px) {
+  .heroDemo { display: none; }
+}
+@media (max-width: 640px) {
+  .rail { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .hero .heroPages { width: min(100%, 390px); justify-self: end; margin-bottom: 24px; }
+  .heroMosaic { margin: 8px; transform: rotate(-1deg); }
+  .hero { align-items: start; min-height: max(calc(100svh - 44px), calc(252px + 89.4vw)); padding-block: 64px 24px; background: #d7d4cc url('/images/litres/case/hero-mobile-delivery.webp') center bottom / 100% auto no-repeat; }
+  .heroCopy { max-width: 100%; }
+  .statsLayout { gap: 24px; }
+  .context { grid-template-columns: 1fr; gap: 12px; }
+  .inkBackdrop { background: #c7bfb5; }
+  .inkBackdrop::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: auto 0 0;
+    aspect-ratio: 1586 / 992;
+    background: url('/images/litres/case/interlude-delivery.webp') center / 100% auto no-repeat;
+    mask-image: linear-gradient(transparent, #000 12%);
+  }
+  .workspace[data-motion='false'] [data-case-showcase-heading] { margin-inline: -12px; }
+}
+
+.hero::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(90deg, rgb(16 20 28 / .9), rgb(16 20 28 / .65) 31%, transparent 70%),
+    linear-gradient(0deg, rgb(16 20 28 / .62), transparent 62%);
+  content: '';
+  pointer-events: none;
+}
+.workspaceStill { aspect-ratio: 1440 / 825; overflow: hidden; background: white; }
+.workspace [data-guided-scene] { background: white; }
+@media (max-width: 640px) {
+  .hero::before { background: linear-gradient(180deg, rgb(16 20 28 / .92), rgb(16 20 28 / .76) 40%, transparent 76%); }
+}
+@media (max-width: 599px) {
+  .workspace[data-motion='false'] [data-case-showcase-heading] h2 { font-size: 40px; line-height: 44px; }
+}

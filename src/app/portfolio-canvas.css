@@ -1,0 +1,4 @@
+/* One portfolio canvas shared by the App Router and the Hito Pages document. */
+:root {
+    --background: var(--color-black);
+}

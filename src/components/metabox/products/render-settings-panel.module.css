@@ -1,0 +1,272 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  border-inline-start: 1px solid var(--mb-border, #e5e7eb);
+  background: var(--mb-surface, #fff);
+  color: var(--mb-ink, #111827);
+}
+
+.tabs {
+  display: flex;
+  flex: none;
+  margin-inline: 8px;
+  border-bottom: 1px solid var(--mb-border, #e5e7eb);
+}
+
+.tabs button {
+  position: relative;
+  flex: none;
+  min-height: 56px;
+  padding: 0 12px;
+  border: 0;
+  background: transparent;
+  color: var(--mb-muted, #6b7280);
+  font-size: 12px;
+  line-height: 16px;
+  cursor: pointer;
+}
+
+.tabs button[aria-selected='true'] { color: var(--mb-ink, #111827); }
+
+.tabs button[aria-selected='true']::after {
+  position: absolute;
+  inset: auto 0 -1px;
+  height: 2px;
+  background: var(--mb-accent, #017bff);
+  content: '';
+}
+
+.settings {
+  flex: 1;
+  min-height: 0;
+  padding: 16px 15px;
+  overflow: auto;
+  scrollbar-width: thin;
+}
+
+.section { border-bottom: 1px solid var(--mb-border, #e5e7eb); }
+
+.sectionHeading {
+  display: flex;
+  width: 100%;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: start;
+  cursor: pointer;
+}
+
+.sectionHeading > img { flex: none; }
+.sectionHeading > span:first-of-type { flex: 1; min-width: 0; }
+.chevron { transition: transform 180ms ease; }
+.sectionHeading[aria-expanded='true'] .chevron { transform: rotate(180deg); }
+
+.sectionBody { padding-bottom: 12px; }
+
+.fieldGroup {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 8px;
+  color: var(--mb-muted, #6b7280);
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.fieldGroup:last-child { margin-bottom: 0; }
+
+.savePosition {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.savePosition img { width: 16px; height: 16px; }
+.savePosition, .nameForm { margin-top: 8px; }
+
+.nameForm {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px;
+}
+
+.saveName { padding-inline: 7px; }
+.cancelName { grid-column: 1 / -1; justify-self: end; }
+
+.cameraActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 4px;
+}
+
+.cameraPresets {
+  display: grid;
+  gap: 4px;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--mb-border, #e5e7eb);
+}
+
+.camera,
+.environment {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 6px 3px 4px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: start;
+}
+
+.camera {
+  cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.cameraLabel,
+.environment > span:nth-child(2) { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.cameraLabel small { display: block; color: var(--mb-muted, #6b7280); font-size: 10px; line-height: 14px; }
+.camera[aria-pressed='true'],
+.environment[aria-current='true'] { background: var(--mb-accent-wash, #e7f2ff); }
+.camera[data-previewed='true'] { border-color: var(--mb-accent, #017bff); }
+.camera:hover { border-color: var(--mb-accent, #017bff); }
+
+.thumbnail,
+.environmentIcon {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  background: var(--mb-subtle, #f4f6f8);
+  object-fit: cover;
+}
+
+.check {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  border: 1px solid var(--mb-border, #cbd1d8);
+  border-radius: 4px;
+  background: var(--mb-surface, #fff);
+}
+
+.camera[aria-pressed='true'] .check,
+.environment[aria-current='true'] .check {
+  border-color: var(--mb-accent, #017bff);
+  background: var(--mb-accent, #017bff) url('/images/metabox/products/settings/check.svg') center / 14px no-repeat;
+}
+
+.environments {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.environment[aria-disabled='true'] {
+  color: var(--mb-muted, #6b7280);
+}
+
+.environmentIcon {
+  display: grid;
+  place-items: center;
+}
+
+.environmentIcon img { opacity: .65; }
+
+.presets { display: grid; gap: 8px; padding-bottom: 12px; }
+.presets button[aria-pressed='true'] { border-color: var(--mb-accent, #017bff); }
+
+.switchTrack {
+  display: flex;
+  width: 44px;
+  height: 24px;
+  flex: none;
+  align-items: center;
+  padding-inline: 1px;
+  border: 1px solid var(--mb-border, #cbd1d8);
+  border-radius: 999px;
+  background: var(--mb-subtle, #f4f6f8);
+}
+
+.switchTrack::after {
+  flex: 0 0 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px #11182729;
+  content: '';
+  transition: transform 180ms cubic-bezier(.23, 1, .32, 1);
+}
+
+.sectionHeading[aria-checked='true'] .switchTrack {
+  border-color: var(--mb-accent, #017bff);
+  background: var(--mb-accent, #017bff);
+}
+
+.sectionHeading[aria-checked='true'] .switchTrack::after { transform: translateX(20px); }
+
+.summary {
+  display: grid;
+  gap: 3px;
+  margin: 8px 0 0;
+  padding: 8px;
+  border: 1px solid color-mix(in srgb, var(--mb-accent, #017bff) 25%, transparent);
+  border-radius: 6px;
+  background: var(--mb-accent-wash, #e7f2ff);
+  color: var(--mb-accent-ink, #005ec5);
+  font-size: 12px;
+  line-height: 16px;
+  overflow-wrap: anywhere;
+}
+
+.summary strong { font-weight: 500; }
+
+.footer {
+  display: flex;
+  flex: none;
+  justify-content: center;
+  padding: 8px 15px;
+  background: var(--mb-surface, #fff);
+}
+
+.tabs button:hover,
+.sectionHeading:hover { background: var(--mb-subtle, #f4f6f8); }
+
+.tabs button:focus-visible,
+.sectionHeading:focus-visible,
+.camera:focus-visible {
+  outline: 2px solid var(--mb-accent, #017bff);
+  outline-offset: -2px;
+}
+
+:global([data-theme='dark']) :is(.sectionHeading, .environmentIcon) img { filter: brightness(0) invert(.9); }
+
+@media (prefers-reduced-motion: reduce) {
+  .camera, .chevron, .switchTrack::after { transition: none; }
+}
+
+@media (forced-colors: active) {
+  .camera[aria-pressed='true'] .check,
+  .environment[aria-current='true'] .check { background: Highlight; }
+  .sectionHeading[aria-checked='true'] .switchTrack { background: Highlight; }
+}

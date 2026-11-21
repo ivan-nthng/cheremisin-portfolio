@@ -1,0 +1,52 @@
+.trigger {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .trigger { opacity: 0; }
+
+  :global([data-render-history-row]:hover) .trigger,
+  :global([data-render-history-row]:focus-within) .trigger,
+  .trigger[aria-expanded='true'] { opacity: 1; }
+}
+
+.menu {
+  position: fixed;
+  z-index: 50;
+  display: grid;
+  box-sizing: border-box;
+  width: min(180px, calc(100vw - 16px));
+  padding: 4px;
+  border: 1px solid var(--mb-border, #e5e7eb);
+  border-radius: 6px;
+  background: var(--mb-surface, #fff);
+  box-shadow: 0 8px 24px #1118272b;
+  color: var(--mb-ink, #0f172a);
+}
+
+.menu > :is(button, a) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 0 7px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: start;
+  text-decoration: none;
+}
+
+.menu > :is(button, a):not(:disabled):is(:hover, :focus) {
+  outline: 0;
+  background: var(--mb-accent-wash, #e7f2ff);
+  color: var(--mb-accent-ink, #005ec5);
+}
+
+.menu > button:disabled { color: var(--mb-muted, #475569); }
+.menu svg { flex: none; }

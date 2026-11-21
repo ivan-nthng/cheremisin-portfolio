@@ -1,0 +1,746 @@
+{
+  "fileKey": "a1FIpM2QJ0y79EO170WQDG",
+  "sessionId": "38fb0383-b4b2-4eb7-8c30-8d42756ef201",
+  "scope": "Local design demonstration only; source artwork not evidence of real participants, trips, payments or production support capability. The Map fragment uses the attributed basemap captures recorded below in both inline and expanded views. The full interactive demo uses the live provider.",
+  "generatedFictionalAssets": [
+    {
+      "person": "Pickup driver (fictional demo identity; displayed name Ivan Cheremisin)",
+      "scope": "Wholly fictional generated person for Pickup only, not a likeness of Ivan or any real person; original geographic/driver and all other people preserved.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: photorealistic-natural. Asset type: one square participant avatar for a fictional driver in a local product demo. Create a photorealistic head-and-shoulders portrait of a wholly fictional adult man around forty-eight, with short softly curly salt-and-pepper hair, clean-shaven face, warm brown eyes and a friendly neutral expression with a slight relaxed smile. Simple muted olive overshirt, unobtrusive warm gray backdrop, soft natural side light and realistic skin texture. Center the full head and shoulders with a little breathing room, direct eye contact; make the face large and distinctive enough to remain clear at 28px and 44px. Contemporary natural editorial photograph. Invent a new identity, not a likeness of Ivan or any real person. One person only, no car or windshield, accessories, text, logos, watermark, border, collage or interface.",
+      "master": {
+        "file": "docs/design/assets/citymobil-pickup-driver-v1-master.png",
+        "sha256": "221f4952dfcd62f41eace19ad716af84d84d1dad6f1951c8aa0f48c2a3460886",
+        "bytes": 2250630,
+        "width": 1254,
+        "height": 1254,
+        "generatedOriginal": "/Users/ivan/.codex/generated_images/01a17d63-3309-73b3-8bfe-ce4666be2d8e/exec-b72a588b-6bb4-4808-a093-2c329d0c6632.png"
+      },
+      "final": {
+        "file": "public/images/citymobil/demo/people/pickup-driver-v1.webp",
+        "width": 192,
+        "height": 192,
+        "bytes": 4492,
+        "sha256": "63504e2dd3cc93f24d0d96c316a2e971a1f20d3c5265e8040dfd29b4262ad1c3",
+        "optimization": "Sharp resize to192x192 WebP quality84; generated master copied byte-exactly and retained unchanged."
+      }
+    },
+    {
+      "person": "Alex Vieira",
+      "scope": "Wholly fictional local demo portrait; not a source-Figma asset or a real participant.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: photorealistic-natural. Create one square head-and-shoulders profile photograph of a wholly fictional adult man for local demo character Alex Vieira. A charismatic approachable man around forty, short dark hair, neatly kept stubble, relaxed slight smile and direct eye contact; plain dark teal overshirt. Soft natural side light, unobtrusive warm gray background, realistic skin texture, contemporary candid editorial feel rather than a glossy stock headshot. Center the clear face large enough to read at28\u201344px, include the full head and shoulders with a little breathing room. One person only; no car/windshield, hat, sunglasses, text, logo, watermark, border, collage or interface. Invent a new identity, not a likeness of a real person.",
+      "master": {
+        "file": "docs/design/assets/citymobil-alex-vieira-v1-master.png",
+        "sha256": "4661159cd1ab30f44c986a4b5d401e5f3a37bc3870bb8cf17606dd9de660e2bd",
+        "bytes": 2090970,
+        "width": 1254,
+        "height": 1254,
+        "generatedOriginal": "/Users/ivan/.codex/generated_images/01a17d63-3309-73b3-8bfe-ce4666be2d8e/exec-295480bc-e70f-44e7-9e8b-3dd28ba3a42e.png"
+      },
+      "final": {
+        "file": "public/images/citymobil/demo/people/alex-vieira-v1.webp",
+        "width": 192,
+        "height": 192,
+        "bytes": 4178,
+        "sha256": "6b9e6cec6a0cfbf99f972eac9e87c26d62724b94d131d68b6b1ce0d07dc33712",
+        "optimization": "Sharp resize to192x192 WebP quality84; generated master copied byte-exactly and retained unchanged."
+      }
+    },
+    {
+      "person": "Tiago Moreira",
+      "scope": "Wholly fictional local demo portrait; not a source-Figma asset or a real participant.",
+      "tool": "built-in image_gen",
+      "prompt": "Use case: photorealistic-natural. Create one square head-and-shoulders profile photograph of a wholly fictional adult man for the local Citymobil demo character Tiago Moreira. Ordinary natural portrait, about forty years old, bald head, clean-shaven face, round dark glasses, warm medium-brown skin, plain olive knit polo. Gentle neutral expression, looking toward the camera. Soft daylight against an unobtrusive warm gray background, realistic skin and fabric texture, sharp recognizable face centered and large enough to read as a tiny 28\u201344px avatar. Full head with a little breathing room, shoulders at lower edge. One person only. No cap, no beard, no vehicle, no text, logos, badge, border, illustration, collage or interface. Distinct from the existing bearded man in a backward cap, gray-bearded driver in a car and young man with wavy brown hair. This is a newly invented person, not a real identity.",
+      "master": {
+        "file": "/Users/ivan/.codex/generated_images/01a17d63-3309-73b3-8bfe-ce4666be2d8e/exec-b68b8aef-e77e-43cb-bcd0-9254b25d6e3b.png",
+        "sha256": "55b83a8308cc6956f1c59b5ca442923a8926247ab895eccb9bd2cbc6860b5759",
+        "bytes": 2112002
+      },
+      "final": {
+        "file": "public/images/citymobil/demo/people/tiago-moreira-v1.webp",
+        "width": 192,
+        "height": 192,
+        "bytes": 3696,
+        "sha256": "9729bfc11ea07d13b9d5a4da07c4c40388085ae40906b7f0ead3957b3f8da3ec",
+        "optimization": "Sharp resize to192x192 WebP quality84; generated source retained unchanged."
+      }
+    }
+  ],
+  "sourceNodes": {
+    "workspace": "6514:19913",
+    "info": "6626:5126",
+    "scripts": "6626:5139",
+    "dark-info": "6756:16796",
+    "menu": "6219:2163"
+  },
+  "assets": [
+    {
+      "group": "workspace",
+      "name": "imgAvatarS",
+      "url": "https://www.figma.com/api/mcp/asset/37de035e-3803-4c9e-b960-a74e4b547a76.png",
+      "file": "public/images/citymobil/demo/workspace/imgAvatarS.png",
+      "bytes": 389271,
+      "sha256": "37cc6c690bb3ddcc5c866cd40252962c5df531456a5dc3f68d070bcf48d195d4",
+      "usedFile": "public/images/citymobil/demo/workspace/imgAvatarS.png"
+    },
+    {
+      "group": "workspace",
+      "name": "imgMcSymbol",
+      "url": "https://www.figma.com/api/mcp/asset/01e040c7-e6ac-43cb-b9be-1b20cd3a0254.svg",
+      "file": "public/images/citymobil/demo/workspace/imgMcSymbol.svg",
+      "bytes": 965,
+      "sha256": "d4eab95303d0382df5cfd503bfe2f9adb41d42c5b81dec7e1325ef9d2a17aeef",
+      "width": "15.9309",
+      "height": "9.84821",
+      "viewBox": "0 0 15.9309 9.84821",
+      "usedFile": "public/images/citymobil/demo/workspace/imgMcSymbol.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgCarFront",
+      "url": "https://www.figma.com/api/mcp/asset/e69abc69-165b-4f21-898a-a98924896e2e.svg",
+      "file": "public/images/citymobil/demo/workspace/imgCarFront.svg",
+      "bytes": 2212,
+      "sha256": "5a908ece3cf4f7e1b7350707f6325951faaad11ad794ae083f12b0badd9a9ee7",
+      "width": "16",
+      "height": "16",
+      "viewBox": "0 0 16 16",
+      "usedFile": "public/images/citymobil/demo/workspace/imgCarFront.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgStateCompleted",
+      "url": "https://www.figma.com/api/mcp/asset/fbdcbdda-68c3-4e35-b505-9de47fd4e39f.svg",
+      "file": "public/images/citymobil/demo/workspace/imgStateCompleted.svg",
+      "bytes": 752,
+      "sha256": "ed501e009f5f15c66a0bd2e12d6af15a3444d4ee47b3e3fa9aa05a864eb2e9de",
+      "width": "16",
+      "height": "16",
+      "viewBox": "0 0 16 16",
+      "usedFile": "public/images/citymobil/demo/workspace/imgStateCompleted.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgVector",
+      "url": "https://www.figma.com/api/mcp/asset/526c7e32-8d0c-4afd-b4a3-edfd07fc9da5.svg",
+      "file": "public/images/citymobil/demo/workspace/imgVector.svg",
+      "bytes": 830,
+      "sha256": "b84bb04faa0831c0950445ac6c4e7ebbc1a640768535ba12449daf59ed002b34",
+      "width": "36",
+      "height": "16",
+      "viewBox": "0 0 36 16",
+      "usedFile": "public/images/citymobil/demo/workspace/imgVector.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgInbox",
+      "url": "https://www.figma.com/api/mcp/asset/e1a5aebd-6122-46d4-aeea-05d96bb2dff2.svg",
+      "file": "public/images/citymobil/demo/workspace/imgInbox.svg",
+      "bytes": 1467,
+      "sha256": "3e9fb9864ec7bc972490e50ee6e23d0a42c76d2b8f7c2771c6a4c8428b7ed128",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgInbox.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgRatingS",
+      "url": "https://www.figma.com/api/mcp/asset/26e2cfa7-aa0c-4606-9abd-1af3c4cd0d29.svg",
+      "file": "public/images/citymobil/demo/workspace/imgRatingS.svg",
+      "bytes": 1270,
+      "sha256": "2b699c0368717a39d396b2b715cb525a1222ddc6f160f06309b9f08c1f3b58b2",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgRatingS.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgComment",
+      "url": "https://www.figma.com/api/mcp/asset/26dee301-de42-41c4-b182-f42cddc4ce45.svg",
+      "file": "public/images/citymobil/demo/workspace/imgComment.svg",
+      "bytes": 3028,
+      "sha256": "c29e6e30951b5dd0d181f2d012288485f0d46249514c4bc2679d633ac83f9a3b",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgComment.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgKnowledge",
+      "url": "https://www.figma.com/api/mcp/asset/65f140cd-855c-41b4-9d90-1c07cd0d9eea.svg",
+      "file": "public/images/citymobil/demo/workspace/imgKnowledge.svg",
+      "bytes": 2044,
+      "sha256": "58c5c5823700d04b510594d4dd8ff1956e63cd91d825b95fe3e52d5f6fdeeb16",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgKnowledge.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgLocation1",
+      "url": "https://www.figma.com/api/mcp/asset/7a57cafb-7952-4f61-ba35-71b4a166156f.svg",
+      "file": "public/images/citymobil/demo/workspace/imgLocation1.svg",
+      "bytes": 507,
+      "sha256": "6dddee3b2ee13d700ea7cb7c912b3ab31cce072cba5c3892ac2963a6726ab465",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgLocation1.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgCall",
+      "url": "https://www.figma.com/api/mcp/asset/c14e1ec7-a62a-4c1b-8d5f-00a9c7d0628e.svg",
+      "file": "public/images/citymobil/demo/workspace/imgCall.svg",
+      "bytes": 1059,
+      "sha256": "b2e0746634d7b57347e58bf395ed7502622359458f8ac034b15b943f5a9d829d",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgCall.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgPayment",
+      "url": "https://www.figma.com/api/mcp/asset/a31b5ef3-851f-46aa-b8ed-809365568974.svg",
+      "file": "public/images/citymobil/demo/workspace/imgPayment.svg",
+      "bytes": 2514,
+      "sha256": "3a228661a95633586c229ad125496d7ca6b8d827627e58707698315ed212976a",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgPayment.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgMore",
+      "url": "https://www.figma.com/api/mcp/asset/ea769f25-820f-4ece-a8ec-7d5ca8e617c9.svg",
+      "file": "public/images/citymobil/demo/workspace/imgMore.svg",
+      "bytes": 2172,
+      "sha256": "12015659200032f7e4051f6293c198c43404c8a6f91a3e7e588a3f252c56b8a0",
+      "width": "16",
+      "height": "16",
+      "viewBox": "0 0 16 16",
+      "usedFile": "public/images/citymobil/demo/workspace/imgMore.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgTimer",
+      "url": "https://www.figma.com/api/mcp/asset/c3eadabe-8d47-4637-bb49-b81401b4ae3e.svg",
+      "file": "public/images/citymobil/demo/workspace/imgTimer.svg",
+      "bytes": 2333,
+      "sha256": "a62fd0d9d4503556e8d5e413165c270b299c67b6884a63ef87c8c50cd05abea7",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgTimer.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgCheck",
+      "url": "https://www.figma.com/api/mcp/asset/5bad54a7-46c3-4810-ab16-2a696b64a7a5.svg",
+      "file": "public/images/citymobil/demo/workspace/imgCheck.svg",
+      "bytes": 630,
+      "sha256": "eefdc29f7abe74391fccb97605a7e027c6744bf32adb82cffca002b2a53a7702",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgCheck.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgCall1",
+      "url": "https://www.figma.com/api/mcp/asset/ba9ce13a-5966-4595-b5c0-45b48509a10a.svg",
+      "file": "public/images/citymobil/demo/workspace/imgCall1.svg",
+      "bytes": 1063,
+      "sha256": "6c3f68891f9bb7b31998a1c42584191a38bc46d9c0a3dfb9113b6427803a7bc9",
+      "width": "16",
+      "height": "16",
+      "viewBox": "0 0 16 16",
+      "usedFile": "public/images/citymobil/demo/workspace/imgCall1.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgMessage",
+      "url": "https://www.figma.com/api/mcp/asset/d391b9c1-0dcc-4d2e-a651-0f06fb132bf8.svg",
+      "file": "public/images/citymobil/demo/workspace/imgMessage.svg",
+      "bytes": 2288,
+      "sha256": "fed38eeb9879a7e73118638dfb19ba0b0280e66613cd5ede3cc9d7d3b0e63293",
+      "width": "16",
+      "height": "16",
+      "viewBox": "0 0 16 16",
+      "usedFile": "public/images/citymobil/demo/workspace/imgMessage.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgSortDown",
+      "url": "https://www.figma.com/api/mcp/asset/4a391d76-a06e-469e-8a9c-844a726d9e9b.svg",
+      "file": "public/images/citymobil/demo/workspace/imgSortDown.svg",
+      "bytes": 425,
+      "sha256": "f1d150529eaa4f56ad8512bbf3ce7ffbe3b8cb8d913e9a2f1f68f9e7ff1cf244",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgSortDown.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgFlash",
+      "url": "https://www.figma.com/api/mcp/asset/1cc9d14b-9039-49ce-80cf-b8f4f86e97d5.svg",
+      "file": "public/images/citymobil/demo/workspace/imgFlash.svg",
+      "bytes": 1202,
+      "sha256": "b9e57fc02a67ccaf8fceba8815dd5d123f50b00d96dbc54483d0e6648875d6b1",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgFlash.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgUnmute",
+      "url": "https://www.figma.com/api/mcp/asset/21ecf96b-e0fd-457a-ba2b-7dae47d72e79.svg",
+      "file": "public/images/citymobil/demo/workspace/imgUnmute.svg",
+      "bytes": 1626,
+      "sha256": "285f34465af42ad0daa964cf219df947f832d65df47da4535b4c663940d3599d",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgUnmute.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgAttach",
+      "url": "https://www.figma.com/api/mcp/asset/ff133cf2-a98b-4bb0-b63c-e3bfceeea5ef.svg",
+      "file": "public/images/citymobil/demo/workspace/imgAttach.svg",
+      "bytes": 2696,
+      "sha256": "c2ca23c2722eb7974ea2118d7b7908e04c28969624ac52540081f7a6203232e0",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgAttach.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgMore1",
+      "url": "https://www.figma.com/api/mcp/asset/af9ba204-83ab-44a9-9333-d68fc8cf0aae.svg",
+      "file": "public/images/citymobil/demo/workspace/imgMore1.svg",
+      "bytes": 2175,
+      "sha256": "7937de3ed7e57cf79fb0900992e139880459f2d1a77be0dde69d0eb731261623",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgMore1.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgTime",
+      "url": "https://www.figma.com/api/mcp/asset/83de64bb-6390-40ce-981f-cb93640cba6c.svg",
+      "file": "public/images/citymobil/demo/workspace/imgTime.svg",
+      "bytes": 1338,
+      "sha256": "51a84830f60923977e75aea59e0b97242eae22e6e89c348d65b5ce3e2858b05b",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgTime.svg"
+    },
+    {
+      "group": "workspace",
+      "name": "imgSend",
+      "url": "https://www.figma.com/api/mcp/asset/d3ffb98f-29dd-4d31-95b5-f4eed36a7431.svg",
+      "file": "public/images/citymobil/demo/workspace/imgSend.svg",
+      "bytes": 1473,
+      "sha256": "15be1975f757b307538295fea22761db9ddaa50dc7c3c5ff293dad051f0db601",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgSend.svg"
+    },
+    {
+      "group": "scripts",
+      "name": "imgProgress",
+      "url": "https://www.figma.com/api/mcp/asset/7af1aeff-7f75-4489-88b6-efddfecaab65.svg",
+      "file": "public/images/citymobil/demo/scripts/imgProgress.svg",
+      "bytes": 473,
+      "sha256": "ef34eff19d79c0c894bc454ef4c605bd409984052ea35344d610dee05700528f",
+      "width": "16",
+      "height": "262",
+      "viewBox": "0 0 16 262",
+      "usedFile": "public/images/citymobil/demo/scripts/imgProgress.svg"
+    },
+    {
+      "group": "scripts",
+      "name": "imgInfo",
+      "url": "https://www.figma.com/api/mcp/asset/3f9be1a3-2919-4449-959a-a6adf52969a3.svg",
+      "file": "public/images/citymobil/demo/scripts/imgInfo.svg",
+      "bytes": 2437,
+      "sha256": "30db4fb05835c4cab673a29b9fcae0095699a1243a30313c07769d8034a39821",
+      "width": "16",
+      "height": "16",
+      "viewBox": "0 0 16 16",
+      "usedFile": "public/images/citymobil/demo/scripts/imgInfo.svg"
+    },
+    {
+      "group": "scripts",
+      "name": "imgProgress1",
+      "url": "https://www.figma.com/api/mcp/asset/9affbf57-d171-4709-8961-88b3793d1f84.svg",
+      "file": "public/images/citymobil/demo/scripts/imgProgress1.svg",
+      "bytes": 786,
+      "sha256": "e717050b5871e650182b849a7817ac8f8f2b78c6af4e7a95ad1dda24108a8fb6",
+      "width": "16",
+      "height": "198",
+      "viewBox": "0 0 16 198",
+      "usedFile": "public/images/citymobil/demo/scripts/imgProgress1.svg"
+    },
+    {
+      "group": "scripts",
+      "name": "imgBranch",
+      "url": "https://www.figma.com/api/mcp/asset/e3f1d90d-a048-4722-9f5a-823baacaaa5e.svg",
+      "file": "public/images/citymobil/demo/scripts/imgBranch.svg",
+      "bytes": 2314,
+      "sha256": "547780c884b2fdc5031b75dab3e024f73efddc0e492502c6b150e35cbbed45d6",
+      "width": "16",
+      "height": "16",
+      "viewBox": "0 0 16 16",
+      "usedFile": "public/images/citymobil/demo/scripts/imgBranch.svg"
+    },
+    {
+      "group": "dark-info",
+      "name": "imgLocation1",
+      "url": "https://www.figma.com/api/mcp/asset/84e78689-839e-425e-be61-9a0851928bd1.svg",
+      "file": "public/images/citymobil/demo/dark-info/imgLocation1.svg",
+      "bytes": 507,
+      "sha256": "ff57bba03f49a392455f9b209f7dff48474e83a195f2479a406d1955b8b27d72",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/dark-info/imgLocation1.svg"
+    },
+    {
+      "group": "dark-info",
+      "name": "imgCall",
+      "url": "https://www.figma.com/api/mcp/asset/9aa7211b-41ac-4bae-a43b-0f483d30fcb5.svg",
+      "file": "public/images/citymobil/demo/dark-info/imgCall.svg",
+      "bytes": 1059,
+      "sha256": "00078463f5c21ec0cf308bcdbab2bd85713102d63263551058bd27f2b5ee8394",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/dark-info/imgCall.svg"
+    },
+    {
+      "group": "dark-info",
+      "name": "imgPayment",
+      "url": "https://www.figma.com/api/mcp/asset/a307f016-027a-4e3c-842f-3c816e7a8736.svg",
+      "file": "public/images/citymobil/demo/dark-info/imgPayment.svg",
+      "bytes": 2514,
+      "sha256": "d6c5e06c5e94785223751b4f1e5e106d29da1e965c22871c5bbf42e3826544f8",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/dark-info/imgPayment.svg"
+    },
+    {
+      "group": "dark-info",
+      "name": "imgStatusIndicator",
+      "url": "https://www.figma.com/api/mcp/asset/2a2ba33b-0430-49b3-bc6a-6d81186ec168.svg",
+      "file": "public/images/citymobil/demo/dark-info/imgStatusIndicator.svg",
+      "bytes": 752,
+      "sha256": "8def5189da3ba6c0f9a3be11bd5f5c44ae5d31f50d354a689fd386ce17593fd1",
+      "width": "16",
+      "height": "16",
+      "viewBox": "0 0 16 16",
+      "usedFile": "public/images/citymobil/demo/dark-info/imgStatusIndicator.svg"
+    },
+    {
+      "group": "dark-info",
+      "name": "imgCarFront",
+      "url": "https://www.figma.com/api/mcp/asset/716fe586-4133-4ece-91b6-4b38b1c591dc.svg",
+      "file": "public/images/citymobil/demo/dark-info/imgCarFront.svg",
+      "bytes": 2212,
+      "sha256": "4516b3fba00225f740a159f601e9abed318d7db54520e0835df4c6a680d3107b",
+      "width": "16",
+      "height": "16",
+      "viewBox": "0 0 16 16",
+      "usedFile": "public/images/citymobil/demo/dark-info/imgCarFront.svg"
+    },
+    {
+      "group": "dark-info",
+      "name": "imgMore",
+      "url": "https://www.figma.com/api/mcp/asset/02f2762e-5ea8-48ea-b8da-7bcbca155edb.svg",
+      "file": "public/images/citymobil/demo/dark-info/imgMore.svg",
+      "bytes": 2172,
+      "sha256": "7c17273cb5f07e014eeaaa445957810ecd711d0619823d1084c80a114ca6a7b6",
+      "width": "16",
+      "height": "16",
+      "viewBox": "0 0 16 16",
+      "usedFile": "public/images/citymobil/demo/dark-info/imgMore.svg"
+    },
+    {
+      "group": "dark-info",
+      "name": "imgProgress",
+      "url": "https://www.figma.com/api/mcp/asset/cd02ee27-97d3-45bd-933e-80cc2f29ba48.svg",
+      "file": "public/images/citymobil/demo/dark-info/imgProgress.svg",
+      "bytes": 471,
+      "sha256": "5ec5582094c386e22c5c1830ca058cde42aed0b75ba7825e51d0b286f00b1923",
+      "width": "16",
+      "height": "262",
+      "viewBox": "0 0 16 262",
+      "usedFile": "public/images/citymobil/demo/dark-info/imgProgress.svg"
+    },
+    {
+      "group": "dark-info",
+      "name": "imgInfo",
+      "url": "https://www.figma.com/api/mcp/asset/e04344c7-89bc-4eef-8912-eb1ee3ede56f.svg",
+      "file": "public/images/citymobil/demo/dark-info/imgInfo.svg",
+      "bytes": 2437,
+      "sha256": "d421519cb0eee2d16beb456436a10e08c8efaff8297463f51ff75be2799fd63c",
+      "width": "16",
+      "height": "16",
+      "viewBox": "0 0 16 16",
+      "usedFile": "public/images/citymobil/demo/dark-info/imgInfo.svg"
+    },
+    {
+      "group": "dark-info",
+      "name": "imgProgress1",
+      "url": "https://www.figma.com/api/mcp/asset/bb428e2c-4343-41d3-b7ff-e837d6657782.svg",
+      "file": "public/images/citymobil/demo/dark-info/imgProgress1.svg",
+      "bytes": 784,
+      "sha256": "aca547b3852e0979cbc07fb87c404b8a63ce333a0b4bf480702848a8dbc6d912",
+      "width": "16",
+      "height": "198",
+      "viewBox": "0 0 16 198",
+      "usedFile": "public/images/citymobil/demo/dark-info/imgProgress1.svg"
+    },
+    {
+      "group": "dark-info",
+      "name": "imgBranch",
+      "url": "https://www.figma.com/api/mcp/asset/3d622d00-a586-4d47-8c77-f08e5ff53dc9.svg",
+      "file": "public/images/citymobil/demo/dark-info/imgBranch.svg",
+      "bytes": 2314,
+      "sha256": "2f01a5912c74afda0aa65b8a021ccdb961931135ec5f40019bf80bb95d8f2cae",
+      "width": "16",
+      "height": "16",
+      "viewBox": "0 0 16 16",
+      "usedFile": "public/images/citymobil/demo/dark-info/imgBranch.svg"
+    },
+    {
+      "group": "dark-info",
+      "name": "imgTimer",
+      "url": "https://www.figma.com/api/mcp/asset/4d020e42-3622-45be-89cd-5224b076198d.svg",
+      "file": "public/images/citymobil/demo/dark-info/imgTimer.svg",
+      "bytes": 2333,
+      "sha256": "05138b4a5eda96f41ab33ed239ec590bcba1f40bede277c2f3c4827984071c67",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/dark-info/imgTimer.svg"
+    },
+    {
+      "group": "dark-info",
+      "name": "imgCheck",
+      "url": "https://www.figma.com/api/mcp/asset/d4786c89-e513-4ea3-84e9-5d35da5afcbe.svg",
+      "file": "public/images/citymobil/demo/dark-info/imgCheck.svg",
+      "bytes": 630,
+      "sha256": "eefdc29f7abe74391fccb97605a7e027c6744bf32adb82cffca002b2a53a7702",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/workspace/imgCheck.svg"
+    },
+    {
+      "group": "menu",
+      "name": "imgArrowComplexUp",
+      "url": "https://www.figma.com/api/mcp/asset/f4bc7745-f02f-4724-b51f-0a9d02ad129e.svg",
+      "file": "public/images/citymobil/demo/menu/imgArrowComplexUp.svg",
+      "bytes": 874,
+      "sha256": "3d364380999d9cbeed44065e951fc1e394642a5463d7093b6ac14b024cffde70",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/menu/imgArrowComplexUp.svg"
+    },
+    {
+      "group": "menu",
+      "name": "imgDown",
+      "url": "https://www.figma.com/api/mcp/asset/537a1762-0ea7-4e26-add6-3c5edba9cd20.svg",
+      "file": "public/images/citymobil/demo/menu/imgDown.svg",
+      "bytes": 1182,
+      "sha256": "24bcadc0327b759317d6662774eb8c902915ba43b163bc2aa890b464aa6fb943",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/menu/imgDown.svg"
+    },
+    {
+      "group": "menu",
+      "name": "imgEnter",
+      "url": "https://www.figma.com/api/mcp/asset/0010dfd1-4790-4bbc-99d6-678e136aa791.svg",
+      "file": "public/images/citymobil/demo/menu/imgEnter.svg",
+      "bytes": 965,
+      "sha256": "4c41d731aed67c6f95b8e8fc9de62c4d5784efbc71925938bbca6b0c51b88c5b",
+      "width": "20",
+      "height": "20",
+      "viewBox": "0 0 20 20",
+      "usedFile": "public/images/citymobil/demo/menu/imgEnter.svg"
+    }
+  ],
+  "journeyNativeExports": {
+    "sourceNode": "8369:21465",
+    "session": "e4c04b8c-9df6-47ed-bda8-777b592233c4",
+    "method": "Read-only Figma exportAsync SVG; source and native frame geometry retained",
+    "files": [
+      {
+        "file": "public/images/citymobil/demo/journey/driver-direction.svg",
+        "node": "8369:21519",
+        "sha256": "18b4b70dc11df1264b9b7469b46ad5aee031efbf341378e321f773cf054bf2a6"
+      },
+      {
+        "file": "public/images/citymobil/demo/journey/traffic-warning.svg",
+        "node": "8369:21483",
+        "sha256": "c64938b0ac181c4b71730c23b005dc6f674f30a25db65da01fa26c66c1181bda"
+      }
+    ],
+    "note": "Driver glyph12px is reused within native24px circle; traffic SVG25x27 preserves outside contour of24px frame. Event dots use source8px/12px frames with outside2px/3px CM surface contour; GetOrder raw#a28787 is not a library alias."
+  },
+  "inlineBasemapCaptures": {
+    "providerStyle": "https://tiles.openfreemap.org/styles/positron",
+    "providerStyleSha256": "40565c7a5a0961cb1b33afefb55c1e48f06575d2e45868b309582334eeab82f1",
+    "recipe": "src/components/citymobil-demo/citymobil-map-style.ts",
+    "recipeSha256": "1638c39716f68a1ba88bbd5c4a838703a52a38ebe161f970251f9fc4c92dca6c",
+    "capturedAt": "2026-11-07T16:04:16.167Z",
+    "records": [
+      {
+        "theme": "light",
+        "camera": {
+          "center": [
+            -9.148142733800512,
+            38.71231659682584
+          ],
+          "zoom": 13.703673897652521,
+          "bearing": 0,
+          "pitch": 0
+        },
+        "coordinates": [
+          [
+            -9.163952916934534,
+            38.73205246741415
+          ],
+          [
+            -9.13233255066632,
+            38.73205246741415
+          ],
+          [
+            -9.13233255066632,
+            38.692575275999076
+          ],
+          [
+            -9.163952916934534,
+            38.692575275999076
+          ]
+        ],
+        "cssSize": {
+          "width": 600,
+          "height": 960
+        },
+        "dpr": 3,
+        "palette": {
+          "main": "#fff",
+          "secondary": "#f8fafc",
+          "border": "#e2e8f0",
+          "soft": "#475569",
+          "label": "#64748b",
+          "blue": "#2563eb",
+          "green": "#16a34a",
+          "orange": "#f5a80f",
+          "red": "#ef4444",
+          "history": "#94a3b8"
+        },
+        "baseLayers": 55,
+        "sources": [
+          "openmaptiles"
+        ],
+        "routeLayers": 0,
+        "markers": 0,
+        "file": "public/images/citymobil/demo/geographic/inline-map-light.png",
+        "sha256": "c4ae51c9dd29d3407db965af2f544caf89f26f9216b3efcb0cc8372998123cc8",
+        "bytes": 1329759
+      },
+      {
+        "theme": "dark",
+        "camera": {
+          "center": [
+            -9.148142733800512,
+            38.71231659682584
+          ],
+          "zoom": 13.703673897652521,
+          "bearing": 0,
+          "pitch": 0
+        },
+        "coordinates": [
+          [
+            -9.163952916934534,
+            38.73205246741415
+          ],
+          [
+            -9.13233255066632,
+            38.73205246741415
+          ],
+          [
+            -9.13233255066632,
+            38.692575275999076
+          ],
+          [
+            -9.163952916934534,
+            38.692575275999076
+          ]
+        ],
+        "cssSize": {
+          "width": 600,
+          "height": 960
+        },
+        "dpr": 3,
+        "palette": {
+          "main": "#0f172a",
+          "secondary": "#000",
+          "border": "#1e293b",
+          "soft": "#cbd5e1",
+          "label": "#94a3b8",
+          "blue": "#60a5fa",
+          "green": "#22c55e",
+          "orange": "#ffb92d",
+          "red": "#f87171",
+          "history": "#94a3b8"
+        },
+        "baseLayers": 55,
+        "sources": [
+          "openmaptiles"
+        ],
+        "routeLayers": 0,
+        "markers": 0,
+        "file": "public/images/citymobil/demo/geographic/inline-map-dark.png",
+        "sha256": "b0b1874262a4c401ef845b3da65e4b5f8c6982fa952677ce5fd70d242b090e88",
+        "bytes": 1586954
+      }
+    ],
+    "scope": "Clean basemap only, captured from the existing MapLibre/OpenFreeMap presentation; route, markers, controls and pointer are not baked into the image. Geographic image coordinates preserve the existing route projection. Expanded/standalone maps remain live.",
+    "attribution": [
+      {
+        "name": "OpenFreeMap",
+        "url": "https://openfreemap.org/"
+      },
+      {
+        "name": "OpenMapTiles",
+        "url": "https://openmaptiles.org/"
+      },
+      {
+        "name": "OpenStreetMap contributors",
+        "url": "https://www.openstreetmap.org/copyright"
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+.canvas {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  padding: 36px;
+  background:
+    radial-gradient(70% 90% at 92% 6%, rgb(245 158 11 / 16%), transparent 68%),
+    radial-gradient(60% 70% at 0% 100%, rgb(59 130 246 / 14%), transparent 68%),
+    #111113;
+}
+.preferences {
+  display: grid;
+  gap: 30px;
+  width: min(100%, 710px);
+  padding: 30px 34px;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 18px;
+  background: #202024;
+  color: #f4f1e9;
+  box-shadow: 0 24px 60px rgb(0 0 0 / 30%);
+}
+.header, .setting, .footer { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.header > div, .setting > div { display: grid; gap: 8px; }
+.header p:first-child { color: #aaa5a0; letter-spacing: .09em; }
+.setting { padding-block: 20px; border-top: 1px solid rgb(255 255 255 / 10%); border-bottom: 1px solid rgb(255 255 255 / 10%); }
+.setting p:last-child, .footer p { color: #aaa5a0; }
+.avatar { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; color: #251c11; background: #f2bb54; font-weight: 600; }
+.footer button { flex-shrink: 0; }

@@ -1,0 +1,414 @@
+@font-face{font-family:Citymobil Montserrat;src:url('/fonts/citymobil/montserrat-variable.ttf') format('truetype');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:Citymobil Roboto;src:url('/fonts/citymobil/roboto-variable.ttf') format('truetype');font-weight:100 900;font-style:normal;font-display:swap}
+.preview{--cm-main:#fff;--cm-secondary:#f8fafc;--cm-on-top:rgba(148,163,184,.08);--cm-fill:rgba(148,163,184,.16);--cm-text:#0f172a;--cm-soft:#475569;--cm-label:#64748b;--cm-grey:#94a3b8;--cm-border:#e2e8f0;--cm-border-light:rgba(148,163,184,.16);--cm-control-border:#cbd5e1;--cm-accent:#8c46e4;--cm-graphic:#7c3ecd;--cm-icon:#334155;--cm-positive:#22c55e;--cm-success:#15803d;--cm-success-fill:rgba(22,163,74,.08);--cm-orange:#f5a80f;--cm-turquoise:#00ced1;position:static;inset:auto;display:block;width:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:var(--cm-main);color:var(--cm-text);font:400 16px/24px 'Citymobil Roboto',Roboto,sans-serif;font-variation-settings:'wdth' 100;letter-spacing:0;border-radius:6px;box-shadow:0 4px 24px rgba(148,163,184,.16),0 0 2px rgba(148,163,184,.16);overflow:visible;color-scheme:light}
+.preview[data-theme=dark]{--cm-main:#0f172a;--cm-secondary:#000;--cm-on-top:rgba(255,255,255,.08);--cm-fill:rgba(255,255,255,.16);--cm-text:#f8fafc;--cm-soft:#cbd5e1;--cm-label:#94a3b8;--cm-grey:#94a3b8;--cm-border:#1e293b;--cm-border-light:rgba(255,255,255,.08);--cm-control-border:#475569;--cm-accent:#9859f1;--cm-graphic:#8c46e4;--cm-icon:#e2e8f0;--cm-positive:#4ade80;--cm-success:#22c55e;--cm-success-fill:rgba(22,163,74,.24);--cm-orange:#ffb92d;color-scheme:dark}
+.preview *{box-sizing:border-box}
+.preview :where(p,h3,h4,fieldset,dl,dd){margin:0}
+.preview :where(h3,h4){font-family:'Citymobil Montserrat',Montserrat,sans-serif;font-weight:600;letter-spacing:0}
+.preview button,.preview input,.preview textarea{font:inherit;color:inherit;letter-spacing:inherit}
+.preview button{cursor:pointer;border:0;background:none;padding:0;touch-action:manipulation}
+.preview button[aria-disabled=true]{cursor:not-allowed}
+.preview button:disabled{cursor:default}
+.preview :where(button,[tabindex]):focus-visible{outline:1px solid var(--cm-control-border);outline-offset:0;box-shadow:0 0 0 2px var(--cm-fill)}
+.preview input:not([type=radio]):not([type=checkbox]):focus-visible,.preview textarea:focus-visible{outline:0}
+.preview :where(button:not([aria-disabled=true]):not(:disabled)):hover{background-color:var(--cm-on-top)}
+.nativeAsset{display:block;flex:none;max-width:none}
+.nativeMask{display:inline-block;flex:none;background:var(--cm-icon);mask-repeat:no-repeat;mask-position:center;mask-size:contain;-webkit-mask-repeat:no-repeat;-webkit-mask-position:center;-webkit-mask-size:contain}
+.workspace{height:860px;display:grid;grid-template-columns:52px 375px minmax(0,1fr);overflow:hidden;border-radius:0 0 6px 6px}
+.workspace[data-guided-city]{height:756px}
+.rail{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 4px;background:var(--cm-main);box-shadow:inset -1px 0 var(--cm-border)}
+.logo{display:grid;place-items:center;width:36px;height:36px;background:#541f8f;border-radius:8px;margin:4px 0 12px}
+.rail>button{width:44px;height:44px;display:grid;place-items:center;border-radius:6px;position:relative}
+.rail>button[data-active=true]{background:rgba(124,62,205,.12)}
+.notification{position:absolute;right:6px;top:6px;width:6px;height:6px;background:var(--cm-orange);border-radius:50%}
+.infoPanel{display:flex;flex-direction:column;min-height:0;background:var(--cm-main);border-inline-end:1px solid var(--cm-border)}
+.issueHeader{padding:12px 16px;display:grid;gap:4px;border-bottom:1px solid var(--cm-border-light)}
+.issueHeader .eyebrow{font:600 14px/20px 'Citymobil Montserrat',sans-serif;color:var(--cm-label);letter-spacing:-.28px;margin-bottom:4px}
+.issueHeader h3{font-size:24px;line-height:32px}
+.issueHeader>p:last-child{color:var(--cm-soft)}
+.prediction{display:flex;align-items:center;gap:4px;height:40px;padding:8px 16px;border-bottom:1px solid var(--cm-border-light)}
+.prediction h4{font-size:14px;line-height:20px;letter-spacing:-.28px}
+.beta{display:inline-flex;background:rgba(124,62,205,.08);color:var(--cm-graphic);padding:4px 8px;border-radius:9999px;font:600 9px/12px 'Citymobil Roboto',sans-serif;text-transform:uppercase;letter-spacing:1.08px}
+[data-theme=dark] .beta{background:rgba(140,70,228,.24)}
+.quickActions{padding:8px 4px;border-bottom:1px solid var(--cm-border-light)}
+.quickActions button{display:flex;gap:6px;align-items:center;width:100%;min-height:36px;padding:8px 8px 8px 12px;border-radius:6px;font-size:14px;font-weight:500;line-height:20px}
+.quickActions button>span:not(.nativeMask){flex:1;text-align:left}
+.quickActions kbd{padding:0 4px;border-radius:4px;background:var(--cm-fill);font:inherit;color:var(--cm-label)}
+.panelWell{display:flex;flex-direction:column;flex:1 1 0;min-height:0;padding:8px;background:var(--cm-secondary)}.panelWell>.card{flex:1 1 0;min-height:0}
+.card{height:auto;max-height:100%;background:var(--cm-main);border-radius:16px;box-shadow:inset 0 0 0 1px var(--cm-border-light);overflow:hidden;display:flex;flex-direction:column}
+.tabs{display:flex;align-items:end;gap:8px;flex:none;height:44px;padding:8px 8px 0;background:var(--cm-on-top);border-bottom:1px solid var(--cm-border-light);backdrop-filter:blur(12px)}
+.tabs button{height:36px;padding:0 12px 8px;border-bottom:2px solid transparent;font-size:12px;line-height:16px;font-weight:500;color:var(--cm-label)}
+.tabs button[aria-selected=true]{border-bottom-color:var(--cm-accent);color:var(--cm-soft)}
+.cardScroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;overflow-anchor:none;scrollbar-gutter:stable;overscroll-behavior:contain;scrollbar-width:thin}
+.dateRow{display:flex;justify-content:space-between;align-items:center;padding:16px 16px 8px;height:52px;gap:8px;font-size:12px;line-height:16px;color:var(--cm-grey)}
+.completed{display:flex;align-items:center;gap:4px;padding:6px;border-radius:9999px;background:var(--cm-success-fill);color:var(--cm-success);font-weight:500;white-space:nowrap}
+.carFare{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 16px 24px;height:84px}
+.carFare h4{font-size:16px;line-height:24px;white-space:nowrap}
+.carFare p{display:flex;align-items:center;gap:8px;color:var(--cm-soft);margin-top:4px}
+.fare{display:flex;align-items:baseline;gap:0;font:600 16px/24px 'Citymobil Montserrat',sans-serif;color:var(--cm-soft);white-space:nowrap}
+.fare>img{align-self:center;margin-right:8px}
+.fare>span:first-of-type{margin-right:4px}
+.fare strong{font-weight:600;font-size:28px;line-height:36px;color:var(--cm-text)}
+.ticket{padding:0 16px 4px;font-size:12px;line-height:16px;color:var(--cm-grey)}
+.routeSummary{--route-gap:36px;display:grid;grid-template-columns:max-content 16px minmax(0,1fr);column-gap:16px;row-gap:var(--route-gap);margin:0 8px;padding:16px 12px;border-radius:8px;background:var(--cm-on-top);color:var(--cm-soft)}
+.routeEndpoint{display:contents}
+.routeTime{white-space:nowrap;align-self:start}
+.routeAddress{min-width:0;overflow-wrap:anywhere}
+.routeMarker{position:relative;align-self:stretch;width:16px}
+.routeMarker i{position:absolute;z-index:1;top:calc(.5lh - 6px);left:2px;display:block;width:12px;height:12px;border:4px solid #f3f3f1;border-radius:50%;background:var(--cm-graphic)}
+.routeEndpoint:first-child .routeMarker::before{content:'';position:absolute;top:calc(.5lh - 8px);bottom:calc(-1 * var(--route-gap) - .5lh - 8px);left:0;width:16px;border-radius:9999px;background:linear-gradient(var(--cm-graphic),var(--cm-orange))}
+.routeEndpoint:last-child .routeMarker i{background:var(--cm-orange)}
+.routeSummary[data-compact=true]{--route-gap:12px;padding:8px;column-gap:8px;font-size:12px;line-height:16px}
+.passenger{display:flex;align-items:center;gap:8px;height:44px;margin:4px 8px 8px;padding:8px 12px;border-radius:8px;background:var(--cm-on-top);font-size:14px;line-height:20px}
+.passenger>img{width:28px;height:28px;object-fit:cover;border-radius:6px}
+.passenger>span{flex:1}
+.passenger button{display:grid;place-items:center;width:28px;height:28px;border-radius:4px}
+.scripts{padding:16px 16px 16px 8px;font-size:14px;line-height:20px;color:var(--cm-soft)}
+.scriptStep{display:flex;gap:12px;padding:0 8px;align-items:start}
+.scriptStep>.nativeAsset{margin-top:6px}
+.stepContent{padding-top:2px;padding-bottom:12px;min-width:0;flex:1;display:grid;gap:16px}
+.stepContent h4{font-size:16px;line-height:24px;color:var(--cm-text)}
+.choice{display:flex;gap:8px;align-items:start;cursor:pointer;min-width:0}
+.choice input{appearance:none;flex:none;width:16px;height:16px;margin:2px 0 0;background:var(--cm-fill);border:1px solid var(--cm-control-border);border-radius:4px;cursor:pointer}
+.choice input[type=radio]{border-radius:50%}
+.choice input:checked{border:4px solid var(--cm-accent);background:var(--cm-main)}
+.choices{display:grid;gap:12px;padding:0 0 0 12px;border:0}
+.scriptHint{display:flex;align-items:start;gap:8px}
+.scriptHint>.nativeAsset,.scriptHint>.nativeMask{margin-top:2px}
+.stepTitle{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.stepTitle>span{display:flex;align-items:center;gap:4px;white-space:nowrap}
+.useReply{font:500 14px/20px 'Citymobil Roboto',sans-serif!important;border:1px solid var(--cm-control-border)!important;border-radius:6px;margin:12px 8px 0;padding:10px 12px!important}
+.issueFooter{padding:16px;border-top:1px solid var(--cm-border-light);display:flex;justify-content:end;gap:8px}
+.issueFooter button{height:36px;padding:0 16px;display:flex;align-items:center;gap:6px;background:var(--cm-fill);font-size:14px;line-height:20px;font-weight:500;border-radius:6px;color:var(--cm-soft)}
+.issueFooter .primary{background:var(--cm-accent);color:white}
+.conversation{min-width:0;min-height:0;display:flex;flex-direction:column;position:relative;background:var(--cm-main)}
+.threadHeader{height:56px;flex:none;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--cm-border-light)}
+.threadHeader h4{font-size:24px;line-height:32px;letter-spacing:0;overflow-wrap:anywhere}
+.threadHeader p{display:flex;align-items:center;gap:4px;font-size:9px;line-height:12px;color:var(--cm-success)}
+.threadHeader i{width:6px;height:6px;background:var(--cm-positive);border-radius:50%}
+.threadHeader>div:last-child{display:flex;gap:8px}
+.threadHeader button{width:28px;height:28px;background:var(--cm-fill);border-radius:4px;display:grid;place-items:center}
+.today{background:var(--cm-on-top);height:40px;flex:none;display:grid;place-items:center;font-size:14px;line-height:20px;font-weight:500;color:var(--cm-label)}
+.thread{flex:1;min-height:0;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:24px;scrollbar-width:thin;overscroll-behavior:contain}
+.message{display:flex;align-items:start;gap:8px}
+.initials{width:44px;height:44px;flex:none;display:grid;place-items:center;border-radius:10px;background:var(--cm-positive);font-size:14px;font-weight:500;color:white}
+.initials[data-agent=true]{background:var(--cm-accent)}
+.message>div{flex:1;min-width:0}
+.message h4{font-size:14px;line-height:20px;color:var(--cm-graphic);letter-spacing:-.28px;margin-bottom:4px}
+.message p{font-size:16px;line-height:24px;overflow-wrap:anywhere;white-space:pre-wrap}
+.message time{flex:none;color:var(--cm-grey);font-size:16px;line-height:24px}
+.composerWrap{padding:0 16px 16px;flex:none}
+/* Existing native Floating MD / Active MD; colors stay local to this family. */
+.composer{--cm-composer-shadow-color:rgba(148,163,184,.16);--cm-composer-active-shadow-color:rgba(124,62,205,.16);border-radius:20px;box-shadow:0 0 2px 0 var(--cm-composer-shadow-color),0 2px 12px 0 var(--cm-composer-shadow-color);padding:12px 16px 16px;background:var(--cm-main)}
+.preview[data-theme=dark] .composer{--cm-composer-shadow-color:rgba(255,255,255,.16);--cm-composer-active-shadow-color:rgba(124,62,205,.24)}
+.replyHeader{min-height:36px;display:flex;gap:6px;align-items:center;font-size:12px;line-height:16px;color:var(--cm-soft)}
+.replyHeader>button{display:flex;gap:6px;align-items:center;min-height:36px;padding:8px;border-radius:6px;font:500 14px/20px 'Citymobil Roboto',sans-serif;min-width:0}
+.replyHeader>button:last-child{overflow-wrap:anywhere}
+.composer textarea{width:100%;height:116px;min-height:96px;display:block;resize:none;border:0;outline:0;background:transparent;padding:16px 0;font-size:20px;line-height:28px;color:var(--cm-text)}
+.composer textarea::placeholder{color:#64799a;opacity:1}
+[data-theme=dark] .composer textarea::placeholder{color:var(--cm-grey)}
+.composerTools{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.composerTools>div{display:flex;gap:8px;align-items:center}
+.composerTools button{height:36px;min-width:36px;display:flex;gap:6px;align-items:center;justify-content:center;background:var(--cm-fill);border-radius:6px}
+.composerTools button:nth-child(4),.composerTools>div:last-child>button:first-child{background:transparent}
+.composerTools .send{padding:0 16px;font-size:14px;line-height:20px;background:var(--cm-accent);color:white}
+.send:disabled{background:var(--cm-fill);color:var(--cm-soft)}
+.itinerary{padding:24px;flex:1;overflow:auto;overscroll-behavior:contain}
+.itinerary h3{font-size:24px;line-height:32px}
+.itineraryHeading{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-bottom:16px}
+.itineraryHeading button{padding:8px 12px;min-height:44px;border:1px solid var(--cm-control-border);border-radius:6px}
+.itinerary>p{color:var(--cm-soft);max-width:600px}
+.itinerary dl{display:grid;gap:8px;margin:24px 0}
+.itinerary dt{font-size:12px;color:var(--cm-label);margin-top:8px}
+.itinerary dd{font:600 16px/24px 'Citymobil Montserrat',sans-serif}
+.actionDialog{width:812px;height:min(520px,calc(100dvh - 48px));max-width:calc(100% - 32px);max-height:calc(100dvh - 48px);padding:0;border:0;border-radius:20px;margin:auto;background:var(--cm-main);color:var(--cm-text);box-shadow:0 0 0 8px rgba(148,163,184,.16);font-family:'Citymobil Roboto',sans-serif;overflow:hidden;overscroll-behavior:contain}.actionDialog[open]{display:flex;flex-direction:column}.actionResults{flex:1;min-height:0;overflow:auto;scrollbar-gutter:stable;overflow-anchor:none}.searchRow,.actionHints{flex:none}
+.actionDialog::backdrop{background:transparent}
+.searchRow{height:60px;display:flex;align-items:center;padding:14px 24px;gap:12px;border-bottom:1px solid var(--cm-border-light)}
+.searchRow input{min-width:0;width:100%;background:transparent;border:0;outline:0;font-size:24px;line-height:32px;font-weight:500}
+.searchRow input::placeholder{color:var(--cm-label);opacity:1}
+.searchRow button{font-size:12px;padding:8px}
+.actionGroup{padding:16px 4px;border-bottom:1px solid var(--cm-border-light)}
+.actionGroup h4{font:600 14px/20px 'Citymobil Montserrat',sans-serif;color:var(--cm-soft);padding:12px 20px;display:flex;gap:4px;align-items:center}
+.actionGroup button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;text-align:left;border-radius:10px;padding:14px 20px;font-size:20px;line-height:28px;font-weight:500}
+.actionGroup button[aria-selected=true]{background:var(--cm-on-top)}
+.actionGroup button>span{background:var(--cm-on-top);border-radius:8px;padding:0 4px;color:var(--cm-label);white-space:nowrap}
+.actionGroup button>span:empty{display:none}
+.actionDialog{container:cm-actions / inline-size}
+.actionHints{display:flex;align-items:center;gap:32px;padding:16px 24px;background:var(--cm-secondary);color:var(--cm-label);font:500 12px/16px 'Citymobil Roboto',sans-serif}
+.actionHints>span{display:flex;gap:8px;align-items:center;white-space:nowrap}
+.actionHints kbd{font:inherit;padding:4px;border:1px solid var(--cm-border);border-radius:6px}
+@container cm-actions (max-width:420px){.actionHints{gap:8px;padding:8px 12px;justify-content:space-between}.actionHints>span{gap:4px}.actionHints kbd{padding:2px 4px}}
+.noResults{padding:16px 24px!important}
+@media(max-width:1050px) and (min-width:761px){.workspace{grid-template-columns:52px 375px minmax(0,1fr)}.message time{display:none}.composerTools{gap:4px}.composerTools>div{gap:4px}.composerTools .send{padding:0 8px}.replyHeader{gap:6px}}
+@media(prefers-reduced-motion:reduce){.preview *{scroll-behavior:auto;animation:none;transition:none}}
+
+.cardScroll,.thread{overscroll-behavior:auto}
+
+.visuallyHidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.standalone{width:100%;min-height:100dvh;background:#f8fafc}
+.standalone:has([data-theme=dark]){background:#0f172a}
+.standalone .preview{min-height:0;border-radius:0;box-shadow:none}
+.standalone .workspace{height:calc(100dvh - var(--cm-toolbar-height, 44px));min-height:0;border-radius:0}
+.featureViewport .conversation{container:cm-feature-chat / inline-size}
+.featureViewport .paymentPanel{container:cm-feature-order / inline-size}
+.featureViewport .trackPanel{container:cm-feature-map / inline-size;min-height:0}
+/* The short case fragment keeps the native controls and text sizes. Empty
+   input gives its unused space back to the actual incoming conversation. */
+@media(max-height:600px){
+  .featureViewport[data-feature-scene=chat] .composerWrap{padding:40px 4px 8px}
+  .featureViewport[data-feature-scene=chat] .composer{padding:8px}
+  .featureViewport[data-feature-scene=chat] .composerTools,.featureViewport[data-feature-scene=chat] .composerTools>div{gap:2px}
+  .featureViewport[data-feature-scene=chat] .composerField[data-local-draft=true]:has(textarea:placeholder-shown){--cm-input-height:44px;padding-top:0;height:44px}
+  .featureViewport[data-feature-scene=chat] .composerField[data-local-draft=true]:has(textarea:placeholder-shown) textarea{padding-block:8px}
+}
+/* Fragment-only reflow: native sizes, labels and commands remain intact. */
+@container cm-feature-chat (max-width:340px){
+  .featureViewport .threadHeader{height:auto;min-height:56px;gap:8px;padding-inline:12px}
+  .featureViewport .threadHeader>div:first-child{min-width:0}
+  .featureViewport .threadHeader>div:last-child{flex:none}
+  .featureViewport .composerWrap{padding-inline:8px}
+  .featureViewport .composer{padding-inline:12px}
+  .featureViewport .composerTools{flex-wrap:wrap;gap:4px}
+  .featureViewport .composerTools>div:last-child{margin-left:auto}
+  .featureViewport .replyHeader{flex-wrap:wrap;gap:2px}
+  .featureViewport .replyHeader>button{padding-inline:4px}
+  .featureViewport .composerWrap{padding-bottom:8px}
+  .featureViewport .composerField[data-local-draft=true]:has(textarea:placeholder-shown){--cm-input-height:88px;padding-top:0;height:88px}
+  .featureViewport .composerField[data-local-draft=true]:has(textarea:placeholder-shown) textarea{padding-block:8px}
+}
+@container cm-feature-order (max-width:340px){
+  .featureViewport .driverMetrics{flex-wrap:wrap;padding:12px 8px;justify-content:flex-start}
+  .featureViewport .driverMetrics>div{flex:1 1 80px}
+  .featureViewport .carFare{flex-wrap:wrap}
+  .featureViewport .carFare h4{white-space:normal}
+  .featureViewport .nativeInvoice{flex-wrap:wrap}
+  .featureViewport .nativeInvoice h4{white-space:normal}
+}
+@container cm-feature-map (max-width:340px){
+  .featureViewport .trackAboveFooter{gap:8px;padding-inline:8px}
+  .featureViewport .trackPerson{flex-wrap:wrap;padding-right:4px}
+  .featureViewport .trackIdentity strong,.featureViewport .trackPersonStatus>span{white-space:normal;overflow:visible;text-overflow:clip}
+  .featureViewport .trackPersonStatus{max-width:100%;margin-left:36px;gap:4px}
+}
+.featureViewport .actionHints{flex-wrap:wrap}
+/* PORT-17: reuse native plain/inline-icon, chat and trip-info source materials. */
+.composer:focus-within{box-shadow:0 0 2px 0 var(--cm-composer-active-shadow-color),0 2px 12px 0 var(--cm-composer-active-shadow-color)}
+.composerField{--cm-input-height:116px;position:relative;display:grid;grid-template-rows:var(--cm-input-height);height:calc(var(--cm-input-height) + 32px);padding-top:32px}
+.composerField textarea{grid-area:1/1;position:relative;z-index:1;padding-right:28px;height:100%;min-height:0}
+.ghostReply{grid-area:1/1;position:relative;height:100%;min-height:0;padding:16px 28px 16px 0;overflow:hidden;pointer-events:none;white-space:pre-wrap;overflow-wrap:anywhere;font-size:20px;line-height:28px;color:var(--cm-grey)}
+.composerField[data-preview-ready=false] .ghostReply{visibility:hidden}
+.clearDraft{position:absolute;right:0;top:48px;z-index:2;width:24px;height:24px;display:grid;place-items:center;border-radius:4px}
+.suggestionTools{position:absolute;left:0;top:0;z-index:2;display:flex;align-items:center;gap:4px;max-width:100%}
+.acceptSuggestion{border-radius:4px!important;padding:4px 8px!important;background:var(--cm-accent)!important;color:white!important;font-size:12px!important;font-weight:500;line-height:16px!important;height:24px;min-height:24px}
+.loadingSuggestion{display:grid;place-items:center;width:28px;height:24px;background:#000;border-radius:4px;color:#fff}
+.loadingSuggestion>.nativeAsset,.loadingSuggestion>.nativeMask{animation:cm-spin 1s linear infinite}
+@keyframes cm-spin{to{transform:rotate(360deg)}}
+.caseSelector{display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;color:var(--cm-soft)!important;border-radius:6px;min-height:36px}
+.caseSelector>.nativeAsset,.caseSelector>.nativeMask{flex:none}
+.inlineClose{width:28px;height:28px;flex:none;display:grid;place-items:center;border-radius:4px;background:var(--cm-fill)!important;padding:0!important}
+.actionDialog{box-shadow:0 4px 24px rgba(141,95,255,.32),0 0 2px rgba(141,95,255,.32)}
+.searchRow:focus-within{box-shadow:inset 0 -1px var(--cm-border)}
+.toolPopup{position:fixed;z-index:110;width:236px;max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain;padding:8px;border:1px solid var(--cm-border);border-radius:12px;background:var(--cm-main);color:var(--cm-text);box-shadow:0 4px 24px rgba(148,163,184,.32),0 0 2px rgba(148,163,184,.32)}
+.toolPopup[data-menu=cases]{width:320px}
+.toolPopup button{display:flex;align-items:center;gap:6px;min-height:36px;width:100%;padding:8px 8px 8px 12px;border-radius:6px;text-align:left;font:500 14px/20px 'Citymobil Roboto',sans-serif}
+.toolPopup button[aria-checked=true]{background:var(--cm-on-top)}
+.toolPopup[data-menu=recipient] button>img{width:28px;height:28px;object-fit:cover;border-radius:6px;flex:none}
+.toolPopup button+button{margin-top:4px}
+.attachments{display:grid;gap:8px;margin:0 0 12px}
+.attachmentCard{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-height:52px;max-width:100%;margin-top:8px;padding:8px;border:1px solid var(--cm-border-light);border-radius:12px;background:linear-gradient(110deg,var(--cm-secondary),var(--cm-fill));font-size:14px;line-height:20px}
+.attachmentCard>strong{font:600 28px/36px 'Citymobil Montserrat',sans-serif}
+.attachmentCard>span:not(.nativeMask){flex:1;min-width:0}
+.attachmentCard>code{margin-left:auto;padding:4px;background:var(--cm-on-top);border-radius:4px;font:400 14px/20px 'Citymobil Roboto',sans-serif;overflow-wrap:anywhere}
+.attachmentCard button{width:28px;height:28px;display:grid;place-items:center;border-radius:4px}
+.attachmentCard a{color:var(--cm-soft);text-decoration:underline;overflow-wrap:anywhere;flex:1}
+.fixturePhoto{width:44px;height:44px;border-radius:6px;object-fit:cover}
+.promoEntry{display:flex;justify-content:center;align-items:center;gap:24px;position:relative;margin:16px -16px -16px;padding:16px 48px 16px 16px;border-radius:0 0 20px 20px;background:var(--cm-secondary)}
+.promoEntry button{font:600 28px/36px 'Citymobil Montserrat',sans-serif;background:var(--cm-main);border:1px solid var(--cm-border-light);border-radius:6px;min-width:50px;min-height:44px;padding:0 8px}
+.promoEntry button:hover{background:var(--cm-accent)!important;color:white}
+.promoEntry small{font-size:16px;line-height:24px;vertical-align:top}
+.promoEntry>button:last-child{position:absolute;right:12px;min-width:28px;min-height:28px;display:grid;place-items:center;border:0;background:none}
+.callPanel{display:flex;align-items:center;gap:8px;margin:16px -16px -16px;padding:16px 12px 16px 16px;background:radial-gradient(ellipse at 12% 0,#541f8f 0,#321b5d 35%,#201943 65%,#0f172a 100%);border-radius:0 0 20px 20px;color:#fff;box-shadow:0 12px 12px rgba(0,0,0,.12),0 0 2px rgba(0,0,0,.2)}
+.callAvatar{width:28px;height:28px;border-radius:6px;display:grid;place-items:center;font-size:12px;background:rgba(255,255,255,.16);flex:none;object-fit:cover}
+.callPanel>div{flex:1;min-width:0}
+.callPanel h4{font-size:14px;line-height:20px}
+.callPanel p{font-size:14px;line-height:20px;color:#cbd5e1}
+.callPanel button{width:36px;height:36px;flex:none;display:grid;place-items:center;border-radius:6px;background:rgba(255,255,255,.08)}
+.callPanel button[aria-pressed=true]{background:rgba(255,255,255,.32)}
+.callPanel .hangup{background:#dc2626}
+.workArea{position:relative;min-width:0;min-height:0;display:grid;grid-template-columns:minmax(0,1fr);overflow:hidden}.workArea[data-right-panel=true]{grid-template-columns:minmax(0,1fr) 375px}
+.workArea>.paymentPanel[data-demo-presence=exiting]{position:absolute;inset:0 0 0 auto;width:375px;max-width:100%}
+.paymentPanel{min-height:0;min-width:0;display:flex;flex-direction:column;border-left:1px solid var(--cm-border);background:var(--cm-main);overflow:hidden;overscroll-behavior:contain}
+.paymentHeading{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;padding:12px 16px;border-bottom:1px solid var(--cm-border-light)}
+.paymentHeading h3{font-size:24px;line-height:32px}
+.orderIdentity{display:flex;align-items:center;gap:12px;padding:16px;min-height:100px}
+.orderIdentity>div{flex:1;min-width:0}
+.orderIdentity h4{font-size:16px;line-height:24px}
+.orderIdentity p{font-size:12px;line-height:16px;color:var(--cm-label)}
+.orderIdentity button{display:grid;place-items:center;width:36px;height:36px;border-radius:6px;background:var(--cm-fill)}
+.orderDriver{flex:none}.paymentWell{min-height:0;overflow:auto;overscroll-behavior:contain;padding:8px;background:var(--cm-secondary);flex:1}
+.paymentWell .card{box-shadow:0 2px 12px rgba(148,163,184,.16),0 0 2px rgba(148,163,184,.16);height:auto;max-height:none}
+.completed[data-pending=true]{background:rgba(124,62,205,.08);color:var(--cm-graphic)}
+.paymentHistory>div{display:flex;align-items:start;gap:12px;padding:16px 8px;border-top:1px solid var(--cm-border-light)}
+.paymentHistory>div>div{flex:1;min-width:0}
+.paymentHistory h4{font-size:14px;line-height:20px}
+.paymentHistory p,.paymentHistory>div>span{font-size:12px;line-height:16px;color:var(--cm-label)}
+@media(max-width:1200px) and (min-width:761px){.workspace[data-payment=true]{grid-template-columns:52px 300px minmax(0,1fr)}.workArea[data-right-panel=true]{grid-template-columns:minmax(0,1fr);grid-auto-rows:100%;overflow-y:auto;overscroll-behavior:contain}}
+@media(prefers-reduced-motion:reduce){.loadingSuggestion>.nativeAsset,.loadingSuggestion>.nativeMask,.callPanel{animation:none}}
+
+.incomeSummary{display:grid;gap:12px;padding:16px;font-size:14px;line-height:20px;color:var(--cm-soft)}
+.incomeSummary h4{font-size:16px;line-height:24px;color:var(--cm-text)}
+.incomeSummary h4>strong{float:right;font:600 14px/24px 'Citymobil Montserrat',sans-serif}
+.incomeSummary>button:not(.useReply){text-align:left;color:var(--cm-accent);background:var(--cm-on-top);padding:12px;border-radius:8px;display:flex;gap:12px;justify-content:space-between}
+.incomeSummary progress{appearance:none;width:100%;height:4px;border:0;border-radius:4px;overflow:hidden;background:var(--cm-fill)}
+.incomeSummary progress::-webkit-progress-bar{background:var(--cm-fill)}
+.incomeSummary progress::-webkit-progress-value{background:var(--cm-accent)}
+.incomeSummary progress::-moz-progress-bar{background:var(--cm-accent)}
+.incomeAmounts{display:flex;justify-content:space-between;gap:8px;font-size:12px;line-height:16px}
+.incomeWarning{padding:12px;border-radius:8px;background:rgba(239,68,68,.08);color:#dc2626}
+.incomeSummary ul{padding-left:20px;display:grid;gap:8px;margin:0}
+/* Shared native message-context and track compositions for the local modes. */
+.forwardContext{margin:8px 0;padding:8px 12px;border-radius:8px;background:rgba(140,70,228,.08);border-left:2px solid var(--cm-accent);font-size:12px;line-height:16px;color:var(--cm-soft)}
+.forwardContext p{font-size:14px;line-height:20px;white-space:pre-wrap;overflow-wrap:anywhere;margin:4px 0}
+.forwardContext small{font-size:12px;line-height:16px;color:var(--cm-label)}
+.internalEntry{padding:12px;border:1px solid var(--cm-border-light);border-radius:12px;background:var(--cm-on-top)}
+.internalEntry h4{font-size:14px;line-height:20px;margin-bottom:8px}
+.internalEntry>p{font-size:14px;line-height:20px;overflow-wrap:anywhere}
+.teamSearch{width:100%;min-height:44px;border:0;border-bottom:1px solid var(--cm-border);background:var(--cm-main);padding:8px 12px;outline:0}
+.teamSearch:focus{box-shadow:inset 0 -2px var(--cm-accent)}
+.toolPopup small{display:block;font-size:12px;line-height:16px;font-weight:400;color:var(--cm-label)}
+.toolPopup strong{font-weight:500}
+.ghostEntered{color:transparent}
+.answerControl{display:flex;align-items:center;gap:4px;height:24px;min-height:24px;padding:0 4px;background:#000;color:#fff;border-radius:4px;font-size:12px;font-weight:500;line-height:16px;white-space:nowrap}
+.answerControl>span{padding:4px}
+.answerLabel{color:#94a3b8}
+.previousAnswer>.nativeMask{transform:rotate(180deg)}
+.answerControl button{width:24px;height:24px;display:grid;place-items:center;border-radius:4px;flex:none}
+.answerControl .loadingSuggestion{width:20px;padding:0}
+.acceptSuggestion:disabled{opacity:.55;cursor:default}
+.composer[data-mode=note]{background:var(--cm-main)}
+.linkComposer{min-height:116px;padding:12px 0}
+.incomePrograms{display:grid;gap:8px;margin-bottom:12px}
+.incomePrograms>button{display:grid;justify-items:center;gap:12px;padding:20px 16px;border:1px solid var(--cm-border-light);border-radius:16px;background:var(--cm-main);box-shadow:0 2px 12px rgba(148,163,184,.16),0 0 2px rgba(148,163,184,.16)}
+.incomePrograms>button[aria-pressed=true]{border-color:var(--cm-accent)}
+.incomePrograms h4{font-size:16px;line-height:24px}
+.incomePrograms>button>strong{font:600 28px/36px 'Citymobil Montserrat',sans-serif}
+.completedProgram{display:grid;justify-items:center;gap:12px;padding:24px 8px;text-align:center}
+.completedProgram>strong{font:600 32px/40px 'Citymobil Montserrat',sans-serif;color:var(--cm-success)}
+
+.answerControl .nativeMask{background:#fff}
+.toolPopup button:disabled{opacity:.45}
+.send .nativeMask{background:currentColor}
+.driverIdentity{display:flex;gap:12px;align-items:center;padding:16px 16px 8px}
+.driverIdentity>img{border-radius:6px;object-fit:cover;flex:none}
+.driverIdentity>div{flex:1;min-width:0}.driverIdentity h4,.driverVehicle h4{font-size:16px;line-height:24px}
+.driverIdentity p{display:flex;gap:4px;align-items:center;font-size:9px;line-height:16px;color:var(--cm-success)}.driverIdentity p>span{width:6px;height:6px;border-radius:50%;background:var(--cm-positive)}
+.driverIdentity>button{width:28px;height:28px;display:grid;place-items:center;border-radius:4px;flex:none}
+.driverInfo .driverProgram{position:relative;display:flex;align-items:center;gap:8px;width:calc(100% - 16px);margin:8px;padding:8px 8px 12px;background:rgba(124,62,205,.08);color:var(--cm-graphic);border-radius:8px;text-align:left;font-size:16px;line-height:24px;overflow:hidden}
+.driverProgram>span:not(.nativeMask):not(.driverProgress){flex:1;min-width:0}.driverProgram strong{font-weight:500}.driverProgress{position:absolute;bottom:0;left:0;right:0;height:4px;background:rgba(124,62,205,.12)}.driverProgress>span{display:block;height:4px;background:var(--cm-accent)}
+.driverVehicle{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:24px 16px 16px}.driverVehicle p{display:flex;align-items:center;gap:8px;margin-top:4px;color:var(--cm-soft)}.driverPlate{background:#fff;border-radius:2px;flex:none}
+.driverMetrics{display:flex;justify-content:space-between;gap:8px;padding:24px 16px}.driverMetrics>div{display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px;min-width:0}.driverMetrics strong{display:flex;align-items:center;gap:8px;font:600 24px/32px 'Citymobil Montserrat',sans-serif;white-space:nowrap}.driverMetrics>div>span{font-size:14px;line-height:20px;color:var(--cm-soft)}.driverMetrics>div:last-child>img{margin:2px 0}
+.caretMirror{position:absolute;left:0;top:32px;height:0;max-width:100%;overflow:hidden;visibility:hidden;pointer-events:none;white-space:pre-wrap;overflow-wrap:anywhere;padding:16px 28px 16px 0;font-size:20px;line-height:28px}
+
+
+/* Local demo motion and geographic Track; native source materials stay static. */
+.preview{--cm-duration:400ms;--cm-ease:cubic-bezier(.23,1,.32,1);overflow-x:clip;position:relative}
+.preview .cardScroll{position:relative}
+.conversation{position:relative;isolation:isolate;overflow:clip}
+.conversationContent{display:flex;flex-direction:column;flex:1;min-height:0}
+.mapOverlay{position:absolute;inset:0;z-index:10;overflow:hidden}
+.trackPanel{position:relative;width:100%;height:100%;min-height:560px;overflow:hidden;background:var(--cm-secondary)}
+.trackPanel{--cm-map-blue:#2563eb;--cm-map-green:#16a34a;--cm-map-red:#ef4444}.preview[data-theme=dark] .trackPanel{--cm-map-blue:#60a5fa;--cm-map-green:#22c55e;--cm-map-red:#f87171}.trackPanel .geographicMap{position:absolute;inset:0;color:var(--cm-text);background:var(--cm-secondary)}
+.geographicMap[data-basemap-mode=local]{isolation:isolate}
+.geographicMap canvas:focus-visible{outline:2px solid var(--cm-accent);outline-offset:-3px}
+.preview[data-theme=dark] .geographicMap[data-style-theme=light] canvas,.preview[data-theme=light] .geographicMap[data-style-theme=dark] canvas{visibility:hidden}
+.mapClose,.mapZoom>button{display:grid;place-items:center;width:44px;height:44px;background:var(--cm-main)!important;border:1px solid var(--cm-control-border)!important;border-radius:8px;box-shadow:0 2px 12px rgba(148,163,184,.16),0 0 2px rgba(148,163,184,.16)}
+.mapClose{position:absolute;right:12px;top:12px;z-index:6}
+.mapZoom{pointer-events:auto;z-index:4;display:grid;gap:12px;justify-items:center}.mapZoom button:disabled{opacity:.5}.mapZoom output{background:var(--cm-main);padding:0 4px;border-radius:4px;font-size:10px;line-height:14px;color:var(--cm-soft)}
+.trackFooter,.trackIndex{background:var(--cm-on-top);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:var(--cm-text)}
+.trackBottom{position:absolute;bottom:0;left:0;right:0;z-index:5;display:flex;flex-direction:column;max-height:calc(100% - 88px);pointer-events:none}
+.trackAboveFooter{display:grid;grid-template-columns:minmax(0,1fr) 44px;align-items:end;gap:20px;padding:0 12px 12px;min-height:0;flex-shrink:1}
+.mapEvent[data-event=history]>span{background:var(--cm-grey)}.mapEvent[data-event=onward]>span{background:var(--cm-label)}
+
+
+
+
+
+.trackFooter{flex:none;pointer-events:auto;padding:16px 24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;z-index:4}
+.trackFooter>button{display:flex;align-items:center;gap:12px;font-size:14px;line-height:20px;color:var(--cm-label)}.trackFooter kbd{display:grid;place-items:center;min-width:28px;height:28px;padding:4px;background:linear-gradient(145deg,rgba(148,163,184,.08),rgba(148,163,184,.24));border:1px solid var(--cm-border-light);border-radius:6px;color:var(--cm-soft);font:inherit}
+.mapAttribution{margin-left:auto;font-size:10px;line-height:14px;max-width:100%;color:var(--cm-soft)}.mapAttribution a{color:inherit;text-decoration:underline}
+.trackIndex{align-self:flex-start;max-width:100%;border:1px solid var(--cm-border-light);border-radius:8px;padding:12px;transform-origin:bottom left}.trackIndex p{display:flex;gap:8px;align-items:center;font-size:12px;line-height:24px}.trackIndex p>span{width:12px;height:12px;border-radius:3px;flex:none}
+.mapStatus{position:absolute;left:16px;bottom:104px;z-index:5;max-width:calc(100% - 84px);padding:12px;border-radius:8px;background:var(--cm-main);border:1px solid var(--cm-border-light);font-size:14px;line-height:20px}.mapStatus button{display:block;margin-top:8px;color:var(--cm-graphic);text-decoration:underline}
+.trackUnavailable{padding:100px 24px;font-size:16px;line-height:24px}.trackUnavailable h3{margin-bottom:12px}
+.preview .mapParticipant{display:grid;place-items:center;width:44px;height:44px;background:transparent;border-radius:50%;z-index:6}.mapParticipant[data-participant=rider]{z-index:5}.vehicleArrow{position:relative;display:block;width:24px;height:24px;border-radius:50%;background:var(--participant-color);outline:2px solid var(--cm-main)}.vehicleArrow::after{content:"";position:absolute;inset:6px;background:url('/images/citymobil/demo/journey/driver-direction.svg') center/12px 12px no-repeat}.riderPosition{display:block;width:14px;height:14px;background:var(--participant-color);border:2px solid var(--cm-main);border-radius:50%}.mapParticipant[data-highlighted=true]{z-index:7}.mapParticipant[data-highlighted=true]>i{box-shadow:0 0 0 5px var(--cm-main),0 0 0 7px var(--cm-accent)}.preview .mapParticipant:focus-visible{outline:2px solid var(--cm-accent);outline-offset:2px}.preview .mapEvent{display:grid;place-items:center;width:44px;height:44px;z-index:4;background:transparent!important}.mapEvent>span{width:8px;height:8px;border-radius:50%;background:var(--cm-orange);box-shadow:0 0 0 2px var(--cm-main)}.mapEvent[data-event=start]>span{background:#a28787}.mapEvent[data-event=A]>span{background:var(--cm-map-blue)}.mapEvent[data-event=B]>span{width:12px;height:12px;background:var(--cm-map-green);box-shadow:0 0 0 3px var(--cm-main)}.mapEvent[data-event=stop]>span{background:var(--cm-label)}.mapEvent[aria-pressed=true]{z-index:8}.mapEvent[aria-pressed=true]>span{outline:3px solid var(--cm-main);box-shadow:0 0 0 6px var(--cm-fill)}.trafficWarning{width:44px;height:44px;display:grid;place-items:center;z-index:4}.trafficWarning img{width:25px;height:27px;pointer-events:none}
+
+.mapPopup{pointer-events:none;z-index:4}.mapPopup :global(.maplibregl-popup-content){pointer-events:none;background:#334155;padding:0;border-radius:8px;color:#f8fafc;box-shadow:none}.mapPopup :global(.maplibregl-popup-tip){border-top-color:#334155}.trackTooltip{width:190px;padding:8px 12px;display:grid;gap:8px;font:500 12px/16px 'Citymobil Roboto',sans-serif}.trackTooltip strong{font:500 12px/16px 'Citymobil Roboto',sans-serif}
+.paletteBackdrop{position:fixed;inset:0;z-index:99;background:rgba(15,23,42,.35);pointer-events:none}.actionDialog{position:fixed;inset:0;z-index:100}.actionDialog[aria-hidden=true]{pointer-events:none}.toolPopup{transform-origin:top left}
+@media(hover:hover) and (pointer:fine){.preview button{transition:background-color var(--cm-duration) var(--cm-ease),color var(--cm-duration) var(--cm-ease)}}
+@media(prefers-reduced-motion:reduce){.preview button{transition:none}}
+
+/* Lost-item data reuses the native trip, driver and payment card materials. */
+.lostTrips{padding:8px}.tripListHint{font-size:12px;line-height:16px;color:var(--cm-label);padding:8px}
+.lostTrips .lostTripRow{display:block;width:100%;text-align:left;background:var(--cm-main);border:1px solid var(--cm-border-light);border-radius:12px;margin:8px 0;overflow:hidden}
+.lostTrips .lostTripRow:hover,.lostTrips .lostTripRow:focus-within{background:var(--cm-fill)}
+.lostTrips .lostTripRow[aria-pressed=true]{border-color:var(--cm-accent);box-shadow:0 0 0 1px var(--cm-accent)}
+.lostTripRow .dateRow{padding:12px 8px;font-size:10px;line-height:16px;gap:4px}.lostTripRow .completed{gap:2px;font-size:10px;padding:2px 4px}.lostTripRow .completed .nativeAsset{width:12px;height:12px}.lostTripRow .carFare{padding:8px;gap:4px}.lostTripRow .carFare h4{font-size:14px;line-height:20px;white-space:normal}.lostTripRow .carFare p{font-size:12px;line-height:16px}.lostTripRow .fare strong{font-size:20px;line-height:28px}.lostTripRow .fare{font-size:14px}.lostTripRow .fare>.nativeAsset{width:20px;height:auto;margin-right:4px}.lostTripRow .passenger{padding:8px;font-size:12px;line-height:16px}.lostTripRow .passenger>small{margin-left:auto;color:var(--cm-label);font-size:10px;line-height:16px}.lostTripRow .passenger img{border-radius:4px;object-fit:cover}
+.generatedPlate{display:flex;align-items:center;gap:4px;background:#fff;color:#111;border:1px solid #111;border-radius:2px;white-space:nowrap;font:600 11px/18px ui-monospace,monospace;padding-right:3px;flex:none}.generatedPlate small{background:#164792;color:#fff;font:600 8px/18px sans-serif;padding:0 2px}
+.contactCard{display:flex;align-items:center;gap:12px;padding:12px;margin-top:12px;border:1px solid var(--cm-border-light);background:var(--cm-on-top);border-radius:12px}.contactCard img{border-radius:6px;object-fit:cover;flex:none}.contactCard strong{font-size:14px;line-height:20px}.contactCard p,.contactCard small{font-size:12px;line-height:16px;color:var(--cm-label)}
+
+.driverIdentity>img,.contactCard>img{width:44px;height:44px;object-fit:cover}.issueFooter button:disabled{opacity:.45}
+.composer textarea:read-only{cursor:text}.lostTripRow .dateRow{font-size:12px;height:auto}.lostTripRow .carFare{height:auto}
+.paymentWell{position:relative}
+.paymentWell .nativePaymentCard{position:relative;height:auto;min-height:0;max-height:none;box-shadow:inset 0 0 0 1px var(--cm-border-light),0 2px 12px rgba(148,163,184,.16),0 0 2px rgba(148,163,184,.16)}
+.nativePaymentContent{padding:16px 8px 0;position:relative;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-gutter:stable;overflow-anchor:none}.paymentWell>.nativePaymentCard{height:100%;max-height:100%}
+.nativeInvoice{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 8px 12px;min-height:52px}.nativeInvoice>div{min-width:0}.nativeInvoice h4{font:600 16px/24px 'Citymobil Montserrat',sans-serif;white-space:nowrap}.nativeInvoice p{font:400 12px/16px 'Citymobil Roboto',sans-serif;color:var(--cm-grey)}.nativeInvoice .completed{font-size:12px;line-height:16px;flex:none}
+.nativePaymentSummary{padding:12px;border-radius:12px;box-shadow:inset 0 0 0 1px var(--cm-border-light)}
+.nativeTotal{display:flex;align-items:baseline;justify-content:space-between;gap:8px;padding-bottom:12px;box-shadow:inset 0 -1px var(--cm-border-light)}.nativeTotal>span{font-size:12px;line-height:16px;font-weight:500;color:var(--cm-soft)}.nativeTotal>strong{display:flex;align-items:center;gap:12px;font:600 28px/36px 'Citymobil Montserrat',sans-serif;white-space:nowrap}
+.nativeAmounts{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-auto-rows:24px;align-items:baseline;gap:4px 8px;margin:12px 0 0!important}.nativeAmounts dt{font:500 12px/16px 'Citymobil Roboto',sans-serif;color:var(--cm-label)}.nativeAmounts dd{font:600 16px/24px 'Citymobil Montserrat',sans-serif;text-align:right;white-space:nowrap}.nativeAmounts .nativeDiscount{color:var(--cm-success)}
+.nativeSelectedMethod{padding-top:24px}.nativePaymentMethod{display:flex;align-items:center;gap:16px;min-width:0}.nativePaymentMethod>.nativeAsset{width:70px;height:44px;flex:none}.nativePaymentMethod>div{display:grid;gap:4px;min-width:0}.nativePaymentMethod p{display:flex;align-items:center;gap:8px;font:400 14px/20px 'Citymobil Roboto',sans-serif;color:var(--cm-label);white-space:nowrap}.nativePaymentMethod b{font-size:12px;line-height:16px;font-weight:500;color:var(--cm-text)}
+.nativeMoreMethods{font:600 14px/20px 'Citymobil Montserrat',sans-serif!important;letter-spacing:-.28px!important;padding:12px 8px 8px}
+.nativeSecondaryMethod{display:grid;gap:12px;padding:16px 8px}.nativeSecondaryMethod .nativeAddMethod{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;height:36px;border-radius:6px;background:var(--cm-fill);color:var(--cm-soft);font:500 14px/20px 'Citymobil Roboto',sans-serif}
+.nativePaymentCard .paymentHistory{padding:0 8px 16px}.nativePaymentCard .paymentHistory>div:first-child{border-top:0}.nativePaymentCard .paymentHistory strong{font:600 14px/20px 'Citymobil Montserrat',sans-serif;white-space:nowrap}
+.quickActions button:disabled,.threadHeader button:disabled{opacity:.45}
+
+/* Native8361 Order identity and single route/payment/history card. */
+.orderDriver{padding:16px 8px;border-bottom:1px solid var(--cm-border-light);display:grid;gap:16px}
+.orderDriver .orderIdentity{min-height:44px;padding:0 8px;gap:8px}.orderIdentity>img{width:44px;height:44px;object-fit:cover;border-radius:6px;margin-right:4px}.orderIdentity button{flex:none}.orderIdentity button[aria-disabled=true]{cursor:default}
+.orderDriver .driverMetrics{padding:16px 12px;gap:0}.orderDriver .driverMetrics>div{padding:8px;gap:8px}.orderDriver .driverMetrics strong{font-size:24px;line-height:32px}
+.orderRoute{padding-bottom:8px}.orderReference{font-size:12px;line-height:16px;color:var(--cm-grey);padding:0 8px 4px}.orderRoute .routeSummary{margin:0;width:100%}.orderRoute .showOnMap{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;height:36px;margin-top:16px;background:var(--cm-fill);color:var(--cm-soft);border-radius:6px;font-size:14px;line-height:20px;font-weight:500}
+
+.typingMessage{min-height:68px}.typingDots{display:flex;align-items:center;gap:4px;height:24px}.typingDots i{width:5px;height:5px;background:var(--cm-label);border-radius:50%;animation:cm-typing 1s ease-in-out infinite}.typingDots i:nth-child(2){animation-delay:.15s}.typingDots i:nth-child(3){animation-delay:.3s}@keyframes cm-typing{50%{opacity:.35;transform:translateY(-2px)}}@media(prefers-reduced-motion:reduce){.typingDots i{animation:none}}
+
+.composerWrap{position:relative;isolation:isolate;padding-top:40px}.composerStack{position:relative;isolation:isolate}.composerStack>.composer{position:relative;z-index:1}.composerHintClip{position:absolute;inset:-40px 0 0;z-index:0;overflow:hidden;pointer-events:none}.composerHint{position:absolute;inset:40px 0 0;border-radius:0 0 20px 20px;background:var(--cm-main);background-image:linear-gradient(var(--cm-on-top),var(--cm-on-top));box-shadow:0 0 2px 0 var(--cm-composer-shadow-color, var(--cm-fill)),0 2px 12px 0 var(--cm-composer-shadow-color, var(--cm-fill))}.composerHintBand{position:absolute;left:0;right:0;bottom:100%;display:flex;align-items:flex-start;gap:8px;padding:4px 16px;border-radius:20px 20px 0 0;background:inherit;font:500 12px/16px 'Citymobil Roboto',sans-serif;color:var(--cm-soft);overflow-wrap:anywhere}.composerHintBand>.nativeMask{background:var(--cm-soft)}.composerHintBand>p{min-width:0}
+.lostWalkthrough{list-style:none;margin:16px 0;padding:0;display:grid;gap:16px}.lostWalkthrough>li{display:flex;align-items:start;gap:12px;padding:0 8px}.walkthroughMark{display:grid;place-items:center;flex:none;width:20px;height:20px;margin-top:2px;border-radius:50%;background:var(--cm-fill);font-size:12px;line-height:16px;color:var(--cm-label)}.lostWalkthrough h4{font-size:14px;line-height:20px}.lostWalkthrough p{margin-top:4px;font-size:12px;line-height:16px;color:var(--cm-label)}.lostWalkthrough [data-step-state=current] .walkthroughMark{background:var(--cm-accent);color:#fff}.lostWalkthrough [data-step-state=upcoming] h4{color:var(--cm-label)}
+.paymentPanel[data-source-node="8361:20876"] .inlineClose{background:transparent!important}.paymentPanel[data-source-node="8361:20876"] .nativePaymentCard{box-shadow:inset 0 0 0 1px var(--cm-border-light)}
+
+.trackPlayback{position:absolute;left:12px;top:12px;z-index:4;display:flex;align-items:center;gap:16px;padding:8px 12px;border-radius:8px;background:var(--cm-main);box-shadow:0 0 2px var(--cm-fill),0 2px 12px var(--cm-fill)}.trackPlayback h3{font-size:14px;line-height:20px}.trackPlayback output{display:block;font-size:12px;line-height:16px;color:var(--cm-soft)}.trackPlayback button{min-height:44px;padding:0 4px;font-size:12px;line-height:16px;color:var(--cm-soft)}.trackPlayback button:disabled{color:var(--cm-label)}
+.trackContext{min-width:0;min-height:0;display:flex;flex-direction:column;gap:12px;max-width:440px;max-height:100%;pointer-events:none}.trackContext .trackIndex{flex:1 1 auto;min-height:0;overflow:auto;overscroll-behavior:contain;pointer-events:auto}.trackEvents{display:grid;gap:4px;margin:8px 0}.trackEvents button{display:flex;justify-content:space-between;gap:12px;min-height:32px;padding:4px 6px;border-radius:4px;font:500 12px/16px 'Citymobil Roboto',sans-serif;text-align:left}.trackEvents button[aria-pressed=true]{background:var(--cm-fill)}.trackEvents time{white-space:nowrap}.trackIndex small{display:block;font:400 12px/16px 'Citymobil Roboto',sans-serif}.trackPeople{flex:none;display:flex;flex-direction:column;gap:8px;width:287px;max-width:100%;pointer-events:auto}.preview .trackPerson{display:flex;align-items:center;gap:8px;width:100%;min-height:38px;padding:4px 12px 4px 4px;border:1px solid var(--cm-border);border-radius:8px;background:var(--cm-main);box-shadow:0 0 2px var(--cm-fill),0 2px 12px var(--cm-fill);text-align:left;font-size:12px;line-height:16px}.trackPerson>img{flex:none;width:28px;height:28px;border-radius:6px;object-fit:cover}.trackIdentity{flex:1;min-width:0}.trackIdentity strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}.trackIdentity small{display:block;color:var(--cm-label);font-size:9px;line-height:12px}.trackPersonStatus{display:flex;align-items:center;gap:8px;min-width:0;max-width:64%;color:var(--cm-label)}.trackPersonStatus>i{flex:none;width:12px;height:12px;border:3px solid var(--cm-main);border-radius:50%;box-sizing:content-box}.trackPersonStatus>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.preview .trackPerson:hover,.preview .trackPerson[data-highlighted=true],.preview .trackPerson:focus-visible{background:var(--cm-main);border-color:#bc99ff;box-shadow:0 0 2px rgba(124,62,205,.16),0 2px 12px rgba(124,62,205,.16)}.preview[data-theme=dark] .trackPerson[data-highlighted=true]{border-color:var(--cm-accent);box-shadow:0 0 2px rgba(124,62,205,.24),0 2px 12px rgba(124,62,205,.24)}.trackIndex .plannedLegend{height:0;border-top:3px dashed; border-radius:0}.trackIndex .trackLegendEndpoints{display:block;line-height:16px;margin-top:8px}
+
+/* The existing phone reserves its visible area beneath the chat composer. */
+.callPanel{position:relative;z-index:0;width:100%;margin:-20px 0 0;padding-top:36px}
+.composerField[data-empty-preview=true]:focus-within textarea::placeholder{color:transparent}
+.composerField[data-empty-preview=true]:not(:focus-within) .ghostReply,.composerField[data-empty-preview=true]:not(:focus-within) .suggestionTools{visibility:hidden}
+.mapStatus{top:84px;bottom:auto}.mapStatus button{min-height:44px}
+
+/* Native geometry is shared by the desktop simulator and feature viewports. */
+.featureCaret{position:absolute;left:0;top:0;z-index:2;display:block;width:1px;background:var(--cm-text);pointer-events:none;visibility:hidden;animation:cm-feature-caret 1s steps(2,start) infinite}
+@keyframes cm-feature-caret{to{opacity:0}}
+.trackPlayback button{min-width:48px}
+@media(prefers-reduced-motion:reduce){.featureCaret{animation:none}}
+
+.staticPreview{display:grid;place-items:center;min-height:calc(100svh - 44px);padding:var(--primitive-size-24);background:var(--background)}
+.staticImage{display:block;width:100%;max-width:390px;padding:0;border:0;border-radius:var(--primitive-size-4);overflow:hidden;background:transparent;cursor:zoom-in}
+.staticImage img{display:block;width:100%;height:auto}
+.staticImage:focus-visible{outline:2px solid var(--foreground);outline-offset:4px}
+
+/* Compact interactive workspace restored for the case demo. */
+@media(max-width:760px){.workspace{height:auto;display:flex;flex-direction:column;overflow:visible}.rail{display:none}.infoPanel{min-height:860px;border-inline-end:0}.quickActions button{min-height:44px}.issueFooter button{min-height:44px}.conversation{min-height:620px;border-top:1px solid var(--cm-border)}.thread{min-height:200px;max-height:460px;flex:auto}.threadHeader button{width:44px;height:44px}.threadHeader{height:64px}.message time{font-size:12px;line-height:16px}.message p{font-size:16px}.composerWrap{padding:0 8px 8px}.composer{padding:12px}.composerTools>div{gap:4px}.composerTools button{min-width:36px;min-height:44px}.composerTools .send{padding:0 8px}.replyHeader{gap:8px}.itinerary{min-height:500px}.itineraryHeading{align-items:start;flex-direction:column}.carFare{gap:4px;padding-inline:12px}.carFare h4{white-space:normal}.carFare p{font-size:14px}.fare>img{margin-right:4px}.dateRow{padding-inline:12px}.routeSummary{column-gap:12px}.stepTitle{flex-wrap:wrap;gap:4px}.actionDialog{max-width:calc(100% - 24px);max-height:calc(100dvh - 24px);border-radius:16px}.searchRow{padding:12px 16px}.searchRow input{font-size:20px}.actionGroup{padding:8px 4px}.actionGroup h4{padding:8px 12px}.actionGroup button{font-size:16px;line-height:24px;padding:12px}.actionHints{gap:12px;padding:12px 16px;font-size:12px;line-height:16px}}
+@media(max-width:760px){.standalone .workspace{height:auto;min-height:0}}
+@media(max-width:760px){.replyHeader{gap:2px}.replyHeader>button{padding:6px 4px;min-height:44px}.replyHeader>button:last-child>.nativeAsset,.replyHeader>button:last-child>.nativeMask{display:none}.toolPopup button{min-height:44px}.workArea,.workArea[data-right-panel=true]{display:flex;flex-direction:column;overflow:visible}.paymentPanel{min-height:600px;max-width:100%;border-top:1px solid var(--cm-border)}.promoEntry{gap:6px;padding-left:8px;padding-right:36px}.promoEntry button{min-width:40px;padding:0 4px;font-size:24px}.callPanel{gap:6px}.callPanel>button{width:32px}.composerField textarea,.ghostReply{min-height:144px}.attachmentCard>code{font-size:12px}.paymentHistory>div{gap:8px}}
+@media(max-width:760px){.teamSearch{font-size:16px}.composerTools .send{max-width:128px;white-space:nowrap}.forwardContext p{font-size:14px}.replyHeader{flex-wrap:wrap}}
+@media(max-width:760px){.conversationContent{min-height:620px}.trackPanel{min-height:620px}.trackFooter{padding:12px;gap:12px}.mapAttribution{width:100%;margin-left:0}.driverMetrics{padding-left:8px;padding-right:8px;gap:2px}.driverMetrics>div{padding:4px}}
+@media(max-width:760px){.conversation[data-track-open=true]{height:620px;min-height:620px;flex:none}}
+@media(max-width:760px){.lostTrips{padding:8px}.lostTripRow .dateRow{font-size:12px}.lostTripRow .completed{font-size:10px}.routeSummary[data-compact=true]{font-size:14px;line-height:20px}.lostTripRow .carFare h4{font-size:16px;line-height:24px}.paymentHeading small{font-size:12px;line-height:16px}}
+@media(max-width:760px){.trackPlayback{gap:8px;padding:4px 8px}}
+@media(max-width:760px){.composerField{--cm-input-height:144px}}

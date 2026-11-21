@@ -1,0 +1,33 @@
+.heroTitle {
+  color: var(--case-hero-foreground);
+  font: 500 clamp(36px, 5vw, 68px)/1.04 var(--type-font-family);
+  letter-spacing: -.045em;
+  text-wrap: balance;
+}
+
+.sectionTitle {
+  font: 500 clamp(28px, 4vw, 52px)/1.1 var(--type-font-family);
+  letter-spacing: -.035em;
+}
+
+.metric {
+  font: 500 clamp(36px, 5vw, var(--type-xl-size))/1.06 var(--type-font-family);
+  font-variant-numeric: tabular-nums;
+}
+
+.detailsIntro {
+  max-width: 1280px;
+  margin: 0 auto clamp(20px, 3vw, 40px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .exitCopy:not(:focus-within) {
+    opacity: calc(1 - var(--case-copy-exit, 0));
+    translate: 0 calc(-48px * var(--case-copy-exit, 0));
+  }
+
+  .exitInterface {
+    translate: calc(var(--case-interface-x, 45vw) * var(--case-interface-exit, 0))
+      calc(var(--case-interface-y, -12vh) * var(--case-interface-exit, 0));
+  }
+}
