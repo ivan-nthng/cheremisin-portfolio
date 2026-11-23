@@ -89,6 +89,7 @@ export default function ProductsLibrary({ onOpen, onOpenConfigurator, onOpenAppl
   const [uploads, setUploads] = useState<RenderProduct[]>([])
   const [uploadStatus, setUploadStatus] = useState('')
   const popupId = useId()
+  const headingId = useId()
   const renderCountId = useId()
   const toolbar = useRef<HTMLDivElement>(null)
   const popup = useRef<HTMLDivElement>(null)
@@ -239,7 +240,7 @@ export default function ProductsLibrary({ onOpen, onOpenConfigurator, onOpenAppl
       {onOpenApplications ? <button type="button" className={sidebar.powered} onClick={onOpenApplications}><Icon name="brand" shared /> Powered by Metabox</button> : <Link className={sidebar.powered} href="/preview/metabox/suite"><Icon name="brand" shared /> Powered by Metabox</Link>}
     </aside>
 
-    <section className={styles.workspace} aria-labelledby="metabox-products-heading">
+    <section className={styles.workspace} aria-labelledby={headingId}>
       <header className={styles.header}>
         <nav className={styles.crumbs} aria-label="Breadcrumb">
           <button type="button" className={styles.crumbButton} onClick={goHome}><Icon name="breadcrumb-home" /> Home</button>
@@ -251,7 +252,7 @@ export default function ProductsLibrary({ onOpen, onOpenConfigurator, onOpenAppl
         <input ref={fileInput} type="file" accept={uploadTypes.join(',')} hidden onChange={addUpload} />
       </header>
       <div className={styles.toolbar}>
-        <h1 id="metabox-products-heading">{heading}</h1>
+        <h1 id={headingId}>{heading}</h1>
         <div className={styles.actions} ref={toolbar} onKeyDown={event => {
           if (event.key === 'Escape' && panel) {
             event.preventDefault()

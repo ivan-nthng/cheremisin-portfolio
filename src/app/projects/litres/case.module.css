@@ -87,8 +87,8 @@
   content: '';
   pointer-events: none;
 }
-.workspaceStill { aspect-ratio: 1440 / 825; overflow: hidden; background: white; }
-.workspace [data-guided-scene] { background: white; }
+.workspaceStill { display: block; aspect-ratio: 1440 / 825; overflow: hidden; background: white; }
+.workspaceStill img { display: block; width: 100%; height: 100%; object-fit: cover; }
 @media (max-width: 640px) {
   .hero::before { background: linear-gradient(180deg, rgb(16 20 28 / .92), rgb(16 20 28 / .76) 40%, transparent 76%); }
 }

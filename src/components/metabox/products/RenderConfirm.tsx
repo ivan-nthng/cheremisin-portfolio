@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useId, useRef } from 'react'
 import MetaboxSelect from '../MetaboxSelect'
 import controls from '../metabox-controls.module.css'
 import { environmentName, renderFormats, renderSizes, type CameraView, type RenderFormat, type RenderSize } from './render-fixtures'
@@ -20,6 +20,7 @@ export default function RenderConfirm({ open, onClose, onRender, views, size, fo
   error: string
 }) {
   const ref = useRef<HTMLDialogElement>(null)
+  const titleId = useId()
   useEffect(() => {
     const dialog = ref.current
     if (open && dialog && !dialog.open) dialog.showModal()
@@ -28,13 +29,13 @@ export default function RenderConfirm({ open, onClose, onRender, views, size, fo
 
   const first = views[0]
 
-  return <dialog ref={ref} className={s.confirm} aria-labelledby="metabox-render-dialog-title" onCancel={event => {
+  return <dialog ref={ref} className={s.confirm} aria-labelledby={titleId} onCancel={event => {
     event.preventDefault()
     if (!rendering) onClose()
   }}>
     <form onSubmit={event => { event.preventDefault(); onRender() }}>
       <header className={s.confirmHeader}>
-        <h2 id="metabox-render-dialog-title">Render</h2>
+        <h2 id={titleId}>Render</h2>
         <button type="button" className={controls.button + ' ' + controls.quiet + ' ' + controls.compact + ' ' + s.iconButton}
           aria-label="Close render dialog" disabled={rendering} onClick={onClose}>
           <img src="/images/metabox/products/editor/close.svg" width={16} height={16} alt="" />

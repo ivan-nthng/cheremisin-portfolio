@@ -1,17 +1,19 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import DemoShell from '@/components/portfolio/demo/DemoShell'
 import { litresCaseReturn } from './demo-return'
-import LitresAuthor from './LitresAuthor'
+import LitresAuthor, { type AuthorGuidedState } from './LitresAuthor'
 
 function close() {
   location.replace(litresCaseReturn())
 }
 
-export default function LitresDemo({ onReturn }: { onReturn?: () => void } = {}) {
+export default function LitresDemo({ onReturn, guided }: { onReturn?: () => void; guided?: AuthorGuidedState } = {}) {
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
   const [visit, setVisit] = useState(0)
+  const presenting = guided !== undefined
+  useLayoutEffect(() => { if (presenting) setTheme('light') }, [presenting])
 
   function restart() {
     if (!onReturn && location.hash) history.replaceState(history.state, '', location.pathname + location.search)
@@ -30,7 +32,7 @@ export default function LitresDemo({ onReturn }: { onReturn?: () => void } = {})
     return () => window.removeEventListener('keydown', escape)
   }, [onReturn])
 
-  return <DemoShell label="LitRes portfolio demo" theme={theme} onTheme={setTheme} onRestart={restart} onReturn={onReturn ?? close}>
-    <LitresAuthor key={visit} theme={theme} hosted={Boolean(onReturn)} selectionActions />
+  return <DemoShell presentation={presenting} label="LitRes portfolio demo" theme={theme} onTheme={setTheme} onRestart={restart} onReturn={onReturn ?? close}>
+    <LitresAuthor key={visit} theme={theme} hosted={Boolean(onReturn)} guided={guided} selectionActions />
   </DemoShell>
 }

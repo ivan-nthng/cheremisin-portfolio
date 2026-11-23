@@ -1,11 +1,10 @@
 'use client'
 
 import { useEffect, useRef, type ReactNode, type ComponentProps } from 'react'
-import AuthorWorkspaceScene from '@/components/litres-author/AuthorWorkspaceScene'
+import { PublishingDemoSurface } from '@/components/litres-author/AuthorWorkspaceScene'
 import { CaseStatistics, CaseTemplate } from '@/components/portfolio/case-story/CaseTemplate'
 import { useCaseHeroExit } from '@/components/portfolio/case-story/motion'
-import { PublishingDemoProvider } from './PublishingDemoProvider'
-import { useCaseDemo } from '@/components/portfolio/case-story/CaseDemoOverlay'
+import { CaseDemoProvider, useCaseDemo } from '@/components/portfolio/case-story/CaseDemoOverlay'
 import { CaseGuidedShowcase } from '@/components/portfolio/case-story/CaseGuidedShowcase'
 import { RepeatReveal } from '@/components/portfolio/RepeatReveal'
 import styles from './case.module.css'
@@ -20,7 +19,13 @@ function CaseStoryContent({ hero, intro, outcome, context, entry, details, furth
   further: ReactNode
   caseFooter: ReactNode
 }) {
-  const { active } = useCaseDemo()
+  const { active, retained } = useCaseDemo()
+  const still = <picture className={styles.workspaceStill}>
+    <source media="(min-width: 1201px)" sizes="(min-width: 1440px) 1120px, 78vw"
+      srcSet="/images/litres/case/workspace-1120.webp 1120w, /images/litres/case/workspace-2240.webp 2240w" />
+    <img src="/images/litres/case/workspace-mobile.jpg" width={1440} height={825}
+      alt="LitRes publishing dashboard with sales, reviews and pages read" loading="lazy" draggable={false} />
+  </picture>
   const heroRegion = useRef<HTMLDivElement>(null)
   const statistics = useRef<HTMLElement>(null)
   useCaseHeroExit(heroRegion, active)
@@ -42,8 +47,8 @@ function CaseStoryContent({ hero, intro, outcome, context, entry, details, furth
     showcase={<CaseGuidedShowcase
       id="workspace" className={styles.workspace} pinClassName={styles.inkBackdrop}
       headingId="workspace-title" kicker="LitRes / Author & publisher workspace" lines={['See what happens', 'after you publish.']}
-      chrome="LitRes — author workspace" still={<div className={styles.workspaceStill}><AuthorWorkspaceScene still /></div>}
-      scene={<AuthorWorkspaceScene />} entry={entry}
+      chrome="LitRes — author workspace" still={still} entry={entry}
+      desktopPreview={retained && <PublishingDemoSurface {...retained} poster={still} />}
       mobilePoster={{ src: '/images/litres/case/workspace-mobile.jpg', alt: 'LitRes author workspace on a mobile screen', width: 1560, height: 2100 }}
     />}
     details={details} further={further} footer={caseFooter} />
@@ -51,5 +56,5 @@ function CaseStoryContent({ hero, intro, outcome, context, entry, details, furth
 }
 
 export function CaseStory(props: ComponentProps<typeof CaseStoryContent>) {
-  return <PublishingDemoProvider><CaseStoryContent {...props} /></PublishingDemoProvider>
+  return <CaseDemoProvider retainedDemo="publishing"><CaseStoryContent {...props} /></CaseDemoProvider>
 }

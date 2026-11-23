@@ -3,7 +3,8 @@
 .host:modal { position: fixed; height: 100dvh; pointer-events: auto; }
 .host::backdrop { background: transparent; }
 .panel { overflow: hidden; transform-origin: left top; position: relative; }
-.panel > picture, .panel > picture img, .frame { display: block; width: 100%; height: 100%; }
-.panel > picture img { object-fit: cover; object-position: top; }
-.frame { position: absolute; inset: 0; border: 0; }
+.panel > img, .panel > picture, .panel > picture img, .content, .content > iframe { display: block; width: 100%; height: 100%; }
+.panel > img, .panel > picture img { object-fit: cover; object-position: top; }
+.content { position: absolute; inset: 0; }
+.content > iframe { border: 0; }
 .fallback { position: absolute; inset: 0 0 auto; display: flex; align-items: center; justify-content: end; gap: 1rem; padding: .5rem 1rem; background: var(--background); color: var(--foreground); }

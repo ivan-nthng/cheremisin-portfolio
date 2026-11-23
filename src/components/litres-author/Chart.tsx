@@ -1,4 +1,4 @@
-import { useId, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
+import { useId, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
 import { count, type Point } from './sample'
 import styles from './author.module.css'
 
@@ -28,6 +28,14 @@ export default function Chart({ label, series, data, format = count, variant = '
   const [hover, setHover] = useState<number | null>(null)
   const [focus, setFocus] = useState<number | null>(null)
   const [pinned, setPinned] = useState<number | null>(null)
+  const scriptedPoint = preview?.active
+  useLayoutEffect(() => {
+    if (scriptedPoint === undefined) return
+    setPinned(scriptedPoint)
+    setCursor(scriptedPoint ?? 0)
+    setHover(null)
+    setFocus(null)
+  }, [scriptedPoint])
   const active = preview ? preview.active : hover ?? focus ?? pinned
   const selected = active === null ? undefined : data[active]
   const sales = variant === 'sales'
@@ -96,7 +104,7 @@ export default function Chart({ label, series, data, format = count, variant = '
           data-target={preview && `${preview.target}-${index}`}
           ref={node => { controls.current[index] = node }}
           tabIndex={index === cursor ? 0 : -1}
-          aria-pressed={index === pinned}
+          aria-pressed={!preview && index === pinned}
           aria-label={`${point.label}. ${series.map((item, i) => `${item.label}: ${format(point.values[i])}`).join('. ')}`}
           onPointerEnter={event => { if (event.pointerType !== 'touch') setHover(index) }}
           onFocus={() => { setCursor(index); setFocus(index) }}
@@ -109,7 +117,7 @@ export default function Chart({ label, series, data, format = count, variant = '
         {area && <span className={styles.plotGuide} aria-hidden="true" style={{ left: `${x(active)}%` }} />}
         {series.map((item, index) => <span key={item.label} className={styles.marker} aria-hidden="true"
           style={{ left: `${x(active)}%`, top: `${y(selected.values[index])}%`, borderColor: item.color }} />)}
-        <div className={styles.tooltip} data-pinned={active === pinned || undefined} aria-hidden="true"
+        <div className={styles.tooltip} data-pinned={!preview && active === pinned || undefined} aria-hidden="true"
           style={{ '--point': `${x(active)}%` } as CSSProperties}>
           <strong>{selected.label}</strong>
           {series.map((item, index) => <div key={item.label}>

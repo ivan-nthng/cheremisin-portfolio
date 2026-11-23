@@ -201,7 +201,7 @@ function Gallery({ id, items, reduced, result = false, viewportRef }: { result?:
   </div>
 }
 
-export default function CaseProcess({ view, review, suspended, onDemo, launch, galleryEntry }: { view: string; review: boolean; suspended: boolean; onDemo: () => void; launch: RefObject<HTMLButtonElement | null>; galleryEntry: RefObject<HTMLDivElement | null> }) {
+export default function CaseProcess({ view, review, suspended, onDemo, launch, galleryEntry, workspace }: { view: string; review: boolean; suspended: boolean; onDemo: () => void; launch: RefObject<HTMLButtonElement | null>; galleryEntry: RefObject<HTMLDivElement | null>; workspace: ReactNode }) {
   const result = view === 'result'
   const root = useRef<HTMLElement>(null)
   const reduced = useReducedMotion()
@@ -219,6 +219,7 @@ export default function CaseProcess({ view, review, suspended, onDemo, launch, g
     return () => { observer.disconnect(); cancelAnimationFrame(frame) }
   }, [])
   return <CaseDetails editorial={result} ref={root} className={result ? layout.trackSection : styles.page} data-persistent-scenes data-layout={view} data-reduced={reduced}>
+    {workspace && <div className={styles.workspaceOrigin}>{workspace}</div>}
     <div hidden={result}><h1 className={caseStyles.srOnly}>Citymobil · Process</h1>
     <Chapter chapter={chapters[0]} reduced={reduced}><BeforeGallery reduced={reduced} active={!result && !suspended}/></Chapter></div>
     {result &&

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import ReaderDemoGallery from '@/components/litres-readers/ReaderDemoGallery'
+import { LibraryDemoSurface } from '@/components/litres-readers/LibraryDemoSurface'
 import CaseDraft, { type CaseDraftData } from '@/components/portfolio/case-story/CaseDraft'
 
 export const metadata: Metadata = {
@@ -78,5 +79,5 @@ const data: CaseDraftData = {
 }
 
 export default function LitresLibraryCasePage() {
-  return <CaseDraft data={data} ReaderGallery={ReaderDemoGallery} />
+  return <CaseDraft data={data} ReaderGallery={ReaderDemoGallery} LibrarySurface={LibraryDemoSurface} />
 }

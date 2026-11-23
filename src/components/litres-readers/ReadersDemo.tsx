@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Check, Download, Filter, LoaderCircle, Plus, Search, Upload, X } from 'lucide-react'
 import DemoShell from '@/components/portfolio/demo/DemoShell'
@@ -19,11 +19,12 @@ const rand = (max: number) => Math.floor(Math.random() * max)
 function makeReader(index: number): Reader { const first = names[index % names.length][0]; const last = names[(index + Math.floor(index / names.length)) % names.length][1]; return {id: 10000+index*1000+rand(1000),first,last,email:`${first.toLowerCase()}.${last.toLowerCase()}${rand(90)+10}@example.com`,phone:`2${rand(10)}-${rand(900)+100}-${rand(900)+100}`,group:groups[rand(groups.length)],age:18+rand(52),books:rand(7),minutes:rand(91),active:Math.random()>.35,type:clientTypes[rand(clientTypes.length)],photo:index%3!==0,photoSrc:portraits[rand(portraits.length)],crop:null,color:colors[rand(colors.length)],available:'4',below:'2',cost:'€25'} }
 function seed() { return Array.from({ length: 60 }, (_, index) => makeReader(index)) }
 export type GuidedReaderFilter = { open: boolean; status: 'All' | 'Active' }
-export default function ReadersDemo({ guidedSelection, guidedFilter, compact, onReturn }: {
+export default function ReadersDemo({ guidedSelection, guidedFilter, compact, onReturn, onReady }: {
   guidedSelection?: boolean
   guidedFilter?: GuidedReaderFilter
   compact?: boolean
   onReturn?: () => void
+  onReady?: () => void
 } = {}) {
  const [theme,setTheme]=useState<'light'|'dark'>('light'), [version,setVersion]=useState(0)
  const [readers,setReaders]=useState<Reader[]>([]), [selection,setSelected]=useState<Reader|null>(null), [draft,setDraft]=useState<Reader|null>(null)
@@ -104,14 +105,14 @@ export default function ReadersDemo({ guidedSelection, guidedFilter, compact, on
    && (!search || `${reader.first} ${reader.last}` === search)
  ), [readers, filter, group, search])
  const download=()=>{const rows=[['Reader ID','Status','Name','Group','Books','Age'],...shown.map(r=>[r.id,r.active?'Active':'Inactive',`${r.first} ${r.last}`,r.group,r.books,r.age])];const csv=rows.map(row=>row.map(cell=>`"${String(cell).replaceAll('"','""')}"`).join(',')).join('\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));const a=document.createElement('a');a.href=url;a.download='readers-demo.csv';a.click();URL.revokeObjectURL(url)}
- function back() {
+ const back = useCallback(() => {
    setStage(-1)
    setDraft(null)
    setPhotoOpen(false)
    setPhotoRequested(false)
    setFinishing(false)
    setSaveStatus('idle')
- }
+ }, [])
 
  function newReader() {
    let id = 10000 + rand(90000)
@@ -167,7 +168,7 @@ export default function ReadersDemo({ guidedSelection, guidedFilter, compact, on
    setSelected(previous => previous && ids.includes(previous.id) ? null : previous)
  }
 
- function restart() {
+ const restart = useCallback(() => {
    back()
    setSelected(null)
    setFilter('All')
@@ -177,7 +178,26 @@ export default function ReadersDemo({ guidedSelection, guidedFilter, compact, on
    setSearchOpen(false)
    setCustomGroups([])
    setVersion(previous => previous + 1)
- }
+ }, [back])
+
+ const wasManual = useRef(false)
+ useLayoutEffect(() => {
+   if (!onReady) return
+   if (readers.length) onReady()
+   if (guidedSelection === undefined) {
+     wasManual.current = true
+     return
+   }
+   // The Stage writes the same native selection that a row click hands to the editor.
+   // A fresh visit is allowed only after the return motion has completed.
+   if (wasManual.current) {
+     wasManual.current = false
+     restart()
+     setTheme('light')
+   } else {
+     setSelected(guidedSelection ? readers[0] ?? null : null)
+   }
+ }, [onReady, guidedSelection, readers, restart])
 
  const close = onReturn ?? (() => location.assign('/projects/litres-library'))
  const workspace = <main id={guidedSelection === undefined && !onReturn ? "main-content" : undefined} className={s.app} data-theme={theme}
@@ -242,5 +262,6 @@ export default function ReadersDemo({ guidedSelection, guidedFilter, compact, on
      onClose={() => setSelected(null)} />}
    </motion.div></AnimatePresence></aside></div>
   </main>
- return guidedSelection === undefined ? <DemoShell label="LitRes readers demo" theme={theme} onTheme={setTheme} onRestart={restart} onReturn={close}>{workspace}</DemoShell> : workspace
+ if (guidedSelection !== undefined && !onReturn) return workspace
+ return <DemoShell presentation={guidedSelection !== undefined} label="LitRes readers demo" theme={theme} onTheme={setTheme} onRestart={restart} onReturn={close}>{workspace}</DemoShell>
 }

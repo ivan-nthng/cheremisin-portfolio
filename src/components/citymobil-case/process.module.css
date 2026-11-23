@@ -15,6 +15,7 @@
 .page button:not(:where([data-native-controls] *)):focus-visible,.viewport:focus-visible,.sourceLink:focus-visible{outline:2px solid var(--foreground);outline-offset:-2px}
 .page button:not(:where([data-native-controls] *))[aria-disabled=true],.page button:not(:where([data-native-controls] *)):disabled{color:var(--muted);cursor:default;opacity:.6}
 .page .desktopEntry{text-align:left;font-weight:500}
+.workspaceOrigin{position:absolute;width:0;height:0}
 .viewport{position:relative;width:100%;height:calc(var(--process-media-height) + 2 * var(--process-gap));margin-top:calc(-1 * var(--process-gap));overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:var(--muted) transparent}
 .track{display:flex;align-items:start;gap:var(--process-gap);width:max-content;padding:var(--process-gap)}
 .figure{flex:none;width:calc(var(--process-media-height) * var(--media-ratio))}

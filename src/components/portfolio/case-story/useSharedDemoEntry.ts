@@ -16,11 +16,12 @@ export function useSharedDemoEntry(enabled: boolean, open: (id: DemoLinkId, laun
 
     let frame = 0
     let scrolled = false
-    const deadline = performance.now() + 3000
+    let deadline = 0
     const enter = () => {
       const section = document.getElementById(anchor)
       const launcher = section?.querySelector<HTMLElement>('[data-shared-demo-entry]')
-      if (section && launcher?.getClientRects().length) {
+      // The server's static layout can have a different scroll destination from the hydrated sticky showcase.
+      if (section && section.dataset.caseMotionReady !== 'false' && launcher?.getClientRects().length) {
         if (!scrolled) {
           const guided = section.dataset.motion === 'true'
           const travel = Math.max(0, section.offsetHeight - innerHeight)
@@ -35,7 +36,13 @@ export function useSharedDemoEntry(enabled: boolean, open: (id: DemoLinkId, laun
       }
       if (performance.now() < deadline) frame = requestAnimationFrame(enter)
     }
-    frame = requestAnimationFrame(enter)
-    return () => cancelAnimationFrame(frame)
+    const start = () => {
+      deadline = performance.now() + 3000
+      frame = requestAnimationFrame(enter)
+    }
+    // WebKit can still restore the URL fragment when the initial document finishes loading.
+    if (url.hash && document.readyState !== 'complete') window.addEventListener('load', start, { once: true })
+    else start()
+    return () => { window.removeEventListener('load', start); cancelAnimationFrame(frame) }
   }, [enabled, open])
 }

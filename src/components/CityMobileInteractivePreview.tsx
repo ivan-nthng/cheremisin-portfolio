@@ -79,11 +79,6 @@ export function CitymobilWorkspace({ illustratedCaret = false, paletteFromBottom
   const [promo, setPromo] = useState(false)
   const [payment, setPayment] = useState(false)
   const [previewTripId, setPreviewTripId] = useState<string | null>(null)
-  useLayoutEffect(() => {
-    if (!guidedStep) return
-    dispatch({ type: 'panel', value: guidedStep === 'scripts' ? 'scripts' : 'info' })
-    setPreviewTripId(guidedStep === 'trip' ? 'latest' : null)
-  }, [dispatch, guidedStep])
   const [completionVisible, setCompletionVisible] = useState(false)
   const detailsClose = useRef<HTMLButtonElement>(null)
   const detailsTrigger = useRef<HTMLElement | null>(null)
@@ -217,19 +212,33 @@ export function CitymobilWorkspace({ illustratedCaret = false, paletteFromBottom
     toolTrigger.current = trigger
     setToolMenu(current => current === value ? null : value)
   }
-  function closeTool() {
+  const closeTool = useCallback(() => {
     setToolMenu(null)
     toolTrigger.current?.focus({ preventScroll: true })
-  }
-  function selectScenario(value: ScenarioId, restart = false) {
+  }, [])
+  const selectScenario = useCallback((value: ScenarioId, restart = false, passive = false) => {
     if (value === state.scenario && !restart) return
     setPreviewTripId(null); setTrackTripId(null); setCompletionVisible(false)
     dispatch({ type: 'scenario', value })
     restoreComposerFocus.current = false
     setMenu(false); paletteDialog.current?.close(); setItinerary(false); setPromo(false); setPayment(value === 'pickup'); setOrderTab('details'); setIncomeTab('rides')
-    closeTool()
+    if (passive) setToolMenu(null)
+    else closeTool()
     setNotice(citymobilScenarios[value].title)
-  }
+  }, [state.scenario, dispatch, closeTool])
+  const previousStep = useRef(guidedStep)
+  useLayoutEffect(() => {
+    const previous = previousStep.current
+    previousStep.current = guidedStep
+    if (!guidedStep) return
+    if (!previous) {
+      // Manual control has ended and the return animation has settled.
+      selectScenario('lost', true, true)
+      dispatch({ type: 'theme', value: 'light' })
+    }
+    dispatch({ type: 'panel', value: guidedStep === 'scripts' ? 'scripts' : 'info' })
+    setPreviewTripId(guidedStep === 'trip' ? 'latest' : null)
+  }, [dispatch, guidedStep, selectScenario])
   function selectRecipient(value: Recipient) {
     dispatch({ type: 'recipient', value })
     closeTool()

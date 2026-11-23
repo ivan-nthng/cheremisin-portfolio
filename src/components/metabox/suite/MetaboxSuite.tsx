@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
+import MetaboxProjectsGrid from './MetaboxProjectsGrid'
 import { profile } from '../catalog-fixtures'
 import catalog from '../metabox-catalog.module.css'
 import shell from '../metabox.module.css'
@@ -16,10 +17,10 @@ const applications = [
   { name: '3D Services', icon: '3d-services', size: 40, description: 'VR, AR, 3D architectural and interior renderings.' },
 ]
 
-export function MetaboxSuiteLayout({ title, children, hosted = false, onOpenApplications }: { title: 'Applications' | 'Projects'; children: ReactNode; hosted?: boolean; onOpenApplications?: () => void }) {
+export function MetaboxSuiteLayout({ title, children, hosted = false, onOpenApplications, theme }: { theme?: string; title: 'Applications' | 'Projects'; children: ReactNode; hosted?: boolean; onOpenApplications?: () => void }) {
   const isProjects = title === 'Projects'
 
-  return <main id={hosted ? undefined : "main-content"} className={shell.app + ' ' + styles.page}>
+  return <main id={hosted ? undefined : "main-content"} className={shell.app + ' ' + styles.page} data-theme={theme}>
     <header className={styles.header}>
       <div className={styles.heading}>
         {isProjects
@@ -45,15 +46,16 @@ export function MetaboxSuiteLayout({ title, children, hosted = false, onOpenAppl
   </main>
 }
 
-export default function MetaboxSuite({ hosted = false, onLaunch }: { hosted?: boolean; onLaunch?: (destination: 'products' | 'projects') => void } = {}) {
-  return <MetaboxSuiteLayout hosted={hosted} title="Applications">
+export default function MetaboxSuite({ hosted = false, projects = false, theme, imageAttempt = 0, onOpenApplications, onLaunch }: { hosted?: boolean; projects?: boolean; theme?: string; imageAttempt?: number; onOpenApplications?: () => void; onLaunch?: (destination: 'products' | 'projects') => void } = {}) {
+  return <MetaboxSuiteLayout hosted={hosted} title={projects ? 'Projects' : 'Applications'} theme={theme} onOpenApplications={onOpenApplications}>
+    {projects ? <MetaboxProjectsGrid imageAttempt={imageAttempt} /> :
     <ul className={styles.cards} aria-label="Applications">
       {applications.map(app => {
         const launch = <>Launch <img src={assets + 'chevron-right.svg'} alt="" width={20} height={20} /></>
 
         return <li className={styles.card} key={app.name}>
           <span className={styles.cardIcon}>
-            <img src={assets + app.icon + '.svg'} alt="" width={app.size} height={app.size} />
+            <img key={imageAttempt} data-suite-image src={assets + app.icon + '.svg'} alt="" width={app.size} height={app.size} />
           </span>
           <h2>{app.name}</h2>
           <p>{app.description}</p>
@@ -66,6 +68,6 @@ export default function MetaboxSuite({ hosted = false, onLaunch }: { hosted?: bo
             : <button type="button" disabled className={styles.launch} aria-label={'Launch ' + app.name}>{launch}</button>}
         </li>
       })}
-    </ul>
+    </ul>}
   </MetaboxSuiteLayout>
 }

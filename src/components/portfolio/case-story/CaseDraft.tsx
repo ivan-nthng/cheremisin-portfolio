@@ -1,20 +1,19 @@
 'use client'
 
-import { useState, type ComponentType } from 'react'
-import dynamic from 'next/dynamic'
+import { useState, type ComponentType, type ReactNode } from 'react'
 import { PortfolioFooter } from '@/components/portfolio/PortfolioFooter'
 import ProjectNavigation from '@/components/ProjectNavigation'
 import { CaseDemoArrow, CaseTemplate } from './CaseTemplate'
 import { CaseHero, type CaseImage } from './CaseHero'
 import { CaseGuidedShowcase } from './CaseGuidedShowcase'
 import { CaseDemoMedia } from './CaseDemoMedia'
-import { GuidedPreview } from './GuidedPreview'
+import { useCaseDemoDesktop } from './case-demo-viewport'
 import { CaseDetails, CaseFeatureCard, CaseFeatureGrid, CaseTextFeature, type CaseTextFeatureProps } from './CaseDetails'
 import { RepeatReveal } from '@/components/portfolio/RepeatReveal'
 import type { MetaboxCardKind } from '@/components/metabox/MetaboxCardScene'
 import caseStyles from '@/components/citymobil-case/case.module.css'
 import { DraftDemoProvider } from './DraftDemoProvider'
-import { caseDemoForHref, useCaseDemo } from './CaseDemoOverlay'
+import { caseDemoForHref, useCaseDemo, type RetainedControls } from './CaseDemoOverlay'
 import { LitresLibraryHeroFlow } from '@/components/litres-readers/LitresLibraryHeroFlow'
 import styles from './case-draft.module.css'
 import editorial from './case-editorial.module.css'
@@ -44,27 +43,27 @@ export type CaseDraftData = {
   textFeatures?: { columns: 2 | 3; items: CaseTextFeatureProps[] }
 }
 
-const DraftNativeScene = dynamic(() => import('./DraftNativeScene').then(module => module.DraftNativeScene))
-
 // Route imports keep server-rendered gallery styles and IDs in the same tree.
 type CaseDraftProps = { data: CaseDraftData } & (
-  | { ReaderGallery: ComponentType<{ suspended: boolean }>; MetaboxScene?: never }
-  | { ReaderGallery?: never; MetaboxScene: ComponentType<{ kind: MetaboxCardKind; suspended: boolean }> }
+  | { ReaderGallery: ComponentType<{ suspended: boolean }>; LibrarySurface: ComponentType<RetainedControls & { poster: ReactNode }>; MetaboxScene?: never; MetaboxSurface?: never }
+  | { ReaderGallery?: never; LibrarySurface?: never; MetaboxScene: ComponentType<{ kind: MetaboxCardKind; suspended: boolean }>; MetaboxSurface: ComponentType<RetainedControls & { poster: ReactNode; card?: boolean; kind?: MetaboxCardKind; suspended?: boolean }> }
 )
 
-function DemoLink({ demo, live = false, sharedEntry = false }: { demo: DraftDemo; live?: boolean; sharedEntry?: boolean }) {
+function DemoLink({ demo, live = false, sharedEntry = false, card = false }: { demo: DraftDemo; live?: boolean; sharedEntry?: boolean; card?: boolean }) {
   const { open } = useCaseDemo()
   const kind = caseDemoForHref(demo.href)
-  return kind ? <button className={`editorial-link ${caseStyles.desktopDemoEntry}`} type="button" aria-haspopup="dialog" data-shared-demo-entry={sharedEntry || undefined} onClick={event => open(kind, event.currentTarget)}>
+  return kind ? <button className={`editorial-link ${caseStyles.desktopDemoEntry}`} type="button" aria-haspopup="dialog" data-shared-demo-entry={sharedEntry || undefined} data-demo-card-entry={card ? kind : undefined} onClick={event => open(kind, event.currentTarget)}>
     {live ? 'Try Live Demo' : demo.label}<CaseDemoArrow />
   </button> : <a className="editorial-link" href={demo.href} target="_blank" rel="noopener">
     {demo.label}<span className="sr-only"> (opens in a new tab)</span><CaseDemoArrow />
   </a>
 }
 
-function CaseDraftContent({ data, ReaderGallery, MetaboxScene }: CaseDraftProps) {
-  const { active } = useCaseDemo()
+function CaseDraftContent({ data, ReaderGallery, LibrarySurface, MetaboxScene, MetaboxSurface }: CaseDraftProps) {
+  const { active, retained } = useCaseDemo()
   const [expandedMicrodemo, setExpandedMicrodemo] = useState<string | null>(null)
+  const desktop = useCaseDemoDesktop()
+  const fromCard = Boolean(retained?.expanded && retained.launcher.current?.closest('#demos'))
   const hero = data.hero ?? data.poster
   const libraryGrid = data.heroPreview && data.variant === 'litres'
   const contextColumns = data.context?.layout === 'columns'
@@ -73,10 +72,15 @@ function CaseDraftContent({ data, ReaderGallery, MetaboxScene }: CaseDraftProps)
   const featureCards = data.demos.map(demo => {
     const kind = caseDemoForHref(demo.href)
     const hasPreview = kind === 'metabox-products' || kind === 'metabox-camera' || kind === 'metabox-projects'
-    return <CaseFeatureCard key={demo.href} id={kind && demoLinks[kind].anchor !== 'showcase' ? demoLinks[kind].anchor : undefined} listItem span={data.variant === 'metabox' ? 'third' : 'full'} title={<><DemoLink demo={demo} sharedEntry /><span className={caseStyles.mobileDemoLabel}>{demo.label}</span></>} description={demo.description}>
-      {MetaboxScene && hasPreview && <CaseDemoMedia reveal title={demo.label} expanded={expandedMicrodemo === kind}
+    const ownsDialog = fromCard && retained?.launcher.current?.dataset.demoCardEntry === kind
+    const suspended = active || expandedMicrodemo !== null && expandedMicrodemo !== kind
+    return <CaseFeatureCard key={demo.href} id={kind && demoLinks[kind].anchor !== 'showcase' ? demoLinks[kind].anchor : undefined} listItem span={data.variant === 'metabox' ? 'third' : 'full'} title={<><DemoLink demo={demo} sharedEntry card/><span className={caseStyles.mobileDemoLabel}>{demo.label}</span></>} description={demo.description}>
+      {MetaboxScene && hasPreview && <CaseDemoMedia reveal title={demo.label} manual={ownsDialog} expanded={expandedMicrodemo === kind}
         onExpand={() => setExpandedMicrodemo(kind)} onClose={() => setExpandedMicrodemo(null)}>
-        <MetaboxScene kind={kind} suspended={active || expandedMicrodemo !== null && expandedMicrodemo !== kind} />
+        {desktop && MetaboxSurface && retained
+          ? <MetaboxSurface {...retained} card kind={kind} interrupt={retained.cardInterrupt!(kind)} expanded={ownsDialog} suspended={suspended && !ownsDialog}
+            poster={kind === 'metabox-camera' ? <img src="/images/metabox/sofa/reference.webp" alt="Sofa camera preview" /> : kind === 'metabox-projects' ? <img src="/images/metabox/suite/tuuci-canopy.webp" alt="Tuuci canopy project" /> : poster} />
+          : <MetaboxScene kind={kind} suspended={suspended} />}
       </CaseDemoMedia>}
     </CaseFeatureCard>
   })
@@ -88,12 +92,6 @@ function CaseDraftContent({ data, ReaderGallery, MetaboxScene }: CaseDraftProps)
         artwork={data.heroPreview ? undefined : hero}
         actions={<><DemoLink demo={primaryDemo} live />
           <a className="editorial-link" href={data.story ? "#process" : "#demos"}>{data.story ? "Read the story" : "View demos"}</a></>}
-        rightUI={data.heroPreview && !libraryGrid ? { label: hero.alt, content: <>
-          <div className={caseStyles.chrome} aria-hidden="true">{data.showcase.chrome}</div>
-          <GuidedPreview still={<img {...hero} className={styles.poster} draggable={false} fetchPriority="high" />}>
-            <DraftNativeScene variant={data.variant} />
-          </GuidedPreview>
-        </> } : undefined}
       />}
       context={data.context && <RepeatReveal active={contextColumns || undefined}><section className={styles.context} aria-labelledby="case-context-title">
         <RepeatReveal className={styles.contextIntro} active={contextColumns ? undefined : true}>
@@ -111,7 +109,9 @@ function CaseDraftContent({ data, ReaderGallery, MetaboxScene }: CaseDraftProps)
         </RepeatReveal>)}
       </section></RepeatReveal>}
       showcase={<CaseGuidedShowcase id="showcase" headingId="case-showcase-title" {...data.showcase}
-        still={poster} scene={<DraftNativeScene variant={data.variant} />}
+        still={poster} desktopPreview={LibrarySurface && retained ? <LibrarySurface {...retained} poster={poster} />
+          : MetaboxSurface && retained ? <MetaboxSurface {...retained} expanded={retained.expanded && !fromCard}
+            suspended={active && (!retained.expanded || fromCard) || expandedMicrodemo !== null} poster={poster} /> : undefined}
         mobilePoster={data.poster}
         entry={<DemoLink demo={primaryDemo} live sharedEntry />}
       />}
@@ -141,5 +141,5 @@ function CaseDraftContent({ data, ReaderGallery, MetaboxScene }: CaseDraftProps)
 }
 
 export default function CaseDraft(props: CaseDraftProps) {
-  return <DraftDemoProvider><CaseDraftContent {...props} /></DraftDemoProvider>
+  return <DraftDemoProvider library={props.data.variant === 'litres'}><CaseDraftContent {...props} /></DraftDemoProvider>
 }

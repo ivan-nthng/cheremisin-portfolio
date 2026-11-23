@@ -83,7 +83,14 @@ export default function NativeFeatureDocument({ scene, width = 375, localBasemap
     }
   }, [scene])
   useLayoutEffect(() => {
-    if (scene && parent !== window) parent.postMessage({ type: 'cm-feature-controlled', sequence: mode.sequence, interactive: armed }, location.origin)
+    if (!scene || parent === window) return
+    // An inert iframe element alone cannot prevent its own document from taking focus
+    // while a nearby fragment prepares. Release the document before acknowledging input.
+    const root = document.documentElement
+    const previous = root.inert
+    root.inert = !armed
+    parent.postMessage({ type: 'cm-feature-controlled', sequence: mode.sequence, interactive: armed }, location.origin)
+    return () => { root.inert = previous }
   }, [scene, mode.sequence, armed])
   useEffect(() => { if (ready && active && parent !== window) parent.postMessage({ type: 'cm-feature-ready' }, location.origin) }, [ready, active])
   useEffect(() => {

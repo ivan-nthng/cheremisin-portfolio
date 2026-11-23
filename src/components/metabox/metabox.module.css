@@ -201,3 +201,8 @@
   .cameraBody { grid-template-columns: minmax(0, 1fr); }
   .viewport { aspect-ratio: 3 / 2; }
 }
+
+:global([data-camera-card]) .cameraBody { grid-template-columns: minmax(0, 1fr) 280px; }
+:global([data-camera-card][data-guided-compact]) .cameraBody { grid-template-columns: minmax(0, 1fr); grid-template-rows: 248px auto; }
+:global([data-camera-card]) .viewport { aspect-ratio: auto; }
+:global([data-camera-card]) .closeCamera[hidden] { display: none; }

@@ -144,6 +144,8 @@
   cursor: pointer;
 }
 
+:global([data-camera-card]) .range { box-sizing: content-box; }
+
 .range::-webkit-slider-thumb {
   appearance: none;
   width: 16px;

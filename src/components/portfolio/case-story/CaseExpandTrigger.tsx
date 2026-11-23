@@ -63,7 +63,7 @@ export function CaseExpandTrigger({ title, hidden, disabled, available = true, t
       fine.removeEventListener('change', hideExpandHint)
     }
   }, [hideExpandHint])
-  return <button hidden={hidden} type="button" className={styles.expand} aria-label={`Expand ${title} fragment`} disabled={disabled} aria-disabled={!available || undefined} data-touch-hint={touchHint || undefined}
+  return <button hidden={hidden} type="button" className={styles.expand} aria-label={`Expand ${title} fragment`} disabled={disabled} aria-disabled={!available || undefined} data-case-fragment-entry data-touch-hint={touchHint || undefined}
         onPointerEnter={placeExpandHint} onPointerLeave={hideExpandHint} onPointerCancel={hideExpandHint} onBlur={hideExpandHint}
         onFocus={() => { hideExpandHint(); expandHint.current?.removeAttribute('data-dismissed') }}
         onPointerDown={event => { hideExpandHint(); gesture.current = { x: event.clientX, y: event.clientY, moved: false, scroll: event.currentTarget.closest('[data-feature-gallery-viewport]')?.scrollLeft ?? 0 } }}

@@ -6,7 +6,7 @@ import styles from '@/components/citymobil-case/case.module.css'
 
 import { caseDemoDesktopQuery } from './case-demo-viewport'
 
-export function useGuidedPlayback(frame: RefObject<HTMLDivElement | null>) {
+export function useGuidedPlayback(frame: RefObject<HTMLDivElement | null>, card = false) {
   const [playing, setPlaying] = useState(false)
 
   useEffect(() => {
@@ -15,11 +15,13 @@ export function useGuidedPlayback(frame: RefObject<HTMLDivElement | null>) {
     const motion = matchMedia('(prefers-reduced-motion: reduce)')
     let visible = false
     const desktop = matchMedia(caseDemoDesktopQuery)
-    const sync = () => setPlaying(visible && showcase.dataset.pose === 'hold' && !motion.matches && desktop.matches && document.visibilityState === 'visible')
-    const intersection = new IntersectionObserver(([entry]) => {
-      visible = entry.intersectionRatio >= .65
+    const sync = () => setPlaying(visible && (card || showcase.dataset.pose === 'hold' && !motion.matches) && desktop.matches && document.visibilityState === 'visible')
+    const threshold = card ? .01 : .65
+    const intersection = new IntersectionObserver(entries => {
+      // A shared deep link can scroll from the hero into the showcase within one delivery.
+      visible = (entries.at(-1)?.intersectionRatio ?? 0) >= threshold
       sync()
-    }, { threshold: .65 })
+    }, { threshold })
     const pose = new MutationObserver(sync)
     pose.observe(showcase, { attributes: true, attributeFilter: ['data-pose'] })
     intersection.observe(node)
@@ -33,7 +35,7 @@ export function useGuidedPlayback(frame: RefObject<HTMLDivElement | null>) {
       desktop.removeEventListener('change', sync)
       document.removeEventListener('visibilitychange', sync)
     }
-  }, [frame])
+  }, [frame, card])
 
   return playing
 }

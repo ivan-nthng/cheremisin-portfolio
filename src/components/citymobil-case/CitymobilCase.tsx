@@ -1,8 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react'
-import dynamic from 'next/dynamic'
-import { CitymobilWorkspace } from '@/components/CityMobileInteractivePreview'
+import CitymobilWorkspaceScene from './CitymobilWorkspaceScene'
 import { CitymobilBackdrop } from '@/components/citymobil-background/CitymobilBackgroundPreview'
 import { useCaseHeroExit, useCaseViewportEntry, useScrollCasePhases } from '@/components/portfolio/case-story/motion'
 import { CaseCounter } from '@/components/portfolio/case-story/CaseCounter'
@@ -12,7 +11,6 @@ import cm from '@/components/citymobil-demo/preview.module.css'
 import background from '@/components/citymobil-background/background.module.css'
 import styles from './case.module.css'
 import CaseProcess from './CaseProcess'
-import { CaseDemoOverlay } from '@/components/portfolio/case-story/CaseDemoOverlay'
 import { CaseGuidedShowcase } from '@/components/portfolio/case-story/CaseGuidedShowcase'
 import { caseDemoDesktopQuery as desktopQuery, useCaseDemoDesktop } from '@/components/portfolio/case-story/case-demo-viewport'
 import { RepeatReveal, useRepeatReveal } from '@/components/portfolio/RepeatReveal'
@@ -31,7 +29,6 @@ const phases = {
   after: { eyebrow: 'After', title: content.afterTitle, summary: content.comparisonNote, heading: 'Reported outcome', story: content.afterDescription, metrics: content.after },
 } as const
 const showcaseInset = 68
-const CitymobilWorkspaceScene = dynamic(() => import('./CitymobilWorkspaceScene'))
 
 function caseToolbarInset() {
   const toolbar = document.querySelector<HTMLElement>(`.${styles.navigation}`)
@@ -77,24 +74,29 @@ export default function CitymobilCase({ review = true }: { review?: boolean }) {
   const [entered, setEntered] = useState(false)
   const [stepped, setStepped] = useState(false)
   const [reduced, setReduced] = useState(false)
-  const [demoOpen, setDemoOpen] = useState(false)
+  const [demoView, setDemoView] = useState<typeof view | null>(null)
   const desktop = useCaseDemoDesktop()
-  const active = desktop && demoOpen
+  const active = desktop && demoView === view
   const hero = useRef<HTMLElement>(null)
   const stats = useRef<HTMLElement>(null)
   const metrics = useRef<HTMLDivElement>(null)
   const stage = useRef<HTMLDivElement>(null), poster = useRef<HTMLDivElement>(null), launch = useRef<HTMLButtonElement>(null)
-  const demoSource = useRef<HTMLElement>(null)
+  const interrupt = useRef<(() => void) | null>(null)
   const processLaunch = useRef<HTMLButtonElement>(null), processGallery = useRef<HTMLDivElement>(null)
 
-  useEffect(() => { if (!desktop) setDemoOpen(false) }, [desktop])
+  useEffect(() => { if (!desktop) setDemoView(null) }, [desktop])
 
   const openResultDemo = useCallback((_: DemoLinkId, launcher: HTMLElement) => {
     if (!(launcher instanceof HTMLButtonElement)) return
+    interrupt.current?.()
     launch.current = launcher
-    demoSource.current = poster.current
-    setDemoOpen(true)
+    setDemoView('result')
   }, [])
+  const close = useCallback(() => setDemoView(null), [])
+  const still = <div className={styles.poster}><img draggable={false} src="/images/citymobil/case/poster-desktop.webp" alt="Citymobil support workspace preview" width="4320" height="2268"/></div>
+  const workspace = <CitymobilWorkspaceScene expanded={active} interrupt={interrupt} onClose={close} poster={still}
+    launcher={view === 'process' ? processLaunch : launch} returnGallery={view === 'process' ? processGallery : undefined}
+    shareHref={review ? undefined : siteUrl + demoShortPath('citymobil')} />
 
   useSharedDemoEntry(!review && desktop && view === 'result', openResultDemo)
 
@@ -109,7 +111,7 @@ export default function CitymobilCase({ review = true }: { review?: boolean }) {
     if (currentView.current === view) return
     restoring.current = true
     currentView.current = view
-    setDemoOpen(false)
+    setDemoView(null)
     window.scrollTo({ top: positions.current[view], behavior: 'instant' })
     const frame = requestAnimationFrame(() => {
       window.scrollTo({ top: positions.current[view], behavior: 'instant' })
@@ -175,20 +177,15 @@ export default function CitymobilCase({ review = true }: { review?: boolean }) {
       backdrop={<div className={`${cm.preview} ${styles.backdrop}`} data-theme="dark"><div ref={stage} className={background.stage} data-running="false"><CitymobilBackdrop/></div></div>}
       onBackdropRunning={setBackdropRunning} suspended={active}
       chrome="Citymobil — support demo"
-      still={<div className={styles.poster}><img draggable={false} src="/images/citymobil/case/poster-desktop.webp" alt="Citymobil support workspace preview" width="4320" height="2268"/></div>}
-      scene={<CitymobilWorkspaceScene />}
+      still={still} desktopPreview={view === 'result' ? workspace : still}
       entry={<button className="editorial-link" type="button" aria-haspopup="dialog" data-shared-demo-entry onClick={event => openResultDemo('citymobil', event.currentTarget)}>Try Live Demo<CaseDemoArrow /></button>}
       mobilePoster={{ src: '/images/citymobil/case/poster-mobile.webp', alt: 'Citymobil support workspace', width: 390, height: 656 }}
     />}
     details={<>
-    <CaseProcess view={view} review={review} suspended={active} onDemo={() => { if (desktop) setDemoOpen(true) }} launch={processLaunch} galleryEntry={processGallery}/>
+    <CaseProcess view={view} review={review} suspended={active} onDemo={() => { if (desktop) setDemoView('process') }} launch={processLaunch} galleryEntry={processGallery}
+      workspace={view === 'process' && active ? workspace : null} />
     {review && <p hidden={view !== 'result'} id="case-review-scope" className={styles.reviewScope}>Local preview · Result includes the introduction, support comparison, showcase and five feature demonstrations. Process presents the design approach and source component gallery.</p>}
     </>} further={!review && <RepeatReveal active={reduced || undefined}><ProjectNavigation href="/projects/taxi-aggregator-support-workspace" /></RepeatReveal>}
     footer={!review && <PortfolioFooter />} />
-    {active && <CaseDemoOverlay onClose={() => setDemoOpen(false)} entry={view === 'process' ? processLaunch : launch}
-      source={view === 'result' ? demoSource : undefined} fallback={view === 'process' ? processGallery : undefined}
-      revealFallback={view === 'process'} label="Interactive Citymobil demo">
-      {close => <div className={cm.standalone}><CitymobilWorkspace onReturn={close} shareHref={review ? undefined : siteUrl + demoShortPath('citymobil')} /></div>}
-    </CaseDemoOverlay>}
   </>
 }

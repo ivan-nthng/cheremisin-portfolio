@@ -26,6 +26,10 @@ FRONTEND owns route/UI implementation:
 
 ## Shared UI Ownership
 
+FRONTEND owns `portfolio/case-story/RetainedDemoSurface`, the measured inline slot and native dialog shared by Saavi Kitchen, LitRes Libraries and LitRes Publishing. The host owns motion, scroll, focus return and exclusive still/live paint. Kitchen owns its iframe mode acknowledgement. Libraries and Publishing interrupt their Stage before native input. Libraries retains its reader selection. Publishing retains the period, open menu and chart point on its authored canvas. Standalone routes keep their own entry.
+
+Metabox Products uses the same host for the showcase and the Products card. Each launcher expands its own visible ProductsDemo. The selected Porsche view and render queue belong to that component in both guided and manual modes. Camera setup uses the native MetaboxDemo at the card, including its current field of view and viewport. The Projects card registers its visible suite view with the launcher. Opening the card keeps that view. The Projects and Applications share links use the same card and open their respective screens. Closing either screen returns to the card launcher. The separate fragment enlargement remains authored playback.
+
 FRONTEND reuses these seams; DESIGN SYSTEM owns shared definitions:
 - `layout/Header.tsx`: one contextual header, home scroll transition, native Back/home fallback.
 - `layout/ContactSheet.tsx`: native modal, focus/scroll containment and return; `portfolio/ContactLinks.tsx`: shared contact rendering.

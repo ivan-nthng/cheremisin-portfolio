@@ -334,3 +334,7 @@
 :global([data-guided-compact]) .panelInner { min-height: 0; }
 :global([data-guided-compact]) .workspace:has(.ticket) .list { display: none; }
 :global([data-guided-compact]) .workspace:not(:has(.ticket)) .panel { display: none; }
+.retainedStage :global([data-hosted="true"]),
+.retainedStage :global([data-hosted="true"]) > div:first-child { height: 100%; }
+.retainedStage .app { height: calc(100% - var(--demo-toolbar-height, 0px)); }
+:global([data-retained-state="manual"]) .retainedStage :global(.ss-stage) { user-select: text; }

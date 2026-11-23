@@ -50,6 +50,8 @@ export interface StageProps<S> {
   playbackClock?: PlaybackClock
   /** Yield authored input to the existing native surface without replacing its DOM. */
   manual?: boolean
+  /** A retained native workspace can use its ordinary page controls and element defaults. */
+  nativeStyles?: boolean
   /** Stop the current authored run synchronously, leaving the scene where it is. */
   interrupt?: RefObject<(() => void) | null>
   /** Explicitly requested native preparation may run behind a poster; the owner must hold before autoplay. */
@@ -118,6 +120,7 @@ export function Stage<S extends object>({
   prepareOffscreen = false,
   playbackClock,
   manual = false,
+  nativeStyles = false,
   interrupt,
   prepareReduced = false,
   accent,
@@ -598,6 +601,7 @@ export function Stage<S extends object>({
       <div
         ref={rootRef}
         className="ss-stage"
+        data-native-styles={nativeStyles || undefined}
         data-specimen={specimen || undefined}
         data-unframed={unframed || undefined}
         data-still={still || undefined}

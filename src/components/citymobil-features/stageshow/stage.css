@@ -414,7 +414,7 @@
    every demo is designed against. A host that styles prose through a class
    (.article p) out-ranks this: exclude stages there with
    :not(:where(.ss-stage *)). */
-:where(.ss-stage) :is(p, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, a, figure, figcaption, blockquote, pre, code, hr, table, th, td, button, input, label):not(html):not(body) {
+:where(.ss-stage:not([data-native-styles])) :is(p, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, a, figure, figcaption, blockquote, pre, code, hr, table, th, td, button, input, label):not(html):not(body) {
   all: revert;
 }
 
@@ -424,7 +424,7 @@
    lights flush against the edge on a blog). revert-layer hands each property back to the kit's
    layer. One type selector's worth, so it beats `*` but not a host's element
    rules, which the guard above already handles */
-:where(.ss-stage, .ss-stage *, .ss-stage ::before, .ss-stage ::after):not(html) {
+:where(.ss-stage:not([data-native-styles]), .ss-stage:not([data-native-styles]) *, .ss-stage:not([data-native-styles]) ::before, .ss-stage:not([data-native-styles]) ::after):not(html) {
   border-width: revert-layer;
   border-style: revert-layer;
   border-color: revert-layer;
@@ -436,7 +436,7 @@
 /* Hosts often cap images and SVGs at their container (max-width: 100%),
    which squeezes an icon or ring drawn larger than its slot off-center.
    Tailwind v3 also aligns them to the middle */
-:where(.ss-stage) :is(svg, img):not(html):not(body) {
+:where(.ss-stage:not([data-native-styles])) :is(svg, img):not(html):not(body) {
   max-width: none;
   vertical-align: revert-layer;
 }

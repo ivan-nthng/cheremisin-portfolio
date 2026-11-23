@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type ReactNode } from 'react'
 import { ChartNoAxesCombined, Download } from 'lucide-react'
 import Chart from './Chart'
 import ChoiceMenu from './ChoiceMenu'
@@ -365,12 +365,23 @@ export type AuthorGuidedState = { period: Period; periodOpen: boolean; point: nu
 export default function LitresAuthor({ theme, selectionActions = false, hosted = false, guided }: { theme?: 'light' | 'dark'; selectionActions?: boolean; hosted?: boolean; guided?: AuthorGuidedState }) {
   const routeHash = useSyncExternalStore(subscribeToView, pageSnapshot, () => '')
   const [hostedHash, setHostedHash] = useState('')
-  const hash = hosted ? hostedHash : routeHash
+  const presenting = guided !== undefined
+  const hash = presenting ? '' : hosted ? hostedHash : routeHash
   const root = useRef<HTMLElement>(null)
   const previousHash = useRef(hash)
   const [order, setOrder] = useState<TileId[]>(['income', 'sold', 'views'])
   const [period, setPeriod] = useState<Period>(28)
   const activePeriod = guided?.period ?? period
+  const scriptedPeriod = guided?.period
+  useLayoutEffect(() => {
+    if (scriptedPeriod !== undefined) setPeriod(scriptedPeriod)
+  }, [scriptedPeriod])
+  useLayoutEffect(() => {
+    if (presenting) {
+      setHostedHash('')
+      setOrder(['income', 'sold', 'views'])
+    }
+  }, [presenting])
   const range = getRange(activePeriod)
   const sales = hash === salesLinks.income || hash === salesLinks.sold
   const metric: Metric = hash === salesLinks.income ? 'income' : 'sold'
@@ -378,6 +389,7 @@ export default function LitresAuthor({ theme, selectionActions = false, hosted =
   useEffect(() => {
     if (previousHash.current === hash) return
     previousHash.current = hash
+    if (presenting) return
     const section = root.current?.querySelector<HTMLElement>(hash ? `[id='${CSS.escape(hash.slice(1))}']` : 'h1')
     if (section?.matches('h2') && root.current?.contains(section)) {
       section.focus({ preventScroll: true })
@@ -385,13 +397,13 @@ export default function LitresAuthor({ theme, selectionActions = false, hosted =
       return
     }
     root.current?.querySelector('h1')?.focus({ preventScroll: true })
-    if (hosted) root.current?.closest('[data-case-demo] > div')?.scrollTo({ top: 0, behavior: 'instant' })
+    if (hosted) root.current?.closest('[data-hosted] > div')?.scrollTo({ top: 0, behavior: 'instant' })
     else window.scrollTo({ top: 0, behavior: 'instant' })
-  }, [hash, hosted])
+  }, [hash, hosted, presenting])
   const periodControl = <PeriodMenu period={activePeriod} onChange={setPeriod} overview={!sales}
     preview={guided && { target: 'guided-period', open: guided.periodOpen }} />
-  const Root = guided ? 'div' : 'main'
-  return <Root id={hosted || guided ? undefined : 'main-content'} ref={node => { root.current = node }} onClickCapture={event => {
+  const Root = hosted ? 'div' : 'main'
+  return <Root role={hosted && !presenting ? 'main' : undefined} id={hosted ? undefined : 'main-content'} ref={node => { root.current = node }} onClickCapture={event => {
     if (!hosted || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || !(event.target instanceof Element)) return
     const href = event.target.closest('a[href^="#"]')?.getAttribute('href')
     if (href) { event.preventDefault(); setHostedHash(href) }

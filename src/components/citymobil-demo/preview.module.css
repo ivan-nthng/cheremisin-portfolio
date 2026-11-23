@@ -146,6 +146,7 @@
 
 .visuallyHidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .standalone{width:100%;min-height:100dvh;background:#f8fafc}
+:global(.ss-stage[data-native-styles]) > .standalone{user-select:text}
 .standalone:has([data-theme=dark]){background:#0f172a}
 .standalone .preview{min-height:0;border-radius:0;box-shadow:none}
 .standalone .workspace{height:calc(100dvh - var(--cm-toolbar-height, 44px));min-height:0;border-radius:0}

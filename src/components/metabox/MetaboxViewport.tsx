@@ -1,11 +1,12 @@
 'use client'
 
-import { useRef, type PointerEvent } from 'react'
+import { useLayoutEffect, useRef, type PointerEvent } from 'react'
 import { cameraFrames, clamp, startingCamera, type CameraSettings } from './camera-model'
 import { sofaName } from './catalog-fixtures'
 import s from './metabox.module.css'
 
-export default function MetaboxViewport({ camera, fovMin, fovMax, measurements, onCamera, onReset }: {
+export default function MetaboxViewport({ camera, fovMin, fovMax, measurements, onCamera, onReset, imageAttempt = 0, onReady, onUnavailable }: {
+  imageAttempt?: number; onReady?: () => void; onUnavailable?: () => void;
   camera: CameraSettings
   fovMin: number
   fovMax: number
@@ -15,6 +16,7 @@ export default function MetaboxViewport({ camera, fovMin, fovMax, measurements, 
 }) {
   const drag = useRef<{ x: number; y: number; yaw: number; pitch: number } | null>(null)
   const fixed = camera.interaction === 'Fixed'
+  const image = useRef<HTMLImageElement>(null)
   const depth = clamp((startingCamera.z - camera.z) / 3200, -.06, .15)
   const scale = Math.max(1, 1.035 + (55 - camera.fov) / (camera.fov > 55 ? 850 : 125) + depth)
   const maxShift = (scale - 1) * 48
@@ -37,6 +39,13 @@ export default function MetaboxViewport({ camera, fovMin, fovMax, measurements, 
     })
   }
 
+  useLayoutEffect(() => {
+    if (image.current?.complete) {
+      if (image.current.naturalWidth) onReady?.()
+      else onUnavailable?.()
+    }
+  }, [activeFrame, imageAttempt, onReady, onUnavailable])
+
   return <section className={s.viewport} aria-label="Sofa camera preview">
     <div className={s.canvas} data-fixed={fixed || undefined} onPointerDown={startDrag} onPointerMove={moveDrag}
       onLostPointerCapture={() => { drag.current = null }} tabIndex={fixed ? undefined : 0}
@@ -52,7 +61,9 @@ export default function MetaboxViewport({ camera, fovMin, fovMax, measurements, 
         onCamera(patch)
       }}>
       <div className={s.viewFrames} style={{ transform: `translate(${horizontal}%, ${vertical}%) scale(${scale})` }}>
-        {cameraFrames.map((frame, index) => <img key={frame.yaw} src={frame.src}
+        {cameraFrames.map((frame, index) => <img key={frame.yaw + ':' + imageAttempt} src={frame.src}
+          ref={frame === activeFrame ? image : undefined} onLoad={frame === activeFrame ? onReady : undefined}
+          onError={frame === activeFrame ? onUnavailable : undefined}
           className={index ? s.alternateFrame : undefined} data-visible={frame === activeFrame || undefined}
           alt={index ? '' : `${sofaName} in the studio`} aria-hidden={index > 0 || undefined}
           draggable={false} fetchPriority={frame.yaw === 0 ? 'high' : undefined} />)}

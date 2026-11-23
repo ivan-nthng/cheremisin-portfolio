@@ -44,6 +44,10 @@
 .app[data-author-guided] a { color: inherit; text-decoration: none; }
 .app[data-author-guided] .nav button { appearance: none; border: 0; }
 .app[data-author-guided] .overviewHeading h3 { font-size: 24px; font-weight: 700; line-height: 32px; color: var(--slate); }
+.retainedStage :global([data-hosted]), .retainedStage :global([data-hosted]) > div:first-child { height: 100%; }
+.retainedStage :global([data-hosted]) > div:first-child { overflow: auto; }
+.retainedStage .app[data-theme] { min-height: calc(100% - var(--demo-toolbar-height, 0px)); }
+:global([data-retained-state="manual"]) .retainedStage :global(.ss-stage) { user-select: text; }
 
 .topBar {
   display: flex;

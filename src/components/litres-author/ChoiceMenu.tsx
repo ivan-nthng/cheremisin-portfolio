@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import styles from './author.module.css'
 
 export default function ChoiceMenu<T extends string | number>({ label, trigger, options, value, onChange, alignEnd = false, preview, selectedMark = '✓' }: {
@@ -13,20 +13,25 @@ export default function ChoiceMenu<T extends string | number>({ label, trigger, 
 }) {
   const id = useId()
   const [open, setOpen] = useState(false)
-  const shown = preview?.open ?? open
+  const scriptedOpen = preview?.open
+  const shown = scriptedOpen ?? open
   const root = useRef<HTMLDivElement>(null)
   const button = useRef<HTMLButtonElement>(null)
 
+  useLayoutEffect(() => {
+    if (scriptedOpen !== undefined) setOpen(scriptedOpen)
+  }, [scriptedOpen])
+
   useEffect(() => {
-    if (!open) return
+    if (!open || scriptedOpen !== undefined) return
     const element = root.current
-    element?.querySelector<HTMLButtonElement>('[aria-checked="true"]')?.focus()
+    element?.querySelector<HTMLButtonElement>('[aria-checked="true"]')?.focus({ preventScroll: true })
     function dismiss(event: PointerEvent) {
       if (event.target instanceof Node && !element?.contains(event.target)) setOpen(false)
     }
     document.addEventListener('pointerdown', dismiss)
     return () => document.removeEventListener('pointerdown', dismiss)
-  }, [open])
+  }, [open, scriptedOpen])
 
   function close() {
     setOpen(false)

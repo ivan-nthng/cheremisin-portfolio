@@ -88,7 +88,7 @@ const projects: readonly Project[] = [
   },
 ]
 
-export default function MetaboxProjectsGrid() {
+export default function MetaboxProjectsGrid({ imageAttempt = 0 }: { imageAttempt?: number } = {}) {
   return (
     <section className={styles.projects} aria-label="Projects">
       <ul className={styles.grid}>
@@ -103,7 +103,7 @@ export default function MetaboxProjectsGrid() {
                 <span className={tile.tileType}>{project.detail}</span>
               </span>
               <span className={tile.thumbnail}>
-                <Image src={project.image} fill sizes="(max-width: 550px) calc(100vw - 48px), 284px" loading="eager" alt="" />
+                <Image key={imageAttempt} data-suite-image src={project.image} fill sizes="(max-width: 550px) calc(100vw - 48px), 284px" loading="eager" alt="" />
               </span>
             </a>
           </li>

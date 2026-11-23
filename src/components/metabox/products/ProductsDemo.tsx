@@ -38,7 +38,9 @@ const archivedRenders: RenderOutput[] = [
   { id: 'side-proof', product: porsche, name: 'Profile study', file: 'porsche-911-profile-study.webp', url: cameraViews[2].image, detail: 'WebP · Last week' },
 ]
 
-export default function ProductsDemo({ guidedCamera, onReturn, onOpenConfigurator, onOpenApplications, scenarioControls }: {
+export default function ProductsDemo({ guidedCamera, imageAttempt = 0, onReady, onUnavailable, onReturn, onOpenConfigurator, onOpenApplications, scenarioControls }: {
+  imageAttempt?: number;
+  onReady?: () => void; onUnavailable?: () => void;
   guidedCamera?: string; onReturn?: () => void; onOpenConfigurator?: () => void; onOpenApplications?: () => void;
   scenarioControls?: DemoScenarioSelection<CaseDemo>
 } = {}) {
@@ -46,9 +48,9 @@ export default function ProductsDemo({ guidedCamera, onReturn, onOpenConfigurato
   const [version, setVersion] = useState(0)
   const [product, setProduct] = useState<RenderProduct | null>(guidedCamera ? porsche : null)
   const [cameras, setCameras] = useState(initialCameras)
-  const [selected, setSelected] = useState<string[]>([currentCamera.id])
-  const [camera, setActive] = useState(currentCamera.id)
-  const active = guidedCamera ?? camera
+  const [selected, setSelected] = useState<string[]>([guidedCamera ?? currentCamera.id])
+  const [active, setActive] = useState(guidedCamera ?? currentCamera.id)
+  const previousGuide = useRef(guidedCamera)
   const [batch, setBatch] = useState(true)
   const [size, setSize] = useState<RenderSize>('full-hd')
   const [format, setFormat] = useState<RenderFormat>('png')
@@ -77,17 +79,17 @@ export default function ProductsDemo({ guidedCamera, onReturn, onOpenConfigurato
   }, [])
 
   useLayoutEffect(() => {
-    if (guidedCamera) return
+    if (guidedCamera || !returnToLibrary.current) return
     if (product) {
-      window.scrollTo({ top: 0, behavior: 'instant' })
+      if (!onReturn) window.scrollTo({ top: 0, behavior: 'instant' })
       heading.current?.focus({ preventScroll: true })
     } else if (returnToLibrary.current) {
       const { element, scrollTop } = returnToLibrary.current
       returnToLibrary.current = null
-      window.scrollTo({ top: scrollTop, behavior: 'instant' })
+      if (!onReturn) window.scrollTo({ top: scrollTop, behavior: 'instant' })
       element?.focus({ preventScroll: true })
     }
-  }, [product, guidedCamera])
+  }, [product, guidedCamera, onReturn])
 
   useEffect(() => {
     if (!notice) return
@@ -99,6 +101,9 @@ export default function ProductsDemo({ guidedCamera, onReturn, onOpenConfigurato
   const activeView = cameras.find(view => view.id === active) ?? currentCamera
   const queuedViews = cameras.filter(view => selected.includes(view.id))
   const currentImage = currentOutput?.url ?? (isPorsche ? activeView.image : product?.image)
+  useLayoutEffect(() => {
+    if (!currentImage || currentImage === loadedScene) onReady?.()
+  }, [currentImage, loadedScene, onReady])
   const outline = isPorsche ? getPorscheOutline(currentOutput?.sourceImage ?? currentImage) : undefined
   const allRenders = [...outputs, ...archivedRenders]
   const history = allRenders.filter(output => output.product.id === product?.id)
@@ -129,7 +134,7 @@ export default function ProductsDemo({ guidedCamera, onReturn, onOpenConfigurato
     urls.current.splice(0).forEach(url => URL.revokeObjectURL(url))
     savedViews.current = 0
     returnToLibrary.current = null
-    window.scrollTo({ top: 0, behavior: 'instant' })
+    if (!onReturn) window.scrollTo({ top: 0, behavior: 'instant' })
     back()
     setCameras(initialCameras)
     setSelected([currentCamera.id])
@@ -145,6 +150,17 @@ export default function ProductsDemo({ guidedCamera, onReturn, onOpenConfigurato
     setNotice(null)
     setVersion(previous => previous + 1)
   }
+
+  useLayoutEffect(() => {
+    const resume = !previousGuide.current
+    previousGuide.current = guidedCamera
+    if (!guidedCamera) return
+    if (resume) { restart(); setTheme('light') }
+    setProduct(porsche)
+    setSelected([guidedCamera])
+    setActive(guidedCamera)
+    setCurrentOutput(null)
+  }, [guidedCamera]) // Only an authored camera change may write to the manual selection.
 
   function previewCamera(id: string) {
     setActive(id)
@@ -269,8 +285,9 @@ export default function ProductsDemo({ guidedCamera, onReturn, onOpenConfigurato
           </header>
           <div className={s.stage}>
             {currentImage
-              ? <img key={currentImage} className={s.scene} src={currentImage}
+              ? <img key={currentImage + ':' + imageAttempt} className={s.scene} src={currentImage}
                 onLoad={() => setLoadedScene(currentImage)}
+                onError={() => { setLoadedScene(undefined); onUnavailable?.() }}
                 alt={product.name + (currentOutput ? ' · ' + currentOutput.name : isPorsche ? ' · ' + activeView.name : '')} />
               : <div className={s.noPreview}><Box size={28} aria-hidden="true" />No preview available</div>}
             {outline && currentImage === loadedScene && <svg className={s.sceneOutline}
@@ -280,7 +297,7 @@ export default function ProductsDemo({ guidedCamera, onReturn, onOpenConfigurato
           </div>
         </section>
 
-        {isPorsche ? <RenderSettingsPanel cameras={cameras} selected={guidedCamera ? [guidedCamera] : selected} active={active} guided={Boolean(guidedCamera)}
+        {isPorsche ? <RenderSettingsPanel key={version} cameras={cameras} selected={selected} active={active} guided={Boolean(guidedCamera)}
           product={{ ...porsche, image: productThumbnails[porsche.id] ?? porsche.image }} onProduct={() => previewCamera(currentCamera.id)}
           size={size} format={format} onCamera={toggleCamera} onSelectAll={toggleAllCameras} onSaveView={saveView} onSize={setSize}
           onFormat={setFormat} onBatch={changeBatch} batch={batch} onRender={() => { setError(''); setConfirming(true) }} rendering={rendering} />
@@ -291,6 +308,6 @@ export default function ProductsDemo({ guidedCamera, onReturn, onOpenConfigurato
           productName={product.name} rendering={rendering} error={error} />
       </div>}
     </main>
-  return guidedCamera ? workspace : <DemoShell {...(scenarioControls ?? { scenarios: undefined })} label="Metabox Products demo" theme={theme} onTheme={setTheme} onRestart={restart}
+  return <DemoShell presentation={Boolean(guidedCamera)} {...(scenarioControls ?? { scenarios: undefined })} label="Metabox Products demo" theme={theme} onTheme={setTheme} onRestart={restart}
     onReturn={onReturn ?? (() => window.location.assign('/'))}>{workspace}</DemoShell>
 }

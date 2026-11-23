@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Check } from 'lucide-react'
 import DemoShell, { type DemoScenarioSelection } from '@/components/portfolio/demo/DemoShell'
 import type { CaseDemo } from '@/components/portfolio/case-story/CaseDemoOverlay'
@@ -20,13 +20,14 @@ const cameraTabs = [
   { id: 'restrictions', label: 'Restrictions' },
 ] as const
 
-export default function MetaboxDemo({ onReturn, onOpenApplications, scenarioControls }: {
+export default function MetaboxDemo({ onReturn, onOpenApplications, scenarioControls, guidedFov, initialEditor, imageAttempt, onReady, onUnavailable }: {
+  guidedFov?: number; initialEditor?: boolean; imageAttempt?: number; onReady?: () => void; onUnavailable?: () => void;
   onReturn?: () => void; onOpenApplications?: () => void; scenarioControls?: DemoScenarioSelection<CaseDemo>
 } = {}) {
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
-  const [screen, setScreen] = useState<Screen>('catalog')
+  const [screen, setScreen] = useState<Screen>(guidedFov !== undefined || initialEditor ? 'camera' : 'catalog')
   const [tab, setTab] = useState<'position' | 'restrictions'>('position')
-  const [camera, setCamera] = useState(startingCamera)
+  const [camera, setCamera] = useState(() => editCamera(startingCamera, { fov: guidedFov ?? startingCamera.fov }))
   const [limits, setLimits] = useState(startingLimits)
   const [applied, setApplied] = useState({ camera: startingCamera, limits: startingLimits })
   const [measurements, setMeasurements] = useState(false)
@@ -34,12 +35,23 @@ export default function MetaboxDemo({ onReturn, onOpenApplications, scenarioCont
   const [notice, setNotice] = useState<{ message: string; saved: boolean; id: number } | null>(null)
   const heading = useRef<HTMLHeadingElement>(null)
   const returnFocus = useRef<HTMLElement | null>(null)
+  const previousGuide = useRef(guidedFov)
+  useLayoutEffect(() => {
+    const resume = previousGuide.current === undefined
+    previousGuide.current = guidedFov
+    if (guidedFov === undefined) return
+    if (resume) { restart(); setTheme('light') }
+    setScreen('camera')
+    setCamera(editCamera(startingCamera, { fov: guidedFov }))
+  }, [guidedFov])
+  useLayoutEffect(() => { if (screen === 'catalog') onReady?.() }, [screen, onReady])
 
   useEffect(() => {
+    if (guidedFov !== undefined) return
     if (screen === 'catalog') {
       returnFocus.current?.focus({ preventScroll: true })
       returnFocus.current = null
-    } else {
+    } else if (returnFocus.current) {
       heading.current?.focus({ preventScroll: true })
     }
   }, [screen])
@@ -88,9 +100,9 @@ export default function MetaboxDemo({ onReturn, onOpenApplications, scenarioCont
 
   const preview = screen === 'preview'
 
-  return <DemoShell {...(scenarioControls ?? { scenarios: undefined })} label="Metabox camera demo" theme={theme} onTheme={setTheme} onRestart={restart}
+  return <DemoShell presentation={guidedFov !== undefined} {...(scenarioControls ?? { scenarios: undefined })} label="Metabox camera demo" theme={theme} onTheme={setTheme} onRestart={restart}
     onReturn={onReturn ?? (() => window.location.assign('/'))}>
-    <main id={onReturn ? undefined : "main-content"} className={s.app} data-theme={theme} onKeyDown={event => {
+    <main id={onReturn || guidedFov !== undefined ? undefined : "main-content"} className={s.app} data-theme={theme} onKeyDown={event => {
       if (event.key === 'Escape' && !event.defaultPrevented && screen !== 'catalog') {
         event.preventDefault()
         setScreen('catalog')
@@ -110,16 +122,16 @@ export default function MetaboxDemo({ onReturn, onOpenApplications, scenarioCont
       {screen !== 'catalog' && <div className={s.cameraWorkspace}>
         <header className={s.cameraHeader}>
           <h1 tabIndex={-1} ref={heading}>{sofaName}</h1>
-          {preview ? <span className={s.previewLabel}>Preview</span> :
+          {guidedFov !== undefined ? null : preview ? <span className={s.previewLabel}>Preview</span> :
             <nav className={s.cameraTabs} aria-label="Camera configuration">
               {cameraTabs.map(({ id, label }) => <button key={id} type="button" aria-pressed={tab === id}
                 onClick={() => setTab(id)}><img src={`/images/metabox/controls/${id}.svg`} width={16} height={16} alt="" />{label}</button>)}
             </nav>}
-          <button type="button" className={s.closeCamera} aria-label={preview ? 'Close preview' : 'Close camera settings'}
+          <button type="button" hidden={guidedFov !== undefined} className={s.closeCamera} aria-label={preview ? 'Close preview' : 'Close camera settings'}
             onClick={() => setScreen('catalog')}><img src="/images/metabox/controls/close.svg" width={16} height={16} alt="" /></button>
         </header>
         <div className={s.cameraBody} data-preview={preview || undefined}>
-          <MetaboxViewport camera={camera} measurements={measurements}
+          <MetaboxViewport camera={camera} measurements={measurements} imageAttempt={imageAttempt} onReady={onReady} onUnavailable={onUnavailable}
             fovMin={preview ? zoomFor(applied.limits.maxZoom) : 25}
             fovMax={preview ? zoomFor(applied.limits.minZoom) : 85}
             onCamera={changeCamera} onReset={() => setCamera(preview ? applied.camera : startingCamera)} />

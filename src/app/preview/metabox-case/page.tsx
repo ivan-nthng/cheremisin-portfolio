@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import MetaboxCardScene from '@/components/metabox/MetaboxCardScene'
+import { MetaboxSurface } from '@/components/portfolio/case-story/DraftNativeScene'
 import CaseDraft, { type CaseDraftData } from '@/components/portfolio/case-story/CaseDraft'
 
 export const metadata: Metadata = {
@@ -87,5 +88,5 @@ const data: CaseDraftData = {
 }
 
 export default function MetaboxCasePreview() {
-  return <CaseDraft data={data} MetaboxScene={MetaboxCardScene} />
+  return <CaseDraft data={data} MetaboxScene={MetaboxCardScene} MetaboxSurface={MetaboxSurface} />
 }

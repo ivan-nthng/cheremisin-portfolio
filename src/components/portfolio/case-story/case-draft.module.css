@@ -315,8 +315,9 @@
   .showcase [data-case-showcase-heading] { gap: 12px; }
 }
 
-.nativeWorkspace, .nativeWorkspace > main[data-theme] { height: 100%; }
-.nativeWorkspace > main { min-height: 0; }
+.nativeWorkspace, .nativeWorkspace [data-hosted], .nativeWorkspace [data-hosted] > div:first-child,
+.nativeWorkspace main[data-theme] { height: 100%; min-height: 0; }
+.retainedStage :global(.ss-stage[data-native-styles]) { user-select: text; }
 
 .hero .kicker, .introduction { color: var(--case-hero-muted); }
 .heroActions button { background: transparent; border: 0; cursor: pointer; }

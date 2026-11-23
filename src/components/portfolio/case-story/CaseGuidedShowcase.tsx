@@ -56,7 +56,7 @@ export function CaseGuidedShowcase({
   const paused = active || suspended || hidden || imageOpen
   const playbackPaused = useRef(paused)
   playbackPaused.current = paused
-  const [animated, setAnimated] = useState(false)
+  const [animated, setAnimated] = useState<boolean | null>(null)
   useRepeatReveal(pin, revealPin && !hidden)
 
   useEffect(() => {
@@ -107,7 +107,7 @@ export function CaseGuidedShowcase({
   return <><CaseShowcase {...content}
     sectionRef={section} pinRef={pin} headingRef={heading} frameRef={frame} entryRef={invitation}
     className={`${styles.showcase} ${wide ? styles.wideShowcase : ''} ${className}`} pinClassName={`${styles.showcasePin} ${pinClassName}`} hidden={hidden}
-    data-motion={animated} data-pose="hold"
+    data-motion={animated ?? false} data-case-motion-ready={animated !== null} data-pose="hold"
     preview={desktop ? desktopPreview ?? <GuidedPreview still={still} suspended={paused}>{scene}</GuidedPreview> : still}
     mobile={<div className={chromeStyles.mobileShowcase}>
       <div className={chromeStyles.compactDemoFrame} data-case-mobile-preview>

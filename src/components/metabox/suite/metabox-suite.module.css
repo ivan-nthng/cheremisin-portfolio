@@ -164,3 +164,5 @@ main.page {
 :global([data-projects-card]) .content { flex: 1; min-height: 0; overflow: hidden; padding-block: 16px; }
 :global([data-projects-card][data-compact]) .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 :global([data-projects-card][data-compact]) .cards > li:nth-child(n+3) { display: none; }
+.guided { height: 100%; }
+.manual { height: calc(100dvh - var(--demo-toolbar-height, 32px)); overflow: auto; }

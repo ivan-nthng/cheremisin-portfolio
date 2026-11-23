@@ -1,9 +1,7 @@
-.stage, .camera {
+.stage {
   height: 100%;
   overflow: clip;
   border-radius: var(--radius-media);
 }
-.stage > main, .camera.camera { height: 100%; min-height: 0; }
-.camera.camera > div { grid-template-columns: minmax(0, 1fr) 280px; }
-.camera.camera[data-compact] > div { grid-template-columns: minmax(0, 1fr); grid-template-rows: 248px auto; }
-.camera.camera section[aria-label='Sofa camera preview'] { aspect-ratio: auto; }
+.stage > main, .stage [data-hosted], .stage [data-hosted] > div:first-child,
+.stage main[data-theme] { height: 100%; min-height: 0; }
